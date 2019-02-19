@@ -1,0 +1,19 @@
+<div>
+  <h3>Список персон</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>ФИО</th>
+      <th>Права</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let r of listService.list">
+      <td>{{r.username}}</td>
+      <td>{{r.fio}}</td>
+      <td>{{r.cans}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,20 @@
+table {
+  display: inline-block;
+}
+
+table th {
+  padding: 0.5rem 0.3rem;
+  font-weight: 700;
+  border-bottom: #91a0a0 double 3px;
+}
+
+table td {
+  padding: 0.3rem;
+  border-bottom: #a5b4b4 solid 1px;
+}
+table tr td:nth-child(1), table tr th:nth-child(1) {
+  text-align: left;
+}
+table tr td:nth-child(2), table tr th:nth-child(2) {
+  text-align: left;
+}

@@ -1,0 +1,16 @@
+plugins {
+  id "com.moowork.node" version "1.2.0"
+}
+task cleanLibs(type: Delete) {
+  delete 'node_modules'
+  delete 'dist'
+}
+
+clean.dependsOn cleanLibs
+
+task dist {
+  dependsOn npm_install
+  dependsOn npm_run_build
+}
+
+npm_run_build.shouldRunAfter npm_install

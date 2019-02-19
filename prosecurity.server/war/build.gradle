@@ -1,0 +1,30 @@
+apply plugin: 'war'
+webAppDirName = 'webapps'
+
+dependencies {
+  compile project(':prosecurity.server')
+
+  testCompile "kz.greetgo.depinject:greetgo.depinject.gen:$depinjectVersion"
+
+  compile 'jstl:jstl:1.2'
+
+}
+
+
+war {
+  dependsOn project(':prosecurity.client').tasks.dist
+  doFirst {
+//    println(project(':prosecurity.client').buildDir.toPath().resolve('product').toFile())
+  }
+
+  baseName 'prosecurity'
+
+  addExcludes rootSpec
+
+  from project(':prosecurity.client').projectDir.toPath().resolve('dist').toFile()
+}
+
+static def addExcludes(rootSpec) {
+  rootSpec.exclude 'ant-*.jar'
+  rootSpec.exclude 'ant-launcher-*.jar'
+}

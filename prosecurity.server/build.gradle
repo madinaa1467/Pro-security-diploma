@@ -1,0 +1,15 @@
+plugins {
+  id "kz.greetgo.depinject.plugin" version "2.1.3"
+}
+
+dependencies {
+  compile project(':prosecurity.register')
+
+  compile "kz.greetgo.mvc:greetgo.mvc.war:$greetgoMvcVersion"
+
+  testCompile "kz.greetgo.depinject:greetgo.depinject.gen:$depinjectVersion"
+}
+
+depinject {
+  scanPackage 'kz.diploma.prosecurity.server'
+}

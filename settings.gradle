@@ -1,0 +1,8 @@
+rootProject.name = "diploma.prosecurity.root"
+
+include 'prosecurity.client'
+include 'prosecurity.controller'
+include 'prosecurity.debug'
+include 'prosecurity.register'
+include 'prosecurity.server'
+include 'prosecurity.server:war'
