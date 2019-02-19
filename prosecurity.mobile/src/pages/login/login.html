@@ -1,0 +1,27 @@
+<ion-content padding class="transparent-header" >
+  <ion-header>
+    <ion-navbar>
+    </ion-navbar>
+  </ion-header>
+  <!--<img class="logo" src="assets/img/logo/logo-instagram.png" />-->
+  <div class="logo"></div>
+  <div padding>
+    <form [formGroup]="form" (submit)="login()">
+      <ion-item>
+        <ion-input formControlName="username" type="text" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+      </ion-item>
+
+      <!--<ion-item>
+        <ion-input formControlName="password" type="password" value="password"></ion-input>
+      </ion-item>-->
+
+      <button ion-button block outline color="light" class="login-button" [disabled]="!form.valid">
+        Login
+      </button>
+    </form>
+  </div>
+
+</ion-content>
