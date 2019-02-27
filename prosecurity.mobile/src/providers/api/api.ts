@@ -15,14 +15,14 @@ export class Api {
   }
 
   get(endpoint: string, params?: any, reqOpts?: any) {
-    if (!reqOpts) {
-      reqOpts = {
-        params: new HttpParams(),
-        withCredentials: true,
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        })
-      };
+    let defReqOpts = {
+      withCredentials: true
+    };
+
+    if (reqOpts) {
+      for (let k in reqOpts) {
+        defReqOpts[k] = reqOpts[k];
+      }
     }
 
     // Support easy query params for GET requests
@@ -34,19 +34,22 @@ export class Api {
       }
     }
 
-    return this.http.get(this.url(endpoint), reqOpts);
+    return this.http.get(this.url(endpoint), defReqOpts);
   }
 
   post(endpoint: string, body: any, reqOpts?: any) {
-    if (!reqOpts) {
-      reqOpts = {withCredentials: true};
-    }
-    if (!reqOpts['headers']) {
-      reqOpts['headers'] = new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      });
-    }
+    let defReqOpts = {
+      headers : new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }),
+      withCredentials: true
+    };
 
+    if(reqOpts){
+      for (let k in reqOpts) {
+        defReqOpts[k] = reqOpts[k];
+      }
+    }
 
     let params: HttpParams = new HttpParams();
 
@@ -56,7 +59,7 @@ export class Api {
     }
 
 
-    return this.http.post(this.url(endpoint), params.toString(), reqOpts);
+    return this.http.post(this.url(endpoint), params.toString(), defReqOpts);
   }
 
 }
