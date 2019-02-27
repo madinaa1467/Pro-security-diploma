@@ -43,7 +43,7 @@ public class AuthController implements Controller {
 
     SessionIdentity identity = authRegister.get().login(username, password);
 
-    cookies.forName(ProSecurityViews.G_SESSION)
+    cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")
       .httpOnly(true)
       .maxAge(-1)
@@ -64,7 +64,7 @@ public class AuthController implements Controller {
   public void exit(@ParSession("sessionId") String sessionId, TunnelCookies cookies) {
     authRegister.get().deleteSession(sessionId);
 
-    cookies.forName(ProSecurityViews.G_SESSION)
+    cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")
       .remove();
   }

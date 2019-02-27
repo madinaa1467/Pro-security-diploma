@@ -1,21 +1,17 @@
 package kz.diploma.prosecurity.controller.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kz.greetgo.depinject.core.BeanGetter;
-import kz.greetgo.mvc.annotations.ParSession;
-import kz.greetgo.mvc.annotations.ToJson;
-import kz.greetgo.mvc.annotations.ToXml;
-import kz.greetgo.mvc.interfaces.MethodInvokedResult;
-import kz.greetgo.mvc.interfaces.MethodInvoker;
-import kz.greetgo.mvc.interfaces.RequestTunnel;
-import kz.greetgo.mvc.interfaces.SessionParameterGetter;
-import kz.greetgo.mvc.interfaces.Views;
 import kz.diploma.prosecurity.controller.errors.JsonRestError;
 import kz.diploma.prosecurity.controller.errors.RestError;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.security.SecurityError;
+import kz.greetgo.depinject.core.BeanGetter;
+import kz.greetgo.mvc.annotations.ParSession;
+import kz.greetgo.mvc.annotations.ToJson;
+import kz.greetgo.mvc.annotations.ToXml;
+import kz.greetgo.mvc.interfaces.*;
 import org.apache.log4j.Logger;
 
 import java.io.PrintWriter;
@@ -27,7 +23,8 @@ import java.util.Map;
  */
 public abstract class ProSecurityViews implements Views {
 
-  public static final String G_SESSION = "g-session";
+  public static final String P_SESSION = "g-session";
+  public static final String P_TOKEN = "token";
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   /**
@@ -138,10 +135,10 @@ public abstract class ProSecurityViews implements Views {
    */
   private void prepareSession(MethodInvoker methodInvoker) {
     //Достаём токен из заголовка запроса. Если токена нет, то получим null
-    String token = methodInvoker.tunnel().requestHeaders().value("token");
+    String token = methodInvoker.tunnel().requestHeaders().value(P_TOKEN);
 
     //Берём идентификатор сессии из кукисов. Если сессии нет, то получаем null
-    String sessionId = methodInvoker.tunnel().cookies().name(G_SESSION).value();
+    String sessionId = methodInvoker.tunnel().cookies().name(P_SESSION).value();
 
     //Проверяем параметры сессии на достоверность, и если всё ок, сохраняем в ThreadLocal-переменной сессию
     //Иначе очищаем ThreadLocal-переменную
@@ -185,7 +182,7 @@ public abstract class ProSecurityViews implements Views {
 
     if ("sessionId".equals(context.parameterName())) {
       if (context.expectedReturnType() != String.class) throw new SecurityError("personId must be a string");
-      return tunnel.cookies().name(G_SESSION).value();
+      return tunnel.cookies().name(P_SESSION).value();
     }
 
     throw new SecurityError("Unknown session parameter " + context.parameterName());

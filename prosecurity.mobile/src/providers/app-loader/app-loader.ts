@@ -4,13 +4,14 @@ import {Auth} from "..";
 @Injectable()
 export class AppLoader {
 
-  constructor(private auth: Auth ) {}
+  constructor(private auth: Auth) {
+  }
 
   initApp(): Promise<any> {
 
     return this.auth.authenticated().then(res => {
       if (res) {
-        return this.auth.loadUserInfo().catch(error => {
+        return this.auth.getPersonDisplay().catch(error => {
           console.error("Произошла ошибка при загрузки данный сессии");
         });
       }

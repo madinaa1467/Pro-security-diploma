@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {MyApp} from './app.component';
@@ -43,8 +43,16 @@ export function initApp(appLoadService: AppLoader) {
     PROVIDERS,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoader], multi: true},
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
-export class AppModule {}
+
+// providers: [
+//   PROVIDERS,
+//   {provide: Settings, useFactory: provideSettings, deps: [Storage]},
+//   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+//   {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoader], multi: true},
+//   {provide: ErrorHandler, useClass: IonicErrorHandler},
+// ]
+export class AppModule {
+}

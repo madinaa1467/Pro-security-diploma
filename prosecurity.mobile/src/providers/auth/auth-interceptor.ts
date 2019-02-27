@@ -15,6 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let promise = this.auth.getToken();
+
     return Observable.fromPromise(promise).mergeMap(token => {
       let cloneReq = this.addToken(req, token);
 
@@ -46,7 +47,7 @@ export class AuthInterceptor implements HttpInterceptor {
       let clone: HttpRequest<any>;
       clone = req.clone({
         setHeaders: {
-          Authorization: `bearer ${token}`
+          token: `${token}`
         }
       });
 

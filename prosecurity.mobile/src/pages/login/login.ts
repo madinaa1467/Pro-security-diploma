@@ -21,8 +21,7 @@ export class LoginPage {
 
     this.form = this.fb.group({
       username: [null, Validators.required],
-      password: [null, Validators.required],
-      grant_type: ["password"]
+      password: [null, Validators.required]
     });
   }
 
@@ -34,7 +33,7 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  login(){
+  login() {
     const loading = this.loadingCtrl.create({
       duration: 500
     });

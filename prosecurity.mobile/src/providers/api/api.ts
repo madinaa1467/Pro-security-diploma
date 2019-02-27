@@ -5,7 +5,7 @@ import {isUndefined} from "util";
 @Injectable()
 export class Api {
 
-  private _url: string = 'http://188.0.151.177:2092/api/mobileRequest';
+  private _url: string = 'http://localhost:1313/prosecurity/api';
 
   constructor(private http: HttpClient) {
   }
@@ -17,7 +17,11 @@ export class Api {
   get(endpoint: string, params?: any, reqOpts?: any) {
     if (!reqOpts) {
       reqOpts = {
-        params: new HttpParams()
+        params: new HttpParams(),
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+        })
       };
     }
 
@@ -35,12 +39,14 @@ export class Api {
 
   post(endpoint: string, body: any, reqOpts?: any) {
     if (!reqOpts) {
-      reqOpts = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded'
-        })
-      };
+      reqOpts = {withCredentials: true};
     }
+    if (!reqOpts['headers']) {
+      reqOpts['headers'] = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      });
+    }
+
 
     let params: HttpParams = new HttpParams();
 
