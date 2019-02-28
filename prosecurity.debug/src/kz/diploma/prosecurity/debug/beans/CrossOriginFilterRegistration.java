@@ -43,7 +43,6 @@ public class CrossOriginFilterRegistration implements WebAppContextRegistration,
 
     response.addHeader("Access-Control-Allow-Credentials", "true");
     response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-    response.addHeader("charset", "UTF-8");
 
     response.addHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
     response.addHeader("Access-Control-Allow-Headers", "origin,x-requested-with,access-control-request-headers," +

@@ -38,6 +38,7 @@ public abstract class ProSecurityViews implements Views {
    */
   @Override
   public String toJson(Object object, RequestTunnel tunnel, Method method) throws Exception {
+    tunnel.setResponseContentType("application/json;charset=UTF-8");
     return convertToJson(object);
   }
 
