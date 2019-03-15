@@ -2,6 +2,7 @@ rootProject.name = "diploma.prosecurity.root"
 
 include 'prosecurity.client'
 include 'prosecurity.mobile'
+include 'prosecurity.mobile_app'
 include 'prosecurity.controller'
 include 'prosecurity.debug'
 include 'prosecurity.register'
