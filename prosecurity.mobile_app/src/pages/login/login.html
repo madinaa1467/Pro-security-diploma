@@ -5,6 +5,7 @@
   </ion-header>
   <img class="logo" src="assets/img/logo/logo-instagram.png" />
   <div padding>
+    <form [formGroup]="form" (submit)="login()">
     <ion-item>
       <ion-input type="text" placeholder="Username"></ion-input>
     </ion-item>
@@ -12,6 +13,7 @@
       <ion-input type="password" placeholder="Password"></ion-input>
     </ion-item>
     <button ion-button block outline (click)="login()" color="light" class="login-button">Login</button>
+    </form>
   </div>
   <div class="strike">
     <span>OR</span>
