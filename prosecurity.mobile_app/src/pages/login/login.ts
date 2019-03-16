@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, AlertController, LoadingController, NavController, NavParams, App } from 'ionic-angular';
-import { TabsPage } from "../tabs/tabs";
+import {Component} from '@angular/core';
+import {AlertController, App, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Auth} from "../../providers";
+import {TabsPage} from "../tabs/tabs";
 
 /**
  * Generated class for the LoginPage page.
@@ -15,13 +17,29 @@ import { TabsPage } from "../tabs/tabs";
 })
 export class LoginPage {
   public loginForm: any;
+  form: FormGroup;
 
-  constructor(
-    public loadingCtrl: LoadingController,
+
+  constructor(private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     public app: App,
+    private auth: Auth,
+    private fb: FormBuilder,
     public navCtrl: NavController,
-    public navParams: NavParams
-  ) { }
+    public navParams: NavParams) {
+  this.form = this.fb.group({
+      username: [null, Validators.required],
+      password: [null, Validators.required]
+    });
+ }
+
+  ionViewCanEnter() {
+    return !this.auth.isAuthenticated();
+  }
+
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad LoginPage');
+  }
 
   login() {
     const loading = this.loadingCtrl.create({
@@ -29,11 +47,19 @@ export class LoginPage {
     });
 
     loading.onDidDismiss(() => {
+      const alert = this.alertCtrl.create({
+        title: 'Logged in!',
+        subTitle: 'Thanks for logging in.',
+        buttons: ['Dismiss']
+      });
+      alert.present();
       this.navCtrl.setRoot(TabsPage);
     });
 
     loading.present();
 
+    this.auth.login(this.form.getRawValue()).catch(err => {
+    });
   }
 
   goToSignup() {

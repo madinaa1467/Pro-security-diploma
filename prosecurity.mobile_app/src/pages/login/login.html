@@ -7,10 +7,10 @@
   <div padding>
     <form [formGroup]="form" (submit)="login()">
     <ion-item>
-      <ion-input type="text" placeholder="Username"></ion-input>
+      <ion-input formControlName="username" type="text" placeholder="Username"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="password" placeholder="Password"></ion-input>
+      <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
     </ion-item>
     <button ion-button block outline (click)="login()" color="light" class="login-button">Login</button>
     </form>
