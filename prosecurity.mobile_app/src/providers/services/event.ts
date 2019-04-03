@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Api} from "..";
 import {Storage} from "@ionic/storage";
-import {TOKEN_KEY} from "./auth.metadata";
+import {TOKEN_KEY} from "./auth/auth.metadata";
 import {BehaviorSubject} from "rxjs";
 import {UserInfo} from "../../model/auth/user-info";
 import {AccountInfo} from "../../model/auth/account-info";
@@ -25,8 +25,7 @@ export class Auth {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        // return this.getPersonDisplay();
-        return this.loadUserInfo();
+        return this.getPersonDisplay();
       });
     });
   }

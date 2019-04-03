@@ -47,12 +47,12 @@ export class LoginPage {
     });
 
     loading.onDidDismiss(() => {
-      const alert = this.alertCtrl.create({
-        title: 'Logged in!',
-        subTitle: 'Thanks for logging in.',
-        buttons: ['Dismiss']
-      });
-      alert.present();
+      // const alert = this.alertCtrl.create({
+        // title: 'Logged in!',
+        // subTitle: 'Thanks for logging in.',
+        // buttons: ['Dismiss']
+      // });
+      // alert.present();
       this.navCtrl.setRoot(TabsPage);
     });
 

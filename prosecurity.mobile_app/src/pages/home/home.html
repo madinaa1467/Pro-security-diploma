@@ -30,56 +30,152 @@
   <hr no-margin no-padding>
   <div (swipe)="swipePage($event)">
 
-    <!-- Cards -->
-    <ion-card no-padding padding-bottom no-margin class="card">
 
-      <ion-row>
-        <ion-col col-10>
-          <ion-item>
+
+    <ion-list>
+
+      <!--<ion-item-group>-->
+      <!--<ion-item-divider color="light" sticky>A</ion-item-divider>-->
+      <!--<ion-item no-lines text-wrap>-->
+        <!--<ion-avatar item-left>-->
+          <!--<img src="https://pbs.twimg.com/profile_images/726955832785571840/8OxhcDxl_400x400.jpg">-->
+        <!--</ion-avatar>-->
+        <!--<p><b>maxlynch</b> started following <b>ionic</b>, <b>angular</b> and 4 others. <ion-note>44s</ion-note></p>-->
+      <!--</ion-item>-->
+      <!--</ion-item-group>-->
+
+      <!--<ion-item-group>-->
+      <!--<ion-item-divider color="light" sticky>B</ion-item-divider>-->
+      <!--<ion-item no-lines text-wrap>-->
+        <!--<ion-avatar item-left>-->
+          <!--<img src="https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg">-->
+        <!--</ion-avatar>-->
+        <!--<p><b>adam_bradley</b> liked 3 posts. <ion-note>6m</ion-note></p>-->
+        <!--<ion-row>-->
+          <!--<ion-col col-2><img src="../../assets/src/girl (1).png"  alt=""></ion-col>-->
+          <!--<ion-col col-2><img src="../../assets/src/girl (1).png"  alt=""></ion-col>-->
+          <!--<ion-col col-2><img src="../../assets/src/girl (1).png"  alt=""></ion-col>-->
+        <!--</ion-row>-->
+      <!--</ion-item>-->
+      <!--</ion-item-group>-->
+
+      <ion-item-group>
+      <ion-item-divider color="light" sticky>C</ion-item-divider>
+      <ion-item no-lines text-wrap>
         <ion-avatar item-left>
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/sarah-avatar.png.jpeg">
+          <img src="../../assets/src/girl (1).png">
         </ion-avatar>
-        <h2 style="font-weight: bold">ashleyosama</h2>
-        <p>Cyprus</p>
-        
+        <ion-row>
+          <ion-col col-10  no-padding no-margin>
+            <p><b>maxlynch</b> entered <ion-note>11m</ion-note></p>
+          </ion-col>
+          <ion-col col-2>
+            <img src="../../assets/src/enter.png" class="post-small-img" alt="">
+          </ion-col>
+        </ion-row>
       </ion-item>
-        </ion-col >
-        <ion-col col-2>
-          <button no-margin no-padding clear color="black" ion-button icon-only style="float: right; top: 15px" (click)="presentPostPopover()">
-            <ion-icon name="more"></ion-icon>
-        </button>
-        </ion-col>
-      </ion-row>
-      
+      <ion-item no-lines text-wrap>
+        <ion-avatar item-left>
+          <img src="../../assets/src/girl (1).png">
+        </ion-avatar>
+        <ion-row>
+          <ion-col col-10  no-padding no-margin>
+            <p><b>maxlynch</b> entered <ion-note>11m</ion-note></p>
+          </ion-col>
+          <ion-col col-2>
+            <img src="../../assets/src/enter.png" class="post-small-img" alt="">
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      </ion-item-group>
 
-      <img src="http://ionicframework.com/dist/preview-app/www/assets/img/advance-card-bttf.png" (tap)="tapPhotoLike($event)">
+      <ion-item-group>
+      <ion-item-divider color="light" sticky>C</ion-item-divider>
+      <ion-item no-lines text-wrap>
+        <ion-avatar item-left>
+          <img src="../../assets/src/girl (1).png">
+        </ion-avatar>
+        <ion-row>
+          <ion-col col-10  no-padding no-margin>
+            <p><b>maxlynch</b> exit <ion-note>11m</ion-note></p>
+          </ion-col>
+          <ion-col col-2>
+            <img src="../../assets/src/exit.png" class="post-small-img" alt="">
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      </ion-item-group>
 
-      <p no-margin no-padding>
-        <button clear ion-button icon-only (click)="likeButton()" class="like-btn">
-          <ion-icon no-padding [name]="like_btn.icon_name" color="{{ like_btn.color }}" class="icon-space"></ion-icon>
-        </button>
-        <button clear ion-button icon-only>
-          <ion-icon no-padding isActive="false" color="black" name="ios-text-outline" class="icon-space" style="font-weight: bold"></ion-icon>
-        </button>
-        <button clear ion-button icon-only>
-          <ion-icon no-padding isActive="false" color="black" name="paper-plane" class="icon-space"></ion-icon>
-        </button>
-        <button no-margin no-padding clear color="black" ion-button icon-only style="float: right">
-          <ion-icon name="ios-bookmark-outline"></ion-icon>
-        </button>
-      </p>
-      <hr>
+      <ion-item-group>
+      <ion-item-divider color="light" sticky>D</ion-item-divider>
+      <ion-item no-lines text-wrap>
+        <ion-avatar item-left>
+          <img src="https://pbs.twimg.com/profile_images/726955832785571840/8OxhcDxl_400x400.jpg">
+        </ion-avatar>
+        <ion-row>
+          <ion-col col-10  no-padding no-margin>
+            <p><b>maxlynch</b> liked <b>adam_bradley</b>'s comment: Typescript <3 <ion-note>1h</ion-note></p>
+          </ion-col>
+          <ion-col col-2>
+            <img src="../../assets/src/girl (1).png" class="post-small-img" alt="">
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      </ion-item-group>
 
-      <ion-card-content>
-        <p class="like-content"><ion-icon name="heart"></ion-icon> 250 likes</p>
-        <p><b>techcrunch</b> Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-      
-        <ion-note style="font-size: 12px">
-          11h ago
-        </ion-note>
-      </ion-card-content>
+    </ion-list>
 
-    </ion-card>
+
+    <!-- Cards -->
+    <!--<ion-card no-padding padding-bottom no-margin class="card">-->
+
+      <!--<ion-row>-->
+        <!--<ion-col col-10>-->
+          <!--<ion-item>-->
+        <!--<ion-avatar item-left>-->
+          <!--<img src="http://ionicframework.com/dist/preview-app/www/assets/img/sarah-avatar.png.jpeg">-->
+        <!--</ion-avatar>-->
+        <!--<h2 style="font-weight: bold">ashleyosama</h2>-->
+        <!--<p>Cyprus</p>-->
+        <!---->
+      <!--</ion-item>-->
+        <!--</ion-col >-->
+        <!--<ion-col col-2>-->
+          <!--<button no-margin no-padding clear color="black" ion-button icon-only style="float: right; top: 15px" (click)="presentPostPopover()">-->
+            <!--<ion-icon name="more"></ion-icon>-->
+        <!--</button>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
+      <!---->
+
+      <!--<img src="http://ionicframework.com/dist/preview-app/www/assets/img/advance-card-bttf.png" (tap)="tapPhotoLike($event)">-->
+
+      <!--<p no-margin no-padding>-->
+        <!--<button clear ion-button icon-only (click)="likeButton()" class="like-btn">-->
+          <!--<ion-icon no-padding [name]="like_btn.icon_name" color="{{ like_btn.color }}" class="icon-space"></ion-icon>-->
+        <!--</button>-->
+        <!--<button clear ion-button icon-only>-->
+          <!--<ion-icon no-padding isActive="false" color="black" name="ios-text-outline" class="icon-space" style="font-weight: bold"></ion-icon>-->
+        <!--</button>-->
+        <!--<button clear ion-button icon-only>-->
+          <!--<ion-icon no-padding isActive="false" color="black" name="paper-plane" class="icon-space"></ion-icon>-->
+        <!--</button>-->
+        <!--<button no-margin no-padding clear color="black" ion-button icon-only style="float: right">-->
+          <!--<ion-icon name="ios-bookmark-outline"></ion-icon>-->
+        <!--</button>-->
+      <!--</p>-->
+      <!--<hr>-->
+
+      <!--<ion-card-content>-->
+        <!--<p class="like-content"><ion-icon name="heart"></ion-icon> 250 likes</p>-->
+        <!--<p><b>techcrunch</b> Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>-->
+      <!---->
+        <!--<ion-note style="font-size: 12px">-->
+          <!--11h ago-->
+        <!--</ion-note>-->
+      <!--</ion-card-content>-->
+
+    <!--</ion-card>-->
 
   </div>
 </ion-content>

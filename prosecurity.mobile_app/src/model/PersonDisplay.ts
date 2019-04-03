@@ -17,6 +17,6 @@ export class PersonDisplay {
     this.username = a.username;
     this.role = a.role;
     // noinspection SuspiciousInstanceOfGuard
-    this.cans = (a.cans instanceof Array) ? a.cans.map(c => c) : [];
+    this.cans = (a.events instanceof Array) ? a.events.map(c => c) : [];
   }
 }
