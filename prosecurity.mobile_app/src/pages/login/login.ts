@@ -63,7 +63,7 @@ export class LoginPage {
   }
 
   goToSignup() {
-    // this.navCtrl.push(SignupPage);
+    this.navCtrl.push('SignupPage');
   }
 
   // Gradient logic from https://codepen.io/quasimondo/pen/lDdrF

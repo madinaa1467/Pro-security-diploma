@@ -22,4 +22,7 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
 
+  goToSignin() {
+    this.navCtrl.pop();
+  }
 }

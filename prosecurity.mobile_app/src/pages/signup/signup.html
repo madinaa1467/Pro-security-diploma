@@ -1,18 +1,39 @@
-<!--
-  Generated template for the SignupPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>signup</ion-title>
+    <ion-title>Signup</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-
+  <div>
+    <span><strong>Please, enter your personal info:</strong></span>
+  </div>
+  <div padding>
+    <form>
+      <ion-item>
+        <ion-input type="text" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="Password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="Confirm password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Surname"></ion-input>
+      </ion-item>
+      <button ion-button block outline color="light" class="login-button">Register</button>
+    </form>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer">
+    <div (click)="goToSignin()">
+      <span><strong>Sign in</strong>.</span>
+    </div>
+  </ion-toolbar>
+</ion-footer>
