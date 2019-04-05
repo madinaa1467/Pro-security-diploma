@@ -25,7 +25,9 @@ export class Auth {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        return this.getPersonDisplay();
+        // return this.getPersonDisplay();
+        this.authenticationState.next(true);
+
       });
     });
   }
@@ -71,6 +73,7 @@ export class Auth {
       .toPromise()
       .then(res => {
         console.log("res:", res);
+        this.authenticationState.next(true);
         return PersonDisplay.of(res)
       });
   }

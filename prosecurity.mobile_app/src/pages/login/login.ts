@@ -41,25 +41,45 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  login() {
-    const loading = this.loadingCtrl.create({
-      duration: 500
-    });
-
-    loading.onDidDismiss(() => {
+  // login() {
+    // const loading = this.loadingCtrl.create({
+    //   duration: 500
+    // });
+    //
+    // loading.onDidDismiss(() => {
       // const alert = this.alertCtrl.create({
         // title: 'Logged in!',
         // subTitle: 'Thanks for logging in.',
         // buttons: ['Dismiss']
       // });
       // alert.present();
-      this.navCtrl.setRoot(TabsPage);
-    });
+    //   this.navCtrl.setRoot(TabsPage);
+    // });
 
+    // loading.present();
+    //
+    // this.auth.login(this.form.getRawValue()).catch(err => {
+    // });
+
+  login() {
+    const loading = this.loadingCtrl.create();
     loading.present();
 
-    this.auth.login(this.form.getRawValue()).catch(err => {
+    this.auth.login(this.form.getRawValue())//{username:Madina, password:Madina123madina, grant_type:password}
+      .then(res => {
+        //loading.onDidDismiss(() => {});
+        loading.dismiss();
+      }).catch(err => {
+
+      loading.dismiss();
+      const alert = this.alertCtrl.create({
+        title: 'Ошибка',
+        message: err.error.error_description,
+        buttons: ['Отклонять']
+      });
+      alert.present();
     });
+
   }
 
   goToSignup() {
