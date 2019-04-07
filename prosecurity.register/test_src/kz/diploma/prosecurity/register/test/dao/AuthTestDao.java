@@ -49,7 +49,7 @@ public interface AuthTestDao {
                     @Param("birth_date") Date birth_date
   );
 
-  @Insert("insert into Child (id, actual, surname, name, patronymic, gender," +
+  @Insert("insert into ChildEvents (id, actual, surname, name, patronymic, gender," +
           "birth_date) " +
           "values (#{id}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
           "#{gender}, #{birth_date} )")

@@ -1,6 +1,6 @@
 package kz.diploma.prosecurity.controller.controller;
 
-import kz.diploma.prosecurity.controller.model.Child;
+import kz.diploma.prosecurity.controller.model.ChildEvents;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.util.Controller;
 import kz.greetgo.depinject.core.Bean;
@@ -19,7 +19,7 @@ public class ChildController implements Controller {
 
   @ToJson
   @OnGet("/listMyChildren")
-  public List<Child> list() {
+  public List<ChildEvents> list() {
     return childRegister.get().listMyChildren();
   }
 

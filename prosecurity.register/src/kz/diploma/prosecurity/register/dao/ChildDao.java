@@ -1,6 +1,6 @@
 package kz.diploma.prosecurity.register.dao;
 
-import kz.diploma.prosecurity.controller.model.Child;
+import kz.diploma.prosecurity.controller.model.ChildEvents;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -21,5 +21,5 @@ public interface ChildDao {
     "     left join cans pc on person_id = id\n" +
     "     where blocked = 0\n" +
     "     order by surname, name")
-  List<Child> listMyChildren();
+  List<ChildEvents> listMyChildren();
 }

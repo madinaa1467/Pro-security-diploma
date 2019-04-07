@@ -70,6 +70,8 @@ public class AuthRegisterImpl implements AuthRegister {
 
     ret.children = authDao.get().loadChildren(personId);
 
+    System.out.println("Return from displayPerson: " + ret);
+
     return ret;
   }
 
