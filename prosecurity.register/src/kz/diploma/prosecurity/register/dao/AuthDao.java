@@ -1,21 +1,21 @@
 package kz.diploma.prosecurity.register.dao;
 
 import kz.diploma.prosecurity.controller.model.PersonDisplay;
-import kz.diploma.prosecurity.controller.model.UserCan;
 import kz.diploma.prosecurity.register.model.PersonLogin;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
-
 public interface AuthDao {
-  @Select("select * from person where username = #{username} and blocked = 0")
+
+  @Select("select p.surname||' '||p.name||' '||p.patronymic as fio, p.username, p.gender, p.birth_date\n" +
+          "from parent as p\n" +
+          "where id = #{parentId}")
+  PersonDisplay loadDisplayPerson(@Param("personId") String parentId);
+
+  @Select("select child from parent_child where parent = #{parentId};")
+  int[] loadChildren(String parentId);
+
+
+  @Select("select * from parent where username = #{username} and actual = 1")
   PersonLogin selectByUsername(@Param("username") String username);
-
-  @Select("select surname||' '||name||' '||patronymic as fio, username" +
-    " from person where id = #{personId}")
-  PersonDisplay loadDisplayPerson(@Param("personId") String personId);
-
-  @Select("select user_can from person_cans where person_id = #{personId}")
-  List<UserCan> loadCans(String personId);
 }

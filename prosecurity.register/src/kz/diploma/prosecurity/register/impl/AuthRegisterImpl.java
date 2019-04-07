@@ -1,18 +1,16 @@
 package kz.diploma.prosecurity.register.impl;
 
-import kz.diploma.prosecurity.register.model.PersonLogin;
-import kz.greetgo.depinject.core.Bean;
-import kz.greetgo.depinject.core.BeanGetter;
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
 import kz.diploma.prosecurity.controller.model.PersonDisplay;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
+import kz.diploma.prosecurity.register.model.PersonLogin;
+import kz.greetgo.depinject.core.Bean;
+import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.security.password.PasswordEncoder;
 import kz.greetgo.security.session.SessionIdentity;
 import kz.greetgo.security.session.SessionService;
-
-import static kz.diploma.prosecurity.controller.util.FilterUtil.skipNulls;
 
 @Bean
 public class AuthRegisterImpl implements AuthRegister {
@@ -70,7 +68,7 @@ public class AuthRegisterImpl implements AuthRegister {
       throw new NullPointerException("No person with id = " + personId);
     }
 
-    ret.cans = skipNulls(authDao.get().loadCans(personId));
+    ret.children = authDao.get().loadChildren(personId);
 
     return ret;
   }
