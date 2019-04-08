@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from "../http.service";
-import {PersonDisplay} from "../../model/PersonDisplay";
+import {ParentDisplay} from "../../model/ParentDisplay";
 import {UserCan} from "../../model/UserCan";
 
 @Injectable({
@@ -11,7 +11,7 @@ export class LoginService {
   public username: string = '';
   public password: string = '';
 
-  public personDisplay: PersonDisplay | null = null;
+  public personDisplay: ParentDisplay | null = null;
 
   public loading = true;
 
@@ -47,7 +47,7 @@ export class LoginService {
   async refresh() {
     this.loading = true;
     try {
-      this.personDisplay = await this.getPersonDisplay();
+      this.personDisplay = await this.getParentDisplay();
       this.loading = false;
     } catch (e) {
       this.http.token = null;
@@ -56,8 +56,8 @@ export class LoginService {
     }
   }
 
-  async getPersonDisplay(): Promise<PersonDisplay> {
-    return this.http.get("/auth/displayPerson").toPromise().then(resp => PersonDisplay.of(resp.body));
+  async getParentDisplay(): Promise<ParentDisplay> {
+    return this.http.get("/auth/displayParent").toPromise().then(resp => ParentDisplay.of(resp.body));
   }
 
   async login() {

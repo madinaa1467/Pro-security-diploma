@@ -1,6 +1,6 @@
 package kz.diploma.prosecurity.controller.register;
 
-import kz.diploma.prosecurity.controller.model.PersonDisplay;
+import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.greetgo.security.session.SessionIdentity;
 
@@ -11,7 +11,7 @@ public interface AuthRegister {
 
   SessionHolder getSession();
 
-  PersonDisplay displayPerson(String personId);
+  ParentDisplay displayParent(String parentId);
 
   void deleteSession(String sessionId);
 }

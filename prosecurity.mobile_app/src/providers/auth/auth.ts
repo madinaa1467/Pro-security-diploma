@@ -69,7 +69,7 @@ export class Auth {
   }
 
   getPersonDisplay(): Promise<PersonDisplay> {
-    return this.api.get('auth/displayPerson')
+    return this.api.get('auth/displayParent')
       .toPromise()
       .then(res => {
         console.log("res:", res);

@@ -1,7 +1,7 @@
 package kz.diploma.prosecurity.register.dao;
 
 import kz.diploma.prosecurity.controller.model.Child;
-import kz.diploma.prosecurity.controller.model.PersonDisplay;
+import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.register.model.PersonLogin;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,7 +13,7 @@ public interface AuthDao {
   @Select("select p.surname||' '||p.name||' '||p.patronymic as fio, p.username\n" +
           "from parent as p\n" +
           "where id = #{parentId}")
-  PersonDisplay loadDisplayPerson(@Param("personId") String parentId);
+  ParentDisplay loadDisplayParent(@Param("parentId") String parentId);
 
   @Select("select pc.child, c.name, c.gender\n" +
           "from parent_child as pc, child as c\n" +

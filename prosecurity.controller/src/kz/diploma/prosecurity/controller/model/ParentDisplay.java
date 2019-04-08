@@ -3,7 +3,7 @@ package kz.diploma.prosecurity.controller.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDisplay {
+public class ParentDisplay {
   public String fio;
   public String username;
   public List<Child> children = new ArrayList<>();;

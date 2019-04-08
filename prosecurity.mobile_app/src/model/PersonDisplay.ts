@@ -1,10 +1,10 @@
 import {UserCan} from "./UserCan";
+import {ChildEvents} from "./ChildEvents";
 
 export class PersonDisplay {
   public fio: string;
   public username: string;
-  public role: string;
-  public cans: UserCan[];
+  public children: ChildEvents[];
 
   public static of(a: any): PersonDisplay {
     const ret = new PersonDisplay();
@@ -15,8 +15,7 @@ export class PersonDisplay {
   assign(a: any) {
     this.fio = a.fio;
     this.username = a.username;
-    this.role = a.role;
     // noinspection SuspiciousInstanceOfGuard
-    this.cans = (a.events instanceof Array) ? a.events.map(c => c) : [];
+    this.children = (a.events instanceof Array) ? a.events.map(c => c) : [];
   }
 }

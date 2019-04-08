@@ -1,13 +1,13 @@
 import {UserCan} from "./UserCan";
 
-export class PersonDisplay {
+export class ParentDisplay {
   public fio: string;
   public username: string;
   public role: string;
   public cans: UserCan[];
 
-  public static of(a: any): PersonDisplay {
-    const ret = new PersonDisplay();
+  public static of(a: any): ParentDisplay {
+    const ret = new ParentDisplay();
     ret.assign(a);
     return ret;
   }

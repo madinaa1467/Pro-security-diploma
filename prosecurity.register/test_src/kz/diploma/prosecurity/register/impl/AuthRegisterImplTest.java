@@ -1,10 +1,10 @@
 package kz.diploma.prosecurity.register.impl;
 
+import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.register.test.dao.AuthTestDao;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
-import kz.diploma.prosecurity.controller.model.PersonDisplay;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.model.UserCan;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
@@ -204,16 +204,16 @@ public class AuthRegisterImplTest extends ParentTestNg {
 
     //
     //
-    PersonDisplay personDisplay = authRegister.get().displayPerson(id);
+    ParentDisplay parentDisplay = authRegister.get().displayParent(id);
     //
     //
 
-    assertThat(personDisplay).isNotNull();
-    assertThat(personDisplay.fio).isEqualTo(surname + ' ' + name + ' ' + patronymic);
-    assertThat(personDisplay.username).isEqualTo(username);
-    assertThat(personDisplay.cans).contains(UserCan.VIEW_ABOUT);
-    assertThat(personDisplay.cans).contains(UserCan.VIEW_USERS);
-    assertThat(personDisplay.cans).hasSize(2);
+    assertThat(parentDisplay).isNotNull();
+    assertThat(parentDisplay.fio).isEqualTo(surname + ' ' + name + ' ' + patronymic);
+    assertThat(parentDisplay.username).isEqualTo(username);
+//    assertThat(parentDisplay.cans).contains(UserCan.VIEW_ABOUT);
+//    assertThat(parentDisplay.cans).contains(UserCan.VIEW_USERS);
+//    assertThat(parentDisplay.cans).hasSize(2);
 
   }
 
@@ -221,7 +221,7 @@ public class AuthRegisterImplTest extends ParentTestNg {
   public void displayPerson_absent() {
     //
     //
-    authRegister.get().displayPerson(RND.str(10));
+    authRegister.get().displayParent(RND.str(10));
     //
     //
   }
