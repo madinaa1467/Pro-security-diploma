@@ -14,6 +14,6 @@ public class ChildRegisterImpl implements ChildRegister {
 
   @Override
   public List<ChildEvents> listMyChildren() {
-    return childDao.get().listMyChildren();
+    return childDao.get().listMyChildrenEvents();
   }
 }
