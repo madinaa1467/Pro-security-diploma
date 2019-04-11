@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { App, NavController, Content, PopoverController } from 'ionic-angular';
 import { PostPopover } from './post-popover';
 import { Messages } from '../messages/messages';
+import {HomeService} from "./home.service";
 
 @Component({
   selector: 'page-home',
@@ -52,7 +53,8 @@ export class Home {
     
   ];
 
-  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App) {
+  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
+              public homeService: HomeService) {
 
   }
 
@@ -97,6 +99,10 @@ export class Home {
 
   scrollToTop() {
     this.content.scrollToTop();
+  }
+
+  ngOnInit() {
+    this.homeService.load();
   }
 
 }
