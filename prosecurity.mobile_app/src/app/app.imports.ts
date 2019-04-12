@@ -6,6 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 // Ionic native providers
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
+import {HomeService} from "../pages/home/home.service";
 
 // Directives
 
@@ -23,6 +24,7 @@ export const PROVIDERS = [
   AppLoader,
   AlertService,
   DropdownService,
+  HomeService,
 
   // Ionic native specific providers
   StatusBar,

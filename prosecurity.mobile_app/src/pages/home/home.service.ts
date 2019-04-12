@@ -1,24 +1,40 @@
 import {Injectable} from '@angular/core';
 import {Api} from "../../providers";
+import {ChildEvents} from "../../model/ChildEvents";
+import {TOKEN_KEY} from "../../providers/auth/auth.metadata";
 // import {HttpService} from "../http.service";
 // import {PersonRecord} from "../../model/PersonRecord";
 
-// @Injectable({
-//   providedIn: 'root'
-// })
+@Injectable()
 export class HomeService {
   constructor(private http: Api) {}
 
   public loading: boolean = false;
 
-  public list: PersonRecord[] = [];
+  public list: ChildEvents[] = [];
 
-  loadEvents(): Promise<PersonRecord[]> {
+  loadEvents(): Promise<ChildEvents[]> {
     return this.http.get("/person/list")
       .toPromise()
-      .then(resp => resp.body as Array<any>)
-      .then(body => body.map(r => PersonRecord.create(r)));
+      .then(resp =>  {
+
+        if(!resp) return resp;
+
+        return (<any> resp).map((r) =>
+        ChildEvents.create(r)
+      );
+      });
   }
+
+  ///return this.api.post('auth/login', credentials, {
+  //       responseType: 'text'
+  //     }).toPromise().then(res => {
+  //       return this.storage.set(TOKEN_KEY, res).then(() => {
+  //         // return this.getPersonDisplay();
+  //         this.authenticationState.next(true);
+  //
+  //       });
+  //     });
 
   async load() {
     try {

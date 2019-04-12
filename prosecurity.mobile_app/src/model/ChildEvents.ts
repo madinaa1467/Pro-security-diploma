@@ -3,7 +3,7 @@ export class ChildEvents {
   public fio: string;
   public events: Event[];
 
-  public static of(a: any): ChildEvents {
+  public static create(a: any): ChildEvents {
     const ret = new ChildEvents();
     ret.assign(a);
     return ret;
