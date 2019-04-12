@@ -5,5 +5,6 @@ import kz.diploma.prosecurity.controller.model.ChildEvents;
 import java.util.List;
 
 public interface ChildRegister {
-  List<ChildEvents> listMyChildren();
+  List<ChildEvents> listAllEvents(long parentId);
+  ChildEvents listEvents(long childId);
 }

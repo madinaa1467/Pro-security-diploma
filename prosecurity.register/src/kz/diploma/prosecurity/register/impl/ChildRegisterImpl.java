@@ -13,7 +13,10 @@ public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ChildDao> childDao;
 
   @Override
-  public List<ChildEvents> listMyChildren() {
-    return childDao.get().listMyChildrenEvents();
+  public List<ChildEvents> listAllEvents(long parentId) {
+    return childDao.get().listAllEvents(parentId);
+  }
+  public ChildEvents listEvents(long childId) {
+    return childDao.get().listEvents(childId);
   }
 }

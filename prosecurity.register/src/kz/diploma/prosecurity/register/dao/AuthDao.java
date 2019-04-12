@@ -10,12 +10,12 @@ import java.util.List;
 
 public interface AuthDao {
 
-  @Select("select p.surname||' '||p.name||' '||p.patronymic as fio, p.username\n" +
+  @Select("select p.id, p.surname||' '||p.name||' '||p.patronymic as fio, p.username\n" +
           "from parent as p\n" +
           "where id = #{parentId}")
   ParentDisplay loadDisplayParent(@Param("parentId") String parentId);
 
-  @Select("select pc.child, c.name, c.gender\n" +
+  @Select("select pc.id, pc.child, c.name, c.gender\n" +
           "from parent_child as pc, child as c\n" +
           "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
   List<Child> loadChildren(String parentId);

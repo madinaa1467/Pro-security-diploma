@@ -2,6 +2,7 @@ import {UserCan} from "./UserCan";
 import {ChildEvents} from "./ChildEvents";
 
 export class PersonDisplay {
+  public id: number;
   public fio: string;
   public username: string;
   public children: ChildEvents[];

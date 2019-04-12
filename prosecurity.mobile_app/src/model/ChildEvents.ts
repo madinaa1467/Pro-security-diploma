@@ -1,4 +1,5 @@
 export class ChildEvents {
+  public id: number;
   public fio: string;
   public events: Event[];
 

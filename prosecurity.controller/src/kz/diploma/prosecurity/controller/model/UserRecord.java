@@ -3,7 +3,7 @@ package kz.diploma.prosecurity.controller.model;
 
 
 public class UserRecord {
-  public String id;
+  public long id;
   public String fio;
   public String accountName;
   public String birthDate;

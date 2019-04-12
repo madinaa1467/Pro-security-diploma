@@ -21,10 +21,10 @@ public interface ChildDao {
     "     left join cans pc on person_id = id\n" +
     "     where blocked = 0\n" +
     "     order by surname, name")
-  List<ChildEvents> listMyChildrenEvents();
+  List<ChildEvents> listAllEvents(long parentId);
 
-  @Select("select pc.child, c.name, c.gender\\n\" +\n" +
-    "          \"from parent_child as pc, child as c\\n\" +\n" +
-    "          \"where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
-  ChildEvents listMyChildEvent(String childID);
+  @Select("select  c.id, c.surname||' '||c.name||' '||c.patronymic as fio, e.id, e.action, e.date\n" +
+          "from child as c, event as e\n" +
+          "where c.id = #{childId} AND c.actual = 1 AND e.actual = 1;")
+  ChildEvents listEvents(long childId);
 }

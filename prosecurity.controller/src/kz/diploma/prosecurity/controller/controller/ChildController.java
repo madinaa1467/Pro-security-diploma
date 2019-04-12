@@ -5,6 +5,7 @@ import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.util.Controller;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
+import kz.greetgo.mvc.annotations.Par;
 import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
@@ -18,9 +19,15 @@ public class ChildController implements Controller {
   public BeanGetter<ChildRegister> childRegister;
 
   @ToJson
-  @OnGet("/listMyChildren")
-  public List<ChildEvents> list() {
-    return childRegister.get().listMyChildren();
+  @OnGet("/listAllEvents")
+  public List<ChildEvents> listAllEvents(@Par("parentId") long parentId) {
+    return childRegister.get().listAllEvents(parentId);
+  }
+
+  @ToJson
+  @OnGet("/listEvents")
+  public ChildEvents listEvents(@Par("childId") long childId) {
+    return childRegister.get().listEvents(childId);
   }
 
 }
