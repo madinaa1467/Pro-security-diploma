@@ -1,6 +1,7 @@
 package kz.diploma.prosecurity.register.dao;
 
 import kz.diploma.prosecurity.controller.model.ChildEvents;
+import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.EventFilter;
 import org.apache.ibatis.annotations.*;
 
@@ -11,22 +12,23 @@ public interface ChildDao {
   @Results({
           @Result(property = "id", column = "id"),
           @Result(property = "fio", column = "fio"),
-          @Result(property = "events", javaType = List.class, column = "{childId = id}", many = @Many(select = "getEventsByChild"))
+//          @Result(property = "events", javaType = List.class, column = "{childId = id}", many = @Many(select = "getEventsByChild"))
   })
   @Select("select  c.id,\n" +
           "        c.name as fio\n" +
           "from parent_child as pc, child as c\n" +
           "where c.actual = 1  AND pc.child = c.id AND pc.actual = 1 AND pc.parent = #{parentId}\n" +
           "order by c.surname, c.name;")
-  List<ChildEvents> listAllEvents(@Param("parentId") long parentId, @Param("filter") EventFilter filter);
+  List<ChildEvents> listAllChildren(@Param("parentId") long parentId);
 
-
-  @Select("select id, action, to_char(date, 'YYYY-MM-DD HH24:MI:SS')\n" +
+  @Select("select id, date, action\n" +
           "from  event\n" +
-          "where  date BETWEEN '2007-02-16' AND '2007-02-16 23:59:59' AND child = #{filter.childId}\n" +
+//          "where  date BETWEEN '2007-02-16' AND '2007-02-16 23:59:59' AND child = #{filter.childId}\n" +
+          "where  date BETWEEN #{filter.startDate} AND #{filter.endDate} AND child = #{filter.childId}\n" +
           "order by date desc\n" +
-          "limit 10")
-  List<ChildEvents> getEventsByChild(@Param("childId") long childId, @Param("filter") EventFilter filter);
+          "limit #{filter.limit}\n" +
+          "offset #{filter.offset}")
+  List<Event> getEventsByChild(@Param("filter") EventFilter filter);
 
 
 

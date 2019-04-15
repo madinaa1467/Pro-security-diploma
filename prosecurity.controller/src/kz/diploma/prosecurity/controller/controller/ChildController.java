@@ -1,7 +1,9 @@
 package kz.diploma.prosecurity.controller.controller;
 
 import kz.diploma.prosecurity.controller.model.ChildEvents;
+import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
+import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
@@ -19,13 +21,18 @@ public class ChildController implements Controller {
   public BeanGetter<ChildRegister> childRegister;
 
   @ToJson
+  @PublicAccess
   @OnGet("/listAllEvents")
-  public List<ChildEvents> listAllEvents(@Par("parentId") long parentId) {
-      throw new UnsupportedOperationException();
-//    return childRegister.get().listAllEvents(parentId, null);
+  public List<ChildEvents> listAllEvents(@Par("parentId") Integer parentId, @Par("filter") EventFilter filter) {
+//      throw new UnsupportedOperationException();
+    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
+    System.out.println("parentId: "+ parentId);
+    System.out.println("filter: "+ filter);
+    return childRegister.get().listAllEvents(parentId, filter);
   }
 
   @ToJson
+  @PublicAccess
   @OnGet("/listEvents")
   public ChildEvents listEvents(@Par("childId") long childId) {
     return childRegister.get().listEvents(childId);

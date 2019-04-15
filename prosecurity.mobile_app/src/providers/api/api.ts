@@ -16,36 +16,48 @@ export class Api {
 
   get(endpoint: string, params?: any, reqOpts?: any) {
     let defReqOpts = {
-      withCredentials: true
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }),
+      withCredentials: true,
+      params : new HttpParams()
     };
 
-    if (reqOpts) {
-      for (let k in reqOpts) {
-        defReqOpts[k] = reqOpts[k];
-      }
-    }
+    // if (reqOpts) {
+    //   for (let k in reqOpts) {
+    //     defReqOpts[k] = reqOpts[k];
+    //   }
+    // }
+    // else {
+    // if (!reqOpts) {
+    //   reqOpts = {
+    //     params : new HttpParams()
+    //   };
+    // }
 
     // Support easy query params for GET requests
     if (params) {
-      reqOpts.params = new HttpParams();
+      defReqOpts.params = new HttpParams();
       for (let k in params) {
         let value = params[k];
-        if (!isUndefined(value)) reqOpts.params = reqOpts.params.set(k, value);
+        if (!isUndefined(value))
+          defReqOpts.params = defReqOpts.params.set(k, value as string);
       }
     }
+
 
     return this.http.get(this.url(endpoint), defReqOpts);
   }
 
   post(endpoint: string, body: any, reqOpts?: any) {
     let defReqOpts = {
-      headers : new HttpHeaders({
+      headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       }),
       withCredentials: true
     };
 
-    if(reqOpts){
+    if (reqOpts) {
       for (let k in reqOpts) {
         defReqOpts[k] = reqOpts[k];
       }

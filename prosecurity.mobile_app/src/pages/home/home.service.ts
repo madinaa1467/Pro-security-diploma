@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Api} from "../../providers";
 import {ChildEvents} from "../../model/ChildEvents";
 import {TOKEN_KEY} from "../../providers/auth/auth.metadata";
+import {EventFilter} from "../../model/EventFilter";
 // import {HttpService} from "../http.service";
 // import {PersonRecord} from "../../model/PersonRecord";
 
@@ -12,11 +13,20 @@ export class HomeService {
   public loading: boolean = false;
 
   public list: ChildEvents[] = [];
+  public filter: EventFilter = new EventFilter();
+
 
   loadEvents(): Promise<ChildEvents[]> {
-    return this.http.get("/person/list")
+    this.filter.limit = 5;
+    this.filter.startDate = new Date("2006-01-26");
+    this.filter.endDate = new Date();
+    let s = JSON.stringify(this.filter);
+
+    return this.http.get("child/listAllEvents",
+      {parentId: 1, filter: s})
       .toPromise()
       .then(resp =>  {
+        console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:', resp);
 
         if(!resp) return resp;
 
@@ -26,18 +36,11 @@ export class HomeService {
       });
   }
 
-  ///return this.api.post('auth/login', credentials, {
-  //       responseType: 'text'
-  //     }).toPromise().then(res => {
-  //       return this.storage.set(TOKEN_KEY, res).then(() => {
-  //         // return this.getPersonDisplay();
-  //         this.authenticationState.next(true);
-  //
-  //       });
-  //     });
-
   async load() {
+
     try {
+      console.log('Looooooooooooooooooooooooooooad:');
+
       this.loading = true;
       this.list = await this.loadEvents();
       this.loading = false;

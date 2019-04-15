@@ -1,9 +1,9 @@
 package kz.diploma.prosecurity.controller.model;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 public class Event {
   public long id;
-  public Data date;
+  public Date date;
   public String action;
 }
