@@ -7,5 +7,5 @@ public class EventFilter {
   public Date endDate;
   public int offset;
   public int limit;
-  public int childId;
+  public long childId;
 }

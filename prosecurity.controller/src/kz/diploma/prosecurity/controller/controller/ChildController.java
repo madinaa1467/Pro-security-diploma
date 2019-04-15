@@ -21,7 +21,8 @@ public class ChildController implements Controller {
   @ToJson
   @OnGet("/listAllEvents")
   public List<ChildEvents> listAllEvents(@Par("parentId") long parentId) {
-    return childRegister.get().listAllEvents(parentId);
+      throw new UnsupportedOperationException();
+//    return childRegister.get().listAllEvents(parentId, null);
   }
 
   @ToJson

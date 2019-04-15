@@ -1,10 +1,11 @@
 package kz.diploma.prosecurity.controller.register;
 
 import kz.diploma.prosecurity.controller.model.ChildEvents;
+import kz.diploma.prosecurity.controller.model.EventFilter;
 
 import java.util.List;
 
 public interface ChildRegister {
-  List<ChildEvents> listAllEvents(long parentId);
+  List<ChildEvents> listAllEvents(long parentId, EventFilter eventFilter);
   ChildEvents listEvents(long childId);
 }
