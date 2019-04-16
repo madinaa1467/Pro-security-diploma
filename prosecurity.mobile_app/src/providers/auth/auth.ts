@@ -24,6 +24,7 @@ export class Auth {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
+        console.log("Response from auth/login:  ", res);
         this.storage.set(USERNAME, credentials.username);
         this.accountInfo = AccountInfo.create(this.loadAccountInfo(credentials.username));
         this.personDisplay= PersonDisplay.create(this.getPersonDisplay(credentials.username));
@@ -59,7 +60,8 @@ export class Auth {
     console.log('Call auth/accountInfo username:', username);
     return this.api.get('auth/accountInfo', {username: username})
       .toPromise().then(res => {
-      this.accountInfo = AccountInfo.create(res);
+        console.log("Response from auth/accountInfo:  ", res);
+        this.accountInfo = AccountInfo.create(res);
       this.authenticationState.next(true);
       return this.accountInfo;
     });
@@ -73,7 +75,7 @@ export class Auth {
     console.log('Call auth/displayParent username: ', username);
     return this.api.get('auth/displayParent', {username: username})
       .toPromise().then(res => {
-        console.log("res from displayParent:  ", res);
+        console.log("Response from auth/displayParent:  ", res);
         // this.authenticationState.next(true);
         return PersonDisplay.create(res)
       });

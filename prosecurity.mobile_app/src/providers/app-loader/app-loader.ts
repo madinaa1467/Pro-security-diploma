@@ -12,7 +12,7 @@ export class AppLoader {
   private accountInfo: AccountInfo;
 
   initApp(): Promise<any> {
-    //todo should send token
+    // todo should send token
     return this.auth.authenticated().then(res => {
       if (res) {
         this.storage.get(USERNAME).then((val) => {
