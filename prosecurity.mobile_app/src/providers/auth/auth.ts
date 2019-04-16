@@ -13,6 +13,7 @@ export class Auth {
 
   private _userInfo: UserInfo;
   private _accountInfo: AccountInfo;
+  private parentInfo: PersonDisplay;
 
   authenticationState = new BehaviorSubject(false);
 
@@ -25,7 +26,8 @@ export class Auth {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        // return this.getPersonDisplay();
+        this.storage.set('username', credentials.username);
+        this.parentInfo= PersonDisplay.create(this.getPersonDisplay(credentials.username));
         this.authenticationState.next(true);
 
       });
@@ -68,13 +70,13 @@ export class Auth {
     return this._accountInfo;
   }
 
-  getPersonDisplay(): Promise<PersonDisplay> {
-    return this.api.get('auth/displayParent')
+  getPersonDisplay(username: string): Promise<PersonDisplay> {
+    return this.api.get('auth/displayParent', {username: username})
       .toPromise()
       .then(res => {
-        console.log("res:", res);
+        console.log("reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees:  ", res);
         this.authenticationState.next(true);
-        return PersonDisplay.of(res)
+        return PersonDisplay.create(res)
       });
   }
 

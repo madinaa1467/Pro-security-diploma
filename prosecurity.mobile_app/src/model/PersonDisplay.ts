@@ -7,7 +7,7 @@ export class PersonDisplay {
   public username: string;
   public children: ChildEvents[];
 
-  public static of(a: any): PersonDisplay {
+  public static create(a: any): PersonDisplay {
     const ret = new PersonDisplay();
     ret.assign(a);
     return ret;

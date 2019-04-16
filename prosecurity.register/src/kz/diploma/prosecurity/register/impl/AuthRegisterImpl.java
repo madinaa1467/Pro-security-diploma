@@ -61,14 +61,14 @@ public class AuthRegisterImpl implements AuthRegister {
   }
 
   @Override
-  public ParentDisplay displayParent(String parentId) {
-    ParentDisplay ret = authDao.get().loadDisplayParent(parentId);
+  public ParentDisplay displayParent(String username) {
+    ParentDisplay ret = authDao.get().loadDisplayParent(username);
 
     if (ret == null) {
-      throw new NullPointerException("No person with id = " + parentId);
+      throw new NullPointerException("No person with username = " + username);
     }
 
-    ret.children = authDao.get().loadChildren(parentId);
+    ret.children = authDao.get().loadChildren(ret.id);
 
     System.out.println("Return from displayParent: " + ret);
 

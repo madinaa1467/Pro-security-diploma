@@ -54,8 +54,8 @@ public class AuthController implements Controller {
 
   @ToJson
   @OnGet("/displayParent")
-  public ParentDisplay displayParent(@ParSession("parentId") String parentId) {
-    return authRegister.get().displayParent(parentId);
+  public ParentDisplay displayParent(@Par("username") String username) {
+    return authRegister.get().displayParent(username);
   }
 
   @AsIs

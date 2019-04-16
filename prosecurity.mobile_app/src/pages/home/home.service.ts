@@ -20,10 +20,9 @@ export class HomeService {
     this.filter.limit = 5;
     this.filter.startDate = new Date("2006-01-26");
     this.filter.endDate = new Date();
-    let s = JSON.stringify(this.filter);
 
     return this.http.get("child/listAllEvents",
-      {parentId: 1, filter: s})
+      {parentId: 1, filter: JSON.stringify(this.filter)})
       .toPromise()
       .then(resp =>  {
         console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:', resp);

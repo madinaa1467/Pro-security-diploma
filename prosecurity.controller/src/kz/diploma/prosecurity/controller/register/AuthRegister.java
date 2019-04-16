@@ -11,7 +11,7 @@ public interface AuthRegister {
 
   SessionHolder getSession();
 
-  ParentDisplay displayParent(String parentId);
+  ParentDisplay displayParent(String username);
 
   void deleteSession(String sessionId);
 }
