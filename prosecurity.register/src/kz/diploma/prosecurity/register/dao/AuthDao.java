@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.register.dao;
 
+import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.Child;
 import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.register.model.PersonLogin;
@@ -14,6 +15,11 @@ public interface AuthDao {
           "from parent as p\n" +
           "where username = #{username}")
   ParentDisplay loadDisplayParent(@Param("username") String username);
+
+  @Select("select p.id, p.surname||' '||p.name||' '||p.patronymic as fio, p.username\n" +
+          "from parent as p\n" +
+          "where username = #{username}")
+  AccountInfo loadAccountInfo(@Param("username") String username);
 
   @Select("select pc.id, pc.child, c.name, c.gender\n" +
           "from parent_child as pc, child as c\n" +

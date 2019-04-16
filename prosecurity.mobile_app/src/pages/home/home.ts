@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { App, NavController, Content, PopoverController } from 'ionic-angular';
 import { PostPopover } from './post-popover';
 import { Messages } from '../messages/messages';
-import {HomeService} from "./home.service";
+import {ChildService} from "../../providers/services/child.service";
 
 @Component({
   selector: 'page-home',
@@ -50,11 +50,11 @@ export class Home {
       user_name: 'linus_torvalds',
       path: ''
     }
-    
+
   ];
 
   constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
-              public homeService: HomeService) {
+              public homeService: ChildService) {
 
   }
 
@@ -89,12 +89,12 @@ export class Home {
   swipePage(event) {
     if(event.direction === 1) { // Swipe Left
       console.log("Swap Camera");
-    } 
+    }
 
     if(event.direction === 2) { // Swipe Right
       this.goMessages();
     }
-    
+
   }
 
   scrollToTop() {

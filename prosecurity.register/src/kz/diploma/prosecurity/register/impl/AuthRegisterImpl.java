@@ -1,6 +1,7 @@
 package kz.diploma.prosecurity.register.impl;
 
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
+import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
@@ -62,16 +63,24 @@ public class AuthRegisterImpl implements AuthRegister {
 
   @Override
   public ParentDisplay displayParent(String username) {
+    //todo delete futrther not neened parameter from parentDisplay
     ParentDisplay ret = authDao.get().loadDisplayParent(username);
 
     if (ret == null) {
       throw new NullPointerException("No person with username = " + username);
     }
-
     ret.children = authDao.get().loadChildren(ret.id);
-
     System.out.println("Return from displayParent: " + ret);
+    return ret;
+  }
 
+  @Override
+  public AccountInfo accountInfo(String username) {
+    AccountInfo ret = authDao.get().loadAccountInfo(username);
+
+    if (ret == null) {
+      throw new NullPointerException("No person with username = " + username);
+    }
     return ret;
   }
 

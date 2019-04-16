@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.controller.controller;
 
+import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
@@ -56,6 +57,12 @@ public class AuthController implements Controller {
   @OnGet("/displayParent")
   public ParentDisplay displayParent(@Par("username") String username) {
     return authRegister.get().displayParent(username);
+  }
+
+  @ToJson
+  @OnGet("/accountInfo")
+  public AccountInfo accountInfo(@Par("username") String username) {
+    return authRegister.get().accountInfo(username);
   }
 
   @AsIs

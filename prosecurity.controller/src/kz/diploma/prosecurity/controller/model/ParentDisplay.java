@@ -7,8 +7,6 @@ public class ParentDisplay {
   public long id;
   public String fio;
   public String username;
-  public List<Child> children = new ArrayList<>();;
-
-  //The following code would be not removed after regenerating
-  ///LEAVE_FURTHER
+  public List<Child> children = new ArrayList<>();
+  //todo change structure
 }

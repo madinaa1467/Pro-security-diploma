@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Api} from "..";
 import {Storage} from "@ionic/storage";
-import {TOKEN_KEY} from "./auth.metadata";
+import {TOKEN_KEY, USERNAME} from "./auth.metadata";
 import {BehaviorSubject} from "rxjs";
-import {UserInfo} from "../../model/auth/user-info";
-import {AccountInfo} from "../../model/auth/account-info";
 import {PersonDisplay} from "../../model/PersonDisplay";
+import {AccountInfo} from "../../model/auth/account-info";
 
 
 @Injectable()
 export class Auth {
 
-  private _userInfo: UserInfo;
-  private _accountInfo: AccountInfo;
-  private parentInfo: PersonDisplay;
+  private accountInfo: AccountInfo;
+  private personDisplay: PersonDisplay;
 
   authenticationState = new BehaviorSubject(false);
 
@@ -21,22 +19,22 @@ export class Auth {
   }
 
   login(credentials) {
-    console.log("credentials:", credentials);
+    console.log('Call auth/login credentials: ', credentials);
     return this.api.post('auth/login', credentials, {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        this.storage.set('username', credentials.username);
-        this.parentInfo= PersonDisplay.create(this.getPersonDisplay(credentials.username));
-        this.authenticationState.next(true);
-
+        this.storage.set(USERNAME, credentials.username);
+        this.accountInfo = AccountInfo.create(this.loadAccountInfo(credentials.username));
+        this.personDisplay= PersonDisplay.create(this.getPersonDisplay(credentials.username));
+        // this.authenticationState.next(true);
       });
     });
   }
 
   logout() {
     this.storage.remove(TOKEN_KEY).then(res => {
-      this._userInfo = null;
+      this.accountInfo = null;
       this.authenticationState.next(false);
     });
   }
@@ -57,25 +55,26 @@ export class Auth {
     return this.storage.get(TOKEN_KEY);
   }
 
-  loadUserInfo() {
-    return this.api.get('userInfo').toPromise().then(res => {
-      this._userInfo = UserInfo.create(res);
-      this._accountInfo = AccountInfo.create(this._userInfo);
+  loadAccountInfo(username: string) {
+    console.log('Call auth/accountInfo username:', username);
+    return this.api.get('auth/accountInfo', {username: username})
+      .toPromise().then(res => {
+      this.accountInfo = AccountInfo.create(res);
       this.authenticationState.next(true);
-      return this._userInfo;
+      return this.accountInfo;
     });
   }
 
-  get accountInfo(): AccountInfo {
-    return this._accountInfo;
+  getAccountInfo(): AccountInfo {
+    return this.accountInfo;
   }
 
   getPersonDisplay(username: string): Promise<PersonDisplay> {
+    console.log('Call auth/displayParent username: ', username);
     return this.api.get('auth/displayParent', {username: username})
-      .toPromise()
-      .then(res => {
-        console.log("reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees:  ", res);
-        this.authenticationState.next(true);
+      .toPromise().then(res => {
+        console.log("res from displayParent:  ", res);
+        // this.authenticationState.next(true);
         return PersonDisplay.create(res)
       });
   }
