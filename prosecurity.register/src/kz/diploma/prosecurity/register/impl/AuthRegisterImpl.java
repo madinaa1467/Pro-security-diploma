@@ -2,7 +2,6 @@ package kz.diploma.prosecurity.register.impl;
 
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
 import kz.diploma.prosecurity.controller.model.AccountInfo;
-import kz.diploma.prosecurity.controller.model.ParentDisplay;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
@@ -17,10 +16,9 @@ import kz.greetgo.security.session.SessionService;
 public class AuthRegisterImpl implements AuthRegister {
 
   public BeanGetter<AuthDao> authDao;
-
   public BeanGetter<PasswordEncoder> passwordEncoder;
-
   public BeanGetter<SessionService> sessionService;
+  private final ThreadLocal<SessionHolder> sessionDot = new ThreadLocal<>();
 
   @Override
   public SessionIdentity login(String username, String password) {
@@ -29,30 +27,22 @@ public class AuthRegisterImpl implements AuthRegister {
     if (personLogin == null) {
       throw new IllegalLoginOrPassword();
     }
-
     if (!passwordEncoder.get().verify(password, personLogin.encodedPassword)) {
       throw new IllegalLoginOrPassword();
     }
-
     SessionHolder sessionHolder = new SessionHolder(personLogin.id, null);
-
     return sessionService.get().createSession(sessionHolder);
   }
-
-  private final ThreadLocal<SessionHolder> sessionDot = new ThreadLocal<>();
 
   @Override
   public void resetThreadLocalAndVerifySession(String sessionId, String token) {
     sessionDot.set(null);
-
     if (!sessionService.get().verifyId(sessionId)) {
       return;
     }
-
     if (!sessionService.get().verifyToken(sessionId, token)) {
       return;
     }
-
     sessionDot.set(sessionService.get().getSessionData(sessionId));
   }
 
@@ -61,23 +51,10 @@ public class AuthRegisterImpl implements AuthRegister {
     return sessionDot.get();
   }
 
-  @Override
-  public ParentDisplay displayParent(String username) {
-    //todo delete futrther not neened parameter from parentDisplay
-    ParentDisplay ret = authDao.get().loadDisplayParent(username);
-
-    if (ret == null) {
-      throw new NullPointerException("No person with username = " + username);
-    }
-    ret.children = authDao.get().loadChildren(ret.id);
-    System.out.println("Return from displayParent: " + ret);
-    return ret;
-  }
 
   @Override
   public AccountInfo accountInfo(String username) {
     AccountInfo ret = authDao.get().loadAccountInfo(username);
-
     if (ret == null) {
       throw new NullPointerException("No person with username = " + username);
     }

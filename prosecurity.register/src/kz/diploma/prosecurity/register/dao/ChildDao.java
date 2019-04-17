@@ -1,8 +1,6 @@
 package kz.diploma.prosecurity.register.dao;
 
-import kz.diploma.prosecurity.controller.model.ChildEvents;
-import kz.diploma.prosecurity.controller.model.Event;
-import kz.diploma.prosecurity.controller.model.EventFilter;
+import kz.diploma.prosecurity.controller.model.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -51,4 +49,20 @@ public interface ChildDao {
           "        left join events e on e.child = c.id\n" +
           "where c.actual = 1  AND c.id = #{childId};")
   ChildEvents listEvents(@Param("childId") long childId);
+
+
+  @Select("select pc.id, pc.child, c.name, c.gender\n" +
+    "from parent_child as pc, child as c\n" +
+    "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
+  List<Child> loadChildren(long parentId);
+
+  @Select("select p.id, p.surname||' '||p.name||' '||p.patronymic as fio, p.username\n" +
+    "from parent as p\n" +
+    "where username = #{username}")
+  ParentChildList loadDisplayParent(@Param("username") String username);
+
+  @Select("select p.id\n" +
+    "from parent as p\n" +
+    "where username = #{username}")
+  int getParentIdByUserName(@Param("username") String username);
 }

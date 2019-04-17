@@ -1,14 +1,14 @@
 import {UserCan} from "./UserCan";
 import {ChildEvents} from "./ChildEvents";
 
-export class PersonDisplay {
+export class ParentChildList {
   public id: number;
   public fio: string;
   public username: string;
   public children: ChildEvents[];
 
-  public static create(a: any): PersonDisplay {
-    const ret = new PersonDisplay();
+  public static create(a: any): ParentChildList {
+    const ret = new ParentChildList();
     ret.assign(a);
     return ret;
   }

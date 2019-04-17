@@ -3,7 +3,6 @@ import {Api} from "..";
 import {Storage} from "@ionic/storage";
 import {TOKEN_KEY, USERNAME} from "./auth.metadata";
 import {BehaviorSubject} from "rxjs";
-import {PersonDisplay} from "../../model/PersonDisplay";
 import {AccountInfo} from "../../model/auth/account-info";
 
 
@@ -11,7 +10,6 @@ import {AccountInfo} from "../../model/auth/account-info";
 export class Auth {
 
   private accountInfo: AccountInfo;
-  private personDisplay: PersonDisplay;
 
   authenticationState = new BehaviorSubject(false);
 
@@ -27,7 +25,6 @@ export class Auth {
         console.log("Response from auth/login:  ", res);
         this.storage.set(USERNAME, credentials.username);
         this.accountInfo = AccountInfo.create(this.loadAccountInfo(credentials.username));
-        this.personDisplay= PersonDisplay.create(this.getPersonDisplay(credentials.username));
         // this.authenticationState.next(true);
       });
     });
@@ -69,16 +66,6 @@ export class Auth {
 
   getAccountInfo(): AccountInfo {
     return this.accountInfo;
-  }
-
-  getPersonDisplay(username: string): Promise<PersonDisplay> {
-    console.log('Call auth/displayParent username: ', username);
-    return this.api.get('auth/displayParent', {username: username})
-      .toPromise().then(res => {
-        console.log("Response from auth/displayParent:  ", res);
-        // this.authenticationState.next(true);
-        return PersonDisplay.create(res)
-      });
   }
 
 
