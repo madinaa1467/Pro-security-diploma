@@ -6,8 +6,8 @@ export class Child {
   public gender: string;
   public img: string;
 
-  public static create(a: any): ChildEvents {
-    const ret = new ChildEvents();
+  public static create(a: any): Child {
+    const ret = new Child();
     ret.assign(a);
     return ret;
   }
