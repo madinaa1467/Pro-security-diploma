@@ -1,5 +1,12 @@
 package kz.diploma.prosecurity.register.dao;
 
+import kz.diploma.prosecurity.controller.model.Child;
+import kz.diploma.prosecurity.controller.model.ChildEvent;
+import kz.diploma.prosecurity.controller.model.Event;
+
+import java.util.Collections;
+import java.util.List;
+
 public class TESTTESTTEST {
     /*
    insert into child(id, surname, name, patronymic, gender, birth_date, actual)
@@ -161,4 +168,23 @@ order by date desc
 limit 10
 
      */
+
+
+    //list sort array List by ChildEvent ////////////// https://dev.to/codebyamir/sort-a-list-of-objects-by-field-in-java-3coj
+//    List<Child> children = childDao.get().loadChildren(parentId);
+////    children.forEach((child) -> {
+////      filter.childId = child.id;
+////      childDao.get().getEventsByChild(filter).forEach((event) -> {
+////        myChildrenEventList.add(new ChildEvent(event.id, event.date, event.action, child.id, child.fio, child.img));
+////      });
+////    });
+//    for (int i = 0; i < children.size(); i++) {
+//    Child child = children.get(i);
+//    filter.childId = child.id;
+//    List<Event> events = childDao.get().getEventsByChild(filter);
+//    events.forEach((event) -> {
+//      myChildrenEventList.add(new ChildEvent(event.id, event.date, event.action, child.id, child.fio, child.img));
+//    });
+//  }
+//    Collections.sort(myChildrenEventList);
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Api} from "../index";
-import {ChildEvents} from "../../model/ChildEvents";
+import {ChildEventList} from "../../model/ChildEventList";
 import {EventFilter} from "../../model/EventFilter";
 import {USERNAME} from "../auth/auth.metadata";
 import {Storage} from "@ionic/storage";
@@ -31,7 +31,7 @@ export class ChildService {
         if (!resp) {
           return [];
         }
-        this.allChildrenEventListValueChanges$.next((resp as ChildEvents[]).map((r) => ChildEvents.create(r)));
+        this.allChildrenEventListValueChanges$.next((resp as ChildEventList[]).map((r) => ChildEventList.create(r)));
       });
   }
 

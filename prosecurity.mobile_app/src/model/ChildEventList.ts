@@ -1,10 +1,10 @@
-export class ChildEvents {
+export class ChildEventList {
   public id: number;
   public fio: string;
   public events: Event[];
 
-  public static create(a: any): ChildEvents {
-    const ret = new ChildEvents();
+  public static create(a: any): ChildEventList {
+    const ret = new ChildEventList();
     ret.assign(a);
     return ret;
   }

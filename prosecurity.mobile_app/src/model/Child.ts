@@ -1,4 +1,3 @@
-import {ChildEvents} from "./ChildEvents";
 
 export class Child {
   public id: number;

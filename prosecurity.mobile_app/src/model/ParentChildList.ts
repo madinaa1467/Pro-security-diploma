@@ -1,11 +1,10 @@
-import {UserCan} from "./UserCan";
-import {ChildEvents} from "./ChildEvents";
+import {ChildEventList} from "./ChildEventList";
 
 export class ParentChildList {
   public id: number;
   public fio: string;
   public username: string;
-  public children: ChildEvents[];
+  public children: ChildEventList[];
 
   public static create(a: any): ParentChildList {
     const ret = new ParentChildList();

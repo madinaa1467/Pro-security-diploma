@@ -12,32 +12,29 @@ import java.util.List;
 public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ChildDao> childDao;
 
+//  @Override
+//  public List<ChildEventList> listAllChildrenEvents(long parentId, EventFilter filter) {
+//    List<ChildEventList> childrenEvents = childDao.get().listAllChildren(parentId);
+//    childrenEvents.forEach((temp) -> {
+//      filter.childId = temp.id;
+//      temp.events = childDao.get().getEventsByChild(filter);
+//    });
+//    return childrenEvents;
+//  }
+
   @Override
-  public List<ChildEvents> listAllEvents(long parentId, EventFilter filter) {
-    List<ChildEvents> childrenEvents = childDao.get().listAllChildren(parentId);
-    childrenEvents.forEach((temp) -> {
-      filter.childId = temp.id;
-      temp.events = childDao.get().getEventsByChild(filter);
-    });
-    return childrenEvents;
+  public List<ChildEvent> listAllEvents(long parentId, EventFilter filter) {
+    List<ChildEvent> myChildrenEventList = childDao.get().getMyChildrenAllEvents(parentId, filter);
+    return myChildrenEventList;
   }
 
   @Override
   public List<Child> getParentChildList(String username) {
     //todo delete futrther not neened parameter from parentDisplay
     int id = childDao.get().getParentIdByUserName(username);
-
     if (id == 0) {//null
       throw new NullPointerException("No person with username = " + username);
     }
-    List<Child> children = childDao.get().loadChildren(id);
-    return children;
-  }
-
-  public List<Event> getEventsByChild(EventFilter filter){
-    return childDao.get().getEventsByChild(filter);
-  }
-  public ChildEvents listEvents(long childId) {
-    return childDao.get().listEvents(childId);
+    return childDao.get().loadChildren(id);
   }
 }
