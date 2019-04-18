@@ -13,11 +13,9 @@ export class ChildService {
   }
 
   public loading: boolean = false;
-  public allChildrenEventList: ChildEvents[] = [];
   public filter: EventFilter = new EventFilter();
-  public parentChildList: Child[] = [];
-
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
+  readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
 
   loadEvents() {
     this.filter.limit = 5;
@@ -33,8 +31,7 @@ export class ChildService {
         if (!resp) {
           return [];
         }
-        this.allChildrenEventList = (resp as ChildEvents[]).map((r) => ChildEvents.create(r));
-        return this.allChildrenEventList;
+        this.allChildrenEventListValueChanges$.next((resp as ChildEvents[]).map((r) => ChildEvents.create(r)));
       });
   }
 
@@ -56,8 +53,7 @@ export class ChildService {
     this.storage.get(USERNAME)
       .then((val) => {
         return this.getParentChildren(val)
-          .then(result => this.parentChildList = result)
-          .then(() => this.parentChildListValueChanges$.next(this.parentChildList))
+          .then(result => this.parentChildListValueChanges$.next(result))
           .catch(error => {
             console.error("Произошла ошибка при загрузки данный сессии");
             return [];

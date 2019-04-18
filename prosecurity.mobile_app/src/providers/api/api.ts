@@ -44,8 +44,6 @@ export class Api {
           defReqOpts.params = defReqOpts.params.set(k, value as string);
       }
     }
-
-
     return this.http.get(this.url(endpoint), defReqOpts);
   }
 

@@ -1,5 +1,5 @@
 page-home {
-  $grid-padding-width:         1px !default;
+  $grid-padding-width: 1px !default;
   ion-title {
     position: absolute;
     top: 0;
@@ -49,6 +49,9 @@ page-home {
     margin-top: 3px
   }
 
+  .custom-divider .label-ios {
+    margin: 0;
+  }
 
   //ion-item-divider{
   //  height: 1em;
