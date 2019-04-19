@@ -13,26 +13,100 @@
       <ion-item>
         <ion-input type="email" id="email" class="input" placeholder="Please enter your email"
                    formControlName="email" required></ion-input>
-        <div *ngIf="formErrors.email" class="help is-danger">
-          {{ formErrors.email }}
-        </div>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.email">
+            {{ formErrors.email }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input type="password" placeholder="Password"></ion-input>
+        <ion-input type="password" placeholder="Password" id="password" class="input"
+                   formControlName="password" required ></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i class="fa fa-check"></i>
+          <div class="error-message isa_error" *ngIf="formErrors.password">
+            {{ formErrors.password }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input type="password" placeholder="Confirm password"></ion-input>
+        <ion-input type="password" placeholder="Confirm password" id="password2" class="input"
+                   formControlName="password2" required ></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.password2">
+            {{ formErrors.password2 }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input type="text" placeholder="Name"></ion-input>
+        <ion-input type="text" placeholder="Name" id="name" formControlName="name" required></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.name">
+            {{ formErrors.name }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input type="text" placeholder="Surname"></ion-input>
+        <ion-input type="text" placeholder="Surname" id="surname" formControlName="surname" required></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.surname">
+            {{ formErrors.surname }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input type="text" placeholder="Patronymic"></ion-input>
+        <ion-input type="text" placeholder="Patronymic" id="patronymic" formControlName="patronymic"></ion-input>
       </ion-item>
-      <button ion-button block outline color="light" class="login-button">Register</button>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.patronymic">
+            {{ formErrors.patronymic }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime display-format="MMMM YYYY" min="1900" max="2020-10-31"  placeholder="Birth Date" required></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select >
+          <ion-option  *ngFor="let gender of genders" [value]="gender.value">{{gender.viewValue}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.gender">
+            {{ formErrors.gender }}
+          </div>
+        </ng-container>
+      </div>
+
+      <button ion-button block outline color="light" class="login-button" type="submit" [disabled]="!userForm.valid">Register</button>
+
     </form>
   </div>
 </ion-content>
