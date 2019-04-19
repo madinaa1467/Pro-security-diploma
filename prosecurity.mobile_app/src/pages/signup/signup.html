@@ -9,9 +9,13 @@
     <span><strong>Please, enter your personal info:</strong></span>
   </div>
   <div padding>
-    <form>
+    <form [formGroup]="userForm" (ngSubmit)="register()">
       <ion-item>
-        <ion-input type="text" placeholder="Gmail"></ion-input>
+        <ion-input type="email" id="email" class="input" placeholder="Please enter your email"
+                   formControlName="email" required></ion-input>
+        <div *ngIf="formErrors.email" class="help is-danger">
+          {{ formErrors.email }}
+        </div>
       </ion-item>
       <ion-item>
         <ion-input type="password" placeholder="Password"></ion-input>
