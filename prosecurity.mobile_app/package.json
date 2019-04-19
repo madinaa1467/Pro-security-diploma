@@ -10,7 +10,7 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "t": "npm install @ngx-translate/core --save"
+    "t": "npm install @ngx-translate/core@9.1.1 @ngx-translate/http-loader@2.0.1 --save"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -27,7 +27,8 @@
     "@ionic-native/splash-screen": "~4.18.0",
     "@ionic-native/status-bar": "~4.18.0",
     "@ionic/storage": "2.2.0",
-    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/core": "^9.1.1",
+    "@ngx-translate/http-loader": "^2.0.1",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "rxjs": "5.5.11",

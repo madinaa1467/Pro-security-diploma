@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 
 import {IonicStorageModule, Storage} from "@ionic/storage";
 import {AppLoader, AuthInterceptor, MODULES, PROVIDERS, Settings} from "./app.imports";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import { Home } from '../pages/home/home';
 import { PostPopover } from '../pages/home/post-popover';
 import { Search } from '../pages/search/search';
@@ -25,6 +25,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -43,6 +45,10 @@ export function provideSettings(storage: Storage) {
 
 export function initApp(appLoadService: AppLoader) {
   return () => appLoadService.initApp();
+}
+
+export function setTranslateLoader(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');//, './assets/i18n/', '.json'
 }
 
 @NgModule({
@@ -69,7 +75,14 @@ export function initApp(appLoadService: AppLoader) {
     MODULES,
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (setTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

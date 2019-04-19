@@ -1,6 +1,10 @@
 <ion-content padding class="transparent-header">
   <ion-header>
     <ion-navbar>
+      <select #langSelect (change)="translate.use(langSelect.value)">
+        <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+      </select>
+      {{ 'HOME.SELECT' | translate }}
     </ion-navbar>
   </ion-header>
   <img class="logo" src="assets/img/logo/logo-white.png" />
@@ -18,7 +22,7 @@
   <div class="strike">
     <span>OR</span>
   </div>
-  <button ion-button block clear (click)="login()" color="light" class="login-button"><ion-icon name="logo-facebook"></ion-icon> Login with Facebook</button>
+  <button ion-button block clear (click)="login()" color="light" class="login-button"><ion-icon name="logo-facebook"> Login with Facebook</ion-icon> </button>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">

@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {TabsPage} from "../pages/tabs/tabs";
 import {Auth} from "../providers";
+import {TranslateService} from "@ngx-translate/core";
 
 class SignalRProvider {
 }
@@ -17,7 +18,7 @@ export class MyApp {
 
 
   constructor(private platform: Platform, private statusBar: StatusBar,
-              private splashScreen: SplashScreen, private auth: Auth) {
+              private splashScreen: SplashScreen, private auth: Auth, public translate: TranslateService) {
     // platform.ready().then(() => {
     //   // Okay, so the platform is ready and our plugins are available.
     //   // Here you can do any higher level native things you might need.
@@ -25,6 +26,11 @@ export class MyApp {
     //   splashScreen.hide();
     // });
 
+    translate.addLangs(['en', 'fr']);
+    translate.setDefaultLang('en');
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 
     this.initializeApp();
   }

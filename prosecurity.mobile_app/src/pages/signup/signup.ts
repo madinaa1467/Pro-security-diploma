@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 /**
@@ -139,7 +139,16 @@ export class SignupPage implements OnInit  {
 
     }, {validator: this.checkIfMatchingPasswords('password', 'password2')});// PasswordValidator.areEqual(this.formGroup));
 
-    this.userForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.userForm.valueChanges.subscribe(data => {
+
+      this.onValueChanged(data);
+
+      Object.keys(this.userForm.controls).forEach(value => {
+        console.log(this.userForm.controls[value]);
+        console.log(this.userForm.controls[value].valid);
+      })
+
+    });
     this.onValueChanged();
   }
 

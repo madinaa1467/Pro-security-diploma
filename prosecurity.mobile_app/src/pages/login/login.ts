@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, App, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Auth} from "../../providers";
-import {TabsPage} from "../tabs/tabs";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * Generated class for the LoginPage page.
@@ -26,7 +26,7 @@ export class LoginPage {
     private auth: Auth,
     private fb: FormBuilder,
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams, public translate: TranslateService) {
   this.form = this.fb.group({
       username: [null, Validators.required],
       password: [null, Validators.required]

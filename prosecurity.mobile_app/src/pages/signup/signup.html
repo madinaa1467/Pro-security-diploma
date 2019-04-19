@@ -25,7 +25,7 @@
 
       <ion-item>
         <ion-input type="password" placeholder="Password" id="password" class="input"
-                   formControlName="password" required ></ion-input>
+                   formControlName="password" required></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container>
@@ -38,7 +38,7 @@
 
       <ion-item>
         <ion-input type="password" placeholder="Confirm password" id="password2" class="input"
-                   formControlName="password2" required ></ion-input>
+                   formControlName="password2" required></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container>
@@ -87,13 +87,14 @@
 
       <ion-item>
         <ion-label>Date</ion-label>
-        <ion-datetime display-format="MMMM YYYY" min="1900" max="2020-10-31"  placeholder="Birth Date" required></ion-datetime>
+        <ion-datetime display-format="MMMM YYYY" min="1900" max="2020-10-31" placeholder="Birth Date"
+                      required></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label>Gender</ion-label>
-        <ion-select >
-          <ion-option  *ngFor="let gender of genders" [value]="gender.value">{{gender.viewValue}}</ion-option>
+        <ion-select formControlName="gender">
+          <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.viewValue}}</ion-option>
         </ion-select>
       </ion-item>
       <div class="validation-errors">
@@ -105,7 +106,21 @@
         </ng-container>
       </div>
 
-      <button ion-button block outline color="light" class="login-button" type="submit" [disabled]="!userForm.valid">Register</button>
+      <ion-item>
+        <ion-input type="text" placeholder="Phone" id="phone" formControlName="phone" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.phone">
+            {{ formErrors.phone }}
+          </div>
+        </ng-container>
+      </div>
+
+      <button ion-button block outline color="light" class="login-button" type="submit" [disabled]="!userForm.valid">
+        Register
+      </button>
 
     </form>
   </div>
