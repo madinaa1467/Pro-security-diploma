@@ -94,7 +94,8 @@
       <ion-item>
         <ion-label>Gender</ion-label>
         <ion-select formControlName="gender">
-          <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.viewValue}}</ion-option>
+          <ion-option value="female">{{ 'GENDER_FEMALE' | translate }}</ion-option>
+          <ion-option value="male">{{ 'GENDER_MALE' | translate }}</ion-option>
         </ion-select>
       </ion-item>
       <div class="validation-errors">
@@ -118,10 +119,10 @@
         </ng-container>
       </div>
 
-      <button ion-button block outline color="light" class="login-button" type="submit" [disabled]="!userForm.valid">
+      <button ion-button block outline class="login-button" type="submit" [disabled]="!userForm.valid">
         Register
       </button>
-
+<!--color="light"-->
     </form>
   </div>
 </ion-content>

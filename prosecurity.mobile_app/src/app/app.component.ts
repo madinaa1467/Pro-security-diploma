@@ -26,11 +26,11 @@ export class MyApp {
     //   splashScreen.hide();
     // });
 
-    translate.addLangs(['en', 'fr']);
+    translate.addLangs(['en', 'ru']);
     translate.setDefaultLang('en');
 
     const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
 
     this.initializeApp();
   }

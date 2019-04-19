@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * Generated class for the SignupPage page.
@@ -19,10 +20,6 @@ export class SignupPage implements OnInit  {
   //https://ionicframework.com/docs/v3/developer-resources/forms/   ---style
   birth_date = new FormControl(new Date());
 
-  genders: Genders[] = [
-    {value: 1, viewValue: 'Male'},
-    {value: 2, viewValue: 'Female'},
-  ];
 
   userForm: FormGroup;
   formErrors = {
@@ -74,11 +71,11 @@ export class SignupPage implements OnInit  {
       'maxlength': 'Please enter less than 25 characters',
     },
     'gender': {
-      'required': 'Please choose your sex',
+      'required': 'Please choose your gender',
     },
   };
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private fb: FormBuilder) {
+              private fb: FormBuilder, public translate: TranslateService) {
   }
   ngOnInit() {
     this.buildForm();
@@ -99,10 +96,6 @@ export class SignupPage implements OnInit  {
       ],
       'password2': ['', [
         Validators.required,
-        // Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-        // // Validators.pattern('password')
-        // Validators.minLength(6),
-        // Validators.maxLength(25)
       ]
       ],
       'name': ['', [
@@ -142,12 +135,10 @@ export class SignupPage implements OnInit  {
     this.userForm.valueChanges.subscribe(data => {
 
       this.onValueChanged(data);
-
-      Object.keys(this.userForm.controls).forEach(value => {
-        console.log(this.userForm.controls[value]);
-        console.log(this.userForm.controls[value].valid);
-      })
-
+      // Object.keys(this.userForm.controls).forEach(value => {
+      //   console.log(this.userForm.controls[value]);
+      //   console.log(this.userForm.controls[value].valid);
+      // })
     });
     this.onValueChanged();
   }

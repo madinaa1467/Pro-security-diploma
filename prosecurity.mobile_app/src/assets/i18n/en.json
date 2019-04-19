@@ -1,4 +1,6 @@
 {
+  "GENDER_MALE": "Male",
+  "GENDER_FEMALE": "Female",
   "HOME": {
     "TITLE": "Hello Angular with ngx-translate!",
     "SELECT": "Change language"

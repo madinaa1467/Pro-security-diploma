@@ -1,0 +1,8 @@
+{
+  "GENDER_MALE": "Мужчина",
+  "GENDER_FEMALE": "Женщина",
+  "HOME": {
+    "TITLE": "Привет ngx-translate!",
+    "SELECT": "Выберите язык"
+  }
+}
