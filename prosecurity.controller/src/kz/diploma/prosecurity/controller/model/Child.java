@@ -6,4 +6,13 @@ public class Child {
   public String gender;
   public String img;
 
+  public static Child getAllChildObject(){
+
+    Child allChildrenObj = new Child();
+    allChildrenObj.fio = "My children";
+    allChildrenObj.id = 0;
+
+    return allChildrenObj;
+  }
 }
+

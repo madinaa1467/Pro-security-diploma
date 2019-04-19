@@ -50,7 +50,6 @@ public class ChildRegisterImpl implements ChildRegister {
         eventLists.add(eventList);
       }
     }
-
     return eventLists;
   }
 
@@ -61,6 +60,8 @@ public class ChildRegisterImpl implements ChildRegister {
     if (id == 0) {//null
       throw new NullPointerException("No person with username = " + username);
     }
-    return childDao.get().loadChildren(id);
+    List<Child> children = childDao.get().loadChildren(id);
+    children.add(0, Child.getAllChildObject());
+    return children;
   }
 }

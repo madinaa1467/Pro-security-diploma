@@ -18,9 +18,7 @@ export class ChildService {
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
 
   loadEvents(childId : number) {
-    if(childId){
-      this.filter.childId = childId;
-    }
+    this.filter.childId = childId;
     this.filter.limit = 15;
     this.filter.startDate = new Date("2006-01-26");
     this.filter.endDate = new Date();
