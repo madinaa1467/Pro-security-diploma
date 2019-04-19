@@ -16,44 +16,13 @@ export class Home implements OnInit, OnDestroy {
     color: 'black',
     icon_name: 'heart-outline'
   };
-  public loading: boolean = false;
   public tap: number = 0;
 
   // You can get this data from your API. This is a dumb data for being an example.
-  public stories = [
-    {
-      id: 1,
-      img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      user_name: 'candelibas',
-      path: ''
-    },
-    {
-      id: 2,
-      img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      user_name: 'maxlynch',
-      path: ''
-    },
-    {
-      id: 3,
-      img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      user_name: 'ashleyosama',
-      path: ''
-    },
-    {
-      id: 4,
-      img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      user_name: 'adam_bradley',
-      path: ''
-    },
-    {
-      id: 5,
-      img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      user_name: 'linus_torvalds',
-      path: ''
-    }
-
-  ];
+  public stories = [];
+  public eventList =[];
   private storiesChanges$: Subscription;
+  private allChildrenEventListChanges$: Subscription;
 
 
   // public stories;
@@ -66,7 +35,9 @@ export class Home implements OnInit, OnDestroy {
     this.storiesChanges$ = this.childService.parentChildListValueChanges$.subscribe(list => {
       this.stories = list
     });
-
+    this.allChildrenEventListChanges$ = this.childService.allChildrenEventListValueChanges$.subscribe(list => {
+      this.eventList = list
+    });
     this.init();
   }
 
@@ -74,6 +45,12 @@ export class Home implements OnInit, OnDestroy {
     this.storiesChanges$.unsubscribe();
   }
 
+  init() {
+    this.childService.load(0);
+  }
+  getEventist(childId: number){
+    this.childService.loadEvents(childId);
+  }
 
   likeButton() {
     if(this.like_btn.icon_name === 'heart-outline') {
@@ -117,24 +94,4 @@ export class Home implements OnInit, OnDestroy {
   scrollToTop() {
     this.content.scrollToTop();
   }
-
-
-  // loadStories() {
-  //   console.log('My children: ', this.childService.parentChildList);
-  //   // this.childService.parentChildList.forEach(function (value) {
-  //   //   console.log('child: ', value);
-  //   //   this.stories.push(value)
-  //   // });
-  //   for (let child of this.childService.parentChildList) {
-  //     console.log('child: ', child);
-  //     this.stories.push(child);
-  //     // this.stories.get(child).image = 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120';
-  //     // this.stories.get(child).user_name = 'AAAAD';
-  //   }
-  // }
-
-  init() {
-    this.childService.load();
-  }
-
 }

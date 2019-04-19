@@ -21,7 +21,7 @@
   <!-- Story line -->
   <ion-scroll class="story" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
-      <div class="story_img_bg">
+      <div class="story_img_bg"  (click)="getEventist(s.id)">
       <img no-margin no-padding class="story_img" [src]="s.img"></div>
       <p no-margin no-padding text-center class="story_text">{{ s.user_name }}</p>
     </div>
@@ -33,31 +33,21 @@
 
 
     <ion-list>
-      <ion-item-group>
-      <ion-item-divider color="light" class="custom-divider" sticky>C</ion-item-divider>
-      <ion-item no-lines text-wrap>
+      <ion-item-group *ngFor="let day of eventList">
+      <ion-item-divider color="light" class="custom-divider" sticky>{{day.date}}</ion-item-divider>
+      <ion-item no-lines text-wrap  *ngFor="let event of day.events">
         <ion-avatar item-left>
           <img src="../../assets/src/girl (1).png">
         </ion-avatar>
         <ion-row>
           <ion-col col-10  no-padding no-margin>
-            <p><b>maxlynch</b> entered <ion-note>11m</ion-note></p>
+            <p><b>{{event.fio}}</b> {{event.action}} <ion-note>{{event.time}}</ion-note></p>
           </ion-col>
-          <ion-col col-2>
+          <ion-col col-2 *ngIf="event.action == 'in'">
             <img src="../../assets/src/enter.png" class="post-small-img" alt="">
           </ion-col>
-        </ion-row>
-      </ion-item>
-      <ion-item no-lines text-wrap>
-        <ion-avatar item-left>
-          <img src="../../assets/src/girl (1).png">
-        </ion-avatar>
-        <ion-row>
-          <ion-col col-10  no-padding no-margin>
-            <p><b>maxlynch</b> entered <ion-note>11m</ion-note></p>
-          </ion-col>
-          <ion-col col-2>
-            <img src="../../assets/src/enter.png" class="post-small-img" alt="">
+          <ion-col col-2 *ngIf="event.action == 'out'">
+            <img src="../../assets/src/exit.png" class="post-small-img" alt="">
           </ion-col>
         </ion-row>
       </ion-item>

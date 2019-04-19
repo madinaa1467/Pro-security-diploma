@@ -17,8 +17,11 @@ export class ChildService {
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
 
-  loadEvents() {
-    this.filter.limit = 5;
+  loadEvents(childId : number) {
+    if(childId){
+      this.filter.childId = childId;
+    }
+    this.filter.limit = 15;
     this.filter.startDate = new Date("2006-01-26");
     this.filter.endDate = new Date();
 
@@ -36,10 +39,10 @@ export class ChildService {
   }
 
   getParentChildren(username: string): Promise<Child[]> {
-    console.log('Call child/getMyChildren username: ', username);
-    return this.http.get('child/getMyChildren', {username: username})
+    console.log('Call child/getChildList username: ', username);
+    return this.http.get('child/getChildList', {username: username})
       .toPromise().then(resp => {
-        console.log("Response from child/getMyChildren:  ", resp);
+        console.log("Response from child/getChildList:  ", resp);
         if (!resp)
           console.error(resp)
         return (<any> resp).map((r) =>
@@ -61,8 +64,8 @@ export class ChildService {
       })
   }
 
-  load() {
+  load(childId : number) {
     this.loadParentChildren();
-    this.loadEvents();
+    this.loadEvents(childId);
   }
 }

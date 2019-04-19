@@ -31,8 +31,8 @@ public class ChildController implements Controller {
   }
 
   @ToJson
-  @OnGet("/getMyChildren")
-  public List<Child> getParentChildren(@Par("username") String username) {
+  @OnGet("/getChildList")
+  public List<Child> getChildList(@Par("username") String username) {
     return childRegister.get().getParentChildList(username);
   }
 
