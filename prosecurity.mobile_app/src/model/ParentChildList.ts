@@ -1,10 +1,10 @@
-import {ChildEventList} from "./ChildEventList";
+import {EventList} from "./EventList";
 
 export class ParentChildList {
   public id: number;
   public fio: string;
   public username: string;
-  public children: ChildEventList[];
+  public children: EventList[];
 
   public static create(a: any): ParentChildList {
     const ret = new ParentChildList();

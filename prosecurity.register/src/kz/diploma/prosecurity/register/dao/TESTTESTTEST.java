@@ -1,12 +1,5 @@
 package kz.diploma.prosecurity.register.dao;
 
-import kz.diploma.prosecurity.controller.model.Child;
-import kz.diploma.prosecurity.controller.model.ChildEvent;
-import kz.diploma.prosecurity.controller.model.Event;
-
-import java.util.Collections;
-import java.util.List;
-
 public class TESTTESTTEST {
     /*
    insert into child(id, surname, name, patronymic, gender, birth_date, actual)

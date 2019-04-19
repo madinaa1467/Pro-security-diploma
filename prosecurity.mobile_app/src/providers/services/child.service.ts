@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Api} from "../index";
-import {ChildEventList} from "../../model/ChildEventList";
+import {EventList} from "../../model/EventList";
 import {EventFilter} from "../../model/EventFilter";
 import {USERNAME} from "../auth/auth.metadata";
 import {Storage} from "@ionic/storage";
@@ -22,7 +22,7 @@ export class ChildService {
     this.filter.startDate = new Date("2006-01-26");
     this.filter.endDate = new Date();
 
-    console.log('Call child/listAllEvents:');
+    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', this.filter);
     this.http.get("child/listAllEvents",
       {parentId: 1, filter: JSON.stringify(this.filter)})
       .toPromise()
@@ -31,7 +31,7 @@ export class ChildService {
         if (!resp) {
           return [];
         }
-        this.allChildrenEventListValueChanges$.next((resp as ChildEventList[]).map((r) => ChildEventList.create(r)));
+        this.allChildrenEventListValueChanges$.next((resp as EventList[]).map((r) => EventList.create(r)));
       });
   }
 

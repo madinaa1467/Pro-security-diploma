@@ -1,7 +1,7 @@
 package kz.diploma.prosecurity.controller.controller;
 
 import kz.diploma.prosecurity.controller.model.Child;
-import kz.diploma.prosecurity.controller.model.ChildEvent;
+import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
@@ -25,7 +25,7 @@ public class ChildController implements Controller {
   @ToJson
   @PublicAccess
   @OnGet("/listAllEvents")
-  public List<ChildEvent> listAllEvents(@Par("parentId") long parentId, @Json @Par("filter") EventFilter filter) {
+  public List<EventList> listAllEvents(@Par("parentId") long parentId, @Json @Par("filter") EventFilter filter) {
 //      throw new UnsupportedOperationException();
     return childRegister.get().listAllEvents(parentId, filter);
   }

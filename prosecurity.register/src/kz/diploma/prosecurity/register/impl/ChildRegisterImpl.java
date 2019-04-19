@@ -6,6 +6,8 @@ import kz.diploma.prosecurity.register.dao.ChildDao;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Bean
@@ -23,9 +25,28 @@ public class ChildRegisterImpl implements ChildRegister {
 //  }
 
   @Override
-  public List<ChildEvent> listAllEvents(long parentId, EventFilter filter) {
-    List<ChildEvent> myChildrenEventList = childDao.get().getMyChildrenAllEvents(parentId, filter);
-    return myChildrenEventList;
+  public List<EventList> listAllEvents(long parentId, EventFilter filter) {
+    List<Event> myChildrenEventList = childDao.get().getMyChildrenAllEvents(parentId, filter);
+    List<EventList> eventLists = new ArrayList<>();
+    String tempDate = "";
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+    for(int i = 0; i < myChildrenEventList.size(); i ++) {
+      Event event = myChildrenEventList.get(i);
+      if (tempDate.equals(dateFormat.format(event.date))) {
+        event.time = timeFormat.format(event.date);
+        eventLists.get(eventLists.size()-1).events.add(event);
+      } else {
+        EventList eventList = new EventList();
+        event.time = timeFormat.format(event.date);
+        eventList.events.add(event);
+        tempDate = dateFormat.format(event.date);
+        eventList.date = tempDate;
+        eventLists.add(eventList);
+      }
+    }
+
+    return eventLists;
   }
 
   @Override
