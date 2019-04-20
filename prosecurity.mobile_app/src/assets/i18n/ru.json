@@ -4,5 +4,11 @@
   "HOME": {
     "TITLE": "Привет ngx-translate!",
     "SELECT": "Выберите язык"
+  },
+  "LOGIN": {
+    "SIGN_IN": "Вход",
+    "SIGN_UP": "Регистрация",
+    "USERNAME": "Имя пользователя",
+    "PASSWORD": "Пароль"
   }
 }

@@ -11,18 +11,18 @@
   <div padding>
     <form [formGroup]="form" (submit)="login()">
     <ion-item>
-      <ion-input formControlName="username" type="text" placeholder="Username"></ion-input>
+      <ion-input formControlName="username" type="text" placeholder="{{ 'LOGIN.USERNAME' | translate}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+      <ion-input formControlName="password" type="password" placeholder="{{ 'LOGIN.PASSWORD' | translate}}"></ion-input>
     </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">Login</button>
+    <button ion-button block outline color="light" class="login-button">{{ 'LOGIN.SIGN_IN' | translate}}</button>
     </form>
   </div>
   <div class="strike">
     <span>OR</span>
   </div>
-  <button ion-button block clear (click)="login()" color="light" class="login-button"><ion-icon name="logo-facebook"> Login with Facebook</ion-icon> </button>
+  <button ion-button block outline (click)="goToSignup()" color="light" class="login-button"> {{ 'LOGIN.SIGN_UP' | translate }}</button>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">

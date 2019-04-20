@@ -4,5 +4,11 @@
   "HOME": {
     "TITLE": "Hello Angular with ngx-translate!",
     "SELECT": "Change language"
+  },
+  "LOGIN": {
+    "SIGN_IN": "Login",
+    "SIGN_UP": "Register",
+    "USERNAME": "Username",
+    "PASSWORD": "Password"
   }
 }
