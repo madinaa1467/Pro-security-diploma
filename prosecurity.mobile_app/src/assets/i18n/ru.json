@@ -1,6 +1,7 @@
 {
   "GENDER_MALE": "Мужчина",
   "GENDER_FEMALE": "Женщина",
+  "CHANGE_LANGUAGE": "Поменять язык",
   "HOME": {
     "TITLE": "Привет ngx-translate!",
     "SELECT": "Выберите язык"
@@ -10,5 +11,9 @@
     "SIGN_UP": "Регистрация",
     "USERNAME": "Имя пользователя",
     "PASSWORD": "Пароль"
+  },
+  "SIGN_UP_VALIDATOR": {
+    "EMAIL_REQUIRED": "Пожалуйста введите свою почту",
+    "EMAIL_VALID": "Пожалуйста введите почту в правильном формате"
   }
 }

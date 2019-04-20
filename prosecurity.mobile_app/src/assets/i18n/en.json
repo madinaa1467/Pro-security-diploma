@@ -1,6 +1,7 @@
 {
   "GENDER_MALE": "Male",
   "GENDER_FEMALE": "Female",
+  "CHANGE_LANGUAGE": "Change language",
   "HOME": {
     "TITLE": "Hello Angular with ngx-translate!",
     "SELECT": "Change language"
@@ -10,5 +11,9 @@
     "SIGN_UP": "Register",
     "USERNAME": "Username",
     "PASSWORD": "Password"
+  },
+  "SIGN_UP_VALIDATOR": {
+    "EMAIL_REQUIRED": "Please enter your email",
+    "EMAIL_VALID": "Please enter your valid email"
   }
 }

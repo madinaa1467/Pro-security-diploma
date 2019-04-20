@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 /**
  * Generated class for the SignupPage page.
@@ -14,6 +14,7 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
+  providers: [TranslatePipe]
 })
 export class SignupPage implements OnInit  {
  //https://ionicthemes.com/tutorials/about/forms-and-validation-in-ionic
@@ -34,8 +35,8 @@ export class SignupPage implements OnInit  {
   };
   validationMessages = {
     'email': {
-      'required': 'Please enter your email',
-      'email': 'Please enter your vaild email'
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_REQUIRED'),
+      'email': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_VALID'),
     },
     'password': {
       'required': 'Please enter your password',
@@ -75,7 +76,7 @@ export class SignupPage implements OnInit  {
     },
   };
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private fb: FormBuilder, public translate: TranslateService) {
+              private fb: FormBuilder, public translate: TranslateService, private translatePipe: TranslatePipe) {
   }
   ngOnInit() {
     this.buildForm();

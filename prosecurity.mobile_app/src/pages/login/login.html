@@ -1,10 +1,6 @@
 <ion-content padding class="transparent-header">
   <ion-header>
     <ion-navbar>
-      <select #langSelect (change)="translate.use(langSelect.value)">
-        <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
-      </select>
-      {{ 'HOME.SELECT' | translate }}
     </ion-navbar>
   </ion-header>
   <img class="logo" src="assets/img/logo/logo-white.png" />
@@ -22,12 +18,16 @@
   <div class="strike">
     <span>OR</span>
   </div>
+  <div padding>
   <button ion-button block outline (click)="goToSignup()" color="light" class="login-button"> {{ 'LOGIN.SIGN_UP' | translate }}</button>
+  </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">
-    <div (click)="goToSignup()">
-      <span>Don't have an account? <strong>Sign up here</strong>.</span>
-    </div>
+      <ion-label>{{ 'CHANGE_LANGUAGE' | translate }}</ion-label>
+        <ion-select #langSelect
+                     (ionChange)="translate.use(langSelect.value)">
+        <ion-option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</ion-option>
+      </ion-select>
   </ion-toolbar>
 </ion-footer>
