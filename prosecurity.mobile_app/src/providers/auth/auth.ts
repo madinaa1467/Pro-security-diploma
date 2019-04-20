@@ -4,6 +4,7 @@ import {Storage} from "@ionic/storage";
 import {TOKEN_KEY, USERNAME} from "./auth.metadata";
 import {BehaviorSubject} from "rxjs";
 import {AccountInfo} from "../../model/auth/account-info";
+import {ToSave} from "../../model/ToSave";
 
 
 @Injectable()
@@ -66,6 +67,11 @@ export class Auth {
 
   getAccountInfo(): AccountInfo {
     return this.accountInfo;
+  }
+
+  register(toSave: ToSave){
+
+    console.log('auth register toSave: ', toSave);
   }
 
 

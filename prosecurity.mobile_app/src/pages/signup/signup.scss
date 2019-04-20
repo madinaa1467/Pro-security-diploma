@@ -41,5 +41,30 @@ page-signup {
     font-size:2em;
     vertical-align:middle;
   }
+  .phone-item-label {
+    min-height: 24px;
+    div.item-inner {
+      border-bottom: none;
+    }
+  }
+  .phone-item {
+    div.item-inner {
+      border-top: none;
+      ion-input {
+        width: 50%;
+        //input {
+        //  text-align: right;
+        //}
+      }
+    }
+  }
+
+  .full-width-select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+
+
 
 }

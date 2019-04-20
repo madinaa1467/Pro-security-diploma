@@ -9,9 +9,10 @@
     <span><strong>Please, enter your personal info:</strong></span>
   </div>
   <div padding>
-    <form [formGroup]="userForm" (ngSubmit)="register()">
+    <form [formGroup]="userForm">
       <ion-item>
-        <ion-input type="email" id="email" class="input" placeholder="Please enter your email"
+        <ion-label color="primary" floating>Email</ion-label>
+        <ion-input type="email" placeholder="" id="email" class="input"
                    formControlName="email" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -24,7 +25,8 @@
       </div>
 
       <ion-item>
-        <ion-input type="password" placeholder="Password" id="password" class="input"
+        <ion-label color="primary" floating>Password</ion-label>
+        <ion-input type="password" placeholder="" id="password" class="input"
                    formControlName="password" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -37,7 +39,8 @@
       </div>
 
       <ion-item>
-        <ion-input type="password" placeholder="Confirm password" id="password2" class="input"
+        <ion-label color="primary" floating>Confirm password</ion-label>
+        <ion-input type="password" placeholder="" id="password2" class="input"
                    formControlName="password2" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -50,7 +53,8 @@
       </div>
 
       <ion-item>
-        <ion-input type="text" placeholder="Name" id="name" formControlName="name" required></ion-input>
+        <ion-label color="primary" floating>Name</ion-label>
+        <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container>
@@ -62,7 +66,8 @@
       </div>
 
       <ion-item>
-        <ion-input type="text" placeholder="Surname" id="surname" formControlName="surname" required></ion-input>
+        <ion-label color="primary" floating>Surname</ion-label>
+        <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container>
@@ -74,7 +79,8 @@
       </div>
 
       <ion-item>
-        <ion-input type="text" placeholder="Patronymic" id="patronymic" formControlName="patronymic"></ion-input>
+        <ion-label color="primary" floating>Patronymic</ion-label>
+        <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container>
@@ -86,8 +92,8 @@
       </div>
 
       <ion-item>
-        <ion-label>Date</ion-label>
-        <ion-datetime display-format="MMMM YYYY" min="1900" max="2020-10-31" placeholder="Birth Date"
+        <ion-label>Birth Date</ion-label>
+        <ion-datetime  formControlName="birth_date" display-format="MMMM YYYY" min="1900" max="2020-10-31" placeholder="Birth Date"
                       required></ion-datetime>
       </ion-item>
 
@@ -107,19 +113,39 @@
         </ng-container>
       </div>
 
-      <ion-item>
-        <ion-input type="text" placeholder="Phone" id="phone" formControlName="phone" required></ion-input>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container>
-          <i></i>
-          <div class="error-message isa_error" *ngIf="formErrors.phone">
-            {{ formErrors.phone }}
-          </div>
-        </ng-container>
+      <div formArrayName="phones" padding>
+     <ion-row *ngFor="let phone of phoneForms.controls; let i=index"
+              [formGroupName]="i">
+        <ion-col col-7>
+          <!-- formControlName="phone"                  [ngModelOptions]="{standalone: true}"-->
+          <ion-input placeholder="Phone" type="number" formControlName="number"></ion-input><!--[ngModelOptions]="{standalone: true}"-->
+        </ion-col>
+        <ion-col col-4>
+          <ion-select placeholder="Type" class="full-width-select" formControlName="type" [ngModel]="defaultPhoneType">
+            <ion-option *ngFor="let s of phoneTypes" value="{{s.value}}" >{{s.viewValue}}</ion-option>
+          </ion-select>
+        </ion-col>
+        <ion-col col-1>
+          <button ion-button clear icon-start icon-right (click)="deletePhone(i)"><ion-icon name="trash" color="danger"></ion-icon></button>
+        </ion-col>
+       <!--<div class="validation-errors">-->
+         <!--<ng-container>-->
+           <!--<i></i>-->
+           <!--<div class="error-message isa_error" *ngIf="formErrors.number">-->
+             <!--{{ formErrors.number }}-->
+           <!--</div>-->
+         <!--</ng-container>-->
+       <!--</div>-->
+      </ion-row>
       </div>
+      <ion-row padding>
+        <ion-col col-11>
+          <button ion-button block color="danger" (click)="savePhone()"><ion-icon name="add-circle"></ion-icon> &nbsp; add phone</button>
+        </ion-col>
+      </ion-row>
 
-      <button ion-button block outline class="login-button" type="submit" [disabled]="!userForm.valid">
+      <button ion-button block outline class="login-button" type="submit" (click)="register()" >
+        <!--[disabled]="!userForm.valid"-->
         Register
       </button>
 <!--color="light"-->
