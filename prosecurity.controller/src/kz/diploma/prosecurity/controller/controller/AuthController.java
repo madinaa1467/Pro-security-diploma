@@ -1,16 +1,14 @@
 package kz.diploma.prosecurity.controller.controller;
 
 import kz.diploma.prosecurity.controller.model.AccountInfo;
+import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
 import kz.diploma.prosecurity.controller.util.ProSecurityViews;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
-import kz.greetgo.mvc.annotations.AsIs;
-import kz.greetgo.mvc.annotations.Par;
-import kz.greetgo.mvc.annotations.ParSession;
-import kz.greetgo.mvc.annotations.ToJson;
+import kz.greetgo.mvc.annotations.*;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
@@ -56,6 +54,15 @@ public class AuthController implements Controller {
   @OnGet("/accountInfo")
   public AccountInfo accountInfo(@Par("username") String username) {
     return authRegister.get().accountInfo(username);
+  }
+
+  @ToJson
+ @PublicAccess
+ @OnPost("/register")
+  public void register(@Json @Par("toSave") ToSave toSave) {
+
+
+    authRegister.get().register(toSave);
   }
 
   @AsIs

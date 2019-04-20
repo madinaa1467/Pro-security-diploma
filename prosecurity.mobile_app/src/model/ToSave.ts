@@ -8,7 +8,7 @@ export class ToSave {
   public surname: string;
   public name: string;
   public patronymic: string;
-  public birthDate: Date;
+  public birth_date: Date;
   public phones: Phone[];
 
   public static create(a: any): ToSave {
@@ -24,7 +24,7 @@ export class ToSave {
     this.surname = a.surname;
     this.name = a.name;
     this.patronymic = a.patronymic;
-    this.birthDate = a.birth_date;
+    this.birth_date = a.birth_date;
     this.phones = (a.phones instanceof Array) ? a.phones.map(c => Phone.create(c)) : [];
   }
 }

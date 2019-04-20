@@ -71,7 +71,14 @@ export class Auth {
 
   register(toSave: ToSave){
 
-    console.log('auth register toSave: ', toSave);
+    console.log('Call auth/register toSave:', toSave);
+    return this.api.post('auth/register', {toSave: JSON.stringify(toSave)})
+      .toPromise().then(res => {
+        console.log("Response from auth/register:  ", res);
+        // this.accountInfo = AccountInfo.create(res);
+        // this.authenticationState.next(true);
+        // return this.accountInfo;
+      });
   }
 
 
