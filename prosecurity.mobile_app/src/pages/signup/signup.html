@@ -11,7 +11,7 @@
   <div padding>
     <form [formGroup]="userForm">
       <ion-item>
-        <ion-label color="primary" floating>Email</ion-label>
+        <ion-label color="primary" fixed>Email</ion-label>
         <ion-input type="email" placeholder="" id="email" class="input"
                    formControlName="email" required></ion-input>
       </ion-item>
@@ -25,7 +25,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" floating>Password</ion-label>
+        <ion-label color="primary" fixed>Password</ion-label>
         <ion-input type="password" placeholder="" id="password" class="input"
                    formControlName="password" required></ion-input>
       </ion-item>
@@ -39,7 +39,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" floating>Confirm password</ion-label>
+        <ion-label color="primary" stacked>Confirm password</ion-label>
         <ion-input type="password" placeholder="" id="password2" class="input"
                    formControlName="password2" required></ion-input>
       </ion-item>
@@ -53,7 +53,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" floating>Name</ion-label>
+        <ion-label color="primary" fixed>Name</ion-label>
         <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -66,7 +66,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" floating>Surname</ion-label>
+        <ion-label color="primary" fixed>Surname</ion-label>
         <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -79,7 +79,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" floating>Patronymic</ion-label>
+        <ion-label color="primary" fixed>Patronymic</ion-label>
         <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -147,17 +147,13 @@
 
       </div>
       <ion-row padding>
-        <ion-col col-11>
-          <button ion-button block color="danger" (click)="savePhone()">
+        <ion-col col-11 >
+          <button ion-button block color="primary" (click)="savePhone()">
             <ion-icon name="add-circle"></ion-icon> &nbsp; add phone
           </button>
         </ion-col>
       </ion-row>
 
-      <button ion-button block outline class="login-button" type="submit" (click)="register()">
-        <!--[disabled]="!userForm.valid"-->
-        Register
-      </button>
       <!--color="light"-->
     </form>
   </div>
@@ -165,8 +161,13 @@
 
 <ion-footer>
   <ion-toolbar class="footer">
-    <div (click)="goToSignin()">
-      <span><strong>Sign in</strong>.</span>
-    </div>
+    <!--<div (click)="goToSignin()">-->
+      <!--<span><strong>Sign in</strong>.</span>-->
+    <!--</div>-->
+
+    <button ion-button block outline class="login-button" type="submit" (click)="register()">
+      <!--[disabled]="!userForm.valid"-->
+      Register
+    </button>
   </ion-toolbar>
 </ion-footer>
