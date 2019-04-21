@@ -19,6 +19,50 @@ public class TESTTESTTEST {
     REINDEX TABLE my_table;
 
 
+222222222
+
+with parent as (insert into parent (username, encoded_password, surname, name, patronymic, gender, birth_date, actual)
+          values ('usernam', 'encodedPassword', 'surname', 'name', 'patronymic', 'gender', null, 1)
+    returning id)
+select * from parent;
+
+
+with parent as (insert into parent (username, encoded_password, surname, name, patronymic, gender, birth_date, actual)
+          values ('aa', 'aa', 'aa', 'aa', 'aa', 'aa', null, 1 )
+          returning id)
+          select * from parent;
+
+insert into parent (id, username, encoded_password, surname, name, patronymic, gender, birth_date, actual)
+values (2, 'usernam23334', 'encodedPassword2', 'surname2', 'name2', 'patronymic2', 'gender', null, 1)
+on conflict (id) do update set
+  username = excluded.username,
+  encoded_password = excluded.encoded_password,
+  surname = excluded.surname,
+  name = excluded.name,
+  patronymic = excluded.patronymic,
+  gender = excluded.gender,
+  birth_date = excluded.birth_date,
+  actual = excluded.actual;
+
+select * from parent;
+
+REINDEX TABLE parent;
+
+
+insert into parent_phone ( parent, number, type, actual)
+values (1, '+77777777', 'home', 1)
+on conflict (parent, number) do update set
+  type = excluded.type,
+  actual = excluded.actual;
+
+
+
+222222222
+
+
+
+
+
    insert into child(id, surname, name, patronymic, gender, birth_date, actual)
 values (1, 'Asyl', 'Aisha', 'Asla', 'female', '2001-09-28', true),
  (2, 'Kasymzhan', 'Arman', 'Adam', 'male', '2001-09-28', true),
