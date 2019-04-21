@@ -45,7 +45,7 @@ public class ParentRegisterImplTest extends ParentTestNg {
 
   public long saveForTest(){
       ToSave toSave = this.getToSave();
-      return parentRegister.get().saveParent(toSave);
+      return parentRegister.get().register(toSave);
   }
 
   @Test
@@ -53,7 +53,7 @@ public class ParentRegisterImplTest extends ParentTestNg {
     ToSave toSave = this.getToSave();
     //
     //
-    long k = parentRegister.get().saveParent(toSave);
+    long k = parentRegister.get().register(toSave);
     //
     //
     System.out.println("AAAA" + k);

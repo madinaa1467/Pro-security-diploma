@@ -12,7 +12,7 @@ public class ParentRegisterImpl implements ParentRegister {
   public BeanGetter<ParentDao> parentDao;
 
   @Override
-  public long saveParent(ToSave toSave) {
+  public long register(ToSave toSave) {
     long parent = parentDao.get().insertParent(toSave);
     for (Phone phone : toSave.phones) {
       parentDao.get().upsertPhone(parent, phone);

@@ -54,7 +54,6 @@ export class SignupPage implements OnInit {
     'gender': '',
     'patronymic': '',
     'phones': '',
-    'type': ''
   };
   validationMessages = {
     'email': {
@@ -93,12 +92,7 @@ export class SignupPage implements OnInit {
     },
     'phones': {
       'required': 'Please enter your Phone',
-      'pattern': 'The Phone must contain numbers',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
-    },
-    'type': {
-      'required': 'Please choose your phone type'
+      // 'pattern': 'The Phone must be in format +7',
     },
   };
 
@@ -249,8 +243,6 @@ export class SignupPage implements OnInit {
         Validators.required,
         // Validators.pattern('^[+]*[0-9 -()]*[0-9 -]*[0-9]$'),
         // Validators.pattern(new RegExp('^\\\+[0-9]?()[0-9](\d[0-9]{9})\$')),
-        // Validators.minLength(2),
-        // Validators.maxLength(25)
       ]
       ],
     });

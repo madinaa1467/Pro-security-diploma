@@ -65,14 +65,6 @@ public class AuthRegisterImpl implements AuthRegister {
   }
 
   @Override
-  public void register(ToSave toSave) {
-
-
-
-//    return null;
-  }
-
-  @Override
   public void deleteSession(String sessionId) {
     sessionService.get().removeSession(sessionId);
   }

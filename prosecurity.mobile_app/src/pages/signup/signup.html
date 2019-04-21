@@ -93,7 +93,8 @@
 
       <ion-item>
         <ion-label>Birth Date</ion-label>
-        <ion-datetime  formControlName="birth_date" display-format="MMMM YYYY" min="1900" max="2020-10-31" placeholder="Birth Date"
+        <ion-datetime formControlName="birth_date" display-format="MMMM YYYY" min="1900" max="2020-10-31"
+                      placeholder="Birth Date"
                       required></ion-datetime>
       </ion-item>
 
@@ -114,41 +115,50 @@
       </div>
 
       <div formArrayName="phones" padding>
-     <ion-row *ngFor="let phone of phoneForms.controls; let i=index"
-              [formGroupName]="i">
-        <ion-col col-7>
-          <!-- formControlName="phone"                  [ngModelOptions]="{standalone: true}"-->
-          <ion-input placeholder="Phone" type="number" formControlName="number"></ion-input><!--[ngModelOptions]="{standalone: true}"-->
-        </ion-col>
-        <ion-col col-4>
-          <ion-select placeholder="Type" class="full-width-select" formControlName="type" [ngModel]="defaultPhoneType">
-            <ion-option *ngFor="let s of phoneTypes" value="{{s.value}}" >{{s.viewValue}}</ion-option>
-          </ion-select>
-        </ion-col>
-        <ion-col col-1>
-          <button ion-button clear icon-start icon-right (click)="deletePhone(i)"><ion-icon name="trash" color="danger"></ion-icon></button>
-        </ion-col>
-       <!--<div class="validation-errors">-->
-         <!--<ng-container>-->
-           <!--<i></i>-->
-           <!--<div class="error-message isa_error" *ngIf="formErrors.number">-->
-             <!--{{ formErrors.number }}-->
-           <!--</div>-->
-         <!--</ng-container>-->
-       <!--</div>-->
-      </ion-row>
+        <div *ngFor="let phone of phoneForms.controls; let i=index"
+             [formGroupName]="i">
+          <ion-row>
+            <ion-col col-7>
+              <!-- formControlName="phone"                  [ngModelOptions]="{standalone: true}"-->
+              <ion-input placeholder="Phone" type="number" formControlName="number"></ion-input>
+            </ion-col>
+            <ion-col col-4>
+              <ion-select placeholder="Type" class="full-width-select" formControlName="type"
+                          [ngModel]="defaultPhoneType">
+                <ion-option *ngFor="let s of phoneTypes" value="{{s.value}}">{{s.viewValue}}</ion-option>
+              </ion-select>
+            </ion-col>
+            <ion-col col-1>
+              <button ion-button clear icon-start icon-right (click)="deletePhone(i)">
+                <ion-icon name="trash" color="danger"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+
+          <div class="validation-errors">
+            <ng-container>
+              <i></i>
+              <div class="error-message isa_error" *ngIf="formErrors.phones">
+                {{ formErrors.phones }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
       </div>
       <ion-row padding>
         <ion-col col-11>
-          <button ion-button block color="danger" (click)="savePhone()"><ion-icon name="add-circle"></ion-icon> &nbsp; add phone</button>
+          <button ion-button block color="danger" (click)="savePhone()">
+            <ion-icon name="add-circle"></ion-icon> &nbsp; add phone
+          </button>
         </ion-col>
       </ion-row>
 
-      <button ion-button block outline class="login-button" type="submit" (click)="register()" >
+      <button ion-button block outline class="login-button" type="submit" (click)="register()">
         <!--[disabled]="!userForm.valid"-->
         Register
       </button>
-<!--color="light"-->
+      <!--color="light"-->
     </form>
   </div>
 </ion-content>
