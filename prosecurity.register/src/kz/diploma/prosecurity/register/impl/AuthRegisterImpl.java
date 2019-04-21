@@ -6,6 +6,7 @@ import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
+import kz.diploma.prosecurity.register.dao.ParentDao;
 import kz.diploma.prosecurity.register.model.PersonLogin;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
@@ -17,6 +18,7 @@ import kz.greetgo.security.session.SessionService;
 public class AuthRegisterImpl implements AuthRegister {
 
   public BeanGetter<AuthDao> authDao;
+  public BeanGetter<ParentDao> parentDao;
   public BeanGetter<PasswordEncoder> passwordEncoder;
   public BeanGetter<SessionService> sessionService;
   private final ThreadLocal<SessionHolder> sessionDot = new ThreadLocal<>();
@@ -24,7 +26,7 @@ public class AuthRegisterImpl implements AuthRegister {
   @Override
   public SessionIdentity login(String username, String password) {
 
-    PersonLogin personLogin = authDao.get().selectByUsername(username);
+    PersonLogin personLogin = parentDao.get().selectByUsername(username);
     if (personLogin == null) {
       throw new IllegalLoginOrPassword();
     }

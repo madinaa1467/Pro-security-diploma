@@ -1,7 +1,24 @@
 package kz.diploma.prosecurity.register.dao;
 
 public class TESTTESTTEST {
+    //  @Results({
+//          @Result(property = "id", column = "id"),
+//          @Result(property = "fio", column = "fio"),
+////          @Result(property = "events", javaType = List.class, column = "{childId = id}", many = @Many(select = "getEventsByChild"))
+//  })
+//  @Select("select  c.id,\n" +
+//          "        c.name as fio\n" +
+//          "from parent_child as pc, child as c\n" +
+//          "where c.actual = 1  AND pc.child = c.id AND pc.actual = 1 AND pc.parent = #{parentId}\n" +
+//          "order by c.surname, c.name;")
+//  List<ChildEventList> listAllChildren(@Param("parentId") long parentId);
+
+
+
     /*
+    REINDEX TABLE my_table;
+
+
    insert into child(id, surname, name, patronymic, gender, birth_date, actual)
 values (1, 'Asyl', 'Aisha', 'Asla', 'female', '2001-09-28', true),
  (2, 'Kasymzhan', 'Arman', 'Adam', 'male', '2001-09-28', true),

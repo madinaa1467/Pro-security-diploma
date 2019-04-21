@@ -46,8 +46,8 @@ public class DbLoader {
 //    add_can("stalin", UserCan.VIEW_USERS);
 //    add_can("stalin", UserCan.VIEW_ABOUT);
 
-    parent(1,"Пушкин Александр Сергеевич", "1799-06-06",
-            "1", "male");
+    parent(1,"Пушкин Александр Сергеевич", "1799-06-06", "1", "male");
+
     child(1, 1, "Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
     child(2, 1, "Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
 
@@ -58,6 +58,7 @@ public class DbLoader {
 
   private void user(String fioStr, String birthDateStr, String accountName) throws Exception {
     String id = idGenerator.get().newId();
+//    long id = -1;
     String[] fio = fioStr.split("\\s+");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date birthDate = sdf.parse(birthDateStr);
