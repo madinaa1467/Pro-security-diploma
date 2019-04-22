@@ -10,6 +10,7 @@ import kz.greetgo.mvc.annotations.Json;
 import kz.greetgo.mvc.annotations.Par;
 import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
+import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
 import kz.greetgo.security.password.PasswordEncoder;
 
@@ -29,4 +30,10 @@ public class ParentController implements Controller {
     return id;
   }
 
+  @ToJson
+//  @PublicAccess
+  @OnGet("/getInfo")
+  public ToSave getInfo(@Par("id") long id) {
+    return  parentRegister.get().getInfo(id);
+  }
 }

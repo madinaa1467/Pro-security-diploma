@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.register.test.beans.develop;
 
+import kz.diploma.prosecurity.controller.model.Phone;
 import kz.diploma.prosecurity.register.beans.all.IdGenerator;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
@@ -47,6 +48,8 @@ public class DbLoader {
 //    add_can("stalin", UserCan.VIEW_ABOUT);
 
     parent(1,"Пушкин Александр Сергеевич", "1799-06-06", "1", "male");
+
+    phone(1);
 
     child(1, 1, "Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
     child(2, 1, "Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
@@ -104,7 +107,17 @@ public class DbLoader {
     authTestDao.get().insertEvent("in", id, new Timestamp(sdfEvent.parse("2007-02-17 08:00:55").getTime()), actual);
     authTestDao.get().insertEvent("out", id, new Timestamp(sdfEvent.parse("2007-02-17 13:10:22").getTime()), actual);
 
+  }
 
+  private void phone(int id)  {
+    Phone phone1 = new Phone();
+    phone1.number = "+1111111111";
+    phone1.type = "mob";
+    Phone phone2 = new Phone();
+    phone2.number = "+2222222222";
+    phone2.type = "home";
 
+    authTestDao.get().upsertPhone(id, phone1);
+    authTestDao.get().upsertPhone(id, phone2);
   }
 }

@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ViewController, LoadingController 
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToSave} from "../../model/ToSave";
 import {Phone} from "../../model/Phone";
+import {Subscription} from "rxjs/Subscription";
+import {ParentService} from "../../providers/services/parent.service";
 
 @IonicPage()
 @Component({
@@ -44,16 +46,27 @@ export class EditProfile  implements OnInit {
 
   public toSave: ToSave = new ToSave();
   public phones: Phone[] = [];
+  private parentInfoChanges$: Subscription;
 
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     public viewCtrl: ViewController,
     public loadingCtrl: LoadingController,
-    private fb: FormBuilder
-    ) {
+    private fb: FormBuilder,
+    private parentService: ParentService) {
   }
+  ngOnInit() {
+    this.buildForm();
+    this.parentService.load();
+    this.parentInfoChanges$ = this.parentService.parentInfoValueChanges$.subscribe(list => {
+      // this.userForm = list
+    });
+    // this.userForm.controls.phones.type.setValue(this.phoneTypes[0])
+    console.log(this.userForm);
+  }
+
 userForm: FormGroup;
   phoneList: FormArray;
   formErrors = {
@@ -116,12 +129,6 @@ userForm: FormGroup;
 
   dismiss() {
    this.viewCtrl.dismiss();
-  }
-
-  ngOnInit() {
-    this.buildForm();
-    // this.userForm.controls.phones.type.setValue(this.phoneTypes[0])
-    console.log(this.userForm);
   }
 
   buildForm() {

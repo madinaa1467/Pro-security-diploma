@@ -13,6 +13,13 @@ public interface ParentDao {
   @Select("select * from parent where username = #{username} and actual = 1")
   PersonLogin selectByUsername(@Param("username") String username);
 
+
+  @Select("select * from parent where id = #{id} and actual = 1")
+  ToSave getInfo(@Param("id") long id);
+
+  @Select("select * from parent_phone where parent = #{parent} and actual = 1")
+  Phone[] getPhones(@Param("parent") long parent);
+
   @Select("select p.id\n" +
           "from parent as p\n" +
           "where username = #{username}")

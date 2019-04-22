@@ -3,7 +3,6 @@ package kz.diploma.prosecurity.register.impl;
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
 import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
-import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
 import kz.diploma.prosecurity.register.dao.ParentDao;

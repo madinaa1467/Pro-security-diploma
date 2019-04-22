@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.register.test.dao;
 
+import kz.diploma.prosecurity.controller.model.Phone;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -48,6 +49,15 @@ public interface AuthTestDao {
                     @Param("gender") String gender,
                     @Param("birth_date") Date birth_date
   );
+
+  @Insert("insert into parent_phone ( parent, number, type, actual)\n" +
+    "values (#{parentId}, #{phone.number}, #{phone.type}, 1)\n" +
+    "on conflict (parent, number) do update set\n" +
+    "  type = excluded.type,\n" +
+    "  actual = excluded.actual;")
+  void upsertPhone(@Param("parentId") long parentId,
+                   @Param("phone") Phone phone);
+
 
   @Insert("insert into Child (id, actual, surname, name, patronymic, gender," +
           "birth_date) " +

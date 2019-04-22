@@ -25,9 +25,16 @@ public class ParentRegisterImpl implements ParentRegister {
     long parent = parentDao.get().upsertParent(toSave);
   }
 
-    @Override
-    public void deleteParent(long id) {
-      this.parentDao.get().deactualParent(id);
-      this.parentDao.get().deactualPhone(id);
-    }
+  @Override
+  public void deleteParent(long id) {
+    this.parentDao.get().deactualParent(id);
+    this.parentDao.get().deactualPhone(id);
+  }
+
+  @Override
+  public ToSave getInfo(long id) {
+    ToSave toSave = this.parentDao.get().getInfo(id);
+    toSave.phones = this.parentDao.get().getPhones(id);
+    return toSave;
+  }
 }
