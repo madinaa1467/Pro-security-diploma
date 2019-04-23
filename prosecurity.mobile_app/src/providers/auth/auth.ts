@@ -10,7 +10,12 @@ import {ToSave} from "../../model/ToSave";
 @Injectable()
 export class Auth {
 
-  private accountInfo: AccountInfo;
+  private _accountInfo: AccountInfo;
+
+
+  get accountInfo(): AccountInfo {
+    return this._accountInfo;
+  }
 
   authenticationState = new BehaviorSubject(false);
 
@@ -25,7 +30,7 @@ export class Auth {
       return this.storage.set(TOKEN_KEY, res).then(() => {
         console.log("Response from auth/login:  ", res);
         this.storage.set(USERNAME, credentials.username);
-        this.accountInfo = AccountInfo.create(this.loadAccountInfo(credentials.username));
+        this._accountInfo = AccountInfo.create(this.loadAccountInfo(credentials.username));
         // this.authenticationState.next(true);
       });
     });
@@ -33,7 +38,7 @@ export class Auth {
 
   logout() {
     this.storage.remove(TOKEN_KEY).then(res => {
-      this.accountInfo = null;
+      this._accountInfo = null;
       this.authenticationState.next(false);
     });
   }
@@ -59,14 +64,14 @@ export class Auth {
     return this.api.get('auth/accountInfo', {username: username})
       .toPromise().then(res => {
         console.log("Response from auth/accountInfo:  ", res);
-        this.accountInfo = AccountInfo.create(res);
+        this._accountInfo = AccountInfo.create(res);
       this.authenticationState.next(true);
-      return this.accountInfo;
+      return this._accountInfo;
     });
   }
 
   getAccountInfo(): AccountInfo {
-    return this.accountInfo;
+    return this._accountInfo;
   }
 
   register(toSave: ToSave){

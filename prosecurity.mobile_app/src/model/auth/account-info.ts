@@ -1,6 +1,6 @@
 
 export class AccountInfo {
-  public id: string;
+  public id: number;
   public username: string;
   public fio:string;
 
