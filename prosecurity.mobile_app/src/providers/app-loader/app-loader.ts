@@ -22,7 +22,9 @@ export class AppLoader {
     // todo should send token
     return this.auth.authenticated().then(res => {
       if (res) {
+
         this.storage.get(USERNAME).then((val) => {
+        // this.auth.logout();
           this._accountInfo = AccountInfo.create(this.auth.loadAccountInfo(val).catch(error => {
             console.error("Произошла ошибка при загрузки данный сессии", error);
             this.auth.logout();

@@ -231,6 +231,19 @@ export class SignupPage implements OnInit {
     this.phoneList.push(this.createPhone());
   }
 
+  getPhoneError(phoneErrorsArray) {
+      console.log(phoneErrorsArray);
+
+      if(phoneErrorsArray['pattern'] !== undefined){
+        console.log("AAAAAAAA pattern", phoneErrorsArray);
+        return 'The Phone must be in format +7';
+      } else if(phoneErrorsArray['required'] !== undefined){
+        console.log("AAAAAAAA required", phoneErrorsArray);
+        return 'Please enter your Phone';
+      }
+  }
+
+
   public deletePhone(phoneId) {
     // this.phones.splice(phoneId, 1);
     this.phoneList.removeAt(phoneId);
@@ -241,7 +254,7 @@ export class SignupPage implements OnInit {
       type: ['', [Validators.required]],
       number: ['', [
         Validators.required,
-        // Validators.pattern('^[+]*[0-9 -()]*[0-9 -]*[0-9]$'),
+        Validators.pattern('^[+]*[0-9 -()]*[0-9 -]*[0-9]$'),
         // Validators.pattern(new RegExp('^\\\+[0-9]?()[0-9](\d[0-9]{9})\$')),
       ]
       ],

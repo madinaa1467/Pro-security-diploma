@@ -33,7 +33,7 @@ public class ParentController implements Controller {
   @ToJson
 //  @PublicAccess
   @OnGet("/getInfo")
-  public ToSave getInfo(@Par("id") long id) {
-    return  parentRegister.get().getInfo(id);
+  public ToSave getInfo(@Par("parentId") long parentId) {
+    return  parentRegister.get().getInfo(parentId);
   }
 }

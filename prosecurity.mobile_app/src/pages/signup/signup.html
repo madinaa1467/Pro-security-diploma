@@ -138,8 +138,8 @@
           <div class="validation-errors">
             <ng-container>
               <i></i>
-              <div class="error-message isa_error" *ngIf="formErrors.phones">
-                {{ formErrors.phones }}
+              <div class="error-message isa_error" *ngIf="phone.get('number').errors !== null">
+                {{ getPhoneError(phone.get('number').errors) }}
               </div>
             </ng-container>
           </div>

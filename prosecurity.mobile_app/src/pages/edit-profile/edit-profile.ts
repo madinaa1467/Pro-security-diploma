@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToSave} from "../../model/ToSave";
 import {Phone} from "../../model/Phone";
@@ -11,7 +11,7 @@ import {ParentService} from "../../providers/services/parent.service";
   selector: 'page-edit-profile',
   templateUrl: 'edit-profile.html',
 })
-export class EditProfile  implements OnInit {
+export class EditProfile implements OnInit {
   birth_date = new FormControl(new Date());
 
   // You can get this data from your API. This is a dumb data for being an example.
@@ -57,17 +57,20 @@ export class EditProfile  implements OnInit {
     private fb: FormBuilder,
     private parentService: ParentService) {
   }
+
   ngOnInit() {
     this.buildForm();
-    this.parentService.load();
-    this.parentInfoChanges$ = this.parentService.parentInfoValueChanges$.subscribe(list => {
-      // this.userForm = list
+    this.parentService.loadParentInfo().then(list => {
+      console.log("AAAAAAAAAAAAAAAAAAAAAAA parentInfoChanges$", list);
+      for (const key of Object.keys(list)) {
+        this.userForm.get(key).setValue(list[key]);
+      }
     });
     // this.userForm.controls.phones.type.setValue(this.phoneTypes[0])
     console.log(this.userForm);
   }
 
-userForm: FormGroup;
+  userForm: FormGroup;
   phoneList: FormArray;
   formErrors = {
     'email': '',
@@ -124,11 +127,11 @@ userForm: FormGroup;
     let loader = this.loadingCtrl.create({
       duration: 200
     });
-    loader.present().then( () => this.navCtrl.pop() ); // Get back to profile page. You should do that after you got data from API
+    loader.present().then(() => this.navCtrl.pop()); // Get back to profile page. You should do that after you got data from API
   }
 
   dismiss() {
-   this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss();
   }
 
   buildForm() {
@@ -235,9 +238,10 @@ userForm: FormGroup;
     }
   }
 
-ionViewDidLoad() {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad Edit -Page');
   }
+
   public savePhone() {
 
     // this.phones.push({ number: "", type: "mob", parent: 0, oldNumber: ""});
