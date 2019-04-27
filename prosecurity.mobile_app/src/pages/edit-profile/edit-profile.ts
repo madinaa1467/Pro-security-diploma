@@ -56,18 +56,31 @@ export class EditProfile implements OnInit {
     public loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private parentService: ParentService) {
+    //this.buildForm();
+
+    // this.userForm = this.fb.group(
+    //   {
+    //     name: [null],
+    //     surname: [null]
+    //   });
   }
 
   ngOnInit() {
-    this.buildForm();
+    this.load();
     this.parentService.loadParentInfo().then(list => {
       console.log("AAAAAAAAAAAAAAAAAAAAAAA parentInfoChanges$", list);
-      for (const key of Object.keys(list)) {
+      console.log("this.userForm:", this.userForm);
+      /*for (const key of Object.keys(list)) {
         this.userForm.get(key).setValue(list[key]);
-      }
+      }*/
     });
     // this.userForm.controls.phones.type.setValue(this.phoneTypes[0])
     console.log(this.userForm);
+  }
+
+  async load(){
+    await this.buildForm();
+
   }
 
   userForm: FormGroup;
