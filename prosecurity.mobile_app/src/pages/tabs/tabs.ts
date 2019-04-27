@@ -13,7 +13,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 export class TabsPage {
 
   tab1Root = Home;
-  tab2Root = Search;
+  // tab2Root = Search;
   // tab3Root = null;
   tab4Root = Notifications;
   tab5Root = Profile;

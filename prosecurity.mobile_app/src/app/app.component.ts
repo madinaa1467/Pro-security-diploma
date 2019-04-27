@@ -70,6 +70,9 @@ export class MyApp {
           //   });
           // });
         }
+        // else{
+        //   rootPage = 'LoginPage';
+        // }
 
         this.nav.setRoot(rootPage);
       });

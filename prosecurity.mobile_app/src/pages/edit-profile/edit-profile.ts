@@ -281,6 +281,10 @@ export class EditProfile implements OnInit {
   get phoneForms() {
     return this.userForm.get('phones') as FormArray;
   }
+
+  handleFile(files: any) {
+    console.log({files})
+  }
 }
 
 export interface phoneType {
