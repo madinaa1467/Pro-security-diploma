@@ -7,6 +7,7 @@ import kz.diploma.prosecurity.controller.util.Controller;
 import kz.diploma.prosecurity.controller.util.ProSecurityViews;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
+import kz.greetgo.file_storage.FileStorage;
 import kz.greetgo.mvc.annotations.AsIs;
 import kz.greetgo.mvc.annotations.Par;
 import kz.greetgo.mvc.annotations.ParSession;

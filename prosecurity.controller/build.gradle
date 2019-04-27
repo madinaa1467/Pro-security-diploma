@@ -4,4 +4,6 @@ dependencies {
   compile "kz.greetgo:greetgo.security:$greetgoSecurityVersion"
 
   compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
+  compile group: 'kz.greetgo', name: 'greetgo.fstorage', version: '2.1.0'
+
 }
