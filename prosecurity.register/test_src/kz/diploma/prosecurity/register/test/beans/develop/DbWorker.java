@@ -1,7 +1,11 @@
 package kz.diploma.prosecurity.register.test.beans.develop;
 
 import kz.diploma.prosecurity.register.beans.all.AllConfigFactory;
+import kz.diploma.prosecurity.register.beans.all.FileStorageFactory;
 import kz.diploma.prosecurity.register.configs.DbConfig;
+import kz.diploma.prosecurity.register.configs.DbConnector;
+import kz.diploma.prosecurity.register.configs.FileStorageConfig;
+import kz.greetgo.conf.hot.ConfigStorage;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.diploma.prosecurity.register.test.util.DbUrlUtils;
@@ -30,12 +34,16 @@ public class DbWorker {
   final Logger logger = Logger.getLogger(getClass());
 
   public BeanGetter<DbConfig> postgresDbConfig;
+  public BeanGetter<FileStorageConfig> fileStorageConfig;
   public BeanGetter<AllConfigFactory> allPostgresConfigFactory;
   public BeanGetter<LiquibaseManager> liquibaseManager;
 
   public void recreateAll() throws Exception {
-    prepareDbConfig();
-    recreateDb();
+    logger.info("Пересоздание MAIN DB");
+    dropCreateMainDb();
+
+    logger.info("Пересоздание File Storage DB");
+    dropCreateFileStorageDb();
 
     liquibaseManager.get().apply();
     App.do_not_run_liquibase_on_deploy_war().createNewFile();
@@ -43,11 +51,14 @@ public class DbWorker {
 
   private final java.util.Set<String> alreadyRecreatedUsers = new HashSet<>();
 
-  private void recreateDb() throws Exception {
+  private void dropCreateMainDb() throws Exception {
+    prepareDbConfig();
+    recreateDb(postgresDbConfig.get().url(), postgresDbConfig.get().username(),postgresDbConfig.get().password() );
+  }
 
-    final String dbName = DbUrlUtils.extractDbName(postgresDbConfig.get().url());
-    final String username = postgresDbConfig.get().username();
-    final String password = postgresDbConfig.get().password();
+
+  private void recreateDb(final String url, final String username, final String password) throws Exception {
+    final String dbName = url.substring(url.lastIndexOf("/") + 1, url.length());
 
     try (Connection con = getPostgresAdminConnection()) {
 
@@ -127,8 +138,53 @@ public class DbWorker {
     }
   }
 
+  private void dropCreateFileStorageDb() throws Exception{
+    prepareFileStorageConfig();
+    DbConnector db = fileStorageConfig.get().db().get(0);
+    recreateDb(db.url, db.username, db.password);
+  }
+
+  private void prepareFileStorageConfig() throws Exception {
+    ConfigStorage configStorage = allPostgresConfigFactory.get().getConfigStorage();
+
+    String configLocation = allPostgresConfigFactory.get().configLocationFor(FileStorageConfig.class);
+
+    if (!configStorage.isConfigContentExists(configLocation)) {
+      writeFileStorageConfigFile();
+    } else if (urlIsNotJdbc(fileStorageConfig.get().db().get(0).url)) {
+      writeFileStorageConfigFile();
+      allPostgresConfigFactory.get().reset();
+    }
+  }
+
+  private void writeFileStorageConfigFile() throws Exception {
+    StringBuilder sb = new StringBuilder();
+
+    String userName = System.getProperty("user.name") + "_prosecurity_fs";
+    String url = changeUrlDbName(pgAdminUrl(), userName);
+
+    sb.append("db.listElementsCount=").append(FileStorageFactory.DB_COUNT).append("\n");
+    for (int i = 0; i < FileStorageFactory.DB_COUNT; i++) {
+      sb.append("db.").append(i).append(".url=").append(url).append("\n");
+      sb.append("db.").append(i).append(".username=").append(userName).append("\n");
+      sb.append("db.").append(i).append(".password=111").append("\n");
+    }
+
+    saveConfigContent(sb.toString(), FileStorageConfig.class);
+  }
+
   public static Connection getPostgresAdminConnection() throws Exception {
     Class.forName("org.postgresql.Driver");
     return DriverManager.getConnection(pgAdminUrl(), pgAdminUserid(), pgAdminPassword());
+  }
+
+  private static boolean urlIsNotJdbc(String url) {
+    return url == null || !url.startsWith("jdbc:");
+  }
+
+  private void saveConfigContent(String content, Class<?> configClass) throws Exception {
+    ConfigStorage configStorage = allPostgresConfigFactory.get().getConfigStorage();
+    String configLocation = allPostgresConfigFactory.get().configLocationFor(configClass);
+    configStorage.saveConfigContent(configLocation, content);
   }
 }
