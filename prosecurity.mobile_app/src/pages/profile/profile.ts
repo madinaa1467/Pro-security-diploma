@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { ModalPost } from '../modal-post/modal-post';
@@ -7,15 +7,18 @@ import { Options } from '../options/options';
 import { TaggedProfile } from '../tagged-profile/tagged-profile';
 import { SavedProfile } from '../saved-profile/saved-profile';
 import {ChildPofile} from "../child-pofile/child-pofile";
+import {Subscription} from "rxjs/Subscription";
 
 @IonicPage()
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
-export class Profile {
+export class Profile implements OnInit, OnDestroy  {
 
   public profile_segment:string;
+  private childList$: Subscription;
+
 
   // You can get this data from your API. This is a dumb data for being an example.
   public images = [
@@ -34,6 +37,12 @@ export class Profile {
   ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+  }
+
+  ngOnDestroy(): void {
+  }
+
+  ngOnInit(): void {
   }
 
   // Define segment for everytime when profile page is active
