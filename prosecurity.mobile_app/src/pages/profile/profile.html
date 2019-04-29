@@ -92,26 +92,6 @@
       </ion-grid>
     </ion-list>
 
-    <ion-list>
-        <div  *ngFor="let i of images" text-center (click)="pressPhoto(i.id, i.username, i.profile_img, i.post_img)">
-        <ion-row>
-          <ion-col col-3 class="grid_img">
-            <img [src]="i.post_img" alt="">
-          </ion-col>
-          <ion-col col-6 class="grid_img">
-            <p>AAAAAA</p>
-          </ion-col>
-        </ion-row>
-
-    </div>
-      <ion-item-sliding>
-        <ion-item>
-          <ion-label>Item</ion-label>
-        </ion-item>
-
-      </ion-item-sliding>
-    </ion-list>
-
 
 
     <ion-list *ngSwitchCase="'list'">

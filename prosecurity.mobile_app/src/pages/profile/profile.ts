@@ -6,6 +6,7 @@ import { EditProfile } from '../edit-profile/edit-profile';
 import { Options } from '../options/options';
 import { TaggedProfile } from '../tagged-profile/tagged-profile';
 import { SavedProfile } from '../saved-profile/saved-profile';
+import {ChildPofile} from "../child-pofile/child-pofile";
 
 @IonicPage()
 @Component({
@@ -60,7 +61,9 @@ export class Profile {
 
   // Triggers when user pressed a post
   pressPhoto(user_id: number, username: string, profile_img: string, post_img: string) {
-    this.presentModal(user_id, username, profile_img, post_img);
+    //this.presentModal(user_id, username, profile_img, post_img);
+    let modal = this.modalCtrl.create('ChildPofile');
+    modal.present();
   }
 
   // Set post modal
