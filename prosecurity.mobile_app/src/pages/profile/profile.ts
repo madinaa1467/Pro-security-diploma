@@ -8,6 +8,8 @@ import { TaggedProfile } from '../tagged-profile/tagged-profile';
 import { SavedProfile } from '../saved-profile/saved-profile';
 import {ChildPofile} from "../child-pofile/child-pofile";
 import {Subscription} from "rxjs/Subscription";
+import {ChildService} from "../../providers/services/child.service";
+import {Child} from "../../model/Child";
 
 @IonicPage()
 @Component({
@@ -17,7 +19,7 @@ import {Subscription} from "rxjs/Subscription";
 export class Profile implements OnInit, OnDestroy  {
 
   public profile_segment:string;
-  private childList$: Subscription;
+  public childList$: Subscription;
 
 
   // You can get this data from your API. This is a dumb data for being an example.
@@ -36,13 +38,14 @@ export class Profile implements OnInit, OnDestroy  {
     }
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public modalCtrl: ModalController, public childService: ChildService) {
   }
-
-  ngOnDestroy(): void {
-  }
-
   ngOnInit(): void {
+    this.childList$ = this.childService.parentChildListValueChanges$
+  }
+  ngOnDestroy(): void {
+    this.childList$.unsubscribe();
   }
 
   // Define segment for everytime when profile page is active
@@ -69,14 +72,22 @@ export class Profile implements OnInit, OnDestroy  {
   }
 
   // Triggers when user pressed a post
-  pressPhoto(user_id: number, username: string, profile_img: string, post_img: string) {
-    //this.presentModal(user_id, username, profile_img, post_img);
-    let modal = this.modalCtrl.create('ChildPofile');
+  childSaveEdit(child: Child) {
+    console.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAsDDDDDDDDDDDDD", child);
+    let modal;
+    if(child) {
+      modal = this.modalCtrl.create('ChildPofile', {child: child, action: 'edit'});
+    } else{
+      modal = this.modalCtrl.create('ChildPofile', {child: child, action: 'save'});
+    }
     modal.present();
   }
 
   // Set post modal
   presentModal(user_id: number, username: string, profile_img: string, post_img: string) {
+
+    //this.presentModal(user_id, username, profile_img, post_img);
+
     let modal = this.modalCtrl.create(ModalPost,
     { // Send data to modal
       user_id: user_id,

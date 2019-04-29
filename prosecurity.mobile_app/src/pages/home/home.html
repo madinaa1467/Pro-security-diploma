@@ -23,7 +23,7 @@
     <div class="story_scroll" *ngFor="let s of stories">
       <div class="story_img_bg"  (click)="getEventist(s.id)">
       <img no-margin no-padding class="story_img" [src]="s.img"></div>
-      <p no-margin no-padding text-center class="story_text">{{ s.user_name }}</p>
+      <p no-margin no-padding text-center class="story_text">{{ s.fio }}</p>
     </div>
   </ion-scroll>
 

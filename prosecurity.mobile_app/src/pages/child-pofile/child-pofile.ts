@@ -5,6 +5,7 @@ import {ParentService} from "../../providers/services/parent.service";
 import {Phone} from "../../model/Phone";
 import {ToSave} from "../../model/ToSave";
 import {Subscription} from "rxjs/Subscription";
+import {Child} from "../../model/Child";
 
 /**
  * Generated class for the ChildPofilePage page.
@@ -18,23 +19,10 @@ import {Subscription} from "rxjs/Subscription";
   selector: 'page-child-pofile',
   templateUrl: 'child-pofile.html',
 })
-export class ChildPofile implements OnInit {
-  birth_date = new FormControl(new Date());
+export class ChildPofile implements OnInit {;
 
-  // You can get this data from your API. This is a dumb data for being an example.
-  public user_data = {
-    profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-    name: 'Can Delibas',
-    surname: 'Can Delibas',
-    patronymic: 'patronymic',
-    username: 'candelibas',
-    website: 'https://github.com/candelibas',
-    description: 'Software developer, open-source lover & Invoker spammer',
-    email: 'candelibas00@gmail.com',
-    phone: '',
-    gender: 'male'
-  };
-
+  public child = Child;
+  public action: string;
 
   constructor(
     public navCtrl: NavController,
@@ -43,6 +31,12 @@ export class ChildPofile implements OnInit {
     public loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private parentService: ParentService) {
+    this.child = this.navParams.get('child');
+    this.action = this.navParams.get('action');
+    if(!this.child){
+      this.child = Child;
+    }
+    console.error('Modaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal', this.child);
   }
 
   ngOnInit() {
@@ -63,7 +57,7 @@ export class ChildPofile implements OnInit {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Edit -Page');
+    console.log('ionViewDidLoad ChildPofile Modal -Page');
   }
 
 

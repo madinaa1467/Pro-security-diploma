@@ -23,26 +23,25 @@
     <ion-col col-3>
       <img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=120" class="avatar" alt="">
     </ion-col>
-    <!-- Information about user -->
-    <ion-col col-3 text-center >
-      <h6>21</h6>
-      <p no-padding no-margin>posts</p>
+  </ion-row>
+
+
+  <!-- Add Child button -->
+  <ion-row no-padding no-margin>
+    <ion-col no-padding no-margin col-4></ion-col>
+    <ion-col no-padding no-margin text-center col-8>
+      <button class="edit-button" ion-button block color="secondary" (click)="childSaveEdit()">
+        <ion-icon name="person-add"></ion-icon>&nbsp; Add Child</button>
     </ion-col>
-    <ion-col col-3 text-center>
-      <h6>114</h6>
-      <p no-paddin no-margin>followers</p>
-    </ion-col>
-    <ion-col col-3 text-center>
-      <h6>119</h6>
-      <p no-paddin no-margin>following</p>
-    </ion-col>
+    <ion-col col-3></ion-col>
   </ion-row>
 
   <!-- Edit/follow button -->
   <ion-row no-padding no-margin>
     <ion-col no-padding no-margin col-4></ion-col>
       <ion-col no-padding no-margin text-center col-8>
-      <button class="edit-button" (click)="goEditProfile()">Edit your profile</button>
+      <button class="edit-button" ion-button block color="twitter"  (click)="goEditProfile()">
+        <ion-icon name="create"></ion-icon> &nbsp; Edit your profile</button>
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
@@ -50,8 +49,6 @@
   <!-- Profile info -->
   <div padding>
     <p no-margin no-padding><b>Can Delibas</b></p>
-    <p no-padding no-margin class="info">Software developer, open-source lover, invoker spammer & heavy metal guitarist</p>
-    <p no-padding no-margin class="info"><a href="#">github.com/candelibas</a></p>
   </div>
 
   <!-- Segments -->
@@ -81,12 +78,12 @@
             <p>My children</p>
           </ion-col>
         </ion-row>
-        <ion-row *ngFor="let i of images" text-center (click)="pressPhoto(i.id, i.username, i.profile_img, i.post_img)">
+        <ion-row *ngFor="let i of childList$ | async" text-center (click)="childSaveEdit(i)">
           <ion-col col-3 class="grid_img">
-            <img [src]="i.post_img" alt="">
+            <img [src]="i.img" alt="">
           </ion-col>
           <ion-col col-6 class="grid_img">
-            <p>AAAAAA</p>
+            <p>{{i.fio}}</p>
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -1,7 +1,7 @@
 
 export class Child {
   public id: number;
-  public user_name: string;
+  public fio: string;
   public gender: string;
   public img: string;
 
@@ -13,7 +13,7 @@ export class Child {
 
   assign(a: any) {
     this.id = a.id;
-    this.user_name = a.name;
+    this.fio = a.fio;
     this.gender = a.gender;
     this.img = 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120';
 
