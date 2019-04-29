@@ -7,6 +7,7 @@
     <sql endDelimiter=";;"><![CDATA[
       create table child (
         id serial not null,
+        onay_number varchar(50) not null,
         surname varchar(50) not null,
         name varchar(50) not null,
         patronymic varchar(50),
