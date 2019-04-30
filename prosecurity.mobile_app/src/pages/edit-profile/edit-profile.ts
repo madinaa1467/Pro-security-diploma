@@ -69,7 +69,20 @@ export class EditProfile implements OnInit {
     this.load();
     this.parentService.loadParentInfo().then(list => {
       console.log("AAAAAAAAAAAAAAAAAAAAAAA parentInfoChanges$", list);
+      console.log("list", list);
       console.log("this.userForm:", this.userForm);
+      this.userForm.patchValue({
+        birth_date: new Date(),
+        gender: "male",
+        name: "Александр",
+        password: null,
+        patronymic: "Сергеевич",
+        phones: [
+          {number: "+1111111111", type: "mob"},
+          {number: "+2222222222", type: "home"}
+        ],
+        surname: "Пушкин"
+      });
       /*for (const key of Object.keys(list)) {
         this.userForm.get(key).setValue(list[key]);
       }*/
@@ -137,7 +150,7 @@ export class EditProfile implements OnInit {
   };
 
   updateProfile() {
-    console.log("userForm.value:",this.userForm.getRawValue())
+    //console.log("userForm.value:",this.userForm.getRawValue())
     let loader = this.loadingCtrl.create({
       duration: 200
     });
@@ -149,6 +162,8 @@ export class EditProfile implements OnInit {
   }
 
   buildForm() {
+    let array:FormArray = this.fb.array([this.createPhone(),this.createPhone()]);
+
     this.userForm = this.fb.group({
       'email': ['', [
         Validators.required,
@@ -194,7 +209,7 @@ export class EditProfile implements OnInit {
         Validators.required
       ]
       ],
-      'phones': this.fb.array([this.createPhone()])
+      'phones': array
 
     }, {validator: this.checkIfMatchingPasswords('password', 'password2')});
 
