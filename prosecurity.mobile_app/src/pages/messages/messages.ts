@@ -46,15 +46,15 @@ export class Messages {
       last_message: 'I am installing Ubuntu right now.',
       time: '6d'
     }
-    
+
   ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App) {
   }
 
-  goNewMessage() {
-    this.app.getRootNav().push(NewMessage);
-  }
+  // goNewMessage() {
+  //   this.app.getRootNav().push(NewMessage);
+  // }
 
   goMessageDetail(sender:string, profile_img:string, last_message:string) {
     this.app.getRootNav().push(MessageDetail, { sender: sender, profile_img: profile_img, last_message: last_message});

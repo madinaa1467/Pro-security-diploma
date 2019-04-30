@@ -76,17 +76,16 @@ export class Home implements OnInit, OnDestroy {
     popover.present();
   }
 
-  goMessages() {
-    this.app.getRootNav().push(Messages);
-  }
-
+  //todo fix swipes
   swipePage(event) {
     if(event.direction === 1) { // Swipe Left
-      console.log("Swap Camera");
+      console.error("Swap Left");
     }
 
     if(event.direction === 2) { // Swipe Right
-      this.goMessages();
+      console.error("Swap Right");
+
+      // this.goMessages();
     }
 
   }
