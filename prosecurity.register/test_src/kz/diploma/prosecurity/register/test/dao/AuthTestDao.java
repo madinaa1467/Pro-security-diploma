@@ -59,11 +59,12 @@ public interface AuthTestDao {
                    @Param("phone") Phone phone);
 
 
-  @Insert("insert into Child (id, actual, surname, name, patronymic, gender," +
+  @Insert("insert into Child (id, onay_number, actual, surname, name, patronymic, gender," +
           "birth_date) " +
-          "values (#{id}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
+          "values (#{id}, #{onayNumber}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
           "#{gender}, #{birth_date} )")
   void insertChild(@Param("id") int id,
+                   @Param("onayNumber") String onayNumber,
                    @Param("surname") String surname,
                    @Param("name") String name,
                    @Param("patronymic") String patronymic,

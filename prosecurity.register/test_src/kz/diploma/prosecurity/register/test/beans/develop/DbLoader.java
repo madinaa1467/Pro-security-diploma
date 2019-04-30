@@ -51,8 +51,8 @@ public class DbLoader {
 
     phone(1);
 
-    child(1, 1, "Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
-    child(2, 1, "Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
+    child(1, 1, "","Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
+    child(2, 1, "","Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
 
 
 
@@ -93,10 +93,10 @@ public class DbLoader {
             new Timestamp(birthDate.getTime()));
 
   }
-  private void child(int id, int parentID, String surname, String name,  String patronymic, String gender, String birthDateStr, int actual) throws Exception {
+  private void child(int id, int parentID, String onaiNumber, String surname, String name,  String patronymic, String gender, String birthDateStr, int actual) throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date birthDate = sdf.parse(birthDateStr);
-    authTestDao.get().insertChild(id, surname, name, patronymic, gender,
+    authTestDao.get().insertChild(id, onaiNumber, surname, name, patronymic, gender,
             new Timestamp(birthDate.getTime()), actual);
 
     authTestDao.get().insertParentChild(parentID, id, actual);
