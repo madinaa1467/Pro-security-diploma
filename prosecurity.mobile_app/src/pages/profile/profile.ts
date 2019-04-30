@@ -19,7 +19,7 @@ import {Child} from "../../model/Child";
 export class Profile implements OnInit, OnDestroy  {
 
   public profile_segment:string;
-  public childList$: Subscription;
+  //public childList$: Subscription;
 
 
   // You can get this data from your API. This is a dumb data for being an example.
@@ -42,10 +42,10 @@ export class Profile implements OnInit, OnDestroy  {
               public modalCtrl: ModalController, public childService: ChildService) {
   }
   ngOnInit(): void {
-    this.childList$ = this.childService.parentChildListValueChanges$
+    // this.childList$ = this.childService.parentChildListValueChanges$.subscribe();
   }
   ngOnDestroy(): void {
-    this.childList$.unsubscribe();
+    //this.childList$.unsubscribe();
   }
 
   // Define segment for everytime when profile page is active

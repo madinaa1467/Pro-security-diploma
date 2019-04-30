@@ -137,6 +137,7 @@ export class EditProfile implements OnInit {
   };
 
   updateProfile() {
+    console.log("userForm.value:",this.userForm.getRawValue())
     let loader = this.loadingCtrl.create({
       duration: 200
     });
