@@ -65,7 +65,7 @@
 
     <ion-list *ngSwitchCase="'grid'">
 
-      <button ion-item *ngFor="let i of childList$ | async" (click)="childSaveEdit(i)">
+      <button ion-item *ngFor="let i of childService.parentChildListValueChanges$ | async" (click)="childSaveEdit(i)">
         <ion-row text-center>
           <ion-col col-3 class="grid_img">
             <img [src]="i.img" class="child-avatar" alt="">
