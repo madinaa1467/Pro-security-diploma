@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {App, Content, NavController, PopoverController} from 'ionic-angular';
+import {App, Content, MenuController, NavController, PopoverController} from 'ionic-angular';
 import {PostPopover} from './post-popover';
 import {Messages} from '../messages/messages';
 import {ChildService} from "../../providers/services/child.service";
@@ -17,7 +17,7 @@ export class Home implements OnInit, OnDestroy {
     icon_name: 'heart-outline'
   };
   public tap: number = 0;
-
+  activeMenu: string;
   // You can get this data from your API. This is a dumb data for being an example.
   public stories = [];
   public eventList =[];
@@ -27,8 +27,12 @@ export class Home implements OnInit, OnDestroy {
 
   // public stories;
   constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
-              public childService: ChildService) {
-
+              public childService: ChildService, public menu: MenuController) {
+    this.menu1Active();
+  }
+  menu1Active() {
+    this.activeMenu = 'menu1';
+    this.menu.enable(true, 'menu1');
   }
 
   ngOnInit() {
