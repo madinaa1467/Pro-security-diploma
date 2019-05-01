@@ -4,10 +4,13 @@ import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
+import kz.diploma.prosecurity.controller.util.ParSessionNames;
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.mvc.annotations.Json;
 import kz.greetgo.mvc.annotations.Par;
+import kz.greetgo.mvc.annotations.ParSession;
 import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
@@ -19,21 +22,17 @@ import kz.greetgo.security.password.PasswordEncoder;
 public class ParentController implements Controller {
 
   public BeanGetter<ParentRegister> parentRegister;
-  public BeanGetter<PasswordEncoder> passwordEncoder;
 
   @ToJson
   @PublicAccess
   @OnPost("/register")
   public long register(@Json @Par("toSave") ToSave toSave) {
-    toSave.password = passwordEncoder.get().encode(toSave.password);
-    long id = parentRegister.get().register(toSave);
-    return id;
+    return parentRegister.get().register(toSave);
   }
 
   @ToJson
-//  @PublicAccess
   @OnGet("/getInfo")
-  public ToSave getInfo(@Par("parentId") long parentId) {
+  public ToSave getInfo(@ParSession(PARENT_ID) Long parentId) {
     return  parentRegister.get().getInfo(parentId);
   }
 }

@@ -4,6 +4,7 @@ import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 import kz.diploma.prosecurity.controller.util.ProSecurityViews;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
@@ -55,8 +56,8 @@ public class AuthController implements Controller {
 
   @ToJson
   @OnGet("/accountInfo")
-  public AccountInfo accountInfo(@Par("username") String username) {
-    return authRegister.get().accountInfo(username);
+  public AccountInfo accountInfo(@ParSession(PARENT_ID) Long parentId) {
+    return authRegister.get().accountInfo(parentId);
   }
 
   @AsIs
