@@ -7,4 +7,5 @@ import java.util.List;
 public interface ChildRegister {
   List<EventList> listAllEvents(long parentId, EventFilter filter);
   List<Child> getParentChildList(String username);
+  List<Event> getLastEventsList(long parentId);
 }

@@ -13,6 +13,10 @@ public class Event implements Comparable<Event> {
   public String img;
 
 
+  public String when;
+  public String timeUnit;
+
+
   private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
 
   @Override

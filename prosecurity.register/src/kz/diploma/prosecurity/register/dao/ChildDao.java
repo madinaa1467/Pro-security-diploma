@@ -36,6 +36,30 @@ public interface ChildDao {
 
 
 
+  @Select("select c.id\n" +
+    "from child as c, parent_child as pc\n" +
+    "where pc.parent = #{parentId} and pc.child = c.id;")
+  int[] getParentChildId(@Param("parentId") long parentId);
+
+//todo notification should be on inside children
+  @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,\n" +
+    "              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio\n" +
+    "from child as c, event as e\n" +
+    "where c.id = #{childId} AND c.id = e.child\n" +
+    "      AND c.actual = 1 AND e.actual = 1\n" +
+    "order by date desc\n" +
+    "limit 1;")
+  Event getChildLastEvent(@Param("childId") long childId);
+
+
+
+
+
+
+
+
+
+
   @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, pc.child as childId,\n" +
     "  c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio\n" +
     "from child as c, event as e, parent_child pc\n" +
