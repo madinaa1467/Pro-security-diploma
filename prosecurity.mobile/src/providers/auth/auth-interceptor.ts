@@ -10,7 +10,7 @@ import {AlertController} from "ionic-angular";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private auth: Auth, private alertCtrl: AlertController) {
+  constructor(private auth: Auth) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return next.handle(cloneReq).pipe(
         catchError(error => {
-
+          console.log("AuthInterceptor:",error);
           if (error.status === 401) {
             this.auth.logout();
           }

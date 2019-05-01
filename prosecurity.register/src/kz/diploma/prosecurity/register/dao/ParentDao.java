@@ -15,18 +15,13 @@ public interface ParentDao {
 
 
   @Select("select * from parent where id = #{id} and actual = 1")
-  ToSave getInfo(@Param("id") long id);
+  ToSave getInfo(@Param("id") Long id);
 
   @Select("select * from parent_phone where parent = #{parent} and actual = 1")
-  Phone[] getPhones(@Param("parent") long parent);
+  Phone[] getPhones(@Param("parent") Long parent);
 
-  @Select("select p.id\n" +
-          "from parent as p\n" +
-          "where username = #{username}")
-  int getParentIdByUserName(@Param("username") String username);
-
-  @Select("with parent as (insert into parent (username, encoded_password, surname, name, patronymic, gender, birth_date, actual) " +
-          "values (#{toSave.username}, #{toSave.password}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
+  @Select("with parent as (insert into parent (email, encoded_password, surname, name, patronymic, gender, birth_date, actual) " +
+          "values (#{toSave.email}, #{toSave.password}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
           "#{toSave.gender}, #{toSave.birth_date}, 1 )" +
           "returning id)\n" +
           "select * from parent")
@@ -53,14 +48,14 @@ public interface ParentDao {
           "on conflict (parent, number) do update set\n" +
           "  type = excluded.type,\n" +
           "  actual = excluded.actual;")
-  void upsertPhone(@Param("parentId") long parentId,
+  void upsertPhone(@Param("parentId") Long parentId,
                    @Param("phone") Phone phone);
 
 
     @Update("update parent_phone set actual = 0 where parent " +
             "= #{parent}")
-    void deactualPhone(@Param("parent") long parent);
+    void deactualPhone(@Param("parent") Long parent);
 
     @Update("update parent set actual = 0 where id = #{id};")
-    void deactualParent(@Param("id") long id);
+    void deactualParent(@Param("id") Long id);
 }

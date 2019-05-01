@@ -102,7 +102,7 @@
         <ion-row>
           <ion-col col-7>
             <!-- formControlName="phone"                  [ngModelOptions]="{standalone: true}"-->
-            <ion-input placeholder="Phone" type="number" formControlName="number"></ion-input>
+            <ion-input placeholder="Phone" type="text" formControlName="number"></ion-input>
           </ion-col>
           <ion-col col-4>
             <ion-select placeholder="Type" class="full-width-select" formControlName="type"
@@ -120,8 +120,8 @@
         <div class="validation-errors">
           <ng-container>
             <i></i>
-            <div class="error-message isa_error" *ngIf="formErrors.phones">
-              {{ formErrors.phones }}
+            <div class="error-message isa_error" *ngIf="phone.get('number').errors !== null">
+              {{ getPhoneError(phone.get('number').errors) }}
             </div>
           </ng-container>
         </div>
@@ -155,40 +155,6 @@
         <i></i>
         <div class="error-message isa_error" *ngIf="formErrors.email">
           {{ formErrors.email }}
-        </div>
-      </ng-container>
-    </div>
-
-    <ion-item>
-      <ion-label>
-      <ion-icon name="key" color="gray"></ion-icon>
-    </ion-label>
-      <!--<ion-label color="primary" floating>Password</ion-label>-->
-      <ion-input type="password" placeholder="Password" id="password" class="input"
-                 formControlName="password" required></ion-input>
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container>
-        <i class="fa fa-check"></i>
-        <div class="error-message isa_error" *ngIf="formErrors.password">
-          {{ formErrors.password }}
-        </div>
-      </ng-container>
-    </div>
-
-      <ion-item>
-      <ion-label>
-      <ion-icon name="key" color="gray"></ion-icon>
-    </ion-label>
-      <!--<ion-label color="primary" floating>Password</ion-label>-->
-      <ion-input type="password" placeholder="Confirm Password" id="password2" class="input"
-                 formControlName="password2" required></ion-input>
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container>
-        <i class="fa fa-check"></i>
-        <div class="error-message isa_error" *ngIf="formErrors.password2">
-          {{ formErrors.password2 }}
         </div>
       </ng-container>
     </div>

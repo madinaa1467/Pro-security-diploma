@@ -28,10 +28,7 @@ export class Auth {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        console.log("Response from auth/login:  ", res);
-        this.storage.set(USERNAME, credentials.username);
-        this._accountInfo = AccountInfo.create(this.loadAccountInfo(credentials.username));
-        // this.authenticationState.next(true);
+        return this.loadAccountInfo();
       });
     });
   }
@@ -59,19 +56,13 @@ export class Auth {
     return this.storage.get(TOKEN_KEY);
   }
 
-  loadAccountInfo(username: string) {
-    console.log('Call auth/accountInfo username:', username);
-    return this.api.get('auth/accountInfo', {username: username})
+  loadAccountInfo() {
+    return this.api.get('auth/accountInfo')
       .toPromise().then(res => {
-        console.log("Response from auth/accountInfo:  ", res);
         this._accountInfo = AccountInfo.create(res);
       this.authenticationState.next(true);
       return this._accountInfo;
     });
-  }
-
-  getAccountInfo(): AccountInfo {
-    return this._accountInfo;
   }
 
   register(toSave: ToSave){

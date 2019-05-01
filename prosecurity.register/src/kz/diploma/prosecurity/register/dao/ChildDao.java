@@ -14,11 +14,11 @@ public interface ChildDao {
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender\n" +
           "    from parent_child as pc, child as c\n" +
           "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
-  List<Child> loadChildren(long parentId);
+  List<Child> loadChildren(Long parentId);
 
   @Insert("insert into Parent_child (parent, child, actual) " +
           "values (#{parent}, #{child}, #{actual})")
-  void insertParentChild(@Param("parent") int parent,
+  void insertParentChild(@Param("parent") long parent,
                          @Param("child") int child,
                          @Param("actual") int actual);
 
@@ -26,7 +26,7 @@ public interface ChildDao {
           "birth_date) " +
           "values (#{id}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
           "#{gender}, #{birth_date} )")
-  void insertChild(@Param("id") int id,
+  void insertChild(@Param("id") long id,
                    @Param("surname") String surname,
                    @Param("name") String name,
                    @Param("patronymic") String patronymic,
@@ -45,7 +45,7 @@ public interface ChildDao {
     "order by date desc\n" +
     "limit #{filter.limit}\n" +
     "offset #{filter.offset};")
-  List<Event> getChildrenEventList(@Param("parentId") long parentId, @Param("filter") EventFilter filter);
+  List<Event> getChildrenEventList(@Param("parentId") Long parentId, @Param("filter") EventFilter filter);
 
   @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,\n" +
     "  c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio\n" +
@@ -61,7 +61,7 @@ public interface ChildDao {
   @Insert("insert into Event (action, date, child, actual) " +
           "values (#{action}, #{date}, #{child}, #{actual})")
   void insertEvent(@Param("action") String action,
-                   @Param("child") int child,
+                   @Param("child") long child,
                    @Param("date") Date date,
                    @Param("actual") int actual
   );

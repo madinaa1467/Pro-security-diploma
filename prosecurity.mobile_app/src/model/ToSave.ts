@@ -1,7 +1,7 @@
 import {Phone} from "./Phone";
 
 export class ToSave {
-  public username: string;
+  public email: string;
   public gender: string;
   public password: string;
   // public img: string;
@@ -18,7 +18,7 @@ export class ToSave {
   }
 
   assign(a: any) {
-    this.username = a.email;
+    this.email = a.email;
     this.password = a.password;
     this.gender = a.gender;
     this.surname = a.surname;

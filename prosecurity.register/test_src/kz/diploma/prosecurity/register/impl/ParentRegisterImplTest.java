@@ -27,7 +27,7 @@ public class ParentRegisterImplTest extends ParentTestNg {
 
   public ToSave getToSave(){
     ToSave toSave = new ToSave();
-    toSave.username = RND.str(10);
+    toSave.email = RND.str(10);
     toSave.password = RND.str(10);
     toSave.name = RND.str(10);
     toSave.surname = RND.str(10);
@@ -63,7 +63,7 @@ public class ParentRegisterImplTest extends ParentTestNg {
   public void updateParentTest(){
     ToSave toSave = this.getToSave();
     toSave.id = this.saveForTest();
-    toSave.username = "updated";
+    toSave.email = "updated";
     toSave.surname="updated";
     //
     //
@@ -77,7 +77,7 @@ public class ParentRegisterImplTest extends ParentTestNg {
   public void deleteParentTest(){
     ToSave toSave = this.getToSave();
     toSave.id = this.saveForTest();
-    toSave.username = "deleted";
+    toSave.email = "deleted";
     //
     //
     parentRegister.get().deleteParent(toSave.id);

@@ -47,7 +47,7 @@ public class DbLoader {
 //    add_can("stalin", UserCan.VIEW_USERS);
 //    add_can("stalin", UserCan.VIEW_ABOUT);
 
-    parent(1,"Пушкин Александр Сергеевич", "1799-06-06", "1", "male");
+    parent(1,"Пушкин Александр Сергеевич", "1980-07-23", "1", "male");
 
     phone(1);
 
@@ -90,7 +90,7 @@ public class DbLoader {
     String encryptPassword = passwordEncoder.get().encode("1");
     authTestDao.get().insertParent(id, accountName, encryptPassword, 1,
             fio[0], fio[1], fio[2], gender,
-            new Timestamp(birthDate.getTime()));
+            new Timestamp(birthDate.getTime()), accountName+"@gmail.com");
 
   }
   private void child(int id, int parentID, String onaiNumber, String surname, String name,  String patronymic, String gender, String birthDateStr, int actual) throws Exception {

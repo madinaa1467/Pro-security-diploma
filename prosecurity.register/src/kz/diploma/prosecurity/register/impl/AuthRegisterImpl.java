@@ -55,10 +55,10 @@ public class AuthRegisterImpl implements AuthRegister {
 
 
   @Override
-  public AccountInfo accountInfo(String username) {
-    AccountInfo ret = authDao.get().loadAccountInfo(username);
+  public AccountInfo accountInfo(Long parentId) {
+    AccountInfo ret = authDao.get().loadAccountInfo(parentId);
     if (ret == null) {
-      throw new NullPointerException("No person with username = " + username);
+      throw new NullPointerException("No person with parentId = " + parentId);
     }
     return ret;
   }

@@ -3,8 +3,8 @@ package kz.diploma.prosecurity.controller.model;
 import java.util.Date;
 
 public class ToSave {
-  public long id;
-  public String username;
+  public Long id;
+  public String email;
   public String password;
   public String gender;
   public String surname;

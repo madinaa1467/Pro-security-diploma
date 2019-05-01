@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Api} from "../index";
 import {EventList} from "../../model/EventList";
 import {EventFilter} from "../../model/EventFilter";
-import {USERNAME} from "../auth/auth.metadata";
 import {Storage} from "@ionic/storage";
 import {Child} from "../../model/Child";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
@@ -36,9 +35,9 @@ export class ChildService {
       });
   }
 
-  getParentChildren(username: string): Promise<Child[]> {
-    console.log('Call child/getChildList username: ', username);
-    return this.http.get('child/getChildList', {username: username})
+  getParentChildren(): Promise<Child[]> {
+    console.log('Call child/getChildList username: ');
+    return this.http.get('child/getChildList')
       .toPromise().then(resp => {
         console.log("Response from child/getChildList:  ", resp);
         if (!resp)
@@ -51,15 +50,12 @@ export class ChildService {
 
   loadParentChildren() {
     this.loading = true;
-    this.storage.get(USERNAME)
-      .then((val) => {
-        return this.getParentChildren(val)
+        return this.getParentChildren()
           .then(result => this.parentChildListValueChanges$.next(result))
           .catch(error => {
             console.error("Произошла ошибка при загрузки данный сессии");
             return [];
           });
-      })
   }
 
   load(childId : number) {

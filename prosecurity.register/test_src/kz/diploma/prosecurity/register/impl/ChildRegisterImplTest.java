@@ -33,7 +33,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
     EventFilter eventFilter = this.getFilter();
     //
     //
-    List<EventList> childEvents = childRegisterBeanGetter.get().listAllEvents(1, eventFilter);
+    List<EventList> childEvents = childRegisterBeanGetter.get().listAllEvents(1L, eventFilter);
     //
     //
     System.out.println(childEvents);

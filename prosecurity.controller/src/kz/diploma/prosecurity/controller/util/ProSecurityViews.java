@@ -103,7 +103,7 @@ public abstract class ProSecurityViews implements Views {
     //смотрим была ли ошибка в метода
     if (invokedResult.error() != null) {
       //обрабатываем ошибку
-      performError(methodInvoker, invokedResult);
+      performError(methodInvoker, invokedResult.error());
     } else {
       //обрабатываем нормальное поведение
       performRender(methodInvoker, invokedResult);
@@ -134,7 +134,7 @@ public abstract class ProSecurityViews implements Views {
    *
    * @param methodInvoker исполнитель метода контроллера
    */
-  private void prepareSession(MethodInvoker methodInvoker) {
+  private void prepareSession(MethodInvoker methodInvoker) throws Exception {
     //Достаём токен из заголовка запроса. Если токена нет, то получим null
     String token = methodInvoker.tunnel().requestHeaders().value(P_TOKEN);
 
@@ -145,16 +145,19 @@ public abstract class ProSecurityViews implements Views {
     //Иначе очищаем ThreadLocal-переменную
     authRegister.get().resetThreadLocalAndVerifySession(sessionId, token);
 
-    if (
-
-      methodInvoker.getMethodAnnotation(PublicAccess.class) == null
-        && authRegister.get().getSession() == null
-
-      ) {
-
-      throw new SecurityError();
-
+    if (methodInvoker.getMethodAnnotation(PublicAccess.class) == null) {
+      SessionHolder session = authRegister.get().getSession();
+      if(session == null){
+        performError(methodInvoker, new SecurityError("Left session on " + methodName(methodInvoker)));
+        return;
+      }
     }
+  }
+
+  private String methodName(MethodInvoker methodInvoker) {
+    return methodInvoker.tunnel().getRequestMethod() + " " + methodInvoker.tunnel().getTarget()
+      + " : " + methodInvoker.method().getDeclaringClass().getSimpleName() + "."
+      + methodInvoker.method().getName() + "(...)";
   }
 
   /**
@@ -167,22 +170,22 @@ public abstract class ProSecurityViews implements Views {
    */
   @Override
   public Object getSessionParameter(SessionParameterGetter.ParameterContext context, RequestTunnel tunnel) {
-    if ("personId".equals(context.parameterName())) {
-      if (context.expectedReturnType() != String.class) throw new SecurityError("personId must be a string");
+    if (ParSessionNames.PARENT_ID.equals(context.parameterName())) {
+      if (context.expectedReturnType() != Long.class) throw new SecurityError("parentId must be a Long");
 
       SessionHolder sessionHolder = authRegister.get().getSession();
-      return sessionHolder == null ? null : sessionHolder.personId;
+      return sessionHolder == null ? null : sessionHolder.parentId;
     }
 
-    if ("mode".equals(context.parameterName())) {
-      if (context.expectedReturnType() != String.class) throw new SecurityError("personId must be a string");
+    if (ParSessionNames.CURRENT_MODE.equals(context.parameterName())) {
+      if (context.expectedReturnType() != String.class) throw new SecurityError("mode must be a string");
 
       SessionHolder sessionHolder = authRegister.get().getSession();
       return sessionHolder == null ? null : sessionHolder.mode;
     }
 
-    if ("sessionId".equals(context.parameterName())) {
-      if (context.expectedReturnType() != String.class) throw new SecurityError("personId must be a string");
+    if (ParSessionNames.SESSION_ID.equals(context.parameterName())) {
+      if (context.expectedReturnType() != String.class) throw new SecurityError("sessionId must be a string");
       return tunnel.cookies().name(P_SESSION).value();
     }
 
@@ -227,14 +230,13 @@ public abstract class ProSecurityViews implements Views {
    * Обрабатывается ошибка запроса
    *
    * @param methodInvoker информация о методе контроллера для обработки запроса
-   * @param invokedResult результаты вызова метода контроллера
+   * @param error результаты вызова метода контроллера
    * @throws Exception нужно чтобы не ставить надоедливые try/catch-блоки
    */
-  private void performError(MethodInvoker methodInvoker, MethodInvokedResult invokedResult) throws Exception {
-    Throwable error = invokedResult.error();
+  private void performError(MethodInvoker methodInvoker, Throwable error) throws Exception {
     assert error != null;
 
-    logger.error(error.getMessage(), error);
+    logger.error(error);
 
     RequestTunnel tunnel = methodInvoker.tunnel();
     tunnel.requestAttributes().set("ERROR_TYPE", error.getClass().getSimpleName());

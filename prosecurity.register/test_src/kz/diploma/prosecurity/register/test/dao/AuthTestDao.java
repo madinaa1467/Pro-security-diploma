@@ -36,9 +36,9 @@ public interface AuthTestDao {
 
 
   @Insert("insert into Parent (id, username, encoded_password, actual, surname, name, patronymic, gender," +
-          "birth_date) " +
+          "birth_date, email) " +
           "values (#{id}, #{username}, #{encodedPassword}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
-          "#{gender}, #{birth_date} )")
+          "#{gender}, #{birth_date}, #{email})")
   void insertParent(@Param("id") int id,
                     @Param("username") String username,
                     @Param("encodedPassword") String encodedPassword,
@@ -47,7 +47,8 @@ public interface AuthTestDao {
                     @Param("name") String name,
                     @Param("patronymic") String patronymic,
                     @Param("gender") String gender,
-                    @Param("birth_date") Date birth_date
+                    @Param("birth_date") Date birth_date,
+                    @Param("email") String email
   );
 
   @Insert("insert into parent_phone ( parent, number, type, actual)\n" +

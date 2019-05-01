@@ -9,6 +9,6 @@ public interface AuthDao {
 
   @Select("select p.id, p.surname||' '||p.name||' '||p.patronymic as fio, p.username\n" +
           "from parent as p\n" +
-          "where username = #{username}")
-  AccountInfo loadAccountInfo(@Param("username") String username);
+          "where id = #{parentId}")
+  AccountInfo loadAccountInfo(@Param("parentId") Long parentId);
 }

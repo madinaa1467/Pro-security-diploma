@@ -8,27 +8,15 @@ import {BehaviorSubject} from "../../../node_modules/rxjs";
 @Injectable()
 export class AppLoader {
 
-  constructor(private auth: Auth, private storage: Storage) {
-  }
-  private _accountInfo: AccountInfo;
-  authenticationState = new BehaviorSubject(false);
-
-
-  get accountInfo(): AccountInfo {
-    return this._accountInfo;
+  constructor(private auth: Auth) {
   }
 
   initApp(): Promise<any> {
-    // todo should send token
+
     return this.auth.authenticated().then(res => {
       if (res) {
-
-        this.storage.get(USERNAME).then((val) => {
-        // this.auth.logout();
-          this._accountInfo = AccountInfo.create(this.auth.loadAccountInfo(val).catch(error => {
-            console.error("Произошла ошибка при загрузки данный сессии", error);
-            this.auth.logout();
-          }));
+        return this.auth.loadAccountInfo().catch(error => {
+          console.error("Произошла ошибка при загрузки данный сессии", error);
         });
       }
     });

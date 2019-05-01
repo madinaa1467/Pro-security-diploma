@@ -17,7 +17,7 @@ public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ParentDao> parentDao;
 
   @Override
-  public List<EventList> listAllEvents(long parentId, EventFilter filter) {
+  public List<EventList> listAllEvents(Long parentId, EventFilter filter) {
     List<Event> eventListFromDB;
     if (filter.childId == 0)//case when we call for all children
       eventListFromDB = childDao.get().getChildrenEventList(parentId, filter);
@@ -46,13 +46,11 @@ public class ChildRegisterImpl implements ChildRegister {
   }
 
   @Override
-  public List<Child> getParentChildList(String username) {
-    //todo delete futrther not neened parameter from parentDisplay
-    int id = parentDao.get().getParentIdByUserName(username);
-    if (id == 0) {//null
-      throw new NullPointerException("No person with username = " + username);
+  public List<Child> getParentChildList(Long parentId) {
+    if (parentId == null) {
+      throw new NullPointerException("No person with parentId = " + parentId);
     }
-    List<Child> children = childDao.get().loadChildren(id);
+    List<Child> children = childDao.get().loadChildren(parentId);
     children.add(0, Child.getAllChildObject());
     return children;
   }

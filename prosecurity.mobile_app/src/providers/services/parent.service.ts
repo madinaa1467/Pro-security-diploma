@@ -8,25 +8,13 @@ import {Subject} from "rxjs/Subject";
 @Injectable()
 export class ParentService {
 
-  private accountInfo: AccountInfo;
-
   constructor(private http: Api, private appLoader: AppLoader, private auth: Auth) {
   }
-
   public filter: EventFilter = new EventFilter();
-  readonly parentInfoValueChanges$ = new Subject<ToSave>();
 
-  loadParentInfo() {
-    this.accountInfo = this.auth.accountInfo;
-    console.log('Call parent/getInfo: parent - by AccountInfo id ', this.accountInfo.id);
-    return this.http.get("parent/getInfo",
-      {parentId: this.accountInfo.id})
+  loadParentInfo():Promise<ToSave> {
+    return this.http.get("parent/getInfo")
       .toPromise()
-      .then(resp => ToSave.create(resp));
-    /*.then(resp => {
-      console.log('Response from server parent/getInfo:', resp);
-      return ToSave.create(resp);
-      //this.parentInfoValueChanges$.next(ToSave.create(resp));
-    });*/
+      .then(resp => ToSave.create(resp)).catch(err=>console.error(err));
   }
 }

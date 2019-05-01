@@ -12,7 +12,6 @@ import {ParentService} from "../../providers/services/parent.service";
   templateUrl: 'edit-profile.html',
 })
 export class EditProfile implements OnInit {
-  birth_date = new FormControl(new Date());
 
   // You can get this data from your API. This is a dumb data for being an example.
   public user_data = {
@@ -43,65 +42,12 @@ export class EditProfile implements OnInit {
     },
   ];
   public defaultPhoneType = this.phoneTypes[0].value;
-
   public toSave: ToSave = new ToSave();
-  public phones: Phone[] = [];
-  private parentInfoChanges$: Subscription;
-
-
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public viewCtrl: ViewController,
-    public loadingCtrl: LoadingController,
-    private fb: FormBuilder,
-    private parentService: ParentService) {
-    //this.buildForm();
-
-    // this.userForm = this.fb.group(
-    //   {
-    //     name: [null],
-    //     surname: [null]
-    //   });
-  }
-
-  ngOnInit() {
-    this.load();
-    this.parentService.loadParentInfo().then(list => {
-      console.log("AAAAAAAAAAAAAAAAAAAAAAA parentInfoChanges$", list);
-      console.log("list", list);
-      console.log("this.userForm:", this.userForm);
-      this.userForm.patchValue({
-        birth_date: new Date(),
-        gender: "male",
-        name: "Александр",
-        password: null,
-        patronymic: "Сергеевич",
-        phones: [
-          {number: "+1111111111", type: "mob"},
-          {number: "+2222222222", type: "home"}
-        ],
-        surname: "Пушкин"
-      });
-      /*for (const key of Object.keys(list)) {
-        this.userForm.get(key).setValue(list[key]);
-      }*/
-    });
-    // this.userForm.controls.phones.type.setValue(this.phoneTypes[0])
-    console.log(this.userForm);
-  }
-
-  async load(){
-    await this.buildForm();
-
-  }
 
   userForm: FormGroup;
   phoneList: FormArray;
   formErrors = {
     'email': '',
-    'password': '',
-    'password2': '',
     'name': '',
     'surname': '',
     'gender': '',
@@ -112,16 +58,6 @@ export class EditProfile implements OnInit {
     'email': {
       'required': 'Please enter your email',
       'email': 'Please enter your valid email',
-    },
-    'password': {
-      'required': 'Please enter your password',
-      'pattern': 'The password must contain numbers and letters',
-      'minlength': 'Please enter more than 6 characters',
-      'maxlength': 'Please enter less than 25 characters',
-    },
-    'password2': {
-      'required': 'Value must be equal to password',
-      'notEquivalent': 'Password confirmation must be equal to password',
     },
     'name': {
       'required': 'Please enter your Name',
@@ -145,12 +81,51 @@ export class EditProfile implements OnInit {
     },
     'phones': {
       'required': 'Please enter your Phone',
-      // 'pattern': 'The Phone must be in format +7',
+      'pattern': 'The Phone must be in format +7',
     },
   };
 
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public loadingCtrl: LoadingController,
+    private fb: FormBuilder,
+    private parentService: ParentService) {
+  }
+
+  ngOnInit() {
+    this.buildForm();
+    this.parentService.loadParentInfo().then(list => {
+      console.log("list", list);
+
+      if(list.phones){
+        list.phones.forEach(x => {
+          this.phoneForms.push(this.createPhone())
+        });
+      }
+
+      this.userForm.patchValue(list);
+
+      /*this.userForm.patchValue({
+        name: "Alexandr",
+        surname: "Pushkin",
+        patronymic: "Sergeevich",
+        email:"asd@asd",
+        birth_date: "2019-05-23",
+        gender: "male",
+        phones: [
+          {number: "+1111111111", type: "mob"},
+          {number: "+2222222222", type: "home"}
+        ]
+      });*/
+
+    });
+  }
+
   updateProfile() {
-    //console.log("userForm.value:",this.userForm.getRawValue())
+    console.log("userForm.value:",this.userForm.getRawValue())
     let loader = this.loadingCtrl.create({
       duration: 200
     });
@@ -170,20 +145,9 @@ export class EditProfile implements OnInit {
         Validators.email
       ]
       ],
-      'password': ['', [
-        Validators.required,
-        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-        Validators.minLength(6),
-        Validators.maxLength(25)
-      ]
-      ],
-      'password2': ['', [
-        Validators.required,
-      ]
-      ],
       'name': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),//'^[\\w\u0430-\u044f]*[ -]*[\\w\u0430-\u044f]*$'
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
@@ -209,9 +173,9 @@ export class EditProfile implements OnInit {
         Validators.required
       ]
       ],
-      'phones': array
+      'phones': this.fb.array([])
 
-    }, {validator: this.checkIfMatchingPasswords('password', 'password2')});
+    });
 
     this.userForm.valueChanges.subscribe(data => {
 
@@ -228,20 +192,6 @@ export class EditProfile implements OnInit {
     this.phoneList = this.userForm.get('phones') as FormArray;
     this.onValueChanged();
 
-  }
-
-  checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    const form = this.userForm;
-    return (group: FormGroup) => {
-      let passwordInput = group.controls[passwordKey],
-        passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true});
-      }
-      else {
-        return passwordConfirmationInput.setErrors(null);
-      }
-    };
   }
 
   onValueChanged(data?: any) {
@@ -277,24 +227,31 @@ export class EditProfile implements OnInit {
     this.phoneList.push(this.createPhone());
   }
 
+  getPhoneError(phoneErrorsArray) {
+    if(phoneErrorsArray['pattern'] !== undefined){
+      return 'The Phone must be in format +7';
+    } else if(phoneErrorsArray['required'] !== undefined){
+      return 'Please enter your Phone';
+    }
+  }
+
   public deletePhone(phoneId) {
     // this.phones.splice(phoneId, 1);
     this.phoneList.removeAt(phoneId);
   }
 
-  createPhone(): FormGroup {
+  createPhone(number?:string, type?:string): FormGroup {
     return this.fb.group({
-      type: ['', [Validators.required]],
-      number: ['', [
-        Validators.required,
-        // Validators.pattern('^[+]*[0-9 -()]*[0-9 -]*[0-9]$'),
-        // Validators.pattern(new RegExp('^\\\+[0-9]?()[0-9](\d[0-9]{9})\$')),
-      ]
+      type: [type, [Validators.required]],
+      number: [number, [
+          Validators.required,
+          Validators.pattern('^[+]*[0-9 -()]*[0-9 -]*[0-9]$')
+        ]
       ],
     });
   }
 
-  get phoneForms() {
+  get phoneForms():FormArray {
     return this.userForm.get('phones') as FormArray;
   }
 
