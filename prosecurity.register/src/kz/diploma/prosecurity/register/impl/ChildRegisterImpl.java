@@ -56,7 +56,7 @@ public class ChildRegisterImpl implements ChildRegister {
   }
 
   @Override
-  public List<Event> getLastEventsList(long parentId) {
+  public List<Event> getLastEventsList(Long parentId) {
     List<Event> lastEventListFromDB = new ArrayList<>();
 
     int[] childrenIds = childDao.get().getParentChildId(parentId);

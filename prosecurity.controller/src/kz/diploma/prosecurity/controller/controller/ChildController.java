@@ -42,7 +42,7 @@ public class ChildController implements Controller {
 
   @ToJson
   @OnGet("/getLastEventsList")
-  public List<Event> getChildList(@Par("parentId") long parentId) {
+  public List<Event> getLastEventsList(@Par("parentId") Long parentId) {
     return childRegister.get().getLastEventsList(parentId);
   }
 }
