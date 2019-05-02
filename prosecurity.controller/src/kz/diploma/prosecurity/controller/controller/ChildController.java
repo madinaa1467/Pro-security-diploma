@@ -1,6 +1,7 @@
 package kz.diploma.prosecurity.controller.controller;
 
 import kz.diploma.prosecurity.controller.model.Child;
+import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
@@ -38,4 +39,10 @@ public class ChildController implements Controller {
     return childRegister.get().getParentChildList(parentId);
   }
 
+
+  @ToJson
+  @OnGet("/getLastEventsList")
+  public List<Event> getChildList(@Par("parentId") long parentId) {
+    return childRegister.get().getLastEventsList(parentId);
+  }
 }

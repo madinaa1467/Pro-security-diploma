@@ -54,4 +54,22 @@ public class ChildRegisterImpl implements ChildRegister {
     children.add(0, Child.getAllChildObject());
     return children;
   }
+
+  @Override
+  public List<Event> getLastEventsList(long parentId) {
+    List<Event> lastEventListFromDB = new ArrayList<>();
+
+    int[] childrenIds = childDao.get().getParentChildId(parentId);
+
+
+    for (int childId : childrenIds) {
+      Event lastEvent = childDao.get().getChildLastEvent(childId);
+      if(lastEvent != null){
+
+        lastEventListFromDB.add(lastEvent);
+      }
+    }
+
+    return lastEventListFromDB;
+  }
 }

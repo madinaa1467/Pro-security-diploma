@@ -8,6 +8,9 @@ export class Event {
   public fio: string;
   public img: string;
 
+  public when: string;
+  public timeUnit: string;
+
   public static create(a: any): Event {
     const ret = new Event();
     ret.assign(a);
@@ -23,7 +26,9 @@ export class Event {
     this.fio = a.fio;
     this.img = a.img;
 
-    // noinspection SuspiciousInstanceOfGuard
-    // this.events = (a.events instanceof Array) ? a.events.map(c => c) : [];
+    if(a.when)
+      this.when = a.when;
+    if(a.timeUnit)
+      this.timeUnit = a.timeUnit;
   }
 }

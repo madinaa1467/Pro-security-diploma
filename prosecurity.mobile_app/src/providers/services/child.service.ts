@@ -1,20 +1,36 @@
 import {Injectable} from '@angular/core';
-import {Api} from "../index";
+import {Api, Auth} from "../index";
 import {EventList} from "../../model/EventList";
 import {EventFilter} from "../../model/EventFilter";
 import {Storage} from "@ionic/storage";
 import {Child} from "../../model/Child";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {AccountInfo} from "../../model/auth/account-info";
+import {Event} from "../../model/Event";
 
 @Injectable()
 export class ChildService {
-  constructor(private http: Api, private storage: Storage) {
+  constructor(private http: Api, private storage: Storage,
+    private auth: Auth) {
   }
 
   public loading: boolean = false;
   public filter: EventFilter = new EventFilter();
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
+  private accountInfo: AccountInfo;
+
+  getLastEventsList(){
+    this.accountInfo = this.auth.accountInfo;
+    console.log('Call child/getLastEventsList: parent - by AccountInfo id ', this.accountInfo.id);
+    return this.http.get("child/getLastEventsList",
+      {parentId: this.accountInfo.id})
+      .toPromise()
+      .then(resp => {
+        return (<any> resp).map((r) =>
+          Event.create(r));
+  });
+  }
 
   loadEvents(childId : number) {
     this.filter.childId = childId;

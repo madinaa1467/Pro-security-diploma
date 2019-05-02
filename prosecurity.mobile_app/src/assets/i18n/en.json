@@ -15,5 +15,11 @@
   "SIGN_UP_VALIDATOR": {
     "EMAIL_REQUIRED": "Please enter your email",
     "EMAIL_VALID": "Please enter your valid email"
+  },
+  "MESSAGE":{
+    "CHILD_IN": "\"{{childFio}}\" entered at \"{{time}}\"",
+    "CHILD_OUT": "\"{{childFio}}\" go out at \"{{time}}\"",
+    "HOUR_AGO": "\"{{when}}\"h",
+    "DAY_AGO": "\"{{when}}\"d"
   }
 }

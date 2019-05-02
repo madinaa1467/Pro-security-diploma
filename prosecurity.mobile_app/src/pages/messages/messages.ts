@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { App, NavController, NavParams } from 'ionic-angular';
 import { MessageDetail } from '../message-detail/message-detail';
 import { NewMessage } from '../new-message/new-message';
+import {ChildService} from "../../providers/services/child.service";
 
 @Component({
   selector: 'page-messages',
   templateUrl: 'messages.html',
 })
-export class Messages {
+export class Messages implements OnInit {
 
+  public messageList;
   // You can get this data from your API. This is a dumb data for being an example.
   public messages = [
     {
@@ -49,8 +51,19 @@ export class Messages {
 
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private app: App, public childService: ChildService) {
   }
+
+  ngOnInit(): void {
+    this.childService.getLastEventsList().then(resp=> {
+        this.messageList = resp;
+      console.log("messageList", this.messageList);
+      }
+    );
+
+  }
+
 
   // goNewMessage() {
   //   this.app.getRootNav().push(NewMessage);
