@@ -10,21 +10,17 @@ import {Event} from "../../model/Event";
 
 @Injectable()
 export class ChildService {
-  constructor(private http: Api, private storage: Storage,
-    private auth: Auth) {
+  constructor(private http: Api) {
   }
 
   public loading: boolean = false;
   public filter: EventFilter = new EventFilter();
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
-  private accountInfo: AccountInfo;
 
   getLastEventsList(){
-    this.accountInfo = this.auth.accountInfo;
-    console.log('Call child/getLastEventsList: parent - by AccountInfo id ', this.accountInfo.id);
-    return this.http.get("child/getLastEventsList",
-      {parentId: this.accountInfo.id})
+    console.log('Call child/getLastEventsList: parent - by AccountInfo id ');
+    return this.http.get("child/getLastEventsList")
       .toPromise()
       .then(resp => {
         return (<any> resp).map((r) =>
