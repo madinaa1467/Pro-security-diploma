@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Api} from "..";
 import {Storage} from "@ionic/storage";
-import {TOKEN_KEY, USERNAME} from "./auth.metadata";
+import {TOKEN_KEY} from "./auth.metadata";
 import {BehaviorSubject} from "rxjs";
 import {AccountInfo} from "../../model/auth/account-info";
 import {ToSave} from "../../model/ToSave";
