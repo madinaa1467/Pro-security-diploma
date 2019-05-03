@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ChildService} from "../../providers/services/child.service";
+import {EventFilter} from "../../model/EventFilter";
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class MessageDetail {
   public childImg:string;
   public send_like_icon:boolean = false;
   public likeBtnVisible:boolean = false;
+  public filter: EventFilter = new EventFilter();
 
   public messages = [];
 
@@ -22,7 +24,8 @@ export class MessageDetail {
     this.childFio = this.navParams.get('childFio');
     this.childId = this.navParams.get('childId');
     this.childImg = this.navParams.get('childImg');
-    this.childService.loadEventsMessages(this.childId).then(resp =>{
+    this.filter.childId = this.childId;
+    this.childService.loadEvents(this.filter).then(resp =>{
       this.messages = resp;
     });
   }

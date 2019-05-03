@@ -4,6 +4,7 @@ import {PostPopover} from './post-popover';
 import {Messages} from '../messages/messages';
 import {ChildService} from "../../providers/services/child.service";
 import {Subscription} from "rxjs/Subscription";
+import {EventFilter} from "../../model/EventFilter";
 
 @Component({
   selector: 'page-home',
@@ -17,22 +18,22 @@ export class Home implements OnInit, OnDestroy {
     icon_name: 'heart-outline'
   };
   public tap: number = 0;
-  activeMenu: string;
+  public activeMenu: string;
   // You can get this data from your API. This is a dumb data for being an example.
   public stories = [];
   public eventList =[];
   private storiesChanges$: Subscription;
   private allChildrenEventListChanges$: Subscription;
-
-
+  public filter: EventFilter = new EventFilter();
   // public stories;
   constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
               public childService: ChildService, public menu: MenuController) {
-    this.menu1Active();
+    this.menuActive();
+    this.filter.childId = 0;
   }
-  menu1Active() {
-    this.activeMenu = 'menu1';
-    this.menu.enable(true, 'menu1');
+  menuActive() {
+    this.activeMenu = 'menu';
+    this.menu.enable(true, 'menu');
   }
 
   ngOnInit() {
@@ -50,10 +51,15 @@ export class Home implements OnInit, OnDestroy {
   }
 
   init() {
-    this.childService.load(0);
+    this.childService.load(this.filter);
   }
   getEventist(childId: number){
-    this.childService.loadEvents(childId);
+    if(childId)
+      this.filter.childId = childId;
+    this.childService.loadEvents(this.filter);
+    this.childService.loadEvents(this.filter).then(list =>{
+      this.eventList = list;
+    });
   }
 
   likeButton() {

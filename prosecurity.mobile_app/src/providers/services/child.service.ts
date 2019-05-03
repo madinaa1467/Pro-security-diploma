@@ -14,7 +14,6 @@ export class ChildService {
   }
 
   public loading: boolean = false;
-  public filter: EventFilter = new EventFilter();
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
 
@@ -26,25 +25,6 @@ export class ChildService {
         return (<any> resp).map((r) =>
           Event.create(r));
   });
-  }
-
-  loadEvents(childId : number) {
-    this.filter.childId = childId;
-    this.filter.limit = 15;
-    this.filter.startDate = new Date("2006-01-26");
-    this.filter.endDate = new Date();
-
-    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', this.filter);
-    this.http.get("child/listAllEvents",
-      {parentId: 1, filter: JSON.stringify(this.filter)})
-      .toPromise()
-      .then(resp => {
-        console.log('Response from server child/listAllEvents:', resp);
-        if (!resp) {
-          return [];
-        }
-        this.allChildrenEventListValueChanges$.next((resp as EventList[]).map((r) => EventList.create(r)));
-      });
   }
 
   getParentChildren(): Promise<Child[]> {
@@ -70,26 +50,29 @@ export class ChildService {
           });
   }
 
-  load(childId : number) {
+  load(filter : EventFilter) {
     this.loadParentChildren();
-    this.loadEvents(childId);
+    this.loadEvents(filter);
   }
 
-  loadEventsMessages(childId : number) {
-    this.filter.childId = childId;
-    this.filter.limit = 15;
-    this.filter.startDate = new Date("2006-01-26");
-    this.filter.endDate = new Date();
+  loadEvents(filter: EventFilter) {
 
-    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', this.filter);
+    filter.limit = 15;
+    if(!filter.startDate)
+      filter.startDate = new Date("2006-01-26");
+    if(!filter.endDate)
+      filter.endDate = new Date();
+
+    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
     return this.http.get("child/listAllEvents",
-      {parentId: 1, filter: JSON.stringify(this.filter)})
+      {parentId: 1, filter: JSON.stringify(filter)})
       .toPromise()
       .then(resp => {
         console.log('Response from server child/listAllEvents:', resp);
         if (!resp) {
           return [];
         }
+        this.allChildrenEventListValueChanges$.next((resp as EventList[]).map((r) => EventList.create(r)));
         return (resp as EventList[]).map((r) => EventList.create(r));
       });
   }
