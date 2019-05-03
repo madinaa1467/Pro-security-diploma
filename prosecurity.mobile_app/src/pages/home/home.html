@@ -28,9 +28,9 @@
 <ion-header>
   <ion-navbar color="white">
     <ion-buttons start left>
-      <button color="black" ion-button icon-only>
-        <ion-icon name="camera"></ion-icon>
-      </button>
+      <!--<button color="black" ion-button icon-only>-->
+        <!--<ion-icon name="camera"></ion-icon>-->
+      <!--</button>-->
     </ion-buttons>
     <button ion-button [menuToggle]="activeMenu">
       <ion-icon name="menu"></ion-icon>
@@ -67,8 +67,9 @@
             </ion-avatar>
             <ion-row>
               <ion-col col-10 no-padding no-margin>
-                <p class="p_action"><b>{{event.fio}}</b> {{event.action}}
-                  <ion-note>{{event.time}}</ion-note>
+                <p class="p_action">
+                {{ ('HOME.'+event.action+'_'+event.gender) | translate:{childFio:event.fio} }}
+                <ion-note>{{event.time}}</ion-note>
                 </p>
               </ion-col>
               <ion-col col-2 *ngIf="event.action == 'in'">

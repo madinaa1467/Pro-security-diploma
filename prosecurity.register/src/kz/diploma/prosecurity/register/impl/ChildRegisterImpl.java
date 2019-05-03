@@ -30,7 +30,6 @@ public class ChildRegisterImpl implements ChildRegister {
       Event event = eventListFromDB.get(i);
       event.setTime();
       if (tempDate.equals(dateFormat.format(event.date))) {
-
         eventLists.get(eventLists.size()-1).events.add(event);
       } else {
         EventList eventList = new EventList();

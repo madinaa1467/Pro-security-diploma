@@ -11,6 +11,7 @@ public class Event implements Comparable<Event> {
   public long childId;
   public String fio;
   public String img;
+  public String gender;
 
 
   public String when;

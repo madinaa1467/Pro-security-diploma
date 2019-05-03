@@ -15,7 +15,7 @@
       <h2 style="font-weight: bold;  display: inline;">{{ m.fio }}</h2>
       <p style="display: inline;"><ion-note item-right style="padding-left: 2px;">
         {{ 'MESSAGE.'+m.timeUnit | translate: {when: m.when} }}</ion-note></p>
-      <p>{{ 'MESSAGE.'+m.action | translate:{childFio:m.fio, time: (m.date|date:'HH:mm:ss  dd/MM/yyyy')} }}</p>
+      <p>{{ ('MESSAGE.'+m.action+'_'+m.gender) | translate:{childFio:m.fio, time: (m.date|date:'HH:mm:ss')} }}</p>
     </ion-item>
   </ion-list>
 

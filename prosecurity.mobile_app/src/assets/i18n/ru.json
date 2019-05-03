@@ -4,7 +4,11 @@
   "CHANGE_LANGUAGE": "Поменять язык",
   "HOME": {
     "TITLE": "Привет ngx-translate!",
-    "SELECT": "Выберите язык"
+    "SELECT": "Выберите язык",
+    "in_male": "{{childFio}} вышел в ",
+    "out_male": "{{childFio}} зашел в ",
+    "in_female": "{{childFio}} вышла в ",
+    "out_female": "{{childFio}} зашла в "
   },
   "LOGIN": {
     "SIGN_IN": "Вход",
@@ -17,8 +21,10 @@
     "EMAIL_VALID": "Пожалуйста введите почту в правильном формате"
   },
   "MESSAGE":{
-    "in": "{{childFio}} вышел в {{time}}",
-    "out": "{{childFio}} зашел в {{time}}",
+    "in_male": "{{childFio}} вышел в {{time}}",
+    "out_male": "{{childFio}} зашел в {{time}}",
+    "in_female": "{{childFio}} вышла в {{time}}",
+    "out_female": "{{childFio}} зашла в {{time}}",
     "YEARS_AGO": "{{when}}г",
     "MONTHS_AGO": "{{when}}мес",
     "DAYS_AGO": "{{when}}д",

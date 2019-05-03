@@ -4,7 +4,11 @@
   "CHANGE_LANGUAGE": "Change language",
   "HOME": {
     "TITLE": "Hello Angular with ngx-translate!",
-    "SELECT": "Change language"
+    "SELECT": "Change language",
+    "in_male": "{{childFio}} entered at ",
+    "out_male": "{{childFio}} go out at ",
+    "in_female": "{{childFio}} entered at ",
+    "out_female": "{{childFio}} go out at "
   },
   "LOGIN": {
     "SIGN_IN": "Login",
@@ -17,8 +21,10 @@
     "EMAIL_VALID": "Please enter your valid email"
   },
   "MESSAGE":{
-    "in": "{{childFio}} entered at {{time}}",
-    "out": "{{childFio}} go out at {{time}}",
+    "in_male": "{{childFio}} entered at {{time}}",
+    "out_male": "{{childFio}} go out at {{time}}",
+    "in_female": "{{childFio}} entered at {{time}}",
+    "out_female": "{{childFio}} go out at {{time}}",
     "YEARS_AGO": "{{when}}y",
     "MONTHS_AGO": "{{when}}month",
     "DAYS_AGO": "{{when}}d",

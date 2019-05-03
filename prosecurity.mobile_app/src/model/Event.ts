@@ -3,6 +3,7 @@ export class Event {
   public date: Date;
   public time: String;
   public action: String;
+  public gender: String;
 
   public childId: number;
   public fio: string;
@@ -24,6 +25,7 @@ export class Event {
     this.action = a.action;
     this.childId = a.childId;
     this.fio = a.fio;
+    this.gender = a.gender;
     this.img = 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120';
 
     if(a.when)
