@@ -4,13 +4,8 @@
     <ion-title>candelibas</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="person-add" class="badge-container">
-          <span class="custom-badge">3</span>
-        </ion-icon>
-      </button>
       <button ion-button icon-only (click)="goOptions()">
-        <ion-icon name="more"></ion-icon>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -30,7 +25,7 @@
   <ion-row no-padding no-margin>
     <ion-col no-padding no-margin col-4></ion-col>
     <ion-col no-padding no-margin text-center col-8>
-      <button class="edit-button" ion-button block color="secondary" (click)="childSaveEdit()">
+      <button class="edit-button" ion-button block color="light" (click)="childSaveEdit()">
         <ion-icon name="person-add"></ion-icon>&nbsp; Add Child</button>
     </ion-col>
     <ion-col col-3></ion-col>
@@ -40,7 +35,7 @@
   <ion-row no-padding no-margin>
     <ion-col no-padding no-margin col-4></ion-col>
       <ion-col no-padding no-margin text-center col-8>
-      <button class="edit-button" ion-button block color="twitter"  (click)="goEditProfile()">
+      <button class="edit-button" ion-button block color="light" (click)="goEditProfile()">
         <ion-icon name="create"></ion-icon> &nbsp; Edit your profile</button>
     </ion-col>
     <ion-col col-3></ion-col>
@@ -75,48 +70,8 @@
           </ion-col>
         </ion-row>
       </button>
-
     </ion-list>
-
-
-    <ion-list *ngSwitchCase="'list'">
-        <ion-item>
-          <ion-label>Pokémon Yellow</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Mega Man X</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>The Legend of Zelda</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Pac-Man</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Super Mario World</ion-label>
-        </ion-item>
-
-      <!-- List of Input Items -->
-      <ion-item>
-        <ion-label>Input</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Toggle</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Radio</ion-label>
-        <ion-radio slot="end"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Checkbox</ion-label>
-        <ion-checkbox slot="start"></ion-checkbox>
-      </ion-item>
-    </ion-list>
-
   </div>
-
 
 
 </ion-content>
