@@ -241,4 +241,145 @@ limit 10
 //    });
 //  }
 //    Collections.sort(myChildrenEventList);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*
+  insert into child(id, surname, name, patronymic, gender, birth_date, actual)
+values (1, 'Asyl', 'Aisha', 'Asla', 'female', '2001-09-28', true),
+  (2, 'Kasymzhan', 'Arman', 'Adam', 'male', '2001-09-28', true),
+  (3, 'Ermekova', 'Altyn', 'Iman kyzy', 'female', '2001-09-28', true),
+  (4, 'Asanov', 'Syrym', 'Asanovich', 'male', '2001-09-28', true);
+
+
+select p.surname||' '||p.name||' '||p.patronymic as fio, p.gender, p.birth_date
+from parent as p
+where id = 1;
+
+
+select child from parent_child where parent = 1;
+
+select pc.child, c.name, c.gender
+from parent_child as pc, child as c
+where pc.parent = 1 AND pc.child = c.id AND c.actual = 1;
+
+select  c.id, c.surname||' '||c.name||' '||c.patronymic as fio, e.id, e.action, e.date
+from child as c, event as e
+where c.id = 1 AND c.actual = 1 AND e.actual = 1;
+
+with cans as (
+    select person_id, string_agg(user_can, ', ' order by user_can asc) as cans
+    from person_cans
+    group by person_id
+)
+select id,
+  surname||' '||substring(name from 1 for 1)||'. '||substring(patronymic from 1 for 1)||'.' as fio,
+  username,
+  to_char(birth_date, 'YYYY-MM-DD') as birthDate,
+  cans
+from person
+  left join cans pc on person_id = id
+where blocked = 0
+order by surname, name;
+
+
+select  c.id, c.surname||' '||c.name||' '||c.patronymic as fio, e.id, e.action, e.date
+from child as c, event as e
+where c.id = 1 AND c.actual = 1 AND e.actual = 1;
+
+
+select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, pc.child,
+  c.surname||' '||c.name||' '||c.patronymic as fio
+from child as c, event as e, parent_child pc
+where pc.parent = 1 AND pc.child = c.id AND pc.child = e.child AND c.actual = 1
+  AND e.actual = 1 AND pc.actual = 1
+  AND  date BETWEEN '2007-02-16' AND '2007-02-16 23:59:59'
+order by date desc
+limit 15
+offset 0;
+
+
+select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,
+  c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio
+from child as c, event as e
+where c.id = 1 AND c.id = e.child
+      AND c.actual = 1 AND e.actual = 1
+      AND  date BETWEEN '2007-02-16' AND '2007-02-16 23:59:59'
+order by date desc
+limit 15
+offset 0;
+
+
+
+
+select pc.child, c.name, c.gender
+    from parent_child as pc, child as c
+    where pc.parent =  1 AND pc.child = c.id AND c.actual = 1;
+
+
+
+select * from event where child = 1 order by date desc;
+
+
+select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,
+              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio
+from child as c, event as e
+where c.id = 5 AND c.id = e.child
+      AND c.actual = 1 AND e.actual = 1
+order by date desc
+limit 1;
+
+
+select c.id
+from child as c, parent_child as pc
+where pc.parent = 1 and pc.child = c.id;
+
+
+select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, pc.child as childId,
+              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender
+from child as c, event as e, parent_child pc
+where c.id = e.child AND pc.child = c.id AND pc.parent = #{parentId}
+AND e.actual = 1 AND c.actual = 1 AND pc.actual = 1
+AND  date BETWEEN #{filter.startDate} AND #{filter.endDate}
+order by date desc
+limit #{filter.limit}
+offset #{filter.offset};
+
+
+
+select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,
+              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender
+from child as c, event as e
+where c.id = e.child AND c.id = #{childId}
+AND c.actual = 1 AND e.actual = 1
+AND  date BETWEEN #{filter.startDate} AND #{filter.endDate}
+order by date desc
+limit #{filter.limit}
+offset #{filter.offset};
+
+
+
+
+
+   */
 }

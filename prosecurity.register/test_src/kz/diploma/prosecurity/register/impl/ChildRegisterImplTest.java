@@ -1,6 +1,7 @@
 package kz.diploma.prosecurity.register.impl;
 
 import javafx.util.Pair;
+import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
@@ -40,6 +41,46 @@ public class ChildRegisterImplTest extends ParentTestNg {
     //
     //
     System.out.println(childEvents);
+  }
+  //List<Event> eventListFromDB;
+  //    if (filter.childId == 0)//case when we call for all children
+  //      eventListFromDB = childDao.get().getChildrenEventList(parentId, filter);
+  //    else
+  //      eventListFromDB = childDao.get().getChildEventList(filter.childId, filter);
+  //
+  //    List<EventList> eventLists = new ArrayList<>();
+  //    String tempDate = "";
+  //    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+  //
+  //    for(int i = 0; i < eventListFromDB.size(); i ++) {
+  //      Event event = eventListFromDB.get(i);
+  //      event.setTime();
+  //      if (tempDate.equals(dateFormat.format(event.date))) {
+  //        eventLists.get(eventLists.size()-1).events.add(event);
+  //      } else {
+  //        EventList eventList = new EventList();
+  //        eventList.events.add(event);
+  //        tempDate = dateFormat.format(event.date);
+  //        eventList.date = tempDate;
+  //        eventLists.add(eventList);
+  //      }
+  //    }
+  //    return eventLists;
+
+
+
+
+
+
+  @Test
+  public void getChildEventListJDBCTest(){
+
+
+    List<Event> eventListFromDB = new ArrayList<>();
+
+
+
+    System.out.println();
   }
 
   @Test
