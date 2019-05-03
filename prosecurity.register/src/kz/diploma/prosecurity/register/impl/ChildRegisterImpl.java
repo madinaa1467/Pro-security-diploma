@@ -1,10 +1,8 @@
 package kz.diploma.prosecurity.register.impl;
 
-import javafx.util.Pair;
 import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
-import kz.diploma.prosecurity.register.dao.ParentDao;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 
@@ -65,9 +63,10 @@ public class ChildRegisterImpl implements ChildRegister {
     for (int childId : childrenIds) {
       Event lastEvent = childDao.get().getChildLastEvent(childId);
       if(lastEvent != null){
-        Pair<String, Long> pair = computeDiff(lastEvent.date, today);
-        lastEvent.timeUnit = pair.getKey();
-        lastEvent.when = pair.getValue().toString();
+        String pair = computeDiff(lastEvent.date, today);
+        String[] parts = pair.split(";");
+        lastEvent.timeUnit = parts[0];
+        lastEvent.when = parts[1];
         lastEventListFromDB.add(lastEvent);
       }
     }
@@ -76,7 +75,7 @@ public class ChildRegisterImpl implements ChildRegister {
   }
 
 
-  public static Pair<String, Long> computeDiff(Date date1, Date date2) {
+  public static String computeDiff(Date date1, Date date2) {
 
     String returnUnit = "";
     Long returnTime = 0L;
@@ -109,7 +108,7 @@ public class ChildRegisterImpl implements ChildRegister {
         returnUnit = "MONTHS_AGO";
       }
     }
-    return new Pair<>(returnUnit, returnTime);
+    return returnUnit+';'+returnTime;
   }
 
 
