@@ -59,24 +59,29 @@
     <ion-list>
       <ion-item-group *ngFor="let day of eventList">
         <ion-item-divider color="light" class="custom-divider" sticky>{{day.date}}</ion-item-divider>
-        <ion-item no-lines text-wrap *ngFor="let event of day.events">
-          <ion-avatar item-left>
-            <img src="../../assets/src/girl (1).png">
-          </ion-avatar>
-          <ion-row>
-            <ion-col col-10 no-padding no-margin>
-              <p><b>{{event.fio}}</b> {{event.action}}
-                <ion-note>{{event.time}}</ion-note>
-              </p>
-            </ion-col>
-            <ion-col col-2 *ngIf="event.action == 'in'">
-              <img src="../../assets/src/enter.png" class="post-small-img" alt="">
-            </ion-col>
-            <ion-col col-2 *ngIf="event.action == 'out'">
-              <img src="../../assets/src/exit.png" class="post-small-img" alt="">
-            </ion-col>
-          </ion-row>
-        </ion-item>
+        <div *ngFor="let event of day.events">
+          <hr>
+          <ion-item no-lines text-wrap>
+            <ion-avatar item-left>
+              <img src="../../assets/src/girl (1).png">
+            </ion-avatar>
+            <ion-row>
+              <ion-col col-10 no-padding no-margin>
+                <p class="p_action"><b>{{event.fio}}</b> {{event.action}}
+                  <ion-note>{{event.time}}</ion-note>
+                </p>
+              </ion-col>
+              <ion-col col-2 *ngIf="event.action == 'in'">
+                <img src="../../assets/src/enter.png" class="post-small-img" alt="">
+              </ion-col>
+              <ion-col col-2 *ngIf="event.action == 'out'">
+                <img src="../../assets/src/exit.png" class="post-small-img" alt="">
+              </ion-col>
+            </ion-row>
+            <!--<div class="divider"></div>-->
+          </ion-item>
+          <hr>
+        </div>
       </ion-item-group>
     </ion-list>
 
