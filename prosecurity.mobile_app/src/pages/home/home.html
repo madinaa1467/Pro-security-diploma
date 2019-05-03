@@ -2,12 +2,17 @@
 
   <ion-header>
     <ion-toolbar color="secondary">
-      <ion-title>Menu 1</ion-title>
+      <ion-title>Filter</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
+
+      <ion-item>
+        <ion-label color="primary" floating>Email</ion-label>
+        <ion-input type="email" placeholder="" id="email" class="input" required></ion-input>
+      </ion-item>
       <button ion-item menuClose="menu1" detail-none>
         Close Menu 1
       </button>
@@ -46,6 +51,7 @@
 
 
     <button ion-button block [menuToggle]="activeMenu">Search By</button>
+
     <ion-list>
       <ion-item-group *ngFor="let day of eventList">
         <ion-item-divider color="light" class="custom-divider" sticky>{{day.date}}</ion-item-divider>
