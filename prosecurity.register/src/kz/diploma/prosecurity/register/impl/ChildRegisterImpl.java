@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.register.impl;
 
+import javafx.util.Pair;
 import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
@@ -8,8 +9,8 @@ import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Bean
 public class ChildRegisterImpl implements ChildRegister {
@@ -61,15 +62,71 @@ public class ChildRegisterImpl implements ChildRegister {
 
     int[] childrenIds = childDao.get().getParentChildId(parentId);
 
-
+    Date today = new Date();
+//    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     for (int childId : childrenIds) {
       Event lastEvent = childDao.get().getChildLastEvent(childId);
       if(lastEvent != null){
-
+        Pair<String, Long> pair = computeDiff(lastEvent.date, today);
+        lastEvent.timeUnit = pair.getKey();
+        lastEvent.when = pair.getValue().toString();
         lastEventListFromDB.add(lastEvent);
       }
     }
 
     return lastEventListFromDB;
+  }
+
+
+  public static Pair<String, Long> computeDiff(Date date1, Date date2) {
+
+    String returnUnit = "";
+    Long returnTime = 0L;
+    long diffInMillies = date2.getTime() - date1.getTime();
+    List<TimeUnit> units = new ArrayList<>(EnumSet.allOf(TimeUnit.class));
+    Collections.reverse(units);
+
+    Map<TimeUnit,Long> result = new LinkedHashMap<>();
+    long milliesRest = diffInMillies;
+
+    for ( TimeUnit unit : units ) {
+      long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
+      long diffInMilliesForUnit = unit.toMillis(diff);
+      milliesRest = milliesRest - diffInMilliesForUnit;
+      result.put(unit,diff);
+    }
+    for (Map.Entry<TimeUnit,Long> entry : result.entrySet()){
+      if(entry.getValue() != 0){
+        returnUnit = getCorrectedUnit(entry.getKey());
+        returnTime = entry.getValue();
+        break;
+      }
+    }
+    if("d".equals(returnUnit)){
+      if(returnTime > 365){
+        returnTime = returnTime / 365;
+        returnUnit = "y";
+      } else if(returnTime > 30){
+        returnTime = returnTime / 30;
+        returnUnit = "month";
+      }
+    }
+    return new Pair<>(returnUnit, returnTime);
+  }
+
+
+  public static String getCorrectedUnit(TimeUnit timeUnit){
+    switch (timeUnit) {
+      case DAYS:
+        return "d";
+      case HOURS:
+        return "h";
+      case MINUTES:
+        return "m";
+      case SECONDS:
+        return "s";
+      default:
+        return "";
+    }
   }
 }
