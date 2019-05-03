@@ -65,7 +65,7 @@ export class ChildService {
 
     console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
     return this.http.get("child/listAllEvents",
-      {parentId: 1, filter: JSON.stringify(filter)})
+      { filter: JSON.stringify(filter)})
       .toPromise()
       .then(resp => {
         console.log('Response from server child/listAllEvents:', resp);
