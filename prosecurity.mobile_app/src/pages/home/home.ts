@@ -54,7 +54,7 @@ export class Home implements OnInit, OnDestroy {
     this.childService.load(this.filter);
   }
   getEventist(childId: number){
-    if(childId)
+    if(childId != null)
       this.filter.childId = childId;
     this.childService.loadEvents(this.filter);
     this.childService.loadEvents(this.filter).then(list =>{
