@@ -8,7 +8,6 @@
 
   <ion-content>
     <ion-list>
-
         <ion-item>
           <ion-label>From </ion-label>
           <ion-datetime pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.startDate" ></ion-datetime>
@@ -55,7 +54,7 @@
   <div (swipe)="swipePage($event)">
 
 
-    <button ion-button block [menuToggle]="activeMenu">Search By</button>
+    <button ion-button block color="light" [menuToggle]="activeMenu">Search By</button>
 
     <ion-list>
       <ion-item-group *ngFor="let day of eventList">
@@ -79,9 +78,18 @@
           </ion-row>
         </ion-item>
       </ion-item-group>
-
     </ion-list>
 
+    <div
+      *ngIf="eventList.length == 0"
+      class="empty-list-notify-container">
+      <img src="../../assets/src/no_reports.png"
+           class="empty-image"/>
+
+      <p class="empty-list-lower-title-text">
+        ОТСУТСТВУЕТ ИСТОРИЯ
+      </p>
+    </div>
 
     <!-- Cards -->
     <!--<ion-card no-padding padding-bottom no-margin class="card">-->

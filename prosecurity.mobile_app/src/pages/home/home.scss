@@ -53,6 +53,33 @@ page-home {
     margin: 0;
   }
 
+  .empty-list-lower-title-text {
+    position: relative;
+    //width: 3em;
+    text-align: center;
+    margin: 0 auto;
+    top: 11%;
+    font-size: 1em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+    margin-top: 5% !important;
+  }
+
+  .empty-list-notify-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 15%;
+  }
+
+  .empty-image {
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+
   //ion-item-divider{
   //  height: 1em;
   //}
