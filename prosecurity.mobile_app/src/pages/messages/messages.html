@@ -8,19 +8,20 @@
 
 <ion-content>
   <ion-list>
-    <ion-item no-lines *ngFor="let m of messages" (click)="goMessageDetail(m.sender, m.profile_img, m.last_message)">
+    <ion-item no-lines *ngFor="let m of messageList" (click)="goMessageDetail(m.childId, m.fio, m.img)">
       <ion-avatar item-left>
-        <img [src]="m.profile_img">
+        <img [src]="m.img">
       </ion-avatar>
-      <h2 style="font-weight: bold">{{ m.sender }}</h2>
-      <p>{{ m.last_message }} <ion-note item-right style="padding-left: 2px">{{ m.time }}</ion-note></p>
-
+      <h2 style="font-weight: bold;  display: inline;">{{ m.fio }}</h2>
+      <p style="display: inline;"><ion-note item-right style="padding-left: 2px;">
+        {{ 'MESSAGE.'+m.timeUnit | translate: {when: m.when} }}</ion-note></p>
+      <p>{{ 'MESSAGE.'+m.action | translate:{childFio:m.fio, time: (m.date|date:'HH:mm:ss  dd/MM/yyyy')} }}</p>
     </ion-item>
   </ion-list>
 
 </ion-content>
 <!--<ion-footer (click)="goNewMessage()">-->
-  <!--<ion-toolbar>-->
-     <!--<p text-center><ion-icon name="add"></ion-icon> </p>-->
-  <!--</ion-toolbar>-->
+<!--<ion-toolbar>-->
+<!--<p text-center><ion-icon name="add"></ion-icon> </p>-->
+<!--</ion-toolbar>-->
 <!--</ion-footer>-->

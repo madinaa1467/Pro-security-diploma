@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {ChildService} from "../../providers/services/child.service";
 
 @IonicPage()
 @Component({
@@ -8,18 +9,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MessageDetail {
 
-  public sender:string;
-  public profile_img:string;
-  public last_message:string;
+  public childFio:string;
+  public childId:number;
+  public childImg:string;
   public send_like_icon:boolean = false;
   public likeBtnVisible:boolean = false;
 
-  public messages = []; // You can get all the chat details from your API
+  public messages = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.sender = this.navParams.get('sender');
-    this.profile_img = this.navParams.get('profile_img');
-    this.last_message = this.navParams.get('last_message');
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private childService: ChildService) {
+    this.childFio = this.navParams.get('childFio');
+    this.childId = this.navParams.get('childId');
+    this.childImg = this.navParams.get('childImg');
+    this.childService.loadEventsMessages(this.childId).then(resp =>{
+      this.messages = resp;
+    });
   }
 
   sendLike() {

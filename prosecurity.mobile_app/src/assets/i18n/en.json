@@ -17,9 +17,13 @@
     "EMAIL_VALID": "Please enter your valid email"
   },
   "MESSAGE":{
-    "CHILD_IN": "\"{{childFio}}\" entered at \"{{time}}\"",
-    "CHILD_OUT": "\"{{childFio}}\" go out at \"{{time}}\"",
-    "HOUR_AGO": "\"{{when}}\"h",
-    "DAY_AGO": "\"{{when}}\"d"
+    "in": "{{childFio}} entered at {{time}}",
+    "out": "{{childFio}} go out at {{time}}",
+    "YEARS_AGO": "{{when}}y",
+    "MONTHS_AGO": "{{when}}month",
+    "DAYS_AGO": "{{when}}d",
+    "HOURS_AGO": "{{when}}h",
+    "MINUTES_AGO": "{{when}}min",
+    "SECONDS_AGO": "{{when}}sec"
   }
 }

@@ -24,7 +24,7 @@ export class Event {
     this.action = a.action;
     this.childId = a.childId;
     this.fio = a.fio;
-    this.img = a.img;
+    this.img = 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120';
 
     if(a.when)
       this.when = a.when;

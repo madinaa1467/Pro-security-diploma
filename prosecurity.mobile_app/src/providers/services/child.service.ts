@@ -74,4 +74,24 @@ export class ChildService {
     this.loadParentChildren();
     this.loadEvents(childId);
   }
+
+  loadEventsMessages(childId : number) {
+    this.filter.childId = childId;
+    this.filter.limit = 15;
+    this.filter.startDate = new Date("2006-01-26");
+    this.filter.endDate = new Date();
+
+    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', this.filter);
+    return this.http.get("child/listAllEvents",
+      {parentId: 1, filter: JSON.stringify(this.filter)})
+      .toPromise()
+      .then(resp => {
+        console.log('Response from server child/listAllEvents:', resp);
+        if (!resp) {
+          return [];
+        }
+        return (resp as EventList[]).map((r) => EventList.create(r));
+      });
+  }
+
 }

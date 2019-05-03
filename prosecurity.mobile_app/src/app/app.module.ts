@@ -27,6 +27,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -50,6 +53,9 @@ export function initApp(appLoadService: AppLoader) {
 export function setTranslateLoader(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');//, './assets/i18n/', '.json'
 }
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 @NgModule({
   declarations: [
@@ -82,7 +88,8 @@ export function setTranslateLoader(httpClient: HttpClient) {
         useFactory: (setTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    PerfectScrollbarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -112,6 +119,7 @@ export function setTranslateLoader(httpClient: HttpClient) {
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoader], multi: true},
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ]
 })
 

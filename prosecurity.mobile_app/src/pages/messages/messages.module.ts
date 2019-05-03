@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { Messages } from './messages';
+import {NgModule} from '@angular/core';
+import {IonicPageModule} from 'ionic-angular';
+import {Messages} from './messages';
+import {SharedModule} from "../../app/shared.module";
 
 @NgModule({
   declarations: [
@@ -8,9 +9,11 @@ import { Messages } from './messages';
   ],
   imports: [
     IonicPageModule.forChild(Messages),
+    SharedModule
   ],
   exports: [
     Messages
   ]
 })
-export class MessagesModule {}
+export class MessagesModule {
+}

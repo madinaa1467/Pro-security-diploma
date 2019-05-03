@@ -17,9 +17,13 @@
     "EMAIL_VALID": "Пожалуйста введите почту в правильном формате"
   },
   "MESSAGE":{
-    "CHILD_IN": "\"{{childFio}}\" вышел в \"{{time}}\"",
-    "CHILD_OUT": "\"{{childFio}}\" зашел в \"{{time}}\"",
-    "HOUR_AGO": "\"{{when}}\"ч",
-    "DAY_AGO": "\"{{when}}\"д"
+    "in": "{{childFio}} вышел в {{time}}",
+    "out": "{{childFio}} зашел в {{time}}",
+    "YEARS_AGO": "{{when}}г",
+    "MONTHS_AGO": "{{when}}мес",
+    "DAYS_AGO": "{{when}}д",
+    "HOURS_AGO": "{{when}}ч",
+    "MINUTES_AGO": "{{when}}мин",
+    "SECONDS_AGO": "{{when}}сек"
   }
 }

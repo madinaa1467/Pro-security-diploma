@@ -42,7 +42,7 @@ public interface ChildDao {
   int[] getParentChildId(@Param("parentId") long parentId);
 
 //todo notification should be on inside children
-  @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,\n" +
+  @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as childId,\n" +
     "              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio\n" +
     "from child as c, event as e\n" +
     "where c.id = #{childId} AND c.id = e.child\n" +

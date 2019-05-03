@@ -69,8 +69,8 @@ export class Messages implements OnInit {
   //   this.app.getRootNav().push(NewMessage);
   // }
 
-  goMessageDetail(sender:string, profile_img:string, last_message:string) {
-    this.app.getRootNav().push(MessageDetail, { sender: sender, profile_img: profile_img, last_message: last_message});
+  goMessageDetail(childId: number, childFio:string, childImg:string) {
+    this.app.getRootNav().push(MessageDetail, { childId:childId, childFio: childFio, childImg: childImg});
   }
 
 }

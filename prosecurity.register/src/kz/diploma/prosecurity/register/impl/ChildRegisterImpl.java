@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 @Bean
 public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ChildDao> childDao;
-  public BeanGetter<ParentDao> parentDao;
 
   @Override
   public List<EventList> listAllEvents(Long parentId, EventFilter filter) {
@@ -63,7 +62,6 @@ public class ChildRegisterImpl implements ChildRegister {
     int[] childrenIds = childDao.get().getParentChildId(parentId);
 
     Date today = new Date();
-//    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     for (int childId : childrenIds) {
       Event lastEvent = childDao.get().getChildLastEvent(childId);
       if(lastEvent != null){
@@ -102,13 +100,13 @@ public class ChildRegisterImpl implements ChildRegister {
         break;
       }
     }
-    if("d".equals(returnUnit)){
+    if("DAYS_AGO".equals(returnUnit)){
       if(returnTime > 365){
         returnTime = returnTime / 365;
-        returnUnit = "y";
+        returnUnit = "YEARS_AGO";
       } else if(returnTime > 30){
         returnTime = returnTime / 30;
-        returnUnit = "month";
+        returnUnit = "MONTHS_AGO";
       }
     }
     return new Pair<>(returnUnit, returnTime);
@@ -118,13 +116,13 @@ public class ChildRegisterImpl implements ChildRegister {
   public static String getCorrectedUnit(TimeUnit timeUnit){
     switch (timeUnit) {
       case DAYS:
-        return "d";
+        return "DAYS_AGO";
       case HOURS:
-        return "h";
+        return "HOURS_AGO";
       case MINUTES:
-        return "m";
+        return "MINUTES_AGO";
       case SECONDS:
-        return "s";
+        return "SECONDS_AGO";
       default:
         return "";
     }
