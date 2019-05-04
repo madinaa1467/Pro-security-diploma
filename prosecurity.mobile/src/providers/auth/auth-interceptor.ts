@@ -4,13 +4,12 @@ import {Observable} from 'rxjs';
 import {Auth} from "./auth";
 import {_throw} from "rxjs/observable/throw";
 import {catchError} from "rxjs/operators";
-import {AlertController} from "ionic-angular";
 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth ) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -21,20 +20,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return next.handle(cloneReq).pipe(
         catchError(error => {
-          console.log("AuthInterceptor:",error);
+
           if (error.status === 401) {
             this.auth.logout();
           }
-
-          /*let msg = error.message;
-
-          let alert = this.alertCtrl.create({
-            title: error.name,
-            message: msg,
-            buttons: ['OK']
-          });
-          alert.present();*/
-
 
           return _throw(error);
         })

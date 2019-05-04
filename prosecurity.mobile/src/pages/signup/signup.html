@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Signup</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <span><strong>Please, enter your personal info:</strong></span>
+  </div>
+  <div padding>
+    <form [formGroup]="userForm">
+      <ion-item>
+        <ion-label color="primary" fixed>Email</ion-label>
+        <ion-input type="email" placeholder="" id="email" class="input"
+                   formControlName="email" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.email">
+            {{ formErrors.email }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" fixed>Password</ion-label>
+        <ion-input type="password" placeholder="" id="password" class="input"
+                   formControlName="password" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i class="fa fa-check"></i>
+          <div class="error-message isa_error" *ngIf="formErrors.password">
+            {{ formErrors.password }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" stacked>Confirm password</ion-label>
+        <ion-input type="password" placeholder="" id="password2" class="input"
+                   formControlName="password2" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.password2">
+            {{ formErrors.password2 }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" fixed>Username</ion-label>
+        <ion-input type="text" formControlName="username" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.username">
+            {{ formErrors.username }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" fixed>Name</ion-label>
+        <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.name">
+            {{ formErrors.name }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" fixed>Surname</ion-label>
+        <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.surname">
+            {{ formErrors.surname }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" fixed>Patronymic</ion-label>
+        <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.patronymic">
+            {{ formErrors.patronymic }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label>Birth Date</ion-label>
+        <ion-datetime formControlName="birthDate" display-format="MMMM YYYY" min="1900" max="2020-10-31"
+                      placeholder="Birth Date"
+                      required></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select placeholder="Gender" formControlName="gender">
+          <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.gender">
+            {{ formErrors.gender }}
+          </div>
+        </ng-container>
+      </div>
+
+      <div formArrayName="phones" padding>
+        <div *ngFor="let phone of phones.controls; let i=index"
+             [formGroupName]="i">
+          <ion-row>
+            <ion-col col-7>
+              <ion-input placeholder="Phone" type="number" formControlName="number"></ion-input>
+            </ion-col>
+            <ion-col col-4>
+              <ion-select placeholder="Type" class="full-width-select" formControlName="type">
+                <ion-option *ngFor="let s of phoneTypes" value="{{s.value}}">{{s.viewValue}}</ion-option>
+              </ion-select>
+            </ion-col>
+            <ion-col col-1>
+              <button ion-button clear icon-start icon-right (click)="deletePhone(i)">
+                <ion-icon name="trash" color="danger"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+
+          <div class="validation-errors">
+            <ng-container>
+              <i></i>
+              <div class="error-message isa_error" *ngIf="phone.get('number').errors !== null">
+                {{ getPhoneError(phone.get('number').errors) }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+      <ion-row padding>
+        <ion-col col-11 >
+          <button ion-button block color="primary" (click)="savePhone()">
+            <ion-icon name="add-circle"></ion-icon> &nbsp; add phone
+          </button>
+        </ion-col>
+      </ion-row>
+
+      <!--color="light"-->
+    </form>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer">
+    <!--<div (click)="goToSignin()">-->
+      <!--<span><strong>Sign in</strong>.</span>-->
+    <!--</div>-->
+
+    <button ion-button block outline class="login-button" type="submit" (click)="register()">
+      <!--[disabled]="!userForm.valid"-->
+      Register
+    </button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.controller.controller;
 
+import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
@@ -34,5 +35,12 @@ public class ParentController implements Controller {
   @OnGet("/getInfo")
   public ToSave getInfo(@ParSession(PARENT_ID) Long parentId) {
     return  parentRegister.get().getInfo(parentId);
+  }
+
+
+  @ToJson
+  @OnPost("/save")
+  public AccountInfo save(@ParSession(PARENT_ID)Long id, @Json @Par("toSave") ToSave toSave){
+    return parentRegister.get().save(id, toSave);
   }
 }

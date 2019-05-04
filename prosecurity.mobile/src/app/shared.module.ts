@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {IonicModule} from 'ionic-angular';
 import {DIRECTIVES} from "./app.imports";
 import {PipesModule} from "../pipes/pipes.module";
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {PipesModule} from "../pipes/pipes.module";
   ],
   exports: [
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    TranslateModule,
   ]
 })
 

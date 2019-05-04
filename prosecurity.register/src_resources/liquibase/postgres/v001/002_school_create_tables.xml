@@ -3,6 +3,14 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
+
+
+  <changeSet author="madina" id="create-sequence">
+    <sql endDelimiter=";;"><![CDATA[
+      create sequence pro_seq start with 1000;;
+    ]]></sql>
+  </changeSet>
+
   <changeSet author="madina" id="create-table-child">
     <sql endDelimiter=";;"><![CDATA[
       create table child (

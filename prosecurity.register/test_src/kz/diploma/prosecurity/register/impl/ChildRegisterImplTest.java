@@ -1,6 +1,5 @@
 package kz.diploma.prosecurity.register.impl;
 
-import javafx.util.Pair;
 import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.model.EventFilter;
@@ -83,73 +82,4 @@ public class ChildRegisterImplTest extends ParentTestNg {
     System.out.println();
   }
 
-  @Test
-  public void checkDifferenceBetweenDates() throws ParseException {
-    Date today = new Date();
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Date eventDate = formatter.parse("2015-05-02 08:59:59");
-
-    Pair<Character, Long> pair = computeDiff(eventDate, today);
-
-    System.out.println("pair : " + pair.getKey() + " value: " +  pair.getValue());
-}
-
-  public static Pair<Character, Long> computeDiff(Date date1, Date date2) {
-
-    char returnUnit = ' ';
-    Long returnTime = 0L;
-    long diffInMillies = date2.getTime() - date1.getTime();
-    List<TimeUnit> units = new ArrayList<>(EnumSet.allOf(TimeUnit.class));
-    Collections.reverse(units);
-
-    Map<TimeUnit,Long> result = new LinkedHashMap<>();
-    long milliesRest = diffInMillies;
-
-    for ( TimeUnit unit : units ) {
-      long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
-      long diffInMilliesForUnit = unit.toMillis(diff);
-      milliesRest = milliesRest - diffInMilliesForUnit;
-      result.put(unit,diff);
-    }
-
-    for (Map.Entry<TimeUnit,Long> entry : result.entrySet()) {
-      System.out.println("Key = " + entry.getKey() +
-        ", Value = " + entry.getValue());
-    }
-    for (Map.Entry<TimeUnit,Long> entry : result.entrySet()){
-      if(entry.getValue() != 0){
-        returnUnit = getCorrectedUnit(entry.getKey());
-        returnTime = entry.getValue();
-        break;
-      }
-    }
-    if(returnUnit == 'd'){
-      if(returnTime > 365){
-        returnTime = returnTime / 365;
-        returnUnit = 'y';
-      } else if(returnTime > 30){
-        returnTime = returnTime / 30;
-        returnUnit = 'm';
-      }
-    }
-
-    return new Pair<>(returnUnit, returnTime);
-  }
-
-
-  public static Character getCorrectedUnit(TimeUnit timeUnit){
-
-    switch (timeUnit) {
-      case DAYS:
-        return 'd';
-      case HOURS:
-        return 'h';
-      case MINUTES:
-        return 'm';
-      case SECONDS:
-        return 's';
-      default:
-        return '0';
-    }
-  }
 }

@@ -1,7 +1,9 @@
 package kz.diploma.prosecurity.register.impl;
 
+import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.Phone;
 import kz.diploma.prosecurity.controller.model.ToSave;
+import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.register.dao.ParentDao;
 import kz.greetgo.depinject.core.Bean;
@@ -13,10 +15,12 @@ public class ParentRegisterImpl implements ParentRegister {
   public BeanGetter<PasswordEncoder> passwordEncoder;
   public BeanGetter<ParentDao> parentDao;
 
+  public BeanGetter<AuthRegister> authRegister;
+
   @Override
   public long register(ToSave toSave) {
     toSave.password = passwordEncoder.get().encode(toSave.password);
-    long parent = parentDao.get().insertParent(toSave);
+    Long parent = parentDao.get().insertParent(toSave);
     for (Phone phone : toSave.phones) {
       parentDao.get().upsertPhone(parent, phone);
     }
@@ -32,6 +36,21 @@ public class ParentRegisterImpl implements ParentRegister {
   public void deleteParent(Long id) {
     this.parentDao.get().deactualParent(id);
     this.parentDao.get().deactualPhone(id);
+  }
+
+  @Override
+  public AccountInfo save(Long id, ToSave toSave) {
+    toSave.id = id;
+    String email = toSave.email;
+    toSave.username = email.substring(0, email.indexOf('@'));
+    parentDao.get().upsertParent(toSave);
+
+    this.parentDao.get().deactualPhone(id);
+    for (Phone phone : toSave.phones) {
+      parentDao.get().upsertPhone(id, phone);
+    }
+
+    return authRegister.get().accountInfo(id);
   }
 
   @Override

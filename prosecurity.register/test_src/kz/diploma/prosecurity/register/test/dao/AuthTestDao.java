@@ -1,8 +1,10 @@
 package kz.diploma.prosecurity.register.test.dao;
 
 import kz.diploma.prosecurity.controller.model.Phone;
+import kz.diploma.prosecurity.controller.model.ToSave;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
@@ -88,5 +90,9 @@ public interface AuthTestDao {
                    @Param("date") Date date,
                    @Param("actual") int actual
   );
+
+
+  @Select("select * from parent where id=#{id} and actual=1")
+  ToSave getInfo(@Param("id") Long id);
 
 }

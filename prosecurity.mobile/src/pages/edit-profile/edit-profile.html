@@ -1,0 +1,175 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+
+      <ion-buttons end>
+        <button ion-button icon-only (click)="updateProfile()" [disabled]="!userForm.valid">
+          <ion-icon name="checkmark" color="primary"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <!-- Profile picture -->
+  <div text-center>
+    <img [src]="user_data.profile_img" class="edit-avatar" alt="">
+    <p class="change-text" (click)="fileInput.click()">Change Photo</p>
+    <input hidden
+           type="file"
+           #fileInput
+           multiple
+           (change)="handleFile($event.target.files)"></div>
+
+    <!-- Form -->
+    <form [formGroup]="userForm">
+      <ion-item>
+        <ion-label color="primary" fixed>Username</ion-label>
+        <ion-input type="text" formControlName="username" required></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container>
+          <i></i>
+          <div class="error-message isa_error" *ngIf="formErrors.username">
+            {{ formErrors.username }}
+          </div>
+        </ng-container>
+      </div>
+    <ion-item>
+      <ion-label color="primary" fixed>Name</ion-label>
+      <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container>
+        <i></i>
+        <div class="error-message isa_error" *ngIf="formErrors.name">
+          {{ formErrors.name }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label color="primary" fixed>Surname</ion-label>
+      <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container>
+        <i></i>
+        <div class="error-message isa_error" *ngIf="formErrors.surname">
+          {{ formErrors.surname }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label color="primary" fixed>Patronymic</ion-label>
+      <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container>
+        <i></i>
+        <div class="error-message isa_error" *ngIf="formErrors.patronymic">
+          {{ formErrors.patronymic }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label>Birth Date</ion-label>
+      <ion-datetime formControlName="birthDate" display-format="MMMM YYYY" min="1900" max="2020-10-31"
+                    placeholder="Birth Date"
+                    required></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="transgender" color="gray"></ion-icon>Gender
+      </ion-label>
+      <!--<ion-label>Gender</ion-label>-->
+      <ion-select placeholder="Gender" formControlName="gender">
+        <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container>
+        <i></i>
+        <div class="error-message isa_error" *ngIf="formErrors.gender">
+          {{ formErrors.gender }}
+        </div>
+      </ng-container>
+    </div>
+
+    <div formArrayName="phones" padding>
+      <div *ngFor="let phone of phones.controls; let i=index"
+           [formGroupName]="i">
+        <ion-row>
+          <ion-col col-7>
+            <!-- formControlName="phone"                  [ngModelOptions]="{standalone: true}"-->
+            <ion-input placeholder="Phone" type="text" formControlName="number"></ion-input>
+          </ion-col>
+          <ion-col col-4>
+            <ion-select placeholder="Type" class="full-width-select" formControlName="type">
+              <ion-option *ngFor="let s of phoneTypes" value="{{s.value}}">{{s.viewValue}}</ion-option>
+            </ion-select>
+          </ion-col>
+          <ion-col col-1>
+            <button ion-button clear icon-start icon-right (click)="deletePhone(i)">
+              <ion-icon name="trash" color="danger"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+
+        <div class="validation-errors">
+          <ng-container>
+            <i></i>
+            <div class="error-message isa_error" *ngIf="phone.get('number').errors !== null">
+              {{ getPhoneError(phone.get('number').errors) }}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+    <ion-row padding>
+      <ion-col col-11>
+        <button ion-button block color="primary" (click)="savePhone()">
+          <ion-icon name="add-circle"></ion-icon> &nbsp; add phone
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Private information form -->
+    <div margin-top padding-top>
+      <h4 no-margin no-padding class="info-text">Private Information</h4>
+      <hr class="custom-hr" color="gray">
+    </div>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="mail" color="gray"></ion-icon>
+      </ion-label>
+      <!--<ion-label color="primary" floating>Email</ion-label>-->
+      <ion-input type="email" placeholder="Email" id="email" class="input"
+                 formControlName="email" required></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container>
+        <i></i>
+        <div class="error-message isa_error" *ngIf="formErrors.email">
+          {{ formErrors.email }}
+        </div>
+      </ng-container>
+    </div>
+    </form>
+
+  </ion-content>
+
+<!--        <ion-option value="none">Not Specified</ion-option>    -->

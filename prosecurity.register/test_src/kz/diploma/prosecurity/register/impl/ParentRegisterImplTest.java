@@ -3,6 +3,7 @@ package kz.diploma.prosecurity.register.impl;
 import kz.diploma.prosecurity.controller.model.Phone;
 import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
+import kz.diploma.prosecurity.register.test.dao.AuthTestDao;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.util.RND;
@@ -32,14 +33,16 @@ public class ParentRegisterImplTest extends ParentTestNg {
     toSave.name = RND.str(10);
     toSave.surname = RND.str(10);
     toSave.patronymic = RND.str(10);
+    toSave.username = RND.str(10);
     toSave.phones = this.getPhones(2);
     toSave.gender = RND.str(4);
-    try {
+    toSave.birthDate = RND.dateYears(1, 4);
+    /*try {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       toSave.birth_date = formatter.parse("1973-02-16");
     }catch (Exception e){
       e.printStackTrace();
-    }
+    }*/
     return toSave;
   }
 
@@ -86,5 +89,10 @@ public class ParentRegisterImplTest extends ParentTestNg {
     System.out.println("AAAA");
   }
 
+  public BeanGetter<AuthTestDao> testDao;
 
+  @Test
+  public void test()throws Exception{
+    System.out.println("sdf: "+testDao.get().getInfo(6L));
+  }
 }

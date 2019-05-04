@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Auth} from "..";
+import {USERNAME} from "../auth/auth.metadata";
+import {Storage} from "@ionic/storage";
+import {AccountInfo} from "../../model/auth/account-info";
+import {BehaviorSubject} from "../../../node_modules/rxjs";
 
 @Injectable()
 export class AppLoader {
@@ -11,58 +15,10 @@ export class AppLoader {
 
     return this.auth.authenticated().then(res => {
       if (res) {
-        return this.auth.getPersonDisplay().catch(error => {
-          console.error("Произошла ошибка при загрузки данный сессии");
+        return this.auth.loadAccountInfo().catch(error => {
+          console.error("Произошла ошибка при загрузки данный сессии", error);
         });
       }
     });
-
-    /*return new Promise((resolve,reject) => {
-
-      this.auth.authenticated().then(res => {
-        return this.auth.getUserInfo().then(res => {
-          resolve(res);
-        }).catch(error => {
-          reject(error);
-        });
-
-        /!*if (res) {
-          this.auth.getUserInfo().then(res => {
-              resolve(res);
-            },
-            error => {
-              reject(error);
-            });
-        } else {
-          resolve();
-        }*!/
-      });
-
-    });*/
-
-    /* return this.auth.authenticated().then(res => {
-       if (res) {
-         return this.auth.getUserInfo();
-       }
-     });*/
-
-    /*return new Promise((resolve,reject) => {
-      /!*if (!this.auth.isAuthenticated()) {
-        this.auth.logout();
-      }
-      resolve();
-      *!/
-
-      this.auth.authenticated().then(res => {
-        if (res) {
-
-        }
-
-        resolve();
-      }).catch(error => {
-        this.auth.logout();
-        reject(error);
-      });
-    });*/
   }
 }

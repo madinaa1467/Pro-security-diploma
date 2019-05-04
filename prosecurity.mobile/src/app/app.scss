@@ -1,4 +1,4 @@
-// http://ionicframework.com/docs/theming/
+// http://ionicframework.com/docs/v2/theming/
 
 
 // App Global Sass
@@ -14,66 +14,91 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
-.highlight {
-  background-color: #f4f4f4;
-}
-
-.round {
-  border-radius: 50%;
-}
-
-.transparent-header {
-  // This is just to make the header transparent and button/icon with white color
-  .toolbar-content,
-  .back-button {
-    color: white;
-  }
-
-  .toolbar-background,
-  ion-navbar,
-  ion-header {
-    background: transparent !important;
-    background-color: transparent !important;
-  }
-  .header-md::after,
-  .toolbar-background-ios {
-    background-image: none;
-    border-bottom: 0;
-  }
-  .header-ios .toolbar-background-ios,
-  .footer-ios .toolbar-background-ios {
-    border: 0;
-  }
-}
-
-ion-menu {
-  .menu-header {
-    padding: 5px 15px;
-    background-color: #436880;
-    /* background-image: url('../assets/img/misc/material-design-background.jpg');
-     background-size: cover;*/
-    color: white;
-    .name {
-      font-weight: 500;
-      margin-bottom: 3px;
-    }
-    .e-mail {
-      margin-top: 0;
-      margin-bottom: 5px;
-    }
-  }
-  .user-avatar {
-    padding: .5em;
-    height: 12vh;
-  }
-  h3,
-  .label,
+/* Heart beat animation*/
+@keyframes heartbeat
+{
+  0%
   {
-    color: #999;
-    font-weight: 400;
+    transform: scale( .75 );
   }
-  ion-icon {
-    color: #777;
+  20%
+  {
+    transform: scale( 1 );
   }
+  40%
+  {
+    transform: scale( .75 );
+  }
+  60%
+  {
+    transform: scale( 1 );
+  }
+  80%
+  {
+    transform: scale( .75 );
+  }
+  100%
+  {
+    transform: scale( .95 );
+  }
+}
+
+/* Like button */
+.like-btn:active {
+  animation: heartbeat 1s linear;
+}
+
+/* Link */
+a {
+  text-decoration: none;
+  color: #003581;
+}
+
+/* Grid */
+.grid_img {
+  margin-bottom: -5px;
+}
+.grid_img img{
+  -webkit-filter: brightness(100%);
+  -moz-filter: brightness(100%);
+  -o-filter: brightness(100%);
+  -ms-filter: brightness(100%);
+  filter: brightness(100%);
+}
+
+.grid_img:active img{
+  -webkit-filter: brightness(70%);
+  -moz-filter: brightness(70%);
+  -o-filter: brightness(70%);
+  -ms-filter: brightness(70%);
+  filter: brightness(70%);
+}
+
+/* Card Content */
+.card {
+  width: 100vw !important;
+}
+
+.like-content {
+  font-weight: bold;
+  font-family: Helvetica Neue;
+}
+
+.icon-space {
+  padding-top: 3px;
+  padding-left: 10px;
+}
+ion-icon {
+  font-size: 2.2em;
+}
+
+button ion-buttons{
+    border: 1px solid #ccc;
+    font-size: 13px;
+    border-radius: 3px;
+    padding: 5px;
+    font-weight: bold;
+    width: 90%;
+    margin-right: 30px;
+
 }

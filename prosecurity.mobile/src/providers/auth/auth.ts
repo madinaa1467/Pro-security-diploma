@@ -3,16 +3,19 @@ import {Api} from "..";
 import {Storage} from "@ionic/storage";
 import {TOKEN_KEY} from "./auth.metadata";
 import {BehaviorSubject} from "rxjs";
-import {UserInfo} from "../../model/auth/user-info";
 import {AccountInfo} from "../../model/auth/account-info";
-import {PersonDisplay} from "../../model/PersonDisplay";
+import {ToSave} from "../../model/ToSave";
 
 
 @Injectable()
 export class Auth {
 
-  private _userInfo: UserInfo;
   private _accountInfo: AccountInfo;
+
+
+  get accountInfo(): AccountInfo {
+    return this._accountInfo;
+  }
 
   authenticationState = new BehaviorSubject(false);
 
@@ -20,20 +23,19 @@ export class Auth {
   }
 
   login(credentials) {
-    console.log("credentials:", credentials);
+    console.log('Call auth/login credentials: ', credentials);
     return this.api.post('auth/login', credentials, {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        // return this.getPersonDisplay();
-        return this.loadUserInfo();
+        return this.loadAccountInfo();
       });
     });
   }
 
   logout() {
     this.storage.remove(TOKEN_KEY).then(res => {
-      this._userInfo = null;
+      this._accountInfo = null;
       this.authenticationState.next(false);
     });
   }
@@ -54,27 +56,23 @@ export class Auth {
     return this.storage.get(TOKEN_KEY);
   }
 
-  loadUserInfo() {
-    return this.api.get('userInfo').toPromise().then(res => {
-      this._userInfo = UserInfo.create(res);
-      this._accountInfo = AccountInfo.create(this._userInfo);
-      this.authenticationState.next(true);
-      return this._userInfo;
+  loadAccountInfo() {
+    return this.api.get('auth/accountInfo')
+      .toPromise().then(res => {
+        this.setAccountInfo(res);
+        this.authenticationState.next(true);
+        return this._accountInfo;
     });
   }
 
-  get accountInfo(): AccountInfo {
-    return this._accountInfo;
+  register(toSave){
+    return this.api.post('parent/register', {toSave: JSON.stringify(ToSave.create(toSave))})
+      .toPromise().then(res => res);
   }
 
-  getPersonDisplay(): Promise<PersonDisplay> {
-    return this.api.get('auth/displayPerson')
-      .toPromise()
-      .then(res => {
-        console.log("res:", res);
-        return PersonDisplay.of(res)
-      });
-  }
 
+  setAccountInfo(res: any) {
+    this._accountInfo = AccountInfo.create(res);
+  }
 
 }

@@ -20,28 +20,27 @@ public interface ParentDao {
   @Select("select * from parent_phone where parent = #{parent} and actual = 1")
   Phone[] getPhones(@Param("parent") Long parent);
 
-  @Select("with parent as (insert into parent (email, encoded_password, surname, name, patronymic, gender, birth_date, actual) " +
-          "values (#{toSave.email}, #{toSave.password}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
-          "#{toSave.gender}, #{toSave.birth_date}, 1 )" +
+  @Select("with parent as (insert into parent (id, email, username, encoded_password, surname, name, patronymic, gender, birth_date, actual) " +
+          "values (nextval('pro_seq'), #{toSave.email}, #{toSave.username}, #{toSave.password}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
+          "#{toSave.gender}, #{toSave.birthDate}, 1 )" +
           "returning id)\n" +
           "select * from parent")
-  int insertParent(@Param("toSave") ToSave toSave);
+  Long insertParent(@Param("toSave") ToSave toSave);
 
   //todo убрать returing если не нужно будет
-  @Insert("insert into parent (id, username, encoded_password, surname, name, patronymic, gender, birth_date, actual)" +
-          "values (#{toSave.id},#{toSave.username}, #{toSave.password}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
-          "#{toSave.gender}, #{toSave.birth_date}, 1 )" +
+  @Insert("insert into parent (id, username, surname, name, patronymic, gender, birth_date, email, actual)" +
+          "values (#{toSave.id}, #{toSave.username}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
+          "#{toSave.gender}, #{toSave.birthDate}, #{toSave.email}, 1)" +
           "on conflict (id) do update set\n" +
-          "  username = excluded.username,\n" +
-          "  encoded_password = excluded.encoded_password,\n" +
           "  surname = excluded.surname,\n" +
           "  name = excluded.name,\n" +
           "  patronymic = excluded.patronymic,\n" +
           "  gender = excluded.gender,\n" +
           "  birth_date = excluded.birth_date,\n" +
+          "  email = excluded.email,\n" +
           "  actual = excluded.actual\n" +
           "    returning id;")
-  int upsertParent(@Param("toSave") ToSave toSave);
+  Long upsertParent(@Param("toSave") ToSave toSave);
 
   @Insert("insert into parent_phone ( parent, number, type, actual)\n" +
           "values (#{parentId}, #{phone.number}, #{phone.type}, 1)\n" +
