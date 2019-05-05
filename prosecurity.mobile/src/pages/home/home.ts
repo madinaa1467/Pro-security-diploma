@@ -30,6 +30,8 @@ export class Home implements OnInit, OnDestroy {
               public childService: ChildService, public menu: MenuController) {
     this.menuActive();
     this.filter.childId = 0;
+    this.filter.endDate = null;
+    this.filter.startDate = null;
   }
   menuActive() {
     this.activeMenu = 'menu';
@@ -56,9 +58,18 @@ export class Home implements OnInit, OnDestroy {
   getEventist(childId: number){
     if(childId != null) {
       this.filter.childId = childId;
-      this.filter.startDate = null;
-      this.filter.endDate = null;
     }
+    this.callServiceGetEventList();
+  }
+
+  clearFilter(){
+    this.filter.startDate = null;
+    this.filter.endDate = null;
+    this.callServiceGetEventList();
+  }
+
+
+  callServiceGetEventList(){
     this.childService.loadEvents(this.filter);
     this.childService.loadEvents(this.filter).then(list =>{
       this.eventList = list;

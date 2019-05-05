@@ -58,8 +58,6 @@ export class ChildService {
   loadEvents(filter: EventFilter) {
 
     filter.limit = 15;
-    if(!filter.startDate)
-      filter.startDate = new Date("2006-01-26");
     if(!filter.endDate)
       filter.endDate = new Date();
 
