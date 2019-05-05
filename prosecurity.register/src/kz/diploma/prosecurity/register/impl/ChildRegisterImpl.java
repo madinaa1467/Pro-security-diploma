@@ -1,8 +1,14 @@
 package kz.diploma.prosecurity.register.impl;
 
-import kz.diploma.prosecurity.controller.model.*;
+import kz.diploma.prosecurity.controller.model.Child;
+import kz.diploma.prosecurity.controller.model.Event;
+import kz.diploma.prosecurity.controller.model.EventFilter;
+import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
+import kz.diploma.prosecurity.register.jdbc.ChildEventList;
+import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
+import kz.greetgo.db.Jdbc;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 
@@ -13,14 +19,17 @@ import java.util.concurrent.TimeUnit;
 @Bean
 public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ChildDao> childDao;
+  public BeanGetter<Jdbc> jdbc;
 
   @Override
   public List<EventList> listAllEvents(Long parentId, EventFilter filter) {
     List<Event> eventListFromDB;
+    filter.parentId = parentId;
+
     if (filter.childId == 0)//case when we call for all children
-      eventListFromDB = childDao.get().getChildrenEventList(parentId, filter);
+      eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
     else
-      eventListFromDB = childDao.get().getChildEventList(filter.childId, filter);
+      eventListFromDB = jdbc.get().execute(new ChildEventList(filter));
 
     List<EventList> eventLists = new ArrayList<>();
     String tempDate = "";

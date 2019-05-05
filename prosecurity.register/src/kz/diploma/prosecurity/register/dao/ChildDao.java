@@ -2,7 +2,6 @@ package kz.diploma.prosecurity.register.dao;
 
 import kz.diploma.prosecurity.controller.model.Child;
 import kz.diploma.prosecurity.controller.model.Event;
-import kz.diploma.prosecurity.controller.model.EventFilter;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -51,36 +50,6 @@ public interface ChildDao {
     "limit 1;")
   Event getChildLastEvent(@Param("childId") long childId);
 
-
-
-
-
-
-
-
-
-
-  @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, pc.child as childId,\n" +
-    "  c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender\n" +
-    "from child as c, event as e, parent_child pc\n" +
-    "where pc.parent = #{parentId} AND pc.child = c.id AND pc.child = e.child AND c.actual = 1\n" +
-    "  AND e.actual = 1 AND pc.actual = 1\n" +
-    "  AND  date BETWEEN #{filter.startDate} AND #{filter.endDate}\n" +
-    "order by date desc\n" +
-    "limit #{filter.limit}\n" +
-    "offset #{filter.offset};")
-  List<Event> getChildrenEventList(@Param("parentId") Long parentId, @Param("filter") EventFilter filter);
-
-  @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as child,\n" +
-    "  c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender\n" +
-    "from child as c, event as e\n" +
-    "where c.id = #{childId} AND c.id = e.child\n" +
-    "      AND c.actual = 1 AND e.actual = 1\n" +
-    "  AND  date BETWEEN #{filter.startDate} AND #{filter.endDate}\n" +
-    "order by date desc\n" +
-    "limit #{filter.limit}\n" +
-    "offset #{filter.offset};")
-  List<Event> getChildEventList(@Param("childId") long childId, @Param("filter") EventFilter filter);
 
   @Insert("insert into Event (action, date, child, actual) " +
           "values (#{action}, #{date}, #{child}, #{actual})")

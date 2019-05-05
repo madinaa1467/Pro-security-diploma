@@ -89,31 +89,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
   public void getChildEventListJDBCTest(){
     EventFilter filter = this.getFilter();
 
-    List<Event> eventListFromDB;
-//    if (filter.childId == 0)//case when we call for all children
-//      eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
-//    else
-//      eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
-//
-//    List<EventList> eventLists = new ArrayList<>();
-//    String tempDate = "";
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-//
-//    for(int i = 0; i < eventListFromDB.size(); i ++) {
-//      Event event = eventListFromDB.get(i);
-//      event.setTime();
-//      if (tempDate.equals(dateFormat.format(event.date))) {
-//        eventLists.get(eventLists.size()-1).events.add(event);
-//      } else {
-//        EventList eventList = new EventList();
-//        eventList.events.add(event);
-//        tempDate = dateFormat.format(event.date);
-//        eventList.date = tempDate;
-//        eventLists.add(eventList);
-//      }
-//    }
-
-    eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
+    List<Event> eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
 
 
     System.out.println();
