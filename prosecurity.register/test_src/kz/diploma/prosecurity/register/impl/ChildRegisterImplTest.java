@@ -1,30 +1,34 @@
 package kz.diploma.prosecurity.register.impl;
 
 import kz.diploma.prosecurity.controller.model.Event;
-import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.model.EventFilter;
+import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
+import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
+import kz.greetgo.db.Jdbc;
 import kz.greetgo.depinject.core.BeanGetter;
 import org.testng.annotations.Test;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 public class ChildRegisterImplTest extends ParentTestNg {
 
   public BeanGetter<ChildRegister> childRegisterBeanGetter;
+  public BeanGetter<Jdbc> jdbc;
 
   public EventFilter getFilter(){
     EventFilter eventFilter = new EventFilter();
 
     eventFilter.limit = 15;
+    eventFilter.parentId = 1;
+    eventFilter.offset = 0;
+
     try {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       eventFilter.startDate = formatter.parse("2000-02-16 23:59:59");
-      eventFilter.endDate = formatter.parse("2007-02-19 23:59:59");
+      eventFilter.endDate = formatter.parse("2007-02-16 23:59:59");
     }catch (Exception e){
       e.printStackTrace();
     }
@@ -73,10 +77,33 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
   @Test
   public void getChildEventListJDBCTest(){
+    EventFilter filter = this.getFilter();
 
+    List<Event> eventListFromDB;
+//    if (filter.childId == 0)//case when we call for all children
+//      eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
+//    else
+//      eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
+//
+//    List<EventList> eventLists = new ArrayList<>();
+//    String tempDate = "";
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+//
+//    for(int i = 0; i < eventListFromDB.size(); i ++) {
+//      Event event = eventListFromDB.get(i);
+//      event.setTime();
+//      if (tempDate.equals(dateFormat.format(event.date))) {
+//        eventLists.get(eventLists.size()-1).events.add(event);
+//      } else {
+//        EventList eventList = new EventList();
+//        eventList.events.add(event);
+//        tempDate = dateFormat.format(event.date);
+//        eventList.date = tempDate;
+//        eventLists.add(eventList);
+//      }
+//    }
 
-    List<Event> eventListFromDB = new ArrayList<>();
-
+    eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));
 
 
     System.out.println();

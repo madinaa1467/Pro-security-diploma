@@ -8,4 +8,5 @@ public class EventFilter {
   public int offset;
   public int limit;
   public long childId;
+  public long parentId;
 }
