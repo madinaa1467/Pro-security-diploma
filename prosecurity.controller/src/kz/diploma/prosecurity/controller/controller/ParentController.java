@@ -5,8 +5,6 @@ import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
-import kz.diploma.prosecurity.controller.util.ParSessionNames;
-import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.mvc.annotations.Json;
@@ -16,7 +14,8 @@ import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
-import kz.greetgo.security.password.PasswordEncoder;
+
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 
 @Bean
 @ControllerPrefix("/parent")
@@ -27,7 +26,7 @@ public class ParentController implements Controller {
   @ToJson
   @PublicAccess
   @OnPost("/register")
-  public long register(@Json @Par("toSave") ToSave toSave) {
+  public Long register(@Json @Par("toSave") ToSave toSave) {
     return parentRegister.get().register(toSave);
   }
 

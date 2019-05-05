@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-import {ToSave} from "../../model/ToSave";
-import {Phone} from "../../model/Phone";
 import {Auth} from "../../providers/auth/auth";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
@@ -40,10 +38,12 @@ export class SignupPage implements OnInit {
     'patronymic': '',
     'phones': '',
   };
+
   validationMessages = {
     'email': {
       'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_REQUIRED'),
       'email': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_VALID'),
+      'alreadyInUse': 'Email is already in use',
     },
     'password': {
       'required': 'Please enter your password',
@@ -60,6 +60,7 @@ export class SignupPage implements OnInit {
       'pattern': 'The Username must contain just letters',
       'minlength': 'Please enter more than 2 characters',
       'maxlength': 'Please enter less than 25 characters',
+      'alreadyInUse': 'Username is already in use',
     },
     'name': {
       'required': 'Please enter your Name',
@@ -159,17 +160,10 @@ export class SignupPage implements OnInit {
     }, {validator: this.checkIfMatchingPasswords('password', 'password2')});
 
     this.userForm.valueChanges.subscribe(data => {
-
       this.onValueChanged(data);
-      Object.keys(this.userForm.controls).forEach(value => {
-        console.log(value, ' - ', this.userForm.controls[value].valid);
-        // console.log(this.userForm.controls[value]);
-        // console.log(this.userForm.controls[value].valid);
-      });
     });
 
     this.onValueChanged();
-
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
@@ -196,6 +190,7 @@ export class SignupPage implements OnInit {
         this.formErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
+
           const messages = this.validationMessages[field];
           for (const key in control.errors) {
             if (Object.prototype.hasOwnProperty.call(control.errors, key)) {
@@ -235,14 +230,24 @@ export class SignupPage implements OnInit {
     }).catch(err => {
       loading.dismiss();
 
+      if (err.status) {
+        let errors = err.error;
+
+        errors.forEach((error) => {
+          let field = this.userForm.controls[error.code];
+          field.setErrors({[error.message]: true});
+        });
+
+        this.onValueChanged();
+        return;
+      }
+
       const alert = this.alertCtrl.create({
         title: 'Ошибка',
         message: err.error.error_description,
         buttons: ['Отклонять']
       });
       alert.present();
-
-      throw  err;
     });
   }
 
@@ -250,9 +255,7 @@ export class SignupPage implements OnInit {
     this.phones.push(this.createPhone());
   }
 
-  getPhoneError(phoneErrorsArray) {
-      console.log(phoneErrorsArray);
-
+  getPhoneError (phoneErrorsArray) {
       if(phoneErrorsArray['pattern'] !== undefined){
         return 'The Phone must be in format +7';
       } else if(phoneErrorsArray['required'] !== undefined){

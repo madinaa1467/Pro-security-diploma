@@ -1,11 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ToSave} from "../../model/ToSave";
-import {Phone} from "../../model/Phone";
-import {Subscription} from "rxjs/Subscription";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
-import {_throw} from "rxjs/observable/throw";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
 
@@ -47,12 +43,14 @@ export class EditProfile implements OnInit {
     'email': {
       'required': 'Please enter your email',
       'email': 'Please enter your valid email',
+      'alreadyInUse': 'Email is already in use',
     },
     'username': {
       'required': 'Please enter your Username',
       'pattern': 'The Username must contain just letters',
       'minlength': 'Please enter more than 2 characters',
       'maxlength': 'Please enter less than 25 characters',
+      'alreadyInUse': 'Username is already in use',
     },
     'name': {
       'required': 'Please enter your Name',
@@ -114,7 +112,19 @@ export class EditProfile implements OnInit {
 
     }).catch(err => {
       loading.dismiss();
-      throw  err;
+
+      if (err.status) {
+        let errors = err.error;
+
+        errors.forEach((error) => {
+          let field = this.userForm.controls[error.code];
+          field.setErrors({[error.message]: true});
+        });
+
+        this.onValueChanged();
+        return;
+      }
+
     });
   }
 

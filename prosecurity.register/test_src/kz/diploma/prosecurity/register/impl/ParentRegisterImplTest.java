@@ -9,8 +9,6 @@ import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.util.RND;
 import org.testng.annotations.Test;
 
-import java.text.SimpleDateFormat;
-
 public class ParentRegisterImplTest extends ParentTestNg {
 
   public BeanGetter<ParentRegister> parentRegister;
@@ -60,20 +58,6 @@ public class ParentRegisterImplTest extends ParentTestNg {
     //
     //
     System.out.println("AAAA" + k);
-  }
-
-  @Test
-  public void updateParentTest(){
-    ToSave toSave = this.getToSave();
-    toSave.id = this.saveForTest();
-    toSave.email = "updated";
-    toSave.surname="updated";
-    //
-    //
-    parentRegister.get().updateParent(toSave);
-    //
-    //
-    System.out.println("AAAA");
   }
 
   @Test

@@ -57,4 +57,10 @@ public interface ParentDao {
 
     @Update("update parent set actual = 0 where id = #{id};")
     void deactualParent(@Param("id") Long id);
+
+  @Select("select id from parent where email=#{email} limit 1")
+  Long getParentIdByEmail(@Param("email") String email);
+
+  @Select("select id from parent where username=#{username} limit 1")
+  Long getParentIdByUsername(@Param("username") String username);
 }
