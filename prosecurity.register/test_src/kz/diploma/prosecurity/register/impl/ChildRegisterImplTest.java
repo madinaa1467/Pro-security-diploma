@@ -74,7 +74,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
 
   @Test
-  public void setChildEventListJDBCTest(){
+  public void getChildEventListJDBCTest(){
     EventFilter filter = this.getFilter();
 
     List<Event> eventListFromDB = jdbc.get().execute(new ChildEventList(filter));
@@ -86,7 +86,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
 
   @Test
-  public void getChildEventListJDBCTest(){
+  public void getChildrenEventListJDBCTest(){
     EventFilter filter = this.getFilter();
 
     List<Event> eventListFromDB = jdbc.get().execute(new ChildrenEventList(filter));

@@ -4,10 +4,7 @@ import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.greetgo.db.DbType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +31,7 @@ public abstract class EventListConnection extends AbstractEventListLoader<List<E
   protected Event fromRs(ResultSet rs) throws SQLException {
     Event ret = new Event();
     ret.id = rs.getLong("id");
-    ret.date = rs.getDate("date");
+    ret.date = new java.util.Date(rs.getTimestamp("date").getTime());
     ret.action = rs.getString("action");
     ret.childId = rs.getLong("childId");
     ret.fio = rs.getString("fio");
