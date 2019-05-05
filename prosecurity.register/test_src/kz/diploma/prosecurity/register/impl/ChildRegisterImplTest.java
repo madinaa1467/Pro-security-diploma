@@ -4,6 +4,7 @@ import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
+import kz.diploma.prosecurity.register.jdbc.ChildEventList;
 import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
 import kz.greetgo.db.Jdbc;
@@ -24,7 +25,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
     eventFilter.limit = 15;
     eventFilter.parentId = 1;
     eventFilter.offset = 0;
-
+    eventFilter.childId = 1;
     try {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       eventFilter.startDate = formatter.parse("2000-02-16 23:59:59");
@@ -72,6 +73,15 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
 
 
+  @Test
+  public void setChildEventListJDBCTest(){
+    EventFilter filter = this.getFilter();
+
+    List<Event> eventListFromDB = jdbc.get().execute(new ChildEventList(filter));
+
+
+    System.out.println();
+  }
 
 
 
