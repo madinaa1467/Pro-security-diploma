@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import { App, NavController, NavParams } from 'ionic-angular';
+import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
 import { MessageDetail } from '../message-detail/message-detail';
 import { NewMessage } from '../new-message/new-message';
 import {ChildService} from "../../providers/services/child.service";
 
+@IonicPage()
 @Component({
   selector: 'page-messages',
   templateUrl: 'messages.html',
@@ -51,8 +52,10 @@ export class Messages implements OnInit {
 
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private app: App, public childService: ChildService) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private app: App,
+              public childService: ChildService) {
   }
 
   ngOnInit(): void {
@@ -70,7 +73,8 @@ export class Messages implements OnInit {
   // }
 
   goMessageDetail(childId: number, childFio:string, childImg:string) {
-    this.app.getRootNav().push(MessageDetail, { childId:childId, childFio: childFio, childImg: childImg});
+    this.navCtrl.push('MessageDetail', { childId:childId, childFio: childFio, childImg: childImg});
+    //this.app.getRootNav().push(MessageDetail, { childId:childId, childFio: childFio, childImg: childImg});
   }
 
 }

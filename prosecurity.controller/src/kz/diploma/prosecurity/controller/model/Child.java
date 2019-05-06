@@ -5,6 +5,10 @@ public class Child {
   public String fio;
   public String gender;
   public String img;
+  public String surname;
+  public String name;
+  public String patronymic;
+  public int notification;
 
   public static Child getAllChildObject(){
 

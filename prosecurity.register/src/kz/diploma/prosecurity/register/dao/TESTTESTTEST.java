@@ -382,4 +382,17 @@ offset #{filter.offset};
 
 
    */
+
+
+  // notification should be on inside children
+  //если вдруг понадобится
+/*
+select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as childId,
+              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender
+from child as c, event as e, parent_child pc
+where c.id = 1 AND c.id = e.child and c.id = pc.child and pc.notification = 1
+AND c.actual = 1 AND e.actual = 1
+order by date desc
+limit 1;
+ */
 }

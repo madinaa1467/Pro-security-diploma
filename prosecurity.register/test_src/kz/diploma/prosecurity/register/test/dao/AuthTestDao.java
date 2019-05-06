@@ -33,10 +33,6 @@ public interface AuthTestDao {
   void personCan(@Param("username") String username, @Param("can") String can);
 
 
-
-
-
-
   @Insert("insert into Parent (id, username, encoded_password, actual, surname, name, patronymic, gender," +
           "birth_date, email) " +
           "values (#{id}, #{username}, #{encodedPassword}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
@@ -76,11 +72,12 @@ public interface AuthTestDao {
                    @Param("actual") int actual
   );
 
-  @Insert("insert into Parent_child (parent, child, actual) " +
-          "values (#{parent}, #{child}, #{actual})")
+  @Insert("insert into Parent_child (parent, child, notification, actual) " +
+    "values (#{parent}, #{child},#{notification}, #{actual})")
   void insertParentChild(@Param("parent") int parent,
-                   @Param("child") int child,
-                   @Param("actual") int actual
+                         @Param("child") int child,
+                         @Param("notification") int notification,
+                         @Param("actual") int actual
   );
 
   @Insert("insert into Event (action, date, child, actual) " +

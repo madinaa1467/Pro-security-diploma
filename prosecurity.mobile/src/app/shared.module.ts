@@ -4,10 +4,12 @@ import {IonicModule} from 'ionic-angular';
 import {DIRECTIVES} from "./app.imports";
 import {PipesModule} from "../pipes/pipes.module";
 import {TranslateModule} from '@ngx-translate/core';
+import {Directive} from 'ionic3-input-mask';
 
 @NgModule({
   declarations: [
-    DIRECTIVES
+    DIRECTIVES,
+    Directive
   ],
   imports: [
     IonicModule,
@@ -18,6 +20,7 @@ import {TranslateModule} from '@ngx-translate/core';
     ComponentsModule,
     PipesModule,
     TranslateModule,
+    Directive
   ]
 })
 

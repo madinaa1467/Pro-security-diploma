@@ -28,7 +28,7 @@ export class ChildService {
   }
 
   getParentChildren(): Promise<Child[]> {
-    console.log('Call child/getChildList username: ');
+    console.log('Call child/getChildList');
     return this.http.get('child/getChildList')
       .toPromise().then(resp => {
         console.log("Response from child/getChildList:  ", resp);

@@ -65,7 +65,7 @@ public class ChildRegisterImpl implements ChildRegister {
   public List<Event> getLastEventsList(Long parentId) {
     List<Event> lastEventListFromDB = new ArrayList<>();
 
-    int[] childrenIds = childDao.get().getParentChildId(parentId);
+    int[] childrenIds = childDao.get().getChildIdByParent(parentId);
 
     Date today = new Date();
     for (int childId : childrenIds) {

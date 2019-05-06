@@ -23,6 +23,7 @@ export class ChildPofile implements OnInit {;
 
   public child = Child;
   public action: string;
+  childForm: FormGroup;
 
   constructor(
     public navCtrl: NavController,
@@ -31,12 +32,14 @@ export class ChildPofile implements OnInit {;
     public loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private parentService: ParentService) {
+    this.buildForm();
     this.child = this.navParams.get('child');
     this.action = this.navParams.get('action');
     if(!this.child){
       this.child = Child;
     }
     console.error('Modaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal', this.child);
+    this.childForm.patchValue(this.child);
   }
 
   ngOnInit() {
@@ -63,5 +66,44 @@ export class ChildPofile implements OnInit {;
 
   handleFile(files: any) {
     console.log({files})
+  }
+  buildForm() {
+    this.childForm = this.fb.group({
+      'onay_number': ['', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+      ]
+      ],
+      'name': ['', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),//'^[\\w\u0430-\u044f]*[ -]*[\\w\u0430-\u044f]*$'
+        Validators.minLength(2),
+        Validators.maxLength(25)
+      ]
+      ],
+      'surname': ['', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.minLength(2),
+        Validators.maxLength(25)
+      ]
+      ],
+      'patronymic': ['', [
+        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.minLength(2),
+        Validators.maxLength(25)
+      ]
+      ],
+      'birthDate': ['', [
+        Validators.required
+      ]
+      ],
+      'gender': ['', [
+        Validators.required
+      ]
+      ],
+      'notification': ['', []
+      ]
+    });
   }
 }

@@ -5,7 +5,7 @@ import {DatePipe} from "@angular/common";
   name: 'dateFormat',
 })
 export class DateFormatPipe extends DatePipe {
-  readonly defaultFormat: string = 'dd/MM/yyyy HH:mm';
+  readonly defaultFormat: string = 'HH:mm:ss';
 
   transform(value: any, format?: any) {
     format = format ? format : this.defaultFormat;//default value
