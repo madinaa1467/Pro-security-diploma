@@ -31,6 +31,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import {SharedModule} from "./shared.module";
+import IonicStepperModule from "ionic-stepper";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function provideSettings(storage: Storage) {
   /**
@@ -79,9 +81,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TabsPage
   ],
   imports: [
-    MODULES,
     BrowserModule,
+    MODULES,
+    IonicStepperModule,
     IonicModule.forRoot(MyApp),
+    BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

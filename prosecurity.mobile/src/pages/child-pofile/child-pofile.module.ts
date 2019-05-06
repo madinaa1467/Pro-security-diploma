@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChildPofile } from './child-pofile';
+import IonicStepperModule from "ionic-stepper";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -8,6 +10,8 @@ import { ChildPofile } from './child-pofile';
   ],
   imports: [
     IonicPageModule.forChild(ChildPofile),
+    IonicStepperModule,
+    CommonModule
   ],
 })
 export class ChildPofilePageModule {}

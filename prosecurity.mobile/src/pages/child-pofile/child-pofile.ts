@@ -46,6 +46,9 @@ export class ChildPofile implements OnInit {
 
   }
 
+  selectChange(e) {
+    console.log(e);
+  }
 
   updateProfile() {
     let loader = this.loadingCtrl.create({

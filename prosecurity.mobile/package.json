@@ -31,6 +31,7 @@
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^2.0.1",
     "ionic-angular": "3.9.2",
+    "ionic-stepper": "^1.1.0",
     "ionic3-input-mask": "^0.20.5",
     "ionicons": "3.0.0",
     "ngx-perfect-scrollbar": "^7.2.1",

@@ -19,6 +19,22 @@
 
 <ion-content padding>
 
+
+  <ion-stepper #stepper (selectIndexChange)="selectChange($event)" mode='horizontal'>
+    <ion-step label="Onay"
+              description="Onay card number">
+      <h2>Enter onay number</h2>
+      <ion-item>
+        <ion-label color="primary" fixed>Onay</ion-label>
+        <ion-input type="text" placeholder="" id="onay_number" required></ion-input>
+      </ion-item>
+
+      <button ion-button small ionicStepperNext>Next</button>
+    </ion-step>
+    <ion-step label="Personal info"
+              description="Step1 description">
+      <h2>Fill the personal Information</h2>
+
   <!-- Profile picture -->
   <div text-center>
     <img *ngIf="child.img" [src]="child.img" class="edit-avatar" alt="">
@@ -30,12 +46,8 @@
            multiple
            (change)="handleFile($event.target.files)"></div>
 
-  <!-- Form -->
-  <form>
-    <ion-item>
-      <ion-label color="primary" fixed>Onay</ion-label>
-      <ion-input type="text" placeholder="" id="onay_number" required></ion-input>
-    </ion-item>
+      <!-- Form -->
+      <form>
 
     <ion-item>
       <ion-label color="primary" fixed>Name</ion-label>
@@ -134,5 +146,10 @@
     </ion-col>
   </ion-row>
 
+
+
+      <button ion-button color="light" small ionicStepperPrevious>Previous</button>
+    </ion-step>
+  </ion-stepper>
 
 </ion-content>
