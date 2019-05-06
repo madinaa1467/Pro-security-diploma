@@ -99,7 +99,7 @@ public class DbLoader {
     authTestDao.get().insertChild(id, onaiNumber, surname, name, patronymic, gender,
             new Timestamp(birthDate.getTime()), actual);
 
-    authTestDao.get().insertParentChild(parentID, id, actual);
+    authTestDao.get().insertParentChild(parentID, id, 1, actual);
 
     SimpleDateFormat sdfEvent = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     authTestDao.get().insertEvent("in", id, new Timestamp(sdfEvent.parse("2007-02-16 07:38:40").getTime()), actual);

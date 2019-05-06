@@ -10,15 +10,16 @@ import java.util.Date;
 import java.util.List;
 
 public interface ChildDao {
-  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender\n" +
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification\n" +
           "    from parent_child as pc, child as c\n" +
           "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
   List<Child> loadChildren(Long parentId);
 
-  @Insert("insert into Parent_child (parent, child, actual) " +
-          "values (#{parent}, #{child}, #{actual})")
+  @Insert("insert into Parent_child (parent, child, notification, actual) " +
+          "values (#{parent}, #{child}, #{notification}, #{actual})")
   void insertParentChild(@Param("parent") long parent,
                          @Param("child") int child,
+                         @Param("notification") int notification,
                          @Param("actual") int actual);
 
   @Insert("insert into Child (id, actual, surname, name, patronymic, gender," +
@@ -34,13 +35,11 @@ public interface ChildDao {
                    @Param("actual") int actual);
 
 
-
   @Select("select c.id\n" +
     "from child as c, parent_child as pc\n" +
     "where pc.parent = #{parentId} and pc.child = c.id;")
-  int[] getParentChildId(@Param("parentId") long parentId);
+  int[] getChildIdByParent(@Param("parentId") long parentId);
 
-//todo notification should be on inside children
   @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as childId,\n" +
     "              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender\n" +
     "from child as c, event as e\n" +

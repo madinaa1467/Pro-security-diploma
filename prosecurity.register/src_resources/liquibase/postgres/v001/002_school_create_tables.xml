@@ -76,6 +76,7 @@
         id serial not null,
         parent integer references parent(id),
         child integer references child(id),
+        notification integer,
         actual integer,
         primary key(id)
       )

@@ -23,6 +23,7 @@ export class ChildPofile implements OnInit {;
 
   public child = Child;
   public action: string;
+  childForm: FormGroup;
 
   constructor(
     public navCtrl: NavController,
