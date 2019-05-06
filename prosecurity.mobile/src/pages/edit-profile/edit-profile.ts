@@ -241,7 +241,7 @@ export class EditProfile implements OnInit {
       type: [this.phoneTypes[0].value, [Validators.required]],
       number: [number, [
           Validators.required,
-          Validators.pattern('^[+]*[0-9 -()]*[0-9 -]*[0-9]$')
+          Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}')
         ]
       ],
     });
