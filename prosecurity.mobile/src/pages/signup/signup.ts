@@ -230,7 +230,7 @@ export class SignupPage implements OnInit {
     }).catch(err => {
       loading.dismiss();
 
-      if (err.status) {
+      if (err.status == 400) {
         let errors = err.error;
 
         errors.forEach((error) => {
