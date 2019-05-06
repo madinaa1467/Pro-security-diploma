@@ -30,6 +30,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {SharedModule} from "./shared.module";
 
 export function provideSettings(storage: Storage) {
   /**
@@ -65,8 +66,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PostPopover,
     Search,
     ModalPost,
-    Messages,
-    MessageDetail,
+    //Messages,
+    // MessageDetail,
     NewMessage,
     Notifications,
     Profile,
@@ -89,7 +90,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         deps: [HttpClient]
       }
     }),
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -98,8 +99,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PostPopover,
     Search,
     ModalPost,
-    Messages,
-    MessageDetail,
+    //Messages,
+    // MessageDetail,
     NewMessage,
     Notifications,
     Profile,

@@ -19,7 +19,7 @@ export class TabsPage {
   tab1Root = Home;
   // tab2Root = Search;
   // tab3Root = null;
-  tab4Root = Messages;
+  tab4Root = 'Messages';
   tab5Root = Profile;
 
   constructor(private camera: Camera, public app: App) {

@@ -41,7 +41,7 @@ when: null-->
         <img [src]="childImg">
       </ion-avatar>
       <div class="chatbox">
-        {{ ('MESSAGE.'+event.action+'_'+event.gender) | translate:{childFio:event.fio, time: (event.date|date:'HH:mm:ss')} }}
+        {{ ('MESSAGE.'+event.action+'_'+event.gender) | translate:{childFio:event.fio, time: (event.date|dateFormat)} }}
       </div>
     </ion-item>
   </ion-list>
