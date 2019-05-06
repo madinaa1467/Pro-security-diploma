@@ -19,7 +19,7 @@ import {Child} from "../../model/Child";
   selector: 'page-child-pofile',
   templateUrl: 'child-pofile.html',
 })
-export class ChildPofile implements OnInit {;
+export class ChildPofile implements OnInit {
 
   public child = Child;
   public action: string;

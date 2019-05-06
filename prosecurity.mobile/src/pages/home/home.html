@@ -56,7 +56,7 @@
 
     <button ion-button block color="light" [menuToggle]="activeMenu">Search By</button>
 
-    <button *ngIf="!filter.endDate || !filter.startDate" ion-button block color="light" (click)="clearFilter()">Clear Filter</button>
+    <button *ngIf="filter.endDate || filter.startDate" ion-button block color="light" (click)="clearFilter()">Clear Filter</button>
 
     <ion-list>
       <ion-item-group *ngFor="let day of eventList">
