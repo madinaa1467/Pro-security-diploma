@@ -15,7 +15,7 @@
     <sql endDelimiter=";;"><![CDATA[
       create table child (
         id serial not null,
-        onay_number varchar(50) not null,
+        card_id integer references card(id),
         surname varchar(50) not null,
         name varchar(50) not null,
         patronymic varchar(50),
@@ -33,8 +33,9 @@
         id serial not null,
         action varchar(3) not null,
         date timestamp not null,
+        entrance varchar(20) not null,
+        card integer references card(inDec),
         actual integer,
-        child integer references child(id),
         primary key(id)
       )
     ]]></sql>
@@ -77,6 +78,20 @@
         parent integer references parent(id),
         child integer references child(id),
         notification integer,
+        actual integer,
+        primary key(id)
+      )
+    ]]></sql>
+  </changeSet>
+
+
+  <changeSet author="madina" id="create-table-parent_child">
+    <sql endDelimiter=";;"><![CDATA[
+      create table card (
+        id serial not null,
+        card_number varchar(20),
+        inHex varchar(20),
+        inDec varchar(20),
         actual integer,
         primary key(id)
       )
