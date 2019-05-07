@@ -27,6 +27,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/@nebular/bootstrap/styles/prebuilt/corporate.css",
               "src/styles.scss"
             ],
             "scripts": [],
