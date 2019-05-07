@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import {NbAuthModule} from "@nebular/auth";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
     AppRoutingModule,
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'corporate' }),
-    NbLayoutModule
+    NbAuthModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
