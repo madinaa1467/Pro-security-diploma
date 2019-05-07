@@ -234,7 +234,15 @@ export class EditProfile implements OnInit {
   }
 
   handleFile(files: any) {
-    console.log({files})
+    console.log("files:", files);
+    const reader: FileReader = new FileReader();
+
+    reader.onloadend = () => {
+      console.log("ev.result:", reader.result);
+    };
+    reader.readAsDataURL(files[0]);
+
+    console.log("files:", files);
   }
 
   createPhone(number?:string): FormGroup {
@@ -250,7 +258,7 @@ export class EditProfile implements OnInit {
 
   trimLastCharacter(value, index){
     if (value.length > 15) {
-      let filed:FormGroup = this.phones.controls[index];
+      let filed = this.phones.controls[index];
       filed.patchValue({number: value.slice(0, -1)});
     }
   }

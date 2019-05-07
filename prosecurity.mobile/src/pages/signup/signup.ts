@@ -5,7 +5,6 @@ import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {Auth} from "../../providers/auth/auth";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
-import {ToSave} from "../../model/ToSave";
 
 /**
  * Generated class for the SignupPage page.
@@ -289,7 +288,7 @@ export class SignupPage implements OnInit {
 
   trimLastCharacter(value, index){
     if (value.length > 15) {
-      let filed:FormGroup = this.phones.controls[index];
+      let filed = this.phones.controls[index];
       filed.patchValue({number: value.slice(0, -1)});
     }
   }
