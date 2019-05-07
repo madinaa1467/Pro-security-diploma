@@ -9,7 +9,7 @@ export class Phone {
   }
 
   assign(a: any) {
-    this.number = a.number;
+    this.number = !! a.number? a.number.replace(/\D+/g, ''): a.number;
     this.type = a.type;
   }
 }

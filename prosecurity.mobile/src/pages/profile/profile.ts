@@ -55,7 +55,7 @@ export class Profile implements OnInit, OnDestroy  {
 
   goEditProfile() {
     // Open it as a modal page
-    let modal = this.modalCtrl.create(EditProfile);
+    let modal = this.modalCtrl.create('EditProfile');
     modal.present();
   }
 

@@ -11,11 +11,25 @@
     ]]></sql>
   </changeSet>
 
+  <changeSet author="madina" id="create-table-card">
+    <sql endDelimiter=";;"><![CDATA[
+      create table card (
+        card_number varchar(20),
+        in_hex varchar(20),
+        in_dec varchar(20),
+        actual integer,
+        created_at timestamp without time zone not null default clock_timestamp(),
+        primary key(card_number)
+      )
+    ]]></sql>
+  </changeSet>
+
+  <!--todo card_number must be unique-->
   <changeSet author="madina" id="create-table-child">
     <sql endDelimiter=";;"><![CDATA[
       create table child (
         id serial not null,
-        card_id integer references card(id),
+        card_number varchar references card(card_number),
         surname varchar(50) not null,
         name varchar(50) not null,
         patronymic varchar(50),
@@ -32,9 +46,9 @@
       create table event (
         id serial not null,
         action varchar(3) not null,
-        date timestamp not null,
-        entrance varchar(20) not null,
-        card integer references card(inDec),
+        date timestamp without time zone not null default clock_timestamp(),
+        entrance varchar(20),
+        child serial references child(id),
         actual integer,
         primary key(id)
       )
@@ -84,19 +98,6 @@
     ]]></sql>
   </changeSet>
 
-
-  <changeSet author="madina" id="create-table-parent_child">
-    <sql endDelimiter=";;"><![CDATA[
-      create table card (
-        id serial not null,
-        card_number varchar(20),
-        inHex varchar(20),
-        inDec varchar(20),
-        actual integer,
-        primary key(id)
-      )
-    ]]></sql>
-  </changeSet>
 
   <!--<changeSet author="madina" id="insert-child">-->
     <!--<sql endDelimiter=";;"><![CDATA[-->

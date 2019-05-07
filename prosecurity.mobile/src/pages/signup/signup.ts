@@ -5,6 +5,7 @@ import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {Auth} from "../../providers/auth/auth";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
+import {ToSave} from "../../model/ToSave";
 
 /**
  * Generated class for the SignupPage page.
@@ -27,6 +28,7 @@ export class SignupPage implements OnInit {
   public genderTypes: GenderType[] = genderTypes;
 
   mask: any[] = ['8', '(', /[1-9]/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
+  myModel:string;
 
   userForm: FormGroup;
   formErrors = {
@@ -275,7 +277,7 @@ export class SignupPage implements OnInit {
       type: [this.phoneTypes[0].value, [Validators.required]],
       number: [number, [
         Validators.required,
-        Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}')
+        Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}[\\w]?')
       ]
       ],
     });
@@ -284,4 +286,12 @@ export class SignupPage implements OnInit {
   get phones() {
     return this.userForm.get('phones') as FormArray;
   }
+
+  trimLastCharacter(value, index){
+    if (value.length > 15) {
+      let filed:FormGroup = this.phones.controls[index];
+      filed.patchValue({number: value.slice(0, -1)});
+    }
+  }
+
 }

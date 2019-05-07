@@ -4,7 +4,7 @@ import {IonicModule} from 'ionic-angular';
 import {DIRECTIVES} from "./app.imports";
 import {PipesModule} from "../pipes/pipes.module";
 import {TranslateModule} from '@ngx-translate/core';
-import {Directive} from 'ionic3-input-mask';
+import  Directive from "ionic3-input-mask";
 
 @NgModule({
   declarations: [

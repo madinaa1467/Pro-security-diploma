@@ -17,8 +17,8 @@ export class ParentService {
       .then(resp => ParentDetails.create(resp));
   }
 
-  save(toSave:ToSave) {
-    return this.http.post("parent/save", {"toSave": JSON.stringify(toSave)})
+  save(toSave) {
+    return this.http.post("parent/save", {"toSave": JSON.stringify(ToSave.create(toSave))})
       .toPromise().then(res => {
         this.auth.setAccountInfo(res);
         console.log("11111");

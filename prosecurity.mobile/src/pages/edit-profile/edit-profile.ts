@@ -28,6 +28,7 @@ export class EditProfile implements OnInit {
 
   public phoneTypes: PhoneType[] = phoneTypes;
   public genderTypes: GenderType[] = genderTypes;
+  mask: any[] = ['8', '(', /[1-9]/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
 
   userForm: FormGroup;
   formErrors = {
@@ -241,9 +242,16 @@ export class EditProfile implements OnInit {
       type: [this.phoneTypes[0].value, [Validators.required]],
       number: [number, [
           Validators.required,
-          Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}')
+          Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}[\\w]?')
         ]
       ],
     });
+  }
+
+  trimLastCharacter(value, index){
+    if (value.length > 15) {
+      let filed:FormGroup = this.phones.controls[index];
+      filed.patchValue({number: value.slice(0, -1)});
+    }
   }
 }

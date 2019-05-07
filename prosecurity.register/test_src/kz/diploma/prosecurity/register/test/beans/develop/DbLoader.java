@@ -7,6 +7,7 @@ import kz.greetgo.depinject.core.BeanGetter;
 import kz.diploma.prosecurity.controller.model.UserCan;
 import kz.diploma.prosecurity.register.test.dao.AuthTestDao;
 import kz.greetgo.security.password.PasswordEncoder;
+import kz.greetgo.util.RND;
 import org.apache.log4j.Logger;
 
 import java.sql.Timestamp;
@@ -51,8 +52,8 @@ public class DbLoader {
 
     phone(1);
 
-    child(1, 1, "","Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
-    child(2, 1, "","Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
+    child(1, 1, "9643108503302167061","Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
+    child(2, 1, "9643108503302167063","Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
 
 
 
@@ -93,10 +94,13 @@ public class DbLoader {
             new Timestamp(birthDate.getTime()), accountName+"@gmail.com");
 
   }
-  private void child(int id, int parentID, String onaiNumber, String surname, String name,  String patronymic, String gender, String birthDateStr, int actual) throws Exception {
+  private void child(int id, int parentID, String cardNumber, String surname, String name,  String patronymic, String gender, String birthDateStr, int actual) throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date birthDate = sdf.parse(birthDateStr);
-    authTestDao.get().insertChild(id, onaiNumber, surname, name, patronymic, gender,
+
+    authTestDao.get().insertCard(cardNumber, RND.str(8), RND.intStr(11));
+
+    authTestDao.get().insertChild(id, cardNumber, surname, name, patronymic, gender,
             new Timestamp(birthDate.getTime()), actual);
 
     authTestDao.get().insertParentChild(parentID, id, 1, actual);
@@ -106,6 +110,7 @@ public class DbLoader {
     authTestDao.get().insertEvent("out", id, new Timestamp(sdfEvent.parse("2007-02-16 12:38:55").getTime()), actual);
     authTestDao.get().insertEvent("in", id, new Timestamp(sdfEvent.parse("2007-02-17 08:00:55").getTime()), actual);
     authTestDao.get().insertEvent("out", id, new Timestamp(sdfEvent.parse("2007-02-17 13:10:22").getTime()), actual);
+    authTestDao.get().insertEventWithoutDate("out", id,  actual);
 
   }
 

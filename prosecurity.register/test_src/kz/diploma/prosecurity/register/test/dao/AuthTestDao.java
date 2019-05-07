@@ -58,12 +58,12 @@ public interface AuthTestDao {
                    @Param("phone") Phone phone);
 
 
-  @Insert("insert into Child (id, onay_number, actual, surname, name, patronymic, gender," +
+  @Insert("insert into child (id, card_number, actual, surname, name, patronymic, gender," +
           "birth_date) " +
-          "values (#{id}, #{onayNumber}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
+          "values (#{id}, #{cardNumber}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
           "#{gender}, #{birth_date} )")
   void insertChild(@Param("id") int id,
-                   @Param("onayNumber") String onayNumber,
+                   @Param("cardNumber") String cardNumber,
                    @Param("surname") String surname,
                    @Param("name") String name,
                    @Param("patronymic") String patronymic,
@@ -88,8 +88,20 @@ public interface AuthTestDao {
                    @Param("actual") int actual
   );
 
+  @Insert("insert into Event (action, child, actual) " +
+    "values (#{action}, #{child}, #{actual})")
+  void insertEventWithoutDate(@Param("action") String action,
+                   @Param("child") int child,
+                   @Param("actual") int actual
+  );
+
 
   @Select("select * from parent where id=#{id} and actual=1")
   ToSave getInfo(@Param("id") Long id);
 
+  @Insert("insert into card (card_number, in_hex, in_dec, actual) " +
+    "values (#{cardNumber}, #{inHex}, #{inDec}, 1)")
+  void insertCard(@Param("cardNumber") String cardNumber,
+                  @Param("inHex") String inHex,
+                  @Param("inDec") String inDec);
 }
