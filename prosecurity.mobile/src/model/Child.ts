@@ -1,4 +1,3 @@
-
 export class Child {
   public id: number;
   public fio: string;
@@ -7,6 +6,8 @@ export class Child {
   public name: string;
   public surname: string;
   public patronymic: string;
+  public birth_date: string;
+  public card_number: string;
   public notification: boolean;
 
   public static create(a: any): Child {
@@ -19,10 +20,15 @@ export class Child {
     this.id = a.id;
     this.fio = a.fio;
     this.gender = a.gender;
-    this.img = 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120';
+    if (a.img)
+      this.img = a.img;
+    else
+      this.img = '../../assets/src/unknown.png';
     this.name = a.name;
     this.surname = a.surname;
     this.patronymic = a.patronymic;
+    if (a.birthDate) this.birth_date = new Date(a.birthDate).toJSON();
+    this.card_number = a.cardNumber;
     this.notification = a.notification;
 
     // noinspection SuspiciousInstanceOfGuard

@@ -39,10 +39,15 @@ public class ChildController implements Controller {
     return childRegister.get().getParentChildList(parentId);
   }
 
-
   @ToJson
   @OnGet("/getLastEventsList")
   public List<Event> getLastEventsList(@ParSession(PARENT_ID) Long parentId) {
     return childRegister.get().getLastEventsList(parentId);
+  }
+
+  @ToJson
+  @OnGet("/getChildByCard")
+  public Child getChildByCard(@Par("cardNumber") String cardNumber) {
+    return childRegister.get().getChildByCard(cardNumber);
   }
 }

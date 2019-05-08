@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import {Api, Auth} from "../index";
 import {EventList} from "../../model/EventList";
 import {EventFilter} from "../../model/EventFilter";
-import {Storage} from "@ionic/storage";
 import {Child} from "../../model/Child";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {AccountInfo} from "../../model/auth/account-info";
 import {Event} from "../../model/Event";
 
 @Injectable()
@@ -72,6 +70,17 @@ export class ChildService {
         }
         this.allChildrenEventListValueChanges$.next((resp as EventList[]).map((r) => EventList.create(r)));
         return (resp as EventList[]).map((r) => EventList.create(r));
+      });
+  }
+
+  getChildByCard(card_number: string){
+    console.log('Call child/getChildByCard: ', card_number);
+    return this.http.get("child/getChildByCard",
+      { cardNumber: card_number})
+      .toPromise()
+      .then(resp => {
+        console.log('Response from server child/getChildByCard:', resp);
+        return Child.create(resp);
       });
   }
 

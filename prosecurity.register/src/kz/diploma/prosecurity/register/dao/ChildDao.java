@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ChildDao {
-  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification\n" +
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
           "    from parent_child as pc, child as c\n" +
           "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
   List<Child> loadChildren(Long parentId);
@@ -34,6 +34,15 @@ public interface ChildDao {
                    @Param("birth_date") Date birth_date,
                    @Param("actual") int actual);
 
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
+    "from child as c, parent_child as pc\n" +
+    "where pc.child = c.id and c.card_number = #{cardNumber} and c.actual = 1;")
+  Child getChildByCard(@Param("cardNumber") String cardNumber);
+
+  @Select("select actual\n" +
+    "from card\n" +
+    "where card_number = #{cardNumber};")
+  Integer checkCard(@Param("cardNumber") String cardNumber);
 
   @Select("select c.id\n" +
     "from child as c, parent_child as pc\n" +
@@ -55,6 +64,5 @@ public interface ChildDao {
   void insertEvent(@Param("action") String action,
                    @Param("child") long child,
                    @Param("date") Date date,
-                   @Param("actual") int actual
-  );
+                   @Param("actual") int actual);
 }

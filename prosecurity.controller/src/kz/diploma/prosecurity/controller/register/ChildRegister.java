@@ -8,4 +8,5 @@ public interface ChildRegister {
   List<EventList> listAllEvents(Long parentId, EventFilter filter);
   List<Child> getParentChildList(Long parentId);
   List<Event> getLastEventsList(Long parentId);
+  Child getChildByCard(String cardNumber);
 }
