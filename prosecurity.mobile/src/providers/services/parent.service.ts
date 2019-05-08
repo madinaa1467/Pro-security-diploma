@@ -3,6 +3,7 @@ import {Api, Auth} from "../index";
 import {EventFilter} from "../../model/EventFilter";
 import {ToSave} from "../../model/ToSave";
 import {ParentDetails} from "../../model/parent-details";
+import {HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class ParentService {
@@ -23,5 +24,13 @@ export class ParentService {
         this.auth.setAccountInfo(res);
         console.log("11111");
     });
+  }
+
+
+  uploadFile(fileData: any) {
+    return this.http.post('files/save', fileData,{
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      }),}).toPromise();
   }
 }

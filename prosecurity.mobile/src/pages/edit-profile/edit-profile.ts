@@ -235,14 +235,28 @@ export class EditProfile implements OnInit {
 
   handleFile(files: any) {
     console.log("files:", files);
+
+    let file =files[0];
     const reader: FileReader = new FileReader();
 
     reader.onloadend = () => {
-      console.log("ev.result:", reader.result);
-    };
-    reader.readAsDataURL(files[0]);
+      const formData = new FormData();
+      formData.append('uploadFile', file);
 
-    console.log("files:", files);
+      //fileData.append("name", file.name);
+      //fileData.append("uploadFile", reader.result);
+
+      console.log('reader.result:', reader.result);
+
+      this.parentService.uploadFile(formData).then(res=>{
+        console.log('res:', res);
+      });
+
+      //console.log("ev.result:", reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    console.log("files:", file);
   }
 
   createPhone(number?:string): FormGroup {
