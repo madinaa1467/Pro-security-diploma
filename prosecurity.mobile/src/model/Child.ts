@@ -6,8 +6,8 @@ export class Child {
   public name: string;
   public surname: string;
   public patronymic: string;
-  public birth_date: string;
-  public card_number: string;
+  public birthDate: string;
+  public cardNumber: string;
   public notification: boolean;
 
   public static create(a: any): Child {
@@ -27,8 +27,8 @@ export class Child {
     this.name = a.name;
     this.surname = a.surname;
     this.patronymic = a.patronymic;
-    if (a.birthDate) this.birth_date = new Date(a.birthDate).toJSON();
-    this.card_number = a.cardNumber;
+    if (a.birthDate) this.birthDate = new Date(a.birthDate).toJSON();
+    this.cardNumber = a.cardNumber;
     this.notification = a.notification;
 
     // noinspection SuspiciousInstanceOfGuard

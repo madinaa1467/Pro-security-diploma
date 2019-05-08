@@ -2,10 +2,7 @@ package kz.diploma.prosecurity.register.impl;
 
 import kz.diploma.prosecurity.controller.errors.ErrorMessage;
 import kz.diploma.prosecurity.controller.errors.ValidationError;
-import kz.diploma.prosecurity.controller.model.Child;
-import kz.diploma.prosecurity.controller.model.Event;
-import kz.diploma.prosecurity.controller.model.EventFilter;
-import kz.diploma.prosecurity.controller.model.EventList;
+import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
 import kz.diploma.prosecurity.register.jdbc.ChildEventList;
@@ -71,14 +68,19 @@ public class ChildRegisterImpl implements ChildRegister {
     } else{
       Integer actual = this.childDao.get().checkCard(cardNumber);
       if(actual == null){
-        ErrorMessage errorMessage = new ErrorMessage("card_number", "unknown");
+        ErrorMessage errorMessage = new ErrorMessage("cardNumber", "unknown");
         throw new ValidationError(errorMessage);
       } else if(actual == 0){
-        ErrorMessage errorMessage = new ErrorMessage("card_number", "unavailable");
+        ErrorMessage errorMessage = new ErrorMessage("cardNumber", "unavailable");
         throw new ValidationError(errorMessage);
       }
     }
     return new Child();
+  }
+
+  @Override
+  public boolean updateChildren(Long parentId, ChildToSave child) {
+    return this.childDao.get().upsertChild(child) > 0;
   }
 
   @Override

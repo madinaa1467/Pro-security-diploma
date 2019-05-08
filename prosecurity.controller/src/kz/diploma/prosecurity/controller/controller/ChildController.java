@@ -1,9 +1,6 @@
 package kz.diploma.prosecurity.controller.controller;
 
-import kz.diploma.prosecurity.controller.model.Child;
-import kz.diploma.prosecurity.controller.model.Event;
-import kz.diploma.prosecurity.controller.model.EventList;
-import kz.diploma.prosecurity.controller.model.EventFilter;
+import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
@@ -16,6 +13,7 @@ import kz.greetgo.mvc.annotations.ParSession;
 import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
+import kz.greetgo.mvc.annotations.on_methods.OnPost;
 
 import java.util.List;
 
@@ -49,5 +47,11 @@ public class ChildController implements Controller {
   @OnGet("/getChildByCard")
   public Child getChildByCard(@Par("cardNumber") String cardNumber) {
     return childRegister.get().getChildByCard(cardNumber);
+  }
+
+  @ToJson
+  @OnPost("/update")
+  public boolean updateChildren(@ParSession(PARENT_ID) Long parentId, @Json @Par("childToSave") ChildToSave childToSave) {
+    return childRegister.get().updateChildren(parentId, childToSave);
   }
 }

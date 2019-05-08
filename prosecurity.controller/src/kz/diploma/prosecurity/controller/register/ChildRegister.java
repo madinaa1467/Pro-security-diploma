@@ -9,4 +9,5 @@ public interface ChildRegister {
   List<Child> getParentChildList(Long parentId);
   List<Event> getLastEventsList(Long parentId);
   Child getChildByCard(String cardNumber);
+  boolean updateChildren(Long parentId, ChildToSave child);
 }

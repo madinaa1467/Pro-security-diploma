@@ -28,17 +28,17 @@
         <ion-item>
           <!--<ion-label color="primary" floating></ion-label>-->
           <ion-input type="text" placeholder="____ __ _____ ____ ____" id="onay_number" [textMask]="{mask: mask}"
-                     required formControlName="card_number"></ion-input>
+                     required formControlName="cardNumber"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container>
             <i></i>
-            <div class="error-message isa_error" *ngIf="formErrors.card_number">
-              {{ formErrors.card_number }}
+            <div class="error-message isa_error" *ngIf="formErrors.cardNumber">
+              {{ formErrors.cardNumber }}
             </div>
           </ng-container>
         </div>
-        <button ion-button ionicStepperNext [disabled]="!childForm.controls['card_number'].valid">Next</button>
+        <button ion-button ionicStepperNext [disabled]="!childForm.controls['cardNumber'].valid">Next</button>
       </form>
     </ion-step>
     <ion-step label="Personal info"
@@ -99,7 +99,7 @@
         </div>
         <ion-item>
           <ion-label>Birth Date</ion-label>
-          <ion-datetime formControlName="birth_date" display-format="MMMM YYYY" min="1900" max="2020-10-31"
+          <ion-datetime formControlName="birthDate" display-format="MMMM YYYY" min="1900" max="2020-10-31"
                         placeholder="Birth Date"
                         required></ion-datetime>
         </ion-item>
@@ -132,7 +132,7 @@
 
       <ion-row *ngIf="action === 'edit'">
         <ion-col col-12>
-          <button ion-button block color="primary">
+          <button ion-button block color="primary" (click)="saveChild()"  [disabled]="!childForm.valid">
             <ion-icon name="checkmark"></ion-icon> &nbsp; Save Changes
           </button>
         </ion-col>

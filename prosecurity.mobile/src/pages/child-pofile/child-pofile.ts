@@ -53,9 +53,9 @@ export class ChildPofile implements OnInit {
     console.log(e);
     if(e == 1){
       const loading = this.loadingCtrl.create();
-      let card_id = this.childForm.controls['card_number'].value;
-      this.childForm.controls['card_number'].patchValue(card_id.substring(0, 23));
-      console.log("Send: ", this.childForm.controls['card_number'].value);
+      let card_id = this.childForm.controls['cardNumber'].value;
+      this.childForm.controls['cardNumber'].patchValue(card_id.substring(0, 23));
+      console.log("Send: ", this.childForm.controls['cardNumber'].value);
       loading.present();
       this.childService.getChildByCard(card_id.replace(/\D/g,'').substring(0, 19)).then(list => {
         loading.dismiss();
@@ -98,6 +98,28 @@ export class ChildPofile implements OnInit {
     this.viewCtrl.dismiss();
   }
 
+  saveChild() {
+    console.error("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", this.childForm.getRawValue());
+    const loading = this.loadingCtrl.create();
+    loading.present();
+
+    this.childService.save(this.childForm.getRawValue()).then(_resp =>{
+      loading.dismiss();
+      const alert = this.alertCtrl.create({
+        //todo change by languge
+        title: ' Уведомление',
+        message: 'Вы успешнo изменили запись!',
+        buttons: [{
+          text: 'Ok',
+          handler: data => {
+            this.dismiss();
+          }
+        }]
+      });
+      alert.present();
+    });
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChildPofile Modal -Page');
@@ -109,7 +131,8 @@ export class ChildPofile implements OnInit {
 
   buildForm() {
     this.childForm = this.fb.group({
-      'card_number': ['', [
+      'id': null,
+      'cardNumber': ['', [
         Validators.required,
         Validators.pattern('[\\d]{4}[- ]?[\\d]{2}[- ]?[\\d]{5}[- ]?[\\d]{4}[- ]?[\\d]{4}[\\w]?'),
       ]
@@ -134,7 +157,7 @@ export class ChildPofile implements OnInit {
         Validators.maxLength(25)
       ]
       ],
-      'birth_date': [, [
+      'birthDate': [, [
         Validators.required
       ]
       ],
@@ -182,7 +205,7 @@ export class ChildPofile implements OnInit {
 
   }
   formErrors = {
-    'card_number': '',
+    'cardNumber': '',
     'name': '',
     'surname': '',
     'patronymic': '',
@@ -191,7 +214,7 @@ export class ChildPofile implements OnInit {
   };
 
   validationMessages = {
-    'card_number': {
+    'cardNumber': {
       'required': 'Enter onay',
       'pattern': 'Not correct!',
       'unknown': 'Unknown card, try again',

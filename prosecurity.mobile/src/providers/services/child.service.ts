@@ -5,6 +5,7 @@ import {EventFilter} from "../../model/EventFilter";
 import {Child} from "../../model/Child";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Event} from "../../model/Event";
+import {ChildToSave} from "../../model/ChildToSave";
 
 @Injectable()
 export class ChildService {
@@ -83,5 +84,17 @@ export class ChildService {
         return Child.create(resp);
       });
   }
+
+  save(childToSave) {
+    return this.http.post("child/update", {"childToSave": JSON.stringify(ChildToSave.create(childToSave))})
+      .toPromise().then(resp => {
+        console.log("Response from child/update:  ", resp);
+        if (!resp)
+          console.error(resp);
+        this.loadParentChildren();
+        this.loadEvents(new EventFilter());
+        return resp;
+      });
+    }
 
 }
