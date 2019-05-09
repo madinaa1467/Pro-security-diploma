@@ -19,6 +19,7 @@ export class Home implements OnInit, OnDestroy {
   };
   public tap: number = 0;
   public activeMenu: string;
+  public dateFilter: string;
   // You can get this data from your API. This is a dumb data for being an example.
   public stories = [];
   public eventList =[];
@@ -59,13 +60,26 @@ export class Home implements OnInit, OnDestroy {
     if(childId != null) {
       this.filter.childId = childId;
     }
+    this.dateFilter = '';
+    if(this.filter.startDate) {
+      this.dateFilter = new Date(this.filter.startDate).toJSON().substr(0, 10);
+      if(!this.filter.endDate)
+        this.filter.endDate = new Date();
+    }
+    if(this.filter.startDate && this.filter.endDate)
+      this.dateFilter += ' - ';
+    if(this.filter.endDate) {
+      if(!this.filter.startDate)
+        this.dateFilter += '... - ';
+      this.dateFilter += new Date(this.filter.endDate).toJSON().substr(0, 10);
+    }
     this.callServiceGetEventList();
   }
 
   clearFilter(){
     this.filter.startDate = null;
     this.filter.endDate = null;
-    this.callServiceGetEventList();
+    this.getEventist(null);
   }
 
 

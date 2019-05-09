@@ -57,8 +57,6 @@ export class ChildService {
   loadEvents(filter: EventFilter) {
 
     filter.limit = 15;
-    if(!filter.endDate)
-      filter.endDate = new Date();
 
     console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
     return this.http.get("child/listAllEvents",

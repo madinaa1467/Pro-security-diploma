@@ -8,24 +8,21 @@
 
   <ion-content>
     <ion-list>
-        <ion-item>
-          <ion-label>From </ion-label>
-          <ion-datetime pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.startDate" ></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label>To </ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.endDate" ></ion-datetime>
-        </ion-item>
-      <!--<button color="light" expand="full" ion-item (click)="clearFilter()" menuClose="menu">-->
-        <!--<ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>-->
-      <!--<button color="light" expand="full" ion-item (click)="getEventist(null)" menuClose="menu">Use Filter</button>-->
+      <ion-item>
+        <ion-label>From</ion-label>
+        <ion-datetime pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.startDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>To</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.endDate"></ion-datetime>
+      </ion-item>
     </ion-list>
 
-    <button menuClose="menu" class="filter-ok-button"  (click)="clearFilter()" >
+    <button menuClose="menu" class="filter-ok-button" (click)="getEventist()">
       ПРИМЕНИТЬ
     </button>
 
-    <button menuClose="menu" class="filter-clear-button" (click)="clearFilter()" >
+    <button menuClose="menu" class="filter-clear-button" (click)="clearFilter()">
       СБРОСИТЬ
     </button>
   </ion-content>
@@ -38,7 +35,7 @@
 
     </ion-buttons>
     <button ion-button [menuToggle]="activeMenu" right>
-      <ion-icon name="funnel"  *ngIf="activeMenu"></ion-icon>
+      <ion-icon name="funnel"></ion-icon>
     </button>
     <ion-title style="border: 1px solid #ccc" (click)="scrollToTop()">Pro-Security</ion-title>
   </ion-navbar>
@@ -55,14 +52,24 @@
     </div>
   </ion-scroll>
 
-  <hr no-margin no-padding>
   <div (swipe)="swipePage($event)">
+
+    <div
+      *ngIf="dateFilter"
+      class="filter-menu-shadow-container">
+
+
+      <ion-row class="filter-center-item">
+        <div class="filter-date-icon"></div>
+        <div class="filter-label">{{dateFilter}}</div>
+        <ion-icon (click)="clearFilter()" name="close"></ion-icon>
+      </ion-row>
+    </div>
 
     <ion-list>
       <ion-item-group *ngFor="let day of eventList">
         <ion-item-divider color="light" class="custom-divider" sticky>{{day.date}}</ion-item-divider>
-        <div *ngFor="let event of day.events">
-          <hr>
+        <div *ngFor="let event of day.events; let i = index">
           <ion-item no-lines text-wrap>
             <ion-avatar item-left>
               <img src="../../assets/src/girl (1).png">
@@ -70,8 +77,8 @@
             <ion-row>
               <ion-col col-10 no-padding no-margin>
                 <p class="p_action">
-                {{ ('HOME.'+event.action+'_'+event.gender) | translate:{childFio:event.fio} }}
-                <ion-note>{{event.time}}</ion-note>
+                  {{ ('HOME.'+event.action+'_'+event.gender) | translate:{childFio:event.fio} }}
+                  <ion-note>{{event.time}}</ion-note>
                 </p>
               </ion-col>
               <ion-col col-2 *ngIf="event.action == 'in'">
@@ -81,9 +88,8 @@
                 <img src="../../assets/src/exit.png" class="post-small-img" alt="">
               </ion-col>
             </ion-row>
-            <!--<div class="divider"></div>-->
           </ion-item>
-          <hr>
+          <hr *ngIf="i != day.events.length - 1">
         </div>
       </ion-item-group>
     </ion-list>
