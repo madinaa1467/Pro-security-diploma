@@ -60,16 +60,18 @@
 
     <ion-list *ngSwitchCase="'grid'">
 
-      <button ion-item *ngFor="let i of childService.parentChildListValueChanges$ | async" (click)="childSaveEdit(i)">
-        <ion-row text-center>
-          <ion-col col-3 class="grid_img">
-            <img [src]="i.img" class="child-avatar" alt="">
-          </ion-col>
-          <ion-col>
-            <p>{{i.fio}}</p>
-          </ion-col>
-        </ion-row>
-      </button>
+      <div *ngFor="let i of childService.parentChildListValueChanges$ | async">
+        <button ion-item *ngIf="i.id != 0" (click)="childSaveEdit(i)">
+          <ion-row text-center>
+            <ion-col col-3 class="grid_img">
+              <img [src]="i.img" class="child-avatar" alt="">
+            </ion-col>
+            <ion-col>
+              <p>{{i.fio}}</p>
+            </ion-col>
+          </ion-row>
+        </button>
+      </div>
     </ion-list>
   </div>
 

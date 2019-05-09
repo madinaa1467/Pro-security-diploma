@@ -16,6 +16,8 @@
           <ion-label>To </ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.endDate" ></ion-datetime>
         </ion-item>
+      <button color="light" expand="full" ion-item (click)="clearFilter()" menuClose="menu">
+        <ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>
       <button color="light" expand="full" ion-item (click)="getEventist(null)" menuClose="menu">Use Filter</button>
       <button color="light" expand="full" ion-item menuClose="menu">
         Close Filter
@@ -33,7 +35,7 @@
       <!--</button>-->
     </ion-buttons>
     <button ion-button [menuToggle]="activeMenu">
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="search"></ion-icon>
     </button>
     <ion-title style="border: 1px solid #ccc" (click)="scrollToTop()">Pro-Security</ion-title>
   </ion-navbar>
@@ -52,11 +54,6 @@
 
   <hr no-margin no-padding>
   <div (swipe)="swipePage($event)">
-
-
-    <button ion-button block color="light" [menuToggle]="activeMenu">Search By</button>
-
-    <button *ngIf="filter.endDate || filter.startDate" ion-button block color="light" (click)="clearFilter()">Clear Filter</button>
 
     <ion-list>
       <ion-item-group *ngFor="let day of eventList">
