@@ -7,7 +7,6 @@ import { Options } from '../options/options';
 import { TaggedProfile } from '../tagged-profile/tagged-profile';
 import { SavedProfile } from '../saved-profile/saved-profile';
 import {ChildPofile} from "../child-pofile/child-pofile";
-import {Subscription} from "rxjs/Subscription";
 import {ChildService} from "../../providers/services/child.service";
 import {Child} from "../../model/Child";
 

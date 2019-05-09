@@ -1,6 +1,7 @@
 package kz.diploma.prosecurity.register.dao;
 
 import kz.diploma.prosecurity.controller.model.Child;
+import kz.diploma.prosecurity.controller.model.ChildToSave;
 import kz.diploma.prosecurity.controller.model.Event;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -10,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ChildDao {
-  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification\n" +
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
           "    from parent_child as pc, child as c\n" +
           "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
   List<Child> loadChildren(Long parentId);
@@ -34,6 +35,29 @@ public interface ChildDao {
                    @Param("birth_date") Date birth_date,
                    @Param("actual") int actual);
 
+  @Insert("insert into child (id, card_number, surname, name, patronymic, gender, birth_date, actual)" +
+    "values (#{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
+    "#{toSave.gender}, #{toSave.birthDate}, 1)" +
+    "on conflict (id) do update set\n" +
+    "  card_number = excluded.card_number,\n" +
+    "  surname = excluded.surname,\n" +
+    "  name = excluded.name,\n" +
+    "  patronymic = excluded.patronymic,\n" +
+    "  gender = excluded.gender,\n" +
+    "  birth_date = excluded.birth_date,\n" +
+    "  actual = excluded.actual;")
+  Long upsertChild(@Param("toSave") ChildToSave toSave);
+
+
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
+    "from child as c, parent_child as pc\n" +
+    "where pc.child = c.id and c.card_number = #{cardNumber} and c.actual = 1;")
+  Child getChildByCard(@Param("cardNumber") String cardNumber);
+
+  @Select("select actual\n" +
+    "from card\n" +
+    "where card_number = #{cardNumber};")
+  Integer checkCard(@Param("cardNumber") String cardNumber);
 
   @Select("select c.id\n" +
     "from child as c, parent_child as pc\n" +
@@ -55,6 +79,5 @@ public interface ChildDao {
   void insertEvent(@Param("action") String action,
                    @Param("child") long child,
                    @Param("date") Date date,
-                   @Param("actual") int actual
-  );
+                   @Param("actual") int actual);
 }

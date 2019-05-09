@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+
 import {Auth} from "../../providers/auth/auth";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from "ionic-angular";
+import {Component, OnInit} from "@angular/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 /**
  * Generated class for the SignupPage page.

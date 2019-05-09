@@ -56,6 +56,10 @@ public class DbLoader {
     child(2, 1, "9643108503302167063","Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
 
 
+    card("9643108503302167064");
+    card("9643108503302167065");
+    card("1111111111111111111");
+    card("2222222222222222222");
 
     logger.info("Finish loading persons");
   }
@@ -98,7 +102,7 @@ public class DbLoader {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date birthDate = sdf.parse(birthDateStr);
 
-    authTestDao.get().insertCard(cardNumber, RND.str(8), RND.intStr(11));
+    card(cardNumber);
 
     authTestDao.get().insertChild(id, cardNumber, surname, name, patronymic, gender,
             new Timestamp(birthDate.getTime()), actual);
@@ -112,6 +116,9 @@ public class DbLoader {
     authTestDao.get().insertEvent("out", id, new Timestamp(sdfEvent.parse("2007-02-17 13:10:22").getTime()), actual);
     authTestDao.get().insertEventWithoutDate("out", id,  actual);
 
+  }
+  private void card(String cardNumber){
+    authTestDao.get().insertCard(cardNumber, RND.str(8), RND.intStr(11));
   }
 
   private void phone(int id)  {

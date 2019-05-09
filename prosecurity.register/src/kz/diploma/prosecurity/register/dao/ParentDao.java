@@ -32,6 +32,7 @@ public interface ParentDao {
           "values (#{toSave.id}, #{toSave.username}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
           "#{toSave.gender}, #{toSave.birthDate}, #{toSave.email}, 1)" +
           "on conflict (id) do update set\n" +
+          "  username = excluded.username,\n" +
           "  surname = excluded.surname,\n" +
           "  name = excluded.name,\n" +
           "  patronymic = excluded.patronymic,\n" +
