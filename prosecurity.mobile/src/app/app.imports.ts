@@ -1,5 +1,5 @@
 // Providers
-import {AlertService, Api, AppLoader, Auth, DropdownService} from "../providers";
+import {AlertService, Api, AppLoader, Auth, DropdownService, FileProvider} from "../providers";
 // Modules
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpClientModule} from "@angular/common/http";
@@ -27,6 +27,7 @@ export const PROVIDERS = [
   DropdownService,
   ChildService,
   ParentService,
+  FileProvider,
 
   // Ionic native specific providers
   StatusBar,

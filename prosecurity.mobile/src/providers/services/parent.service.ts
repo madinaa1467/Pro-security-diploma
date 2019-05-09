@@ -28,6 +28,7 @@ export class ParentService {
 
 
   uploadFile(fileData: any) {
+    console.log("fileData", fileData);
     return this.http.post('files/save', fileData,{
       headers: new HttpHeaders({
         'Content-Type': 'multipart/form-data'
