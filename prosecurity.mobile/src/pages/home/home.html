@@ -1,4 +1,4 @@
-<ion-menu [content]="content" id="menu">
+<ion-menu [content]="content" id="menu" side="right">
 
   <ion-header>
     <ion-toolbar color="secondary">
@@ -16,13 +16,18 @@
           <ion-label>To </ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="filter.endDate" ></ion-datetime>
         </ion-item>
-      <button color="light" expand="full" ion-item (click)="clearFilter()" menuClose="menu">
-        <ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>
-      <button color="light" expand="full" ion-item (click)="getEventist(null)" menuClose="menu">Use Filter</button>
-      <button color="light" expand="full" ion-item menuClose="menu">
-        Close Filter
-      </button>
+      <!--<button color="light" expand="full" ion-item (click)="clearFilter()" menuClose="menu">-->
+        <!--<ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>-->
+      <!--<button color="light" expand="full" ion-item (click)="getEventist(null)" menuClose="menu">Use Filter</button>-->
     </ion-list>
+
+    <button menuClose="menu" class="filter-ok-button"  (click)="clearFilter()" >
+      ПРИМЕНИТЬ
+    </button>
+
+    <button menuClose="menu" class="filter-clear-button" (click)="clearFilter()" >
+      СБРОСИТЬ
+    </button>
   </ion-content>
 </ion-menu>
 
@@ -30,12 +35,10 @@
 <ion-header>
   <ion-navbar color="white">
     <ion-buttons start left>
-      <!--<button color="black" ion-button icon-only>-->
-        <!--<ion-icon name="camera"></ion-icon>-->
-      <!--</button>-->
+
     </ion-buttons>
-    <button ion-button [menuToggle]="activeMenu">
-      <ion-icon name="search"></ion-icon>
+    <button ion-button [menuToggle]="activeMenu" right>
+      <ion-icon name="funnel"  *ngIf="activeMenu"></ion-icon>
     </button>
     <ion-title style="border: 1px solid #ccc" (click)="scrollToTop()">Pro-Security</ion-title>
   </ion-navbar>
@@ -95,57 +98,5 @@
         ОТСУТСТВУЕТ ИСТОРИЯ
       </p>
     </div>
-
-    <!-- Cards -->
-    <!--<ion-card no-padding padding-bottom no-margin class="card">-->
-
-    <!--<ion-row>-->
-    <!--<ion-col col-10>-->
-    <!--<ion-item>-->
-    <!--<ion-avatar item-left>-->
-    <!--<img src="http://ionicframework.com/dist/preview-app/www/assets/img/sarah-avatar.png.jpeg">-->
-    <!--</ion-avatar>-->
-    <!--<h2 style="font-weight: bold">ashleyosama</h2>-->
-    <!--<p>Cyprus</p>-->
-    <!---->
-    <!--</ion-item>-->
-    <!--</ion-col >-->
-    <!--<ion-col col-2>-->
-    <!--<button no-margin no-padding clear color="black" ion-button icon-only style="float: right; top: 15px" (click)="presentPostPopover()">-->
-    <!--<ion-icon name="more"></ion-icon>-->
-    <!--</button>-->
-    <!--</ion-col>-->
-    <!--</ion-row>-->
-    <!---->
-
-    <!--<img src="http://ionicframework.com/dist/preview-app/www/assets/img/advance-card-bttf.png" (tap)="tapPhotoLike($event)">-->
-
-    <!--<p no-margin no-padding>-->
-    <!--<button clear ion-button icon-only (click)="likeButton()" class="like-btn">-->
-    <!--<ion-icon no-padding [name]="like_btn.icon_name" color="{{ like_btn.color }}" class="icon-space"></ion-icon>-->
-    <!--</button>-->
-    <!--<button clear ion-button icon-only>-->
-    <!--<ion-icon no-padding isActive="false" color="black" name="ios-text-outline" class="icon-space" style="font-weight: bold"></ion-icon>-->
-    <!--</button>-->
-    <!--<button clear ion-button icon-only>-->
-    <!--<ion-icon no-padding isActive="false" color="black" name="paper-plane" class="icon-space"></ion-icon>-->
-    <!--</button>-->
-    <!--<button no-margin no-padding clear color="black" ion-button icon-only style="float: right">-->
-    <!--<ion-icon name="ios-bookmark-outline"></ion-icon>-->
-    <!--</button>-->
-    <!--</p>-->
-    <!--<hr>-->
-
-    <!--<ion-card-content>-->
-    <!--<p class="like-content"><ion-icon name="heart"></ion-icon> 250 likes</p>-->
-    <!--<p><b>techcrunch</b> Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out create a DeLorean?! Whoa. This is heavy.</p>-->
-    <!---->
-    <!--<ion-note style="font-size: 12px">-->
-    <!--11h ago-->
-    <!--</ion-note>-->
-    <!--</ion-card-content>-->
-
-    <!--</ion-card>-->
-
   </div>
 </ion-content>
