@@ -13,11 +13,6 @@ import {EventFilter} from "../../model/EventFilter";
 export class Home implements OnInit, OnDestroy {
   @ViewChild(Content) content: Content;
 
-  public like_btn = {
-    color: 'black',
-    icon_name: 'heart-outline'
-  };
-  public tap: number = 0;
   public activeMenu: string;
   public dateFilter: string;
   // You can get this data from your API. This is a dumb data for being an example.
@@ -88,30 +83,6 @@ export class Home implements OnInit, OnDestroy {
     this.childService.loadEvents(this.filter).then(list =>{
       this.eventList = list;
     });
-  }
-
-  likeButton() {
-    if(this.like_btn.icon_name === 'heart-outline') {
-      this.like_btn.icon_name = 'heart';
-      this.like_btn.color = 'danger';
-      // Do some API job in here for real!
-    }
-    else {
-      this.like_btn.icon_name = 'heart-outline';
-      this.like_btn.color = 'black';
-    }
-  }
-
-  tapPhotoLike(times) { // If we click double times, it will trigger like the post
-    this.tap++;
-    if(this.tap % 2 === 0) {
-      this.likeButton();
-    }
-  }
-
-  presentPostPopover() {
-    let popover = this.popoverCtrl.create(PostPopover);
-    popover.present();
   }
 
   //todo fix swipes
