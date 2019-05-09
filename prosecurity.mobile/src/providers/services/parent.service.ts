@@ -4,12 +4,12 @@ import {Api, Auth} from "../index";
 import {EventFilter} from "../../model/EventFilter";
 import {ToSave} from "../../model/ToSave";
 import {ParentDetails} from "../../model/parent-details";
-import {HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class ParentService {
 
-  constructor(private http: Api, private auth:Auth) {
+  constructor (private http: Api, private auth: Auth, private httpClient: HttpClient) {
   }
   public filter: EventFilter = new EventFilter();
 
@@ -27,12 +27,13 @@ export class ParentService {
     });
   }
 
-
-  uploadFile(fileData: any) {
-    console.log("fileData", fileData);
-    return this.http.post('files/save', fileData,{
-      headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data'
-      }),}).toPromise();
+  loadFile (fileId: string) {
+    return this.http.get('files/get', {fileId: fileId}, {observe: 'response', responseType: 'blob'})
+      .toPromise().then(res => {
+        //  const url = window.URL.createObjectURL(res);
+        //console.log("url:", res.url)
+        console.log('res:', res)
+        return res;
+      }).catch(err => console.log('err', err));
   }
 }

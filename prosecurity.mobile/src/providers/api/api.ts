@@ -17,24 +17,18 @@ export class Api {
 
   get(endpoint: string, params?: any, reqOpts?: any) {
     let defReqOpts = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }),
+      /* headers: new HttpHeaders({
+         'Content-Type': 'application/x-www-form-urlencoded'
+       }),*/
       withCredentials: true,
       params : new HttpParams()
     };
 
-    // if (reqOpts) {
-    //   for (let k in reqOpts) {
-    //     defReqOpts[k] = reqOpts[k];
-    //   }
-    // }
-    // else {
-    // if (!reqOpts) {
-    //   reqOpts = {
-    //     params : new HttpParams()
-    //   };
-    // }
+    if (reqOpts) {
+      for (let k in reqOpts) {
+        defReqOpts[k] = reqOpts[k];
+      }
+    }
 
     // Support easy query params for GET requests
     if (params) {
@@ -72,5 +66,6 @@ export class Api {
 
     return this.http.post(this.url(endpoint), params.toString(), defReqOpts);
   }
+
 
 }

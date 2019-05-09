@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
+import {FileProvider} from "../../providers";
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class EditProfile implements OnInit {
   // You can get this data from your API. This is a dumb data for being an example.
   public user_data = {
     profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
+    //profile_img: 'http://localhost:1313/prosecurity/api/files/get?fileId=2h8nnf5Y0c6oG',
     name: 'Can Delibas',
     surname: 'Can Delibas',
     patronymic: 'patronymic',
@@ -86,7 +88,8 @@ export class EditProfile implements OnInit {
     public viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
-    private parentService: ParentService) {
+    private parentService: ParentService,
+    private fileProvider: FileProvider) {
   }
 
   ngOnInit() {
@@ -99,6 +102,10 @@ export class EditProfile implements OnInit {
       }
 
       this.userForm.patchValue(list);
+    });
+
+    this.parentService.loadFile('2h8nnf5Y0c6oG').then(res => {
+      this.user_data.profile_img = res['url'];
     });
   }
 
@@ -234,38 +241,9 @@ export class EditProfile implements OnInit {
   }
 
   handleFile(files: any) {
-    console.log("files:", files);
-
-    let file =files[0];
-    const reader: FileReader = new FileReader();
-
-    reader.onloadend = () => {
-      console.log("files:", file);
-      console.log('reader.result:', reader.result);
-      const formData = new FormData();
-      formData.append('uploadFile', file);
-
-      this.parentService.uploadFile(formData).then(res => {
-        console.log('res:', res);
-      });
-
-      /*const formData = new FormData();
-      formData.append('uploadFile', file);*/
-
-      //fileData.append("name", file.name);
-      //fileData.append("uploadFile", reader.result);
-
-      //console.log('reader.result:', reader.result);
-
-      /*this.parentService.uploadFile(formData).then(res=>{
-        console.log('res:', res);
-      });*/
-
-      //console.log("ev.result:", reader.result);
-    };
-    reader.readAsDataURL(file);
-
-    // console.log("files:", file);
+    this.fileProvider.upload(files[0]).toPromise().then(res => {
+      console.log("res:", res);
+    });
   }
 
   createPhone(number?:string): FormGroup {
