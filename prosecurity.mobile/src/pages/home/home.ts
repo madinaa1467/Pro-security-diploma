@@ -28,6 +28,24 @@ export class Home implements OnInit, OnDestroy {
     this.filter.childId = 0;
     this.filter.endDate = null;
     this.filter.startDate = null;
+    this.filter.limit = 15;
+    this.filter.offset = 0;
+
+    // this.content.ionScrollEnd.subscribe((data)=>{
+    //   // My ideia is to get the whole content dimensions
+    //   let dimensions = this.content.getContentDimensions();
+    //
+    //   console.log("Dimensions");
+    //   console.log(dimensions);
+    //   console.log("Scroll ");
+    //   console.log(data);
+    //
+    //   // And compare it with the scroll data.
+    //   if(dimensions.contentTop == data.scrollTop){
+    //     console.log("Looks like I'm in the bottom of the scroll element!");
+    //   }
+    //
+    // });
   }
   menuActive() {
     this.activeMenu = 'menu';
@@ -68,6 +86,8 @@ export class Home implements OnInit, OnDestroy {
         this.dateFilter += '... - ';
       this.dateFilter += new Date(this.filter.endDate).toJSON().substr(0, 10);
     }
+    this.eventList = [];
+    this.filter.offset = 0;
     this.callServiceGetEventList();
   }
 
@@ -81,7 +101,9 @@ export class Home implements OnInit, OnDestroy {
   callServiceGetEventList(){
     this.childService.loadEvents(this.filter);
     this.childService.loadEvents(this.filter).then(list =>{
-      this.eventList = list;
+      list.forEach(event=> {
+        this.eventList.push(event)
+      });
     });
   }
 
@@ -102,4 +124,15 @@ export class Home implements OnInit, OnDestroy {
   scrollToTop() {
     this.content.scrollToTop();
   }
+
+
+  test(){
+    // console.error('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+    // this.filter.offset++;
+    // this.callServiceGetEventList();
+  }
+  scrollDownOnLoad(){
+    console.error('AAAAAAAAAAAAAAAAASSSSSSDDD')
+  }
+
 }

@@ -56,8 +56,6 @@ export class ChildService {
 
   loadEvents(filter: EventFilter) {
 
-    filter.limit = 15;
-
     console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
     return this.http.get("child/listAllEvents",
       { filter: JSON.stringify(filter)})
