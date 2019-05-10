@@ -4,11 +4,12 @@ import {Api, Auth} from "../index";
 import {EventFilter} from "../../model/EventFilter";
 import {ToSave} from "../../model/ToSave";
 import {ParentDetails} from "../../model/parent-details";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class ParentService {
 
-  constructor(private http: Api, private auth:Auth) {
+  constructor (private http: Api, private auth: Auth, private httpClient: HttpClient) {
   }
   public filter: EventFilter = new EventFilter();
 

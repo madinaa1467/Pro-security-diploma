@@ -48,6 +48,7 @@ public class CrossOriginFilterRegistration implements WebAppContextRegistration,
     response.addHeader("Access-Control-Allow-Headers", "origin,x-requested-with,access-control-request-headers," +
       "content-type,access-control-request-method,accept,token,set-cookie");
     response.addHeader("Access-Control-Max-Age", "1800");
+    response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
 
     if ("OPTIONS".equals(request.getMethod())) {
       response.setStatus(200);

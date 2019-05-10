@@ -4,6 +4,8 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
+import {FileProvider} from "../../providers";
+import {FileModel} from "../../model/file-model";
 
 @IonicPage()
 @Component({
@@ -15,6 +17,7 @@ export class EditProfile implements OnInit {
   // You can get this data from your API. This is a dumb data for being an example.
   public user_data = {
     profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
+    //profile_img: 'http://localhost:1313/prosecurity/api/files/get?fileId=2h8nnf5Y0c6oG',
     name: 'Can Delibas',
     surname: 'Can Delibas',
     patronymic: 'patronymic',
@@ -86,7 +89,8 @@ export class EditProfile implements OnInit {
     public viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
-    private parentService: ParentService) {
+    private parentService: ParentService,
+    private fileProvider: FileProvider) {
   }
 
   ngOnInit() {
@@ -100,6 +104,10 @@ export class EditProfile implements OnInit {
 
       this.userForm.patchValue(list);
     });
+
+   /* this.parentService.loadFile('2h8nnf5Y0c6oG').then(res => {
+      this.user_data.profile_img = res['url'];
+    });*/
   }
 
   updateProfile() {
@@ -234,15 +242,16 @@ export class EditProfile implements OnInit {
   }
 
   handleFile(files: any) {
-    console.log("files:", files);
-    const reader: FileReader = new FileReader();
-
-    reader.onloadend = () => {
-      console.log("ev.result:", reader.result);
-    };
-    reader.readAsDataURL(files[0]);
-
-    console.log("files:", files);
+    this.fileProvider.upload(files[0]).toPromise().then(fileId => {
+      this.fileProvider.load(fileId).then(res => {
+        const reader = new FileReader();
+        reader.readAsDataURL(res);
+        reader.onloadend = () => {
+          this.user_data.profile_img = reader.result;
+          console.log("reader.result:",reader.result);
+        };
+      });
+    });
   }
 
   createPhone(number?:string): FormGroup {
