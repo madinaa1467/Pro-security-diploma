@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Api, Auth} from "../index";
+import {Api} from "../index";
 import {EventList} from "../../model/EventList";
 import {EventFilter} from "../../model/EventFilter";
 import {Child} from "../../model/Child";
@@ -16,14 +16,14 @@ export class ChildService {
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
 
-  getLastEventsList(){
+  getLastEventsList() {
     console.log('Call child/getLastEventsList: parent - by AccountInfo id ');
     return this.http.get("child/getLastEventsList")
       .toPromise()
       .then(resp => {
         return (<any> resp).map((r) =>
           Event.create(r));
-  });
+      });
   }
 
   getParentChildren(): Promise<Child[]> {
@@ -41,20 +41,42 @@ export class ChildService {
 
   loadParentChildren() {
     this.loading = true;
-        return this.getParentChildren()
-          .then(result => this.parentChildListValueChanges$.next(result))
-          .catch(error => {
-            console.error("Произошла ошибка при загрузки данный сессии");
-            return [];
-          });
+    return this.getParentChildren()
+      .then(result => this.parentChildListValueChanges$.next(result))
+      .catch(error => {
+        console.error("Произошла ошибка при загрузки данный сессии");
+        return [];
+      });
   }
 
-  load(filter : EventFilter) {
+  load(filter: EventFilter) {
     this.loadParentChildren();
     this.loadEvents(filter);
   }
 
   loadEvents(filter: EventFilter) {
+
+    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
+    this.http.get("child/listAllEvents",
+      {filter: JSON.stringify(filter)})
+      .toPromise()
+      .then(resp => {
+        console.log('Response from server child/listAllEvents:', resp);
+        if (!resp) {
+          return [];
+        }
+        if (filter.offset == 0) {
+          this.allChildrenEventListValueChanges$.next((resp as EventList[]).map((r) => EventList.create(r)));
+        } else {
+          let list = this.allChildrenEventListValueChanges$.value;
+          list = list.concat((resp as EventList[]).map((r) => EventList.create(r)));
+          this.allChildrenEventListValueChanges$.next(list);
+        }
+      });
+  }
+
+
+  loadMessageEvents(filter: EventFilter) {
 
     console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
     return this.http.get("child/listAllEvents",
@@ -65,15 +87,14 @@ export class ChildService {
         if (!resp) {
           return [];
         }
-        this.allChildrenEventListValueChanges$.next((resp as EventList[]).map((r) => EventList.create(r)));
         return (resp as EventList[]).map((r) => EventList.create(r));
       });
   }
 
-  getChildByCard(card_number: string){
+  getChildByCard(card_number: string) {
     console.log('Call child/getChildByCard: ', card_number);
     return this.http.get("child/getChildByCard",
-      { cardNumber: card_number})
+      {cardNumber: card_number})
       .toPromise()
       .then(resp => {
         console.log('Response from server child/getChildByCard:', resp);
@@ -91,6 +112,6 @@ export class ChildService {
         this.loadEvents(new EventFilter());
         return resp;
       });
-    }
+  }
 
 }

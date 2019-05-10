@@ -7,34 +7,13 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content  #content padding>
+  <ion-infinite-scroll *ngIf="loadMore" (ionInfinite)="loadDataMoreMessages($event)" position="top">
+    <ion-infinite-scroll-content loadingText="Loading more chats...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
-    <!-- Sender -->
-    <!--<ion-item no-lines no-margin no-padding text-wrap>-->
-      <!--<ion-avatar item-left>-->
-        <!--<img [src]="profile_img">-->
-      <!--</ion-avatar>-->
-      <!--<div class="chatbox">LOL. Still using Ionic instead of native techs? It's 2017 mate.</div>-->
-    <!--</ion-item>-->
-
-    <!-- Me -->
-    <!--<ion-item no-lines no-margin no-padding text-wrap>-->
-      <!--<ion-avatar item-right>-->
-        <!--<img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=460">-->
-      <!--</ion-avatar>-->
-      <!--<div margin-left class="chatbox chatbox-right">You are doomed bruh! ;)</div>-->
-    <!--</ion-item>-->
-<!--action: "out"
-childId: 0
-date: 1171696222000
-fio: "Aisha A. A."
-id: 4
-img: null
-time: "01:10:22"
-timeUnit: null
-when: null-->
-
-  <ion-list *ngFor="let message of messages.slice().reverse()">
+  <ion-list *ngFor="let message of messages">
     <ion-note><p text-center no-padding no-margin>{{message.date}}</p></ion-note>
     <ion-item *ngFor="let event of message.events" no-lines no-margin no-padding text-wrap>
       <ion-avatar item-left>
@@ -45,15 +24,5 @@ when: null-->
       </div>
     </ion-item>
   </ion-list>
-
-    <!-- Heart icon -->
-    <ion-item no-lines no-margin no-padding text-wrap *ngIf="send_like_icon" item-right>
-      <ion-avatar item-right>
-        <img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=460">
-      </ion-avatar>
-      <div text-right [ngClass]="{'like-msg-btn': likeBtnVisible }">
-        <ion-icon name="heart" [ngClass]="{'like-btn': likeBtnVisible, 'heart-size': true }" color="danger"></ion-icon>
-      </div>
-    </ion-item>
 
 </ion-content>

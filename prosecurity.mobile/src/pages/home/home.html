@@ -41,7 +41,11 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content #content (ionScrollEnd)="test()" [scrollDownOnLoad]="scrollDownOnLoad()">
+<ion-content #content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <!-- Story line -->
   <ion-scroll class="story" scrollX="true">
@@ -57,8 +61,6 @@
     <div
       *ngIf="dateFilter"
       class="filter-menu-shadow-container">
-
-
       <ion-row class="filter-center-item">
         <div class="filter-date-icon"></div>
         <div class="filter-label">{{dateFilter}}</div>
@@ -67,7 +69,8 @@
     </div>
 
     <ion-list>
-      <ion-item-group *ngFor="let day of eventList">
+      <ion-item-group *ngFor="let day of childService.allChildrenEventListValueChanges$ | async">
+        <!--{{test(day)}}-->
         <ion-item-divider color="light" class="custom-divider" sticky>{{day.date}}</ion-item-divider>
         <div *ngFor="let event of day.events; let i = index">
           <ion-item no-lines text-wrap>
@@ -105,4 +108,11 @@
       </p>
     </div>
   </div>
+
+  <ion-infinite-scroll *ngIf="loadMore" threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
