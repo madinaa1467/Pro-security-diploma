@@ -32,7 +32,7 @@ export class FileProvider {
   load(fileId:string) {
     return this.api.get('files/get', {fileId: fileId}, {observe: 'response', responseType: 'blob'})
       .toPromise().then( (response:HttpResponse<Blob>) => {
-        console.log('res:', response);
+        //console.log('res:', response);
         const filename: string = response.headers.get('Content-Disposition')
           .split(';')[1]
           .split('=')[1]
@@ -42,7 +42,7 @@ export class FileProvider {
       }).catch(err => console.error('err', err));
   }
 
-  private blobToFile= (blob: Blob, filename:string):File =>{
+  private blobToFile= (blob: Blob, filename:string):File => {
     let b:any = blob;
     b.lastModifiedDate = new Date();
     b.name = filename;

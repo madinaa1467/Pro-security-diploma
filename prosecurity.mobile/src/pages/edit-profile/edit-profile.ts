@@ -248,7 +248,7 @@ export class EditProfile implements OnInit {
         reader.readAsDataURL(res);
         reader.onloadend = () => {
           this.user_data.profile_img = reader.result;
-          console.log("reader.result:",reader.result);
+          //console.log("reader.result:",reader.result);
         };
       });
     });
