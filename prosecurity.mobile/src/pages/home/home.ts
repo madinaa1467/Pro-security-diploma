@@ -13,12 +13,8 @@ import {EventFilter} from "../../model/EventFilter";
 export class Home implements OnInit, OnDestroy {
   @ViewChild(Content) content: Content;
 
-  public like_btn = {
-    color: 'black',
-    icon_name: 'heart-outline'
-  };
-  public tap: number = 0;
   public activeMenu: string;
+  public dateFilter: string;
   // You can get this data from your API. This is a dumb data for being an example.
   public stories = [];
   public eventList =[];
@@ -32,6 +28,24 @@ export class Home implements OnInit, OnDestroy {
     this.filter.childId = 0;
     this.filter.endDate = null;
     this.filter.startDate = null;
+    this.filter.limit = 15;
+    this.filter.offset = 0;
+
+    // this.content.ionScrollEnd.subscribe((data)=>{
+    //   // My ideia is to get the whole content dimensions
+    //   let dimensions = this.content.getContentDimensions();
+    //
+    //   console.log("Dimensions");
+    //   console.log(dimensions);
+    //   console.log("Scroll ");
+    //   console.log(data);
+    //
+    //   // And compare it with the scroll data.
+    //   if(dimensions.contentTop == data.scrollTop){
+    //     console.log("Looks like I'm in the bottom of the scroll element!");
+    //   }
+    //
+    // });
   }
   menuActive() {
     this.activeMenu = 'menu';
@@ -59,45 +73,38 @@ export class Home implements OnInit, OnDestroy {
     if(childId != null) {
       this.filter.childId = childId;
     }
+    this.dateFilter = '';
+    if(this.filter.startDate) {
+      this.dateFilter = new Date(this.filter.startDate).toJSON().substr(0, 10);
+      if(!this.filter.endDate)
+        this.filter.endDate = new Date();
+    }
+    if(this.filter.startDate && this.filter.endDate)
+      this.dateFilter += ' - ';
+    if(this.filter.endDate) {
+      if(!this.filter.startDate)
+        this.dateFilter += '... - ';
+      this.dateFilter += new Date(this.filter.endDate).toJSON().substr(0, 10);
+    }
+    this.eventList = [];
+    this.filter.offset = 0;
     this.callServiceGetEventList();
   }
 
   clearFilter(){
     this.filter.startDate = null;
     this.filter.endDate = null;
-    this.callServiceGetEventList();
+    this.getEventist(null);
   }
 
 
   callServiceGetEventList(){
     this.childService.loadEvents(this.filter);
     this.childService.loadEvents(this.filter).then(list =>{
-      this.eventList = list;
+      list.forEach(event=> {
+        this.eventList.push(event)
+      });
     });
-  }
-
-  likeButton() {
-    if(this.like_btn.icon_name === 'heart-outline') {
-      this.like_btn.icon_name = 'heart';
-      this.like_btn.color = 'danger';
-      // Do some API job in here for real!
-    }
-    else {
-      this.like_btn.icon_name = 'heart-outline';
-      this.like_btn.color = 'black';
-    }
-  }
-
-  tapPhotoLike(times) { // If we click double times, it will trigger like the post
-    this.tap++;
-    if(this.tap % 2 === 0) {
-      this.likeButton();
-    }
-  }
-
-  presentPostPopover() {
-    let popover = this.popoverCtrl.create(PostPopover);
-    popover.present();
   }
 
   //todo fix swipes
@@ -117,4 +124,15 @@ export class Home implements OnInit, OnDestroy {
   scrollToTop() {
     this.content.scrollToTop();
   }
+
+
+  test(){
+    // console.error('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+    // this.filter.offset++;
+    // this.callServiceGetEventList();
+  }
+  scrollDownOnLoad(){
+    console.error('AAAAAAAAAAAAAAAAASSSSSSDDD')
+  }
+
 }

@@ -50,7 +50,7 @@ public class ChildrenEventList extends EventListConnection {
   @Override
   void offset() {
     sql.offset(":offset");
-    sql.setValue("offset", filter.offset);
+    sql.setValue("offset", filter.offset * filter.limit);
 //    sql.offset("0");
 
   }
