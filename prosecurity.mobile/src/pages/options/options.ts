@@ -25,7 +25,7 @@ export class Options {
 
   goEditProfile() {
     // Open it as a modal page
-    let modal = this.modalCtrl.create(EditProfile);
+    let modal = this.modalCtrl.create('EditProfile');
     modal.present();
   }
 }
