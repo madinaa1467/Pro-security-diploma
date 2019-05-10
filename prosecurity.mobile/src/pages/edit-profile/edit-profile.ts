@@ -1,10 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  ActionSheetController, IonicPage, LoadingController, NavController, NavParams, Platform, ToastController,
+  ViewController
+} from 'ionic-angular';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
 import {FileProvider} from "../../providers";
+import {Camera, CameraOptions, PictureSourceType} from "@ionic-native/camera";
+import {File as NativeFile, FileEntry} from "@ionic-native/file";
+import {FilePath} from "@ionic-native/file-path";
 import {FileModel} from "../../model/file-model";
 
 @IonicPage()
@@ -32,6 +38,8 @@ export class EditProfile implements OnInit {
   public phoneTypes: PhoneType[] = phoneTypes;
   public genderTypes: GenderType[] = genderTypes;
   mask: any[] = ['8', '(', /[1-9]/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
+  isApp:boolean = false;
+  fileInput: HTMLElement;
 
   userForm: FormGroup;
   formErrors = {
@@ -84,8 +92,14 @@ export class EditProfile implements OnInit {
 
 
   constructor(
+    private platform: Platform,
+    private actionSheetCtrl: ActionSheetController,
+    private toastCtrl: ToastController,
+    private camera:Camera,
     public navCtrl: NavController,
     public navParams: NavParams,
+    private file: NativeFile,
+    private filePath: FilePath,
     public viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
@@ -94,6 +108,13 @@ export class EditProfile implements OnInit {
   }
 
   ngOnInit() {
+    this.fileInput = document.getElementById("fileInput") as HTMLElement;
+    if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      this.isApp = false;
+    } else {
+      this.isApp = true;
+    }
+
     this.buildForm();
     this.parentService.loadParentInfo().then(list => {
       if(list.phones){
@@ -105,9 +126,6 @@ export class EditProfile implements OnInit {
       this.userForm.patchValue(list);
     });
 
-   /* this.parentService.loadFile('2h8nnf5Y0c6oG').then(res => {
-      this.user_data.profile_img = res['url'];
-    });*/
   }
 
   updateProfile() {
@@ -241,26 +259,13 @@ export class EditProfile implements OnInit {
     return this.userForm.get('phones') as FormArray;
   }
 
-  handleFile(files: any) {
-    this.fileProvider.upload(files[0]).toPromise().then(fileId => {
-      this.fileProvider.load(fileId).then(res => {
-        const reader = new FileReader();
-        reader.readAsDataURL(res);
-        reader.onloadend = () => {
-          this.user_data.profile_img = reader.result;
-          //console.log("reader.result:",reader.result);
-        };
-      });
-    });
-  }
-
   createPhone(number?:string): FormGroup {
     return this.fb.group({
       type: [this.phoneTypes[0].value, [Validators.required]],
       number: [number, [
-          Validators.required,
-          Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}[\\w]?')
-        ]
+        Validators.required,
+        Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}[\\w]?')
+      ]
       ],
     });
   }
@@ -271,4 +276,110 @@ export class EditProfile implements OnInit {
       filed.patchValue({number: value.slice(0, -1)});
     }
   }
+
+  changePhoto () {
+    const actionSheet = this.actionSheetCtrl.create({
+      enableBackdropDismiss:true,
+      title: 'Select Image source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },{
+          text: 'Use Camera',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.CAMERA);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
+
+  photoChanged(files: any) {
+    this.fileProvider.upload(files[0]).toPromise().then(fileId => {
+      this.fileProvider.load(fileId).then((res) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(res);
+        reader.onloadend = () => {
+          this.user_data.profile_img = reader.result;
+          //console.log("reader.result:",reader.result);
+        };
+      });
+    });
+  }
+
+  private takePicture(sourceType: PictureSourceType) {
+    if(!this.isApp){
+      this.fileInput.click();
+      return;
+    }
+
+    var options: CameraOptions = {
+      quality: 100,
+      sourceType: sourceType,
+      saveToPhotoAlbum: false,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(options).then(imagePath => {
+      console.log("imagePath:", imagePath);
+      this.user_data.profile_img = imagePath;
+        this.file.resolveLocalFilesystemUrl(imagePath).then(entry => {
+        (<FileEntry> entry).file( file => {
+          this.fileProvider.upload(file).toPromise().then(fileId => {
+            this.presentToast("fileId: "+fileId);
+          });
+        });
+      });
+
+      if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+        this.filePath.resolveNativePath(imagePath)
+          .then(filePath => {
+            console.log("filePath:",filePath);
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+          });
+      } else {
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+      }
+    });
+  }
+
+  createFileName() {
+    let d = new Date(),
+      n = d.getTime(),
+      newFileName = n + ".jpg";
+    return newFileName;
+  }
+
+  copyFileToLocalDir(namePath, currentName, newFileName) {
+    this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
+      console.log("namePath:",namePath, "currentName:",currentName,"newFileName:",newFileName);
+      //this.updateStoredImages(newFileName);
+    }, error => {
+      // this.presentToast('Error while storing file.');
+      console.error("copyFileToLocalDir:",error);
+    });
+  }
+
+
+  presentToast(message:string) {
+    const toast = this.toastCtrl.create({
+      message: message,
+      position: 'bottom',
+      duration: 3000
+    });
+    toast.present();
+  }
+
 }

@@ -12,7 +12,7 @@ export class FileProvider {
   constructor (private api: Api) {
   }
 
-  upload (file: File): Observable<string> {
+  upload (file: any): Observable<string> {
     return new Observable<string>((observer) => {
       if (file == null) {
         observer.next(null);
@@ -39,7 +39,7 @@ export class FileProvider {
           .replace(/["]/g, '');
 
         return this.blobToFile(response.body, filename);
-      }).catch(err => console.error('err', err));
+      });
   }
 
   private blobToFile= (blob: Blob, filename:string):File => {
