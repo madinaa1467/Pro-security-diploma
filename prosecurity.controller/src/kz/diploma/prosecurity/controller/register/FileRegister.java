@@ -6,8 +6,6 @@ import kz.greetgo.file_storage.FileDataReader;
 
 public interface FileRegister {
 
-  String saveFile(FileHolder file);
-
   FileDataReader getFile(String fileId);
 
   String save(FileModel file, boolean isLast);

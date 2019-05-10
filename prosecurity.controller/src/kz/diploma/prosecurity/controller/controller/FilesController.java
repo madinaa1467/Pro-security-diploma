@@ -4,6 +4,7 @@ import kz.diploma.prosecurity.controller.model.FileModel;
 import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
+import kz.diploma.prosecurity.controller.util.MimeTypeUtil;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.file_storage.FileDataReader;
@@ -24,7 +25,6 @@ public class FilesController implements Controller {
 
   public BeanGetter<FileRegister> fileRegister;
 
-
   @ToJson
   @PublicAccess
   @OnPost("/save")
@@ -32,43 +32,12 @@ public class FilesController implements Controller {
     return fileRegister.get().save(file, isLast);
   }
 
-  /*@ToJson
-  @OnPost("/save")
-  public FileWrapper save(@Par("fileData") Upload file) throws IOException {
-
-
-    FileHolder fileHolder = new FileHolder();
-
-    fileHolder.name = file.getSubmittedFileName();
-    fileHolder.data = new byte[file.getInputStream().available()];
-    int read = file.getInputStream().read(fileHolder.data);
-    assert read == fileHolder.data.length;
-    fileHolder.contentType = file.getContentType();
-
-    return new FileWrapper(fileRegister.get().saveFile(fileHolder), file.getSubmittedFileName());
-
-  }*/
-
-
-  /*@ToJson
-  @PublicAccess
-  @OnGet("/get")
-  public void get(@Par("fileId") String fileId, BinResponse binResponse) throws IOException {
-
-    FileDataReader file = fileRegister.get().getFile(fileId);
-    if (file == null) throw new RestError("Could not find fileId: " + fileId);
-    binResponse.setFilename(file.name());
-    binResponse.setContentTypeByFilenameExtension();
-    binResponse.out().write(file.dataAsArray());
-    binResponse.flushBuffers();
-  }*/
-
   @PublicAccess
   @OnGet("/get")
   public void get(@Par("fileId") String fileId, RequestTunnel tunnel) throws IOException {
     FileDataReader file = fileRegister.get().getFile(fileId);
     tunnel.setResponseHeader("Content-Disposition", "attachment; filename=" + file.name());
-    tunnel.setResponseContentType(MimeUtil.mimeTypeFromFilename(file.name()));
+    tunnel.setResponseContentType(MimeTypeUtil.extractMimeType(file.name()));
     tunnel.setResponseContentLength(file.dataAsArray().length);
     tunnel.getResponseOutputStream().write(file.dataAsArray());
     tunnel.flushBuffer();

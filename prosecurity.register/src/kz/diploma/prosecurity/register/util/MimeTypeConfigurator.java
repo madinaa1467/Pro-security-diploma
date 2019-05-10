@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.register.util;
 
+import kz.diploma.prosecurity.controller.util.MimeTypeUtil;
 import kz.greetgo.file_storage.impl.FileStorageBuilder;
 import kz.greetgo.file_storage.impl.FileStorageBuilderConfigurator;
 

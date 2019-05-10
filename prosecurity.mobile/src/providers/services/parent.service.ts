@@ -26,14 +26,4 @@ export class ParentService {
         console.log("11111");
     });
   }
-
-  loadFile (fileId: string) {
-    return this.http.get('files/get', {fileId: fileId}, {observe: 'response', responseType: 'blob'})
-      .toPromise().then(res => {
-        //  const url = window.URL.createObjectURL(res);
-        //console.log("url:", res.url)
-        console.log('res:', res)
-        return res;
-      }).catch(err => console.log('err', err));
-  }
 }

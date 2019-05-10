@@ -5,6 +5,7 @@ import {ParentService} from "../../providers/services/parent.service";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
 import {FileProvider} from "../../providers";
+import {FileModel} from "../../model/file-model";
 
 @IonicPage()
 @Component({
@@ -104,9 +105,9 @@ export class EditProfile implements OnInit {
       this.userForm.patchValue(list);
     });
 
-    this.parentService.loadFile('2h8nnf5Y0c6oG').then(res => {
+   /* this.parentService.loadFile('2h8nnf5Y0c6oG').then(res => {
       this.user_data.profile_img = res['url'];
-    });
+    });*/
   }
 
   updateProfile() {
@@ -241,8 +242,15 @@ export class EditProfile implements OnInit {
   }
 
   handleFile(files: any) {
-    this.fileProvider.upload(files[0]).toPromise().then(res => {
-      console.log("res:", res);
+    this.fileProvider.upload(files[0]).toPromise().then(fileId => {
+      this.fileProvider.load(fileId).then(res => {
+        const reader = new FileReader();
+        reader.readAsDataURL(res);
+        reader.onloadend = () => {
+          this.user_data.profile_img = reader.result;
+          console.log("reader.result:",reader.result);
+        };
+      });
     });
   }
 
