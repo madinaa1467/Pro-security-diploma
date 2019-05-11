@@ -57,7 +57,9 @@ export class ChildPofile implements OnInit {
       this.childForm.controls['cardNumber'].patchValue(card_id.substring(0, 23));
       console.log("Send: ", this.childForm.controls['cardNumber'].value);
       loading.present();
-      this.childService.getChildByCard(card_id.replace(/\D/g,'').substring(0, 19)).then(list => {
+      this.childService.getChildByCard(card_id.replace(/\D/g,'').substring(0, 19),
+        this.childForm.controls['id'].value)
+        .then(list => {
         loading.dismiss();
         console.error("Answer: ", list);
         console.error("this.childForm: ", this.childForm.controls);
@@ -99,27 +101,118 @@ export class ChildPofile implements OnInit {
   }
 
   saveChild() {
-    console.error("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK", this.childForm.getRawValue());
     const loading = this.loadingCtrl.create();
     loading.present();
 
+    let card_id = this.childForm.controls['cardNumber'].value;
+    card_id = card_id.replace(/\D/g,'').substring(0, 19);
+    this.childForm.controls['cardNumber'].patchValue(card_id);
     this.childService.save(this.childForm.getRawValue()).then(_resp =>{
       loading.dismiss();
+      let alert;
+      if(this.action == 'edit') {
+         alert = this.alertCtrl.create({
+          //todo change by languge
+          title: ' Уведомление',
+          message: 'Вы успешнo изменили запись!',
+          buttons: [{
+            text: 'Ok',
+            handler: data => {
+              this.dismiss();
+            }
+          }]
+        });
+      } else {
+         alert = this.alertCtrl.create({
+          //todo change by languge
+          title: ' Уведомление',
+          message: 'Вы успешнo добавили ребенка!',
+          buttons: [{
+            text: 'Ok',
+            handler: data => {
+              this.dismiss();
+            }
+          }]
+        });
+      }
+      alert.present();
+    }).catch(err => {
+      loading.dismiss();
+      if (err.status == 400) {
+        let errors = err.error;
+
+        errors.forEach((error) => {
+          let field = this.childForm.controls[error.code];
+          field.setErrors({[error.message]: true});
+        });
+
+        this.onValueChanged();
+        this.stepper.selectedIndex = 0;
+        return;
+      }
+    });
+  }
+
+
+  deleteChild(){
+    //todo действительно ли вы хотите удалить?
+
+    const deleteFor = this.alertCtrl.create({
+      //todo change by languge
+      title: ' ',
+      message: 'Удалить?',
+      buttons: [{
+        text: 'Навсегда',
+        handler: data => {
+          this.delete('permanent');
+        }
+      }, {
+        text: 'Только у меня',
+        handler: data => {
+          this.delete('temporary');
+        }
+      }]
+    });
+    deleteFor.present();
+
+  }
+
+
+  delete(how: string){
+    const loading = this.loadingCtrl.create();
+    loading.present();
+    let childId = this.childForm.controls['id'].value;
+    if(childId) {
+      this.childService.delete(childId, how).then(_resp => {
+        loading.dismiss();
+        const alert = this.alertCtrl.create({
+          //todo change by languge
+          title: ' Уведомление',
+          message: 'Вы успешнo удалили запись везде!',
+          buttons: [{
+            text: 'Ok',
+            handler: data => {
+              this.dismiss();
+            }
+          }]
+        });
+        alert.present();
+      });
+    } else{
       const alert = this.alertCtrl.create({
         //todo change by languge
         title: ' Уведомление',
-        message: 'Вы успешнo изменили запись!',
+        message: 'Вы не можете удалить!',
         buttons: [{
           text: 'Ok',
           handler: data => {
-            this.dismiss();
+            // this.dismiss();
           }
         }]
       });
       alert.present();
-    });
+    }
   }
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChildPofile Modal -Page');
@@ -218,7 +311,8 @@ export class ChildPofile implements OnInit {
       'required': 'Enter onay',
       'pattern': 'Not correct!',
       'unknown': 'Unknown card, try again',
-      'unavailable': 'Right now this card is unavailable'
+      'unavailable': 'Right now this card is unavailable',
+      'alreadyInUse': 'This card already in use by someone else'
     },
     'name': {
       'required': 'Please enter your Name',

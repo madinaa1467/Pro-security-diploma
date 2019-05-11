@@ -91,10 +91,10 @@ export class ChildService {
       });
   }
 
-  getChildByCard(card_number: string) {
+  getChildByCard(card_number: string, childId: number) {
     console.log('Call child/getChildByCard: ', card_number);
     return this.http.get("child/getChildByCard",
-      {cardNumber: card_number})
+      {cardNumber: card_number, childId: childId })
       .toPromise()
       .then(resp => {
         console.log('Response from server child/getChildByCard:', resp);
@@ -103,9 +103,23 @@ export class ChildService {
   }
 
   save(childToSave) {
-    return this.http.post("child/update", {"childToSave": JSON.stringify(ChildToSave.create(childToSave))})
+    return this.http.post("child/save",
+      {"childToSave": JSON.stringify(ChildToSave.create(childToSave))})
       .toPromise().then(resp => {
-        console.log("Response from child/update:  ", resp);
+        console.log("Response from child/save:  ", resp);
+        if (!resp)
+          console.error(resp);
+        this.loadParentChildren();
+        this.loadEvents(new EventFilter());
+        return resp;
+      });
+  }
+
+  delete(childId: number, how: string) {
+    return this.http.post("child/delete",
+      {childId: childId, delete: how})
+      .toPromise().then(resp => {
+        console.log("Response from child/delete:  ", resp);
         if (!resp)
           console.error(resp);
         this.loadParentChildren();

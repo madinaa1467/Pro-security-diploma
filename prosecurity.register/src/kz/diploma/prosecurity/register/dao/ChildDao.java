@@ -6,34 +6,34 @@ import kz.diploma.prosecurity.controller.model.Event;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 import java.util.List;
 
 public interface ChildDao {
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
-          "    from parent_child as pc, child as c\n" +
-          "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1;")
+    "    from parent_child as pc, child as c\n" +
+    "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1 AND pc.actual = 1;")
   List<Child> loadChildren(Long parentId);
 
-  @Insert("insert into Parent_child (parent, child, notification, actual) " +
-          "values (#{parent}, #{child}, #{notification}, #{actual})")
-  void insertParentChild(@Param("parent") long parent,
-                         @Param("child") int child,
+  @Insert("insert into Parent_child (parent, child, notification, actual)\n" +
+    "values (#{parent}, #{child}, #{notification}, #{actual})\n" +
+    "on conflict (parent, child) do update set\n" +
+    "  notification = excluded.notification,\n" +
+    "  actual = excluded.actual;")
+  void upsertParentChild(@Param("parent") Long parent,
+                         @Param("child") Long child,
                          @Param("notification") int notification,
                          @Param("actual") int actual);
 
-  @Insert("insert into Child (id, actual, surname, name, patronymic, gender," +
-          "birth_date) " +
-          "values (#{id}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
-          "#{gender}, #{birth_date} )")
-  void insertChild(@Param("id") long id,
-                   @Param("surname") String surname,
-                   @Param("name") String name,
-                   @Param("patronymic") String patronymic,
-                   @Param("gender") String gender,
-                   @Param("birth_date") Date birth_date,
-                   @Param("actual") int actual);
+  @Insert("insert into Child (id, card_number, surname, name, patronymic, gender, birth_date, actual)\n " +
+    "values ( #{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}," +
+    "#{toSave.gender}, #{toSave.birthDate}, 1);")
+  Long insertChild(@Param("toSave") ChildToSave toSave);
+
+  @Select("select nextval('pro_seq')")
+  Long proSeqNext();
 
   @Insert("insert into child (id, card_number, surname, name, patronymic, gender, birth_date, actual)" +
     "values (#{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
@@ -45,39 +45,66 @@ public interface ChildDao {
     "  patronymic = excluded.patronymic,\n" +
     "  gender = excluded.gender,\n" +
     "  birth_date = excluded.birth_date,\n" +
-    "  actual = excluded.actual;")
+    "  actual = excluded.actual\n" +
+    "    returning id;")
   Long upsertChild(@Param("toSave") ChildToSave toSave);
-
 
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
     "from child as c, parent_child as pc\n" +
-    "where pc.child = c.id and c.card_number = #{cardNumber} and c.actual = 1;")
+    "where pc.child = c.id and c.card_number = #{cardNumber} and c.actual = 1 limit 1;")
   Child getChildByCard(@Param("cardNumber") String cardNumber);
+
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
+    "from child as c, parent_child as pc\n" +
+    "where pc.child = c.id and c.id = #{childId} and c.actual = 1;")
+  Child getChildById(@Param("childId") Long childId);
 
   @Select("select actual\n" +
     "from card\n" +
     "where card_number = #{cardNumber};")
   Integer checkCard(@Param("cardNumber") String cardNumber);
 
+  @Update("update child\n" +
+    "set card_number = #{cardNumber}\n" +
+    "where id = #{childId};")
+  void updateChildCard(@Param("cardNumber") String cardNumber, @Param("childId") Long childId);
+
+  @Update("update child\n" +
+    "set actual = 0\n" +
+    "where id = #{childId};")
+  void deactualChildForever(@Param("childId") Long childId);
+
+
+  @Update("update parent_child\n" +
+    "set actual = 0\n" +
+    "where child = #{childId};")
+  void deactualParentChildForever(@Param("childId") Long childId);
+
+
+  @Update("update parent_child\n" +
+    "set actual = 0\n" +
+    "where child = #{childId} and parent= #{parentId};")
+  void deactualParentChild(@Param("parentId") Long parentId, @Param("childId") Long childId);
+
   @Select("select c.id\n" +
     "from child as c, parent_child as pc\n" +
     "where pc.parent = #{parentId} and pc.child = c.id;")
-  int[] getChildIdByParent(@Param("parentId") long parentId);
+  Long[] getChildIdByParent(@Param("parentId") Long parentId);
 
   @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as childId,\n" +
     "              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender\n" +
-    "from child as c, event as e\n" +
-    "where c.id = #{childId} AND c.id = e.child\n" +
-    "      AND c.actual = 1 AND e.actual = 1\n" +
+    "from child as c, event as e, parent_child as pc\n" +
+    "where c.id = #{childId} AND c.id = e.child AND pc.child = c.id AND pc.parent = #{parentId}\n" +
+    "      AND c.actual = 1 AND e.actual = 1 AND pc.actual = 1\n" +
     "order by date desc\n" +
     "limit 1;")
-  Event getChildLastEvent(@Param("childId") long childId);
+  Event getChildLastEvent(@Param("parentId") Long parentId, @Param("childId") Long childId);
 
 
   @Insert("insert into Event (action, date, child, actual) " +
-          "values (#{action}, #{date}, #{child}, #{actual})")
+    "values (#{action}, #{date}, #{child}, #{actual})")
   void insertEvent(@Param("action") String action,
-                   @Param("child") long child,
+                   @Param("child") Long child,
                    @Param("date") Date date,
                    @Param("actual") int actual);
 }

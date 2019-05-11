@@ -4,7 +4,6 @@ import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
-import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.mvc.annotations.Json;
@@ -17,6 +16,7 @@ import kz.greetgo.mvc.annotations.on_methods.OnPost;
 
 import java.util.List;
 
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 @Bean
 @ControllerPrefix("/child")
 public class ChildController implements Controller {
@@ -45,13 +45,19 @@ public class ChildController implements Controller {
 
   @ToJson
   @OnGet("/getChildByCard")
-  public Child getChildByCard(@Par("cardNumber") String cardNumber) {
-    return childRegister.get().getChildByCard(cardNumber);
+  public Child getChildByCard(@Par("cardNumber") String cardNumber, @Json @Par("childId") Long childId) {
+    return childRegister.get().getChildByCard(cardNumber, childId);
   }
 
   @ToJson
-  @OnPost("/update")
-  public boolean updateChildren(@ParSession(PARENT_ID) Long parentId, @Json @Par("childToSave") ChildToSave childToSave) {
-    return childRegister.get().updateChildren(parentId, childToSave);
+  @OnPost("/save")
+  public boolean saveOrUpdateChild(@ParSession(PARENT_ID) Long parentId, @Json @Par("childToSave") ChildToSave childToSave) {
+    return childRegister.get().saveOrUpdateChild(parentId, childToSave);
+  }
+
+  @ToJson
+  @OnPost("/delete")
+  public boolean saveOrUpdateChild(@ParSession(PARENT_ID) Long parentId, @Json @Par("childId") Long childId, @Par("delete") String delete) {
+    return childRegister.get().deleteChild(parentId, childId, delete);
   }
 }

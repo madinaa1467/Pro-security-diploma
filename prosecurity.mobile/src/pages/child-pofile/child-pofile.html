@@ -55,9 +55,8 @@
 
       <!-- Profile picture -->
       <div text-center>
-        <img *ngIf="child.img" [src]="child.img" class="edit-avatar" alt="">
-        <p *ngIf="child.img" class="change-text" (click)="fileInput.click()">Change Photo</p>
-        <p *ngIf="!child.img" class="change-text" (click)="fileInput.click()">Select Photo</p>
+        <img [src]="child.img" class="edit-avatar" alt="">
+        <p class="change-text" (click)="fileInput.click()">Change Photo</p>
         <input hidden
                type="file"
                #fileInput
@@ -128,13 +127,13 @@
 
         <ion-item>
           <ion-label>Send Notification</ion-label>
-          <ion-toggle slot="end" formControlName="notification" ></ion-toggle>
+          <ion-toggle slot="end" formControlName="notification" [checked]="true"></ion-toggle>
         </ion-item>
       </form>
 
       <ion-row *ngIf="action === 'edit'">
         <ion-col col-12>
-          <button ion-button block color="danger">
+          <button ion-button block color="danger" (click)="deleteChild()">
             <ion-icon name="close"></ion-icon> &nbsp; Delete Child
           </button>
         </ion-col>

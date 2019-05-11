@@ -34,11 +34,11 @@ public class ChildRegisterImpl implements ChildRegister {
     String tempDate = "";
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 
-    for(int i = 0; i < eventListFromDB.size(); i ++) {
+    for (int i = 0; i < eventListFromDB.size(); i++) {
       Event event = eventListFromDB.get(i);
       event.setTime();
       if (tempDate.equals(dateFormat.format(event.date))) {
-        eventLists.get(eventLists.size()-1).events.add(event);
+        eventLists.get(eventLists.size() - 1).events.add(event);
       } else {
         EventList eventList = new EventList();
         eventList.events.add(event);
@@ -61,38 +61,52 @@ public class ChildRegisterImpl implements ChildRegister {
   }
 
   @Override
-  public Child getChildByCard(String cardNumber) {
-    Child child = childDao.get().getChildByCard(cardNumber);
-    if(child != null) {
-      return child;
-    } else{
-      Integer actual = this.childDao.get().checkCard(cardNumber);
-      if(actual == null){
-        ErrorMessage errorMessage = new ErrorMessage("cardNumber", "unknown");
-        throw new ValidationError(errorMessage);
-      } else if(actual == 0){
-        ErrorMessage errorMessage = new ErrorMessage("cardNumber", "unavailable");
-        throw new ValidationError(errorMessage);
-      }
-    }
-    return new Child();
+  public Child getChildByCard(String cardNumber, Long childId) {
+    Child child = this.getChildByCardFromDB(cardNumber, childId);
+    return child;
   }
 
   @Override
-  public boolean updateChildren(Long parentId, ChildToSave child) {
-    return this.childDao.get().upsertChild(child) > 0;
+  public boolean saveOrUpdateChild(Long parentId, ChildToSave childToSave) {
+    if (childToSave.id != null) {
+      Child child = this.getChildByCardFromDB(childToSave.cardNumber, childToSave.id);
+
+      this.childDao.get().upsertParentChild(parentId, childToSave.id, childToSave.notification, 1);
+
+      if (!Objects.equals(child.cardNumber, childToSave.cardNumber) && child.cardNumber != null)
+        childToSave.cardNumber = child.cardNumber;
+      return this.childDao.get().upsertChild(childToSave) > 0;
+    } else {
+      childToSave.id = childDao.get().proSeqNext();
+      this.childDao.get().insertChild(childToSave);
+      this.childDao.get().upsertParentChild(parentId, childToSave.id, childToSave.notification, 1);
+      return true;
+    }
+  }
+
+  @Override
+  public boolean deleteChild(Long parentId, Long childId, String delete) {
+    if("permanent".equals(delete)){
+      this.childDao.get().deactualChildForever(childId);
+      this.childDao.get().deactualParentChildForever(childId);
+      return true;
+    }else if("temporary".equals(delete)){
+      this.childDao.get().deactualParentChild(parentId, childId);
+      return true;
+    }
+    return false;
   }
 
   @Override
   public List<Event> getLastEventsList(Long parentId) {
     List<Event> lastEventListFromDB = new ArrayList<>();
 
-    int[] childrenIds = childDao.get().getChildIdByParent(parentId);
+    Long[] childrenIds = childDao.get().getChildIdByParent(parentId);
 
     Date today = new Date();
-    for (int childId : childrenIds) {
-      Event lastEvent = childDao.get().getChildLastEvent(childId);
-      if(lastEvent != null){
+    for (Long childId : childrenIds) {
+      Event lastEvent = childDao.get().getChildLastEvent(parentId, childId);
+      if (lastEvent != null) {
         String pair = computeDiff(lastEvent.date, today);
         String[] parts = pair.split(";");
         lastEvent.timeUnit = parts[0];
@@ -113,36 +127,36 @@ public class ChildRegisterImpl implements ChildRegister {
     List<TimeUnit> units = new ArrayList<>(EnumSet.allOf(TimeUnit.class));
     Collections.reverse(units);
 
-    Map<TimeUnit,Long> result = new LinkedHashMap<>();
+    Map<TimeUnit, Long> result = new LinkedHashMap<>();
     long milliesRest = diffInMillies;
 
-    for ( TimeUnit unit : units ) {
-      long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
+    for (TimeUnit unit : units) {
+      long diff = unit.convert(milliesRest, TimeUnit.MILLISECONDS);
       long diffInMilliesForUnit = unit.toMillis(diff);
       milliesRest = milliesRest - diffInMilliesForUnit;
-      result.put(unit,diff);
+      result.put(unit, diff);
     }
-    for (Map.Entry<TimeUnit,Long> entry : result.entrySet()){
-      if(entry.getValue() != 0){
+    for (Map.Entry<TimeUnit, Long> entry : result.entrySet()) {
+      if (entry.getValue() != 0) {
         returnUnit = getCorrectedUnit(entry.getKey());
         returnTime = entry.getValue();
         break;
       }
     }
-    if("DAYS_AGO".equals(returnUnit)){
-      if(returnTime > 365){
+    if ("DAYS_AGO".equals(returnUnit)) {
+      if (returnTime > 365) {
         returnTime = returnTime / 365;
         returnUnit = "YEARS_AGO";
-      } else if(returnTime > 30){
+      } else if (returnTime > 30) {
         returnTime = returnTime / 30;
         returnUnit = "MONTHS_AGO";
       }
     }
-    return returnUnit+';'+returnTime;
+    return returnUnit + ';' + returnTime;
   }
 
 
-  public static String getCorrectedUnit(TimeUnit timeUnit){
+  public static String getCorrectedUnit(TimeUnit timeUnit) {
     switch (timeUnit) {
       case DAYS:
         return "DAYS_AGO";
@@ -155,5 +169,36 @@ public class ChildRegisterImpl implements ChildRegister {
       default:
         return "";
     }
+  }
+
+  public Child getChildByCardFromDB(String cardNumber, Long childId) {
+
+    Child child = childDao.get().getChildByCard(cardNumber);
+    if (child == null) {
+      Integer actual = this.childDao.get().checkCard(cardNumber);
+      if (actual == null) {
+        ErrorMessage errorMessage = new ErrorMessage("cardNumber", "unknown");
+        throw new ValidationError(errorMessage);
+      } else if (actual == 0) {
+        ErrorMessage errorMessage = new ErrorMessage("cardNumber", "unavailable");
+        throw new ValidationError(errorMessage);
+      } else {
+        //ребенка с такой картой нет но сам ребенок есть(только с другой картой) и он меняет карточку, но так как это edit
+        // нужно значит старое значение карточки удалить
+        if (childId != null) {
+          //update child card
+          child = childDao.get().getChildById(childId);
+          child.cardNumber = cardNumber;
+        } else {
+          child = new Child();
+          child.cardNumber = cardNumber;
+        }
+      }
+    } else if (!Objects.equals(child.id, childId) && childId != null) {
+      // карточка не свободна, уже на другого ребенка прикреплена
+      ErrorMessage errorMessage = new ErrorMessage("cardNumber", "alreadyInUse");
+      throw new ValidationError(errorMessage);
+    }
+    return child;
   }
 }

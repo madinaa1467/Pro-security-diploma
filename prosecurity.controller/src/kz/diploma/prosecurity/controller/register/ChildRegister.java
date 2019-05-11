@@ -8,6 +8,7 @@ public interface ChildRegister {
   List<EventList> listAllEvents(Long parentId, EventFilter filter);
   List<Child> getParentChildList(Long parentId);
   List<Event> getLastEventsList(Long parentId);
-  Child getChildByCard(String cardNumber);
-  boolean updateChildren(Long parentId, ChildToSave child);
+  Child getChildByCard(String cardNumber, Long childId);
+  boolean saveOrUpdateChild(Long parentId, ChildToSave child);
+  boolean deleteChild(Long parentId, Long childId, String delete);
 }
