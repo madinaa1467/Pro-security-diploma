@@ -88,6 +88,7 @@ public class ChildRegisterImpl implements ChildRegister {
   public boolean deleteChild(Long parentId, Long childId, String delete) {
     if("permanent".equals(delete)){
       this.childDao.get().deactualChildForever(childId);
+      this.childDao.get().deactualChildEventsForever(childId);
       this.childDao.get().deactualParentChildForever(childId);
       return true;
     }else if("temporary".equals(delete)){

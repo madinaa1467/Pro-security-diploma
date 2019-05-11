@@ -75,6 +75,12 @@ public interface ChildDao {
   void deactualChildForever(@Param("childId") Long childId);
 
 
+  @Update("update event\n" +
+    "set actual = 0\n" +
+    "where child = #{childId};")
+  void deactualChildEventsForever(@Param("childId") Long childId);
+
+
   @Update("update parent_child\n" +
     "set actual = 0\n" +
     "where child = #{childId};")
