@@ -53,4 +53,16 @@ page-profile {
   .edit-button:active {
     border-color: #dce2ed;
   }
+
+
+  .my-children{
+    width: 100%;
+    color: #ffffff;
+    text-transform: uppercase;
+    height: 3em;
+    background-color: #01B8FE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

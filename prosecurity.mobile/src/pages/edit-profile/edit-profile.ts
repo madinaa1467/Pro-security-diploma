@@ -242,16 +242,16 @@ export class EditProfile implements OnInit {
   }
 
   handleFile(files: any) {
-    this.fileProvider.upload(files[0]).toPromise().then(fileId => {
-      this.fileProvider.load(fileId).then(res => {
-        const reader = new FileReader();
-        reader.readAsDataURL(res);
-        reader.onloadend = () => {
-          this.user_data.profile_img = reader.result;
-          console.log("reader.result:",reader.result);
-        };
-      });
-    });
+    /* this.fileProvider.upload(files[0]).toPromise().then(fileId => {
+       this.fileProvider.load(fileId).then(res => {
+         const reader = new FileReader();
+         reader.readAsDataURL(res);
+         reader.onloadend = () => {
+           this.user_data.profile_img = reader.result;
+           console.log("reader.result:",reader.result);
+         };
+       });
+     });*/
   }
 
   createPhone(number?:string): FormGroup {

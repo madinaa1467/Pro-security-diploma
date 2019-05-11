@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="white">
-    <ion-title>candelibas</ion-title>
+    <ion-title>Profile</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="goOptions()">
@@ -42,23 +42,20 @@
   </ion-row>
 
   <!-- Profile info -->
-  <div padding>
-    <p no-margin no-padding><b>Can Delibas</b></p>
-  </div>
+  <!--<div padding>-->
+    <!--<p no-margin no-padding><b>Can Delibas</b></p>-->
+  <!--</div>-->
 
   <!-- Segments -->
-  <div>
-    <ion-segment [(ngModel)]="profile_segment">
-      <ion-segment-button value="grid">
-        <ion-icon name="apps" size="large"></ion-icon> My Children
-      </ion-segment-button>
-    </ion-segment>
-  </div>
+  <button ion-button class="my-children"  (click)="childSaveEdit()">
+    <p>My Children</p>
+    <ion-icon style="padding-left: 2%" name="ios-add-outline"></ion-icon>
+  </button>
 
   <!-- Segment content -->
   <div [ngSwitch]="profile_segment">
 
-    <ion-list *ngSwitchCase="'grid'">
+    <ion-list>
 
       <div *ngFor="let i of childService.parentChildListValueChanges$ | async">
         <button ion-item *ngIf="i.id != 0" (click)="childSaveEdit(i)">
