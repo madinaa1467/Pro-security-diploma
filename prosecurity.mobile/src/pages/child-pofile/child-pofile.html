@@ -8,11 +8,11 @@
     </ion-buttons>
     <ion-title>Edit Profile</ion-title>
 
-    <!--<ion-buttons end>-->
-    <!--<button ion-button icon-only (click)="updateProfile()" [disabled]="true">-->
-    <!--<ion-icon name="checkmark" color="primary"></ion-icon>-->
-    <!--</button>-->
-    <!--</ion-buttons>-->
+    <ion-buttons end>
+    <button ion-button icon-only  (click)="saveChild()"  [disabled]="!childForm.valid">
+    <ion-icon name="checkmark" color="primary"></ion-icon>
+    </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -21,7 +21,7 @@
 
 
   <ion-stepper #stepper (selectIndexChange)="selectChange($event)" mode='horizontal'>
-    <ion-step label="Onay"
+    <ion-step label="Card"
               description="Onay child card number" icon="card">
       <h2>Enter onay number</h2>
       <form [formGroup]="childForm">
@@ -38,9 +38,17 @@
             </div>
           </ng-container>
         </div>
-        <button ion-button ionicStepperNext [disabled]="!childForm.controls['cardNumber'].valid">Next</button>
+        <ion-row>
+          <ion-col col-12>
+            <button ion-button ionicStepperNext block [disabled]="!childForm.controls['cardNumber'].valid">
+              Next
+            </button>
+          </ion-col>
+        </ion-row>
       </form>
     </ion-step>
+
+
     <ion-step label="Personal info"
               description="Step1 description" icon="person">
       <h2 class="centered-text">Fill the personal Information</h2>
@@ -55,7 +63,6 @@
                #fileInput
                multiple
                (change)="handleFile($event.target.files)"></div>
-
       <!-- Form -->
       <form [formGroup]="childForm">
 
@@ -125,15 +132,6 @@
         </ion-item>
       </form>
 
-
-      <ion-row *ngIf="action === 'edit'">
-        <ion-col col-12>
-          <button ion-button block color="primary" (click)="saveChild()"  [disabled]="!childForm.valid">
-            <ion-icon name="checkmark"></ion-icon> &nbsp; Save Changes
-          </button>
-        </ion-col>
-      </ion-row>
-
       <ion-row *ngIf="action === 'edit'">
         <ion-col col-12>
           <button ion-button block color="danger">
@@ -142,16 +140,15 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="action === 'save'">
+
+      <ion-row>
         <ion-col col-12>
-          <button ion-button block color="primary">
-            <ion-icon name="close"></ion-icon> &nbsp; Save Child
+          <button ion-button ionicStepperPrevious block color="light">
+            Previous
           </button>
         </ion-col>
       </ion-row>
 
-
-      <button ion-button color="light" small ionicStepperPrevious>Previous</button>
     </ion-step>
   </ion-stepper>
 

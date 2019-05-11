@@ -6,8 +6,9 @@ page-profile {
   }
   .child-avatar {
     vertical-align: super;
-    width: 8em;
-    height: 4em;
+    //width: 8em;
+    //height: 4em;
+    max-width: 50%;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
