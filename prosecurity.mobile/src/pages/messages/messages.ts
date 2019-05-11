@@ -3,6 +3,7 @@ import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
 import { MessageDetail } from '../message-detail/message-detail';
 import { NewMessage } from '../new-message/new-message';
 import {ChildService} from "../../providers/services/child.service";
+import {Subscription} from "rxjs/Subscription";
 
 @IonicPage()
 @Component({
@@ -12,6 +13,7 @@ import {ChildService} from "../../providers/services/child.service";
 export class Messages implements OnInit {
 
   public messageList;
+  private lastMessageChanges$: Subscription;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -19,10 +21,11 @@ export class Messages implements OnInit {
   }
 
   ngOnInit(): void {
-    this.childService.getLastEventsList().then(resp=> {
-        this.messageList = resp;
-      }
-    );
+
+    this.lastMessageChanges$ = this.childService.parentChildListValueChanges$.subscribe(list => {
+      this.messageList = list;
+    });
+    this.childService.getLastEventsList();
 
   }
 
@@ -37,9 +40,7 @@ export class Messages implements OnInit {
   doRefresh(refresher) {
     setTimeout(() => {
       refresher.complete();
-      this.childService.getLastEventsList().then(resp=> {
-        this.messageList = resp;
-      });
+      this.childService.getLastEventsList();
     }, 500);
   }
 

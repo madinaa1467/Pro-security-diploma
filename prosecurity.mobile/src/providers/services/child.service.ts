@@ -15,14 +15,18 @@ export class ChildService {
   public loading: boolean = false;
   readonly parentChildListValueChanges$ = new BehaviorSubject([]);
   readonly allChildrenEventListValueChanges$ = new BehaviorSubject([]);
+  readonly lastEventMessagesChanges$ = new BehaviorSubject([]);
 
   getLastEventsList() {
     console.log('Call child/getLastEventsList: parent - by AccountInfo id ');
-    return this.http.get("child/getLastEventsList")
+    this.http.get("child/getLastEventsList")
       .toPromise()
       .then(resp => {
-        return (<any> resp).map((r) =>
-          Event.create(r));
+        this.lastEventMessagesChanges$.next(
+          (<any> resp).map((r) =>
+          Event.create(r)));
+        // return (<any> resp).map((r) =>
+        //   Event.create(r));
       });
   }
 
