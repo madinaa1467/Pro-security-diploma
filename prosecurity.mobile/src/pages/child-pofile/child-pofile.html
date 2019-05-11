@@ -43,7 +43,7 @@
     </ion-step>
     <ion-step label="Personal info"
               description="Step1 description" icon="person">
-      <h2>Fill the personal Information</h2>
+      <h2 class="centered-text">Fill the personal Information</h2>
 
       <!-- Profile picture -->
       <div text-center>
@@ -105,11 +105,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>
-            <ion-icon name="transgender" color="gray"></ion-icon>
-            Gender
-          </ion-label>
-          <!--<ion-label>Gender</ion-label>-->
+          <ion-label>Gender</ion-label>
           <ion-select placeholder="Gender" formControlName="gender">
             <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
           </ion-select>

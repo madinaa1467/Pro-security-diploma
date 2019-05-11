@@ -89,10 +89,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>
-        <ion-icon name="transgender" color="gray"></ion-icon>Gender
-      </ion-label>
-      <!--<ion-label>Gender</ion-label>-->
+      <ion-label>Gender</ion-label>
       <ion-select placeholder="Gender" formControlName="gender">
         <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
       </ion-select>
@@ -106,11 +103,11 @@
       </ng-container>
     </div>
 
-    <div formArrayName="phones" padding>
+    <div formArrayName="phones" class="phones-form-array">
       <div *ngFor="let phone of phones.controls; let i=index"
            [formGroupName]="i">
         <ion-row>
-          <ion-col col-7>
+          <ion-col col-6>
             <ion-input placeholder="8(___)___-__-__"
                        formControlName="number" #myProp (ionBlur)="trimLastCharacter(myProp.value, i)"
                        [textMask]="{mask: mask}"></ion-input>
@@ -120,9 +117,12 @@
               <ion-option *ngFor="let s of phoneTypes" value="{{s.value}}">{{s.viewValue}}</ion-option>
             </ion-select>
           </ion-col>
-          <ion-col col-1>
-            <button ion-button clear icon-start icon-right (click)="deletePhone(i)">
+          <ion-col col-2>
+            <button *ngIf="i != 0" ion-button clear icon-start icon-right (click)="deletePhone(i)">
               <ion-icon name="trash" color="danger"></ion-icon>
+            </button>
+            <button *ngIf="i == 0" ion-button clear icon-start icon-right (click)="savePhone()">
+              <ion-icon name="add-circle"></ion-icon>
             </button>
           </ion-col>
         </ion-row>
@@ -138,13 +138,6 @@
       </div>
 
     </div>
-    <ion-row padding>
-      <ion-col col-11>
-        <button ion-button block color="primary" (click)="savePhone()">
-          <ion-icon name="add-circle"></ion-icon> &nbsp; add phone
-        </button>
-      </ion-col>
-    </ion-row>
 
     <!-- Private information form -->
     <div margin-top padding-top>
@@ -156,9 +149,8 @@
       <ion-label>
         <ion-icon name="mail" color="gray"></ion-icon>
       </ion-label>
-      <!--<ion-label color="primary" floating>Email</ion-label>-->
       <ion-input type="email" placeholder="Email" id="email" class="input"
-                 formControlName="email" required></ion-input>
+                 formControlName="email" required  style="padding-left: 2%"></ion-input>
     </ion-item>
     <div class="validation-errors">
       <ng-container>
