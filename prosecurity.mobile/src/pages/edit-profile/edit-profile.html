@@ -21,13 +21,15 @@
 
   <!-- Profile picture -->
   <div text-center>
-    <img [src]="user_data.profile_img" class="edit-avatar" alt="">
-    <p class="change-text" (click)="changePhoto()">Change Photo</p>
+    <!--<img [src]="chosenPicture || placeholder" class="edit-avatar" alt="">
+    <p class="change-text" (click)="changePhoto()">Change Photo</p>-->
+    <image-picker [fileId]="chosenPictureId"></image-picker>
 
-    <input hidden
+    <!--<input hidden
            type="file"
            id="fileInput"
-           (change)="photoChanged($event.target.files)"></div>
+           (change)="photoChanged($event.target.files)">-->
+  </div>
 
     <!-- Form -->
     <form [formGroup]="userForm">

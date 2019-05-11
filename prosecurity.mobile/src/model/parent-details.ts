@@ -4,7 +4,7 @@ export class ParentDetails {
   public email: string;
   public gender: string;
   public password: string;
-  // public img: string;
+  public img: string;
   public username: string;
   public name: string;
   public surname: string;
@@ -26,6 +26,7 @@ export class ParentDetails {
     this.name = a.name;
     this.surname = a.surname;
     this.patronymic = a.patronymic;
+    this.img = a.img;
     if(a.birthDate) this.birthDate = new Date(a.birthDate).toJSON();
 
     this.phones = (a.phones instanceof Array) ? a.phones.map(c => Phone.create(c)) : [];

@@ -5,11 +5,10 @@ import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {HttpResponse} from "@angular/common/http/src/response";
 
-
 @Injectable()
 export class FileProvider {
 
-  constructor (private api: Api) {
+  constructor(private api: Api) {
   }
 
   upload (file: any): Observable<string> {

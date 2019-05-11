@@ -1,5 +1,5 @@
 // Providers
-import {AlertService, Api, AppLoader, Auth, DropdownService, FileProvider} from "../providers";
+import {AlertService, Api, AppLoader, Auth, DropdownService, FileProvider, ImagePickerProvider} from "../providers";
 // Modules
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpClientModule} from "@angular/common/http";
@@ -11,7 +11,7 @@ import {ParentService} from "../providers/services/parent.service";
 import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {FilePath} from "@ionic-native/file-path";
-import {WebView} from "@ionic-native/ionic-webview/ngx";
+import {Crop} from "@ionic-native/crop";
 
 // Directives
 
@@ -32,6 +32,7 @@ export const PROVIDERS = [
   ChildService,
   ParentService,
   FileProvider,
+  ImagePickerProvider,
 
   // Ionic native specific providers
   StatusBar,
@@ -39,7 +40,8 @@ export const PROVIDERS = [
   Camera,
   File,
   FilePath,
-  WebView
+  Crop
+
 ];
 
 export const DIRECTIVES = [];

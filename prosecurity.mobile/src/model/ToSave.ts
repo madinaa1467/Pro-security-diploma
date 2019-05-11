@@ -4,7 +4,7 @@ export class ToSave {
   public email: string;
   public gender: string;
   public password: string;
-  // public img: string;
+  public img: string;
   public username: string;
   public name: string;
   public surname: string;
@@ -27,6 +27,7 @@ export class ToSave {
     this.surname = a.surname;
     this.patronymic = a.patronymic;
     this.birthDate = a.birthDate;
+    this.img = a.img;
     this.phones = (a.phones instanceof Array) ? a.phones.map(c => Phone.create(c)) : [];
   }
 }

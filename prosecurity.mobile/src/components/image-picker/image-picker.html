@@ -1,0 +1,7 @@
+<img [src]="chosenPicture || placeholder" class="edit-avatar" onerror="this.src='assets/src/unknown.png'">
+<p class="change-text" (click)="changePhoto()">Change Photo</p>
+
+<input hidden
+       type="file"
+       id="fileInput"
+       (change)="photoChanged($event.target.files)">

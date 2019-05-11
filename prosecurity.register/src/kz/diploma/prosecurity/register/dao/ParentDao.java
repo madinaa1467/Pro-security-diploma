@@ -28,10 +28,11 @@ public interface ParentDao {
   Long insertParent(@Param("toSave") ToSave toSave);
 
   //todo убрать returing если не нужно будет
-  @Insert("insert into parent (id, username, surname, name, patronymic, gender, birth_date, email, actual)" +
-          "values (#{toSave.id}, #{toSave.username}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
+  @Insert("insert into parent (id, img, username, surname, name, patronymic, gender, birth_date, email, actual)" +
+          "values (#{toSave.id}, #{toSave.img}, #{toSave.username}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
           "#{toSave.gender}, #{toSave.birthDate}, #{toSave.email}, 1)" +
           "on conflict (id) do update set\n" +
+          "  img = excluded.img,\n" +
           "  username = excluded.username,\n" +
           "  surname = excluded.surname,\n" +
           "  name = excluded.name,\n" +
