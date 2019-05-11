@@ -9,6 +9,8 @@ import { SavedProfile } from '../saved-profile/saved-profile';
 import {ChildPofile} from "../child-pofile/child-pofile";
 import {ChildService} from "../../providers/services/child.service";
 import {Child} from "../../model/Child";
+import {AccountInfo} from "../../model/auth/account-info";
+import {Auth} from "../../providers";
 
 @IonicPage()
 @Component({
@@ -18,12 +20,14 @@ import {Child} from "../../model/Child";
 export class Profile implements OnInit, OnDestroy  {
 
   //public childList$: Subscription;
-
+  public accountInfo: AccountInfo;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public modalCtrl: ModalController, public childService: ChildService) {
+              public modalCtrl: ModalController, public childService: ChildService, private auth: Auth) {
   }
   ngOnInit(): void {
     // this.childList$ = this.childService.parentChildListValueChanges$.subscribe();
+    this.accountInfo = this.auth.accountInfo;
+    console.error('accountInfo', this.accountInfo)
   }
   ngOnDestroy(): void {
     //this.childList$.unsubscribe();

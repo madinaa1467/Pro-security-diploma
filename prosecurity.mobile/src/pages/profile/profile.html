@@ -25,8 +25,11 @@
   <ion-row no-padding no-margin>
     <ion-col no-padding no-margin col-4></ion-col>
     <ion-col no-padding no-margin text-center col-8>
-      <button class="edit-button" ion-button block color="light" (click)="childSaveEdit()">
-        <ion-icon name="person-add"></ion-icon>&nbsp; Add Child</button>
+      <ion-item href="https://www.ionicframework.com">
+        <ion-label>
+          {{accountInfo.fio}}
+        </ion-label>
+      </ion-item>
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
