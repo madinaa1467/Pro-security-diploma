@@ -53,7 +53,7 @@ public class DbLoader {
     phone(1);
 
     child(1, 1, "9643108503302167061","Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
-    child(2, 1, "9643108503302167063","Kasymzhan", "Arman", "Adam", "male", "2010-04-09", 1);
+    child(2, 1, "9643108503302167063","Kasymzhan", "Abzal", "Adam", "male", "2010-04-09", 1);
 
 
     card("9643108503302167064");

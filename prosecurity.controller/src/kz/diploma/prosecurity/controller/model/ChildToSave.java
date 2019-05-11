@@ -3,7 +3,7 @@ package kz.diploma.prosecurity.controller.model;
 import java.util.Date;
 
 public class ChildToSave {
-  public long id;
+  public Long id;
   public String gender;
   public String img;
   public String surname;

@@ -9,6 +9,8 @@ import { SavedProfile } from '../saved-profile/saved-profile';
 import {ChildPofile} from "../child-pofile/child-pofile";
 import {ChildService} from "../../providers/services/child.service";
 import {Child} from "../../model/Child";
+import {AccountInfo} from "../../model/auth/account-info";
+import {Auth} from "../../providers";
 
 @IonicPage()
 @Component({
@@ -17,39 +19,18 @@ import {Child} from "../../model/Child";
 })
 export class Profile implements OnInit, OnDestroy  {
 
-  public profile_segment:string;
   //public childList$: Subscription;
-
-
-  // You can get this data from your API. This is a dumb data for being an example.
-  public images = [
-    {
-      id: 1,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120'
-    },
-    {
-      id: 2,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120'
-    }
-  ];
-
+  public accountInfo: AccountInfo;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public modalCtrl: ModalController, public childService: ChildService) {
+              public modalCtrl: ModalController, public childService: ChildService, private auth: Auth) {
   }
   ngOnInit(): void {
     // this.childList$ = this.childService.parentChildListValueChanges$.subscribe();
+    this.accountInfo = this.auth.accountInfo;
+    console.error('accountInfo', this.accountInfo)
   }
   ngOnDestroy(): void {
     //this.childList$.unsubscribe();
-  }
-
-  // Define segment for everytime when profile page is active
-  ionViewWillEnter() {
-    this.profile_segment = 'grid';
   }
 
   goEditProfile() {

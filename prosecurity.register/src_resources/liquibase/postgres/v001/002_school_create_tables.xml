@@ -89,12 +89,11 @@
   <changeSet author="madina" id="create-table-parent_child">
     <sql endDelimiter=";;"><![CDATA[
       create table parent_child (
-        id serial not null,
         parent integer references parent(id),
         child integer references child(id),
         notification integer,
         actual integer,
-        primary key(id)
+        primary key(parent, child)
       )
     ]]></sql>
   </changeSet>

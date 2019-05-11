@@ -1,12 +1,15 @@
 <ion-header>
-
   <ion-navbar color="white">
     <ion-title>Messages</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <ion-item no-lines *ngFor="let m of messageList" (click)="goMessageDetail(m.childId, m.fio, m.img)">
       <ion-avatar item-left>
@@ -18,10 +21,4 @@
       <p>{{ ('MESSAGE.'+m.action+'_'+m.gender) | translate:{childFio:m.fio, time: (m.date|dateFormat) } }}</p>
     </ion-item>
   </ion-list>
-
 </ion-content>
-<!--<ion-footer (click)="goNewMessage()">-->
-<!--<ion-toolbar>-->
-<!--<p text-center><ion-icon name="add"></ion-icon> </p>-->
-<!--</ion-toolbar>-->
-<!--</ion-footer>-->
