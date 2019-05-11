@@ -195,7 +195,7 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
       .then(fileId => {
         this.tmpFile = null;
         this.tmpFileId = fileId;
-
+        resolve(fileId);
       }, err => {
         this.presentToast('Error while uploading file');
         reject(err);
