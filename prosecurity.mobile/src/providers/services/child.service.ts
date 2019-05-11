@@ -56,7 +56,7 @@ export class ChildService {
 
   loadEvents(filter: EventFilter) {
 
-    console.log('Call child/listAllEvents: parent - 1(static)', 'filter - ', filter);
+    console.log('Call child/listAllEvents: filter - ', filter);
     this.http.get("child/listAllEvents",
       {filter: JSON.stringify(filter)})
       .toPromise()
@@ -109,8 +109,7 @@ export class ChildService {
         console.log("Response from child/save:  ", resp);
         if (!resp)
           console.error(resp);
-        this.loadParentChildren();
-        this.loadEvents(new EventFilter());
+        this.load(new EventFilter());
         return resp;
       });
   }
@@ -122,8 +121,7 @@ export class ChildService {
         console.log("Response from child/delete:  ", resp);
         if (!resp)
           console.error(resp);
-        this.loadParentChildren();
-        this.loadEvents(new EventFilter());
+        this.load(new EventFilter());
         return resp;
       });
   }
