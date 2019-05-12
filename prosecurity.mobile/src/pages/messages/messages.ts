@@ -22,11 +22,10 @@ export class Messages implements OnInit {
 
   ngOnInit(): void {
 
-    this.lastMessageChanges$ = this.childService.parentChildListValueChanges$.subscribe(list => {
+    this.lastMessageChanges$ = this.childService.lastEventMessagesChanges$.subscribe(list => {
       this.messageList = list;
     });
     this.childService.getLastEventsList();
-
   }
 
   // goNewMessage() {

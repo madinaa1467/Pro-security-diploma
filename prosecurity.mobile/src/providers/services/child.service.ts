@@ -18,15 +18,12 @@ export class ChildService {
   readonly lastEventMessagesChanges$ = new BehaviorSubject([]);
 
   getLastEventsList() {
-    console.log('Call child/getLastEventsList: parent - by AccountInfo id ');
+    console.log('Call child/getLastEventsList:');
     this.http.get("child/getLastEventsList")
       .toPromise()
       .then(resp => {
-        this.lastEventMessagesChanges$.next(
-          (<any> resp).map((r) =>
-          Event.create(r)));
-        // return (<any> resp).map((r) =>
-        //   Event.create(r));
+        console.log("Response from child/getLastEventsList:  ", resp);
+        this.lastEventMessagesChanges$.next((<any> resp).map((r) => Event.create(r)));
       });
   }
 
@@ -56,6 +53,7 @@ export class ChildService {
   load(filter: EventFilter) {
     this.loadParentChildren();
     this.loadEvents(filter);
+    this.getLastEventsList()
   }
 
   loadEvents(filter: EventFilter) {
