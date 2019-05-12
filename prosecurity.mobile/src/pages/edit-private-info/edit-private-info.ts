@@ -26,7 +26,39 @@ export class EditPrivateInfo implements OnInit {
     this.buildForm();
   }
 
-  updateProfile() {
+  changePassword() {
+    const loading = this.loadingCtrl.create();
+    let alert;
+    this.parentService.changePassword(this.privateInfoForm.controls['password'].value).then(_resp =>{
+      loading.dismiss();
+      if(_resp == true) {
+        alert = this.alertCtrl.create({
+          //todo change by languge
+          title: ' Уведомление',
+          message: 'Вы успешнo изменили пароль!',
+          buttons: [{
+            text: 'Ok',
+            handler: data => {
+              this.dismiss();
+            }
+          }]
+        });
+        alert.present();
+      } else {
+        alert = this.alertCtrl.create({
+          //todo change by languge
+          title: ' Уведомление',
+          message: 'Возникли проблемы и пароль не был изменен!',
+          buttons: [{
+            text: 'Ok',
+            handler: data => {
+              this.dismiss();
+            }
+          }]
+        });
+        alert.present();
+      }
+    });
   }
 
   dismiss() {
@@ -108,6 +140,10 @@ export class EditPrivateInfo implements OnInit {
     }, {validator: this.checkIfMatchingPasswords('password', 'password2')});
 
     this.privateInfoForm.valueChanges.subscribe(data => {
+      //delete
+      Object.keys(this.privateInfoForm.controls).forEach(value => {
+        console.log(value, ' - ', this.privateInfoForm.controls[value].value, this.privateInfoForm.controls[value].valid);
+      });
       this.onValueChanged(data);
     });
 

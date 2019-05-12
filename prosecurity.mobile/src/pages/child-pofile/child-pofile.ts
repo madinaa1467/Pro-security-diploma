@@ -78,13 +78,6 @@ export class ChildPofile implements OnInit {
           this.stepper.selectedIndex = 0;
           return;
         }
-
-        const alert = this.alertCtrl.create({
-          title: 'Ошибка',
-          message: err.error.error_description,
-          buttons: ['Отклонять']
-        });
-        alert.present();
       });
     }
   }

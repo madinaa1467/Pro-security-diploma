@@ -91,4 +91,14 @@ public class ParentRegisterImpl implements ParentRegister {
     }
   }
 
+
+  @Override
+  public boolean changePassword(Long id, String password) {
+      password = passwordEncoder.get().encode(password);
+      if (Objects.equals(this.parentDao.get().changePassword(id, password), id))
+          return true;
+      else
+          return false;
+
+  }
 }

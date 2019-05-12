@@ -67,4 +67,8 @@ public interface ParentDao {
 
     @Select("select id from parent where id = #{id} and encoded_password =#{encoded_password};")
     Long checkPassword(@Param("id") Long id, @Param("encoded_password") String encoded_password);
+
+    @Select("update parent set encoded_password = #{encoded_password} where id \n" +
+            "= #{id} returning id;")
+    Long changePassword(@Param("id") Long id, @Param("encoded_password") String encoded_password);
 }

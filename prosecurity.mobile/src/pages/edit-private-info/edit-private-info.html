@@ -9,7 +9,7 @@
     <ion-title>Edit Profile</ion-title>
 
       <ion-buttons end>
-        <button ion-button icon-only (click)="updateProfile()" [disabled]="!privateInfoForm.valid">
+        <button ion-button icon-only (click)="changePassword()" [disabled]="!privateInfoForm.valid">
           <ion-icon name="checkmark" color="primary"></ion-icon>
         </button>
       </ion-buttons>
@@ -32,7 +32,7 @@
       <ion-stepper #stepper (selectIndexChange)="selectChange($event)">
         <ion-step label="Old password"
                   description="" icon="card">
-<!--          <h2>Enter onay number</h2>-->
+<!--          <h2></h2>-->
           <ion-item>
             <!--<ion-label color="primary" stacked>Password</ion-label>-->
             <ion-input type="password" placeholder="Enter your old password" id="oldPassword" class="input"

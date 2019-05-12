@@ -47,4 +47,10 @@ public class ParentController implements Controller {
   public void checkPassword(@ParSession(PARENT_ID)Long id, @Par("oldPassword") String oldPassword){
     parentRegister.get().checkPassword(id, oldPassword);
   }
+
+  @ToJson
+  @OnPost("/changePassword")
+  public boolean changePassword(@ParSession(PARENT_ID)Long id, @Par("password") String password){
+    return parentRegister.get().changePassword(id, password);
+  }
 }

@@ -11,4 +11,5 @@ public interface ParentRegister {
 
   AccountInfo save(Long id, ToSave toSave);
   void checkPassword(Long id, String oldPassword);
+    boolean changePassword(Long id, String password);
 }
