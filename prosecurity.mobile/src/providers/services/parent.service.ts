@@ -32,4 +32,13 @@ export class ParentService {
         this.auth.setAccountInfo(res);
     });
   }
+
+  checkPassword(oldPassword) {
+    console.log('Call parent/checkPassword');
+    return this.http.post("parent/checkPassword", {"oldPassword": oldPassword})
+      .toPromise().then(res => {
+        console.log("Response from parent/checkPassword:  ", res);
+        this.auth.setAccountInfo(res);
+    });
+  }
 }

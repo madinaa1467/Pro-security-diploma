@@ -10,4 +10,5 @@ public interface ParentRegister {
   void deleteParent(Long id);
 
   AccountInfo save(Long id, ToSave toSave);
+  void checkPassword(Long id, String oldPassword);
 }

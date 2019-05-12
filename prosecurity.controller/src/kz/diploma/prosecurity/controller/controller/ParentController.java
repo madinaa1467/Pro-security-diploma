@@ -36,10 +36,15 @@ public class ParentController implements Controller {
     return  parentRegister.get().getInfo(parentId);
   }
 
-
   @ToJson
   @OnPost("/save")
   public AccountInfo save(@ParSession(PARENT_ID)Long id, @Json @Par("toSave") ToSave toSave){
     return parentRegister.get().save(id, toSave);
+  }
+
+  @ToJson
+  @OnPost("/checkPassword")
+  public void checkPassword(@ParSession(PARENT_ID)Long id, @Par("oldPassword") String oldPassword){
+    parentRegister.get().checkPassword(id, oldPassword);
   }
 }

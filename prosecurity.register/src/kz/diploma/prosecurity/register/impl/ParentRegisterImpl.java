@@ -81,4 +81,14 @@ public class ParentRegisterImpl implements ParentRegister {
     toSave.phones = this.parentDao.get().getPhones(id);
     return toSave;
   }
+
+  @Override
+  public void checkPassword(Long id, String oldPassword) {
+    oldPassword = passwordEncoder.get().encode(oldPassword);
+    if (!Objects.equals(this.parentDao.get().checkPassword(id, oldPassword), id)) {
+      ErrorMessage errorMessage = new ErrorMessage("oldPassword", "notCorrect");
+      throw new ValidationError(errorMessage);
+    }
+  }
+
 }
