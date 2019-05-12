@@ -11,6 +11,7 @@ import {ChildService} from "../../providers/services/child.service";
 import {Child} from "../../model/Child";
 import {AccountInfo} from "../../model/auth/account-info";
 import {Auth} from "../../providers";
+import {Subscription} from "rxjs";
 
 @IonicPage()
 @Component({
@@ -19,18 +20,19 @@ import {Auth} from "../../providers";
 })
 export class Profile implements OnInit, OnDestroy  {
 
-  //public childList$: Subscription;
+  public accountInfo$: Subscription;
   public accountInfo: AccountInfo;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modalCtrl: ModalController, public childService: ChildService, private auth: Auth) {
   }
   ngOnInit(): void {
-    // this.childList$ = this.childService.parentChildListValueChanges$.subscribe();
-    this.accountInfo = this.auth.accountInfo;
+    this.accountInfo$ = this.auth.accountInfoChanges$.subscribe(list => {
+      this.accountInfo = list;
+    });
     console.error('accountInfo', this.accountInfo)
   }
   ngOnDestroy(): void {
-    //this.childList$.unsubscribe();
+    this.accountInfo$.unsubscribe();
   }
 
   goEditProfile() {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
 import { MessageDetail } from '../message-detail/message-detail';
 import { NewMessage } from '../new-message/new-message';
@@ -10,7 +10,7 @@ import {Subscription} from "rxjs/Subscription";
   selector: 'page-messages',
   templateUrl: 'messages.html',
 })
-export class Messages implements OnInit {
+export class Messages implements OnInit, OnDestroy {
 
   public messageList;
   private lastMessageChanges$: Subscription;
@@ -26,6 +26,10 @@ export class Messages implements OnInit {
       this.messageList = list;
     });
     this.childService.getLastEventsList();
+  }
+
+  ngOnDestroy(): void {
+    this.lastMessageChanges$.unsubscribe();
   }
 
   // goNewMessage() {
