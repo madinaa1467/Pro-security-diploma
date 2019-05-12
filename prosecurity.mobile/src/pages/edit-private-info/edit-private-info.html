@@ -1,0 +1,96 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+
+      <ion-buttons end>
+        <button ion-button icon-only (click)="updateProfile()" [disabled]="!privateInfoForm.valid">
+          <ion-icon name="checkmark" color="primary"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <!-- Form -->
+    <form [formGroup]="privateInfoForm">
+
+
+    <!-- Private information form -->
+    <div margin-top padding-top>
+      <h4 no-margin no-padding class="info-text">Private Information</h4>
+      <hr class="custom-hr" color="gray">
+    </div>
+
+      <ion-stepper #stepper (selectIndexChange)="selectChange($event)">
+        <ion-step label="Old password"
+                  description="" icon="card">
+<!--          <h2>Enter onay number</h2>-->
+          <ion-item>
+            <!--<ion-label color="primary" stacked>Password</ion-label>-->
+            <ion-input type="password" placeholder="Enter your old password" id="oldPassword" class="input"
+                       formControlName="oldPassword" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container>
+              <i class="fa fa-check"></i>
+              <div class="error-message isa_error" *ngIf="formErrors.oldPassword">
+                {{ formErrors.oldPassword }}
+              </div>
+            </ng-container>
+          </div>
+
+            <ion-row>
+              <ion-col col-12>
+                <button ion-button ionicStepperNext block [disabled]="!privateInfoForm.controls['oldPassword'].valid">
+                  Next
+                </button>
+              </ion-col>
+            </ion-row>
+        </ion-step>
+
+
+        <ion-step label="Personal info"
+                  description="Step1 description" icon="person">
+          <h2 class="centered-text">Fill the new Password</h2>
+
+
+          <ion-item>
+            <!--<ion-label color="primary" stacked>Password</ion-label>-->
+            <ion-input type="password" placeholder="Password" id="password" class="input"
+                       formControlName="password" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container>
+              <i class="fa fa-check"></i>
+              <div class="error-message isa_error" *ngIf="formErrors.password">
+                {{ formErrors.password }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item>
+            <!--<ion-label color="primary" stacked>Confirm password</ion-label>-->
+            <ion-input type="password" placeholder="Confirm password" id="password2" class="input"
+                       formControlName="password2" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container>
+              <i></i>
+              <div class="error-message isa_error" *ngIf="formErrors.password2">
+                {{ formErrors.password2 }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-step>
+      </ion-stepper>
+    </form>
+
+  </ion-content>

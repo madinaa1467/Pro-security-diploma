@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Api, Auth} from "../index";
-
 import {EventFilter} from "../../model/EventFilter";
 import {ToSave} from "../../model/ToSave";
 import {ParentDetails} from "../../model/parent-details";
