@@ -17,4 +17,37 @@ page-message-detail {
     float: right;
     animation: heartbeat 1s linear;
   }
+
+  .messages-container {
+    //position: absolute;
+    //bottom: 0px;
+
+    //width: 90%;
+    /* border: 3px solid #8AC007; */
+
+    //display: table-cell;
+    //vertical-align: bottom;
+    //height: 200px;
+
+    //position: relative;
+    //height: 200px;
+
+    position:relative;
+    margin:0;
+    padding:0;
+    overflow:auto;
+  }
+
+  .messages-container-content{
+    //position: absolute;
+    //bottom: 0;
+    //width: 100%;
+    //overflow-y:auto
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    color: white;
+    background-color: #202020;
+    font-size: 12px;
+  }
 }
