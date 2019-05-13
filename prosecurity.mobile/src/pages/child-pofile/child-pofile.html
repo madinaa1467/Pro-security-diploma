@@ -6,7 +6,8 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Edit Profile</ion-title>
+    <ion-title *ngIf="action === 'edit'">Edit Child</ion-title>
+    <ion-title *ngIf="action === 'save'">Add Child</ion-title>
 
     <ion-buttons end>
     <button ion-button icon-only  (click)="saveChild()"  [disabled]="!childForm.valid">

@@ -153,14 +153,14 @@ export class ChildPofile implements OnInit {
     const deleteFor = this.alertCtrl.create({
       //todo change by languge
       title: ' ',
-      message: 'Удалить?',
+      message: 'Delete?',
       buttons: [{
-        text: 'Навсегда',
+        text: 'For all parents',
         handler: data => {
           this.delete('permanent');
         }
       }, {
-        text: 'Только у меня',
+        text: 'Just for me',
         handler: data => {
           this.delete('temporary');
         }
