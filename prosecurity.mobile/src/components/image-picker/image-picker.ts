@@ -4,7 +4,7 @@ import {ActionSheetController, Platform, ToastController} from "ionic-angular";
 import {Camera, CameraOptions, MediaType, PictureSourceType} from "@ionic-native/camera";
 import {Crop} from "@ionic-native/crop";
 import {FilePath} from "@ionic-native/file-path";
-import {File as NativeFile, RemoveResult} from "@ionic-native/file";
+import {File as NativeFile, FileEntry} from "@ionic-native/file";
 
 @Component({
   selector: 'image-picker',
@@ -111,6 +111,9 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
 
     this.camera.getPicture(options).then(imagePath => {
       this.cropService.crop(imagePath, {quality: 75}).then(newImg => {
+        console.log("imagePath:", imagePath);
+        this.chosenPicture = newImg;
+
         if (this.platform.is('android') && sourceType === PictureSourceType.PHOTOLIBRARY) {
           this.filePath.resolveNativePath(imagePath).then(filePath => {
             let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
@@ -123,53 +126,11 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
           this.removeOldFile(correctPath, currentName);
         }
       });
-
-
-      /*this.cropService.crop(imagePath, {quality: 75})
-        .then(newImg => {
-          this.imgProvider.resolveLocalFilesystemUrl(sourceType, imagePath, newImg).then(res => {
-            console.log("resolveLocalFilesystemUrl:", res);
-            this.correctPath = res.path;
-            this.currentName = res.name;
-
-            this.chosenPicture = this.imgProvider.pathForImage(newImg);
-          });
-
-
-          /!*this.file.resolveLocalFilesystemUrl(imagePath).then(entry => {
-            (<FileEntry> entry).file(file => {
-              this.fileProvider.upload(file).toPromise().then(fileId => {
-
-              });
-            });
-          });*!/
-
-          /!*if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-            this.filePath.resolveNativePath(newImg)
-              .then(filePath => {
-                let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-                let toDelete = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-                let currentName = newImg.substring(newImg.lastIndexOf('/') + 1, newImg.lastIndexOf('?'));
-                this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-                this.file.removeFile(correctPath, toDelete).then(res => {
-                  this.presentToast('File removed.');
-                });
-              });
-          } else {
-            var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-            var toDelete = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-            var currentName = newImg.substr(newImg.lastIndexOf('/') + 1);
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-            this.file.removeFile(correctPath, toDelete).then(res => {
-              this.presentToast('File removed.');
-            });
-          }*!/
-        });*/
     });
   }
 
-  private removeOldFile(path: string, name: string): Promise<RemoveResult> {
-    return this.file.removeFile(path, name);
+  private removeOldFile (path: string, name: string) {
+    this.file.removeFile(path, name).catch(err => console.error(err));
   }
 
   photoChanged(files: any) {
@@ -198,7 +159,28 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
         return;
       }
 
-      this.upload(resolve, reject);
+      if (!this.imgProvider.isApp) {
+        this.upload().then(fileId => {
+          resolve(fileId);
+        }, err => {
+          this.presentToast('Error while uploading file');
+          reject(err);
+        });
+
+        return;
+      }
+
+      this.file.resolveLocalFilesystemUrl(this.chosenPicture).then(entry => {
+        (<FileEntry> entry).file(file => {
+          this.tmpFile = this.file;
+          this.upload().then(fileId => {
+            resolve(fileId);
+          }, err => {
+            this.presentToast('Error while uploading file');
+            reject(err);
+          });
+        });
+      });
     });
   }
 
@@ -211,15 +193,12 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private upload(resolve: (value?: (any)) => void, reject: (reason?: any) => void) {
-    this.imgProvider.upload(this.tmpFile).toPromise()
+  private upload (): Promise<string> {
+    return this.imgProvider.upload(this.tmpFile).toPromise()
       .then(fileId => {
         this.tmpFile = null;
         this.tmpFileId = fileId;
-        resolve(fileId);
-      }, err => {
-        this.presentToast('Error while uploading file');
-        reject(err);
+        return fileId;
       });
   }
 }
