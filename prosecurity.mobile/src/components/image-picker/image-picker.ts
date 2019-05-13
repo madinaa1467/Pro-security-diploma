@@ -1,8 +1,10 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {ImagePickerProvider} from "../../providers";
-import {ActionSheetController, ToastController} from "ionic-angular";
-import {Camera, CameraOptions, PictureSourceType} from "@ionic-native/camera";
+import {ActionSheetController, Platform, ToastController} from "ionic-angular";
+import {Camera, CameraOptions, MediaType, PictureSourceType} from "@ionic-native/camera";
 import {Crop} from "@ionic-native/crop";
+import {FilePath} from "@ionic-native/file-path";
+import {File as NativeFile, RemoveResult} from "@ionic-native/file";
 
 @Component({
   selector: 'image-picker',
@@ -24,7 +26,10 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
               private toastCtrl: ToastController,
               private actionSheetCtrl: ActionSheetController,
               private camera: Camera,
-              private cropService: Crop,) {
+              private cropService: Crop,
+              private platform: Platform,
+              private filePath: FilePath,
+              private file: NativeFile,) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -102,13 +107,26 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
       saveToPhotoAlbum: false,
       correctOrientation: true
     };
-
-    this.tmpFileId = null;
+    if (sourceType != PictureSourceType.CAMERA) options.mediaType = MediaType.PICTURE;
 
     this.camera.getPicture(options).then(imagePath => {
-      this.cropService.crop(imagePath, {quality: 75})
-        .then(newImg => {
+      this.cropService.crop(imagePath, {quality: 75}).then(newImg => {
+        if (this.platform.is('android') && sourceType === PictureSourceType.PHOTOLIBRARY) {
+          this.filePath.resolveNativePath(imagePath).then(filePath => {
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+            this.removeOldFile(correctPath, currentName);
+          });
+        } else {
+          let correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+          let currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+          this.removeOldFile(correctPath, currentName);
+        }
+      });
 
+
+      /*this.cropService.crop(imagePath, {quality: 75})
+        .then(newImg => {
           this.imgProvider.resolveLocalFilesystemUrl(sourceType, imagePath, newImg).then(res => {
             console.log("resolveLocalFilesystemUrl:", res);
             this.correctPath = res.path;
@@ -118,15 +136,15 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
           });
 
 
-          /*this.file.resolveLocalFilesystemUrl(imagePath).then(entry => {
+          /!*this.file.resolveLocalFilesystemUrl(imagePath).then(entry => {
             (<FileEntry> entry).file(file => {
               this.fileProvider.upload(file).toPromise().then(fileId => {
 
               });
             });
-          });*/
+          });*!/
 
-          /*if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+          /!*if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
             this.filePath.resolveNativePath(newImg)
               .then(filePath => {
                 let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
@@ -145,10 +163,13 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
             this.file.removeFile(correctPath, toDelete).then(res => {
               this.presentToast('File removed.');
             });
-          }*/
-
-        });
+          }*!/
+        });*/
     });
+  }
+
+  private removeOldFile(path: string, name: string): Promise<RemoveResult> {
+    return this.file.removeFile(path, name);
   }
 
   photoChanged(files: any) {

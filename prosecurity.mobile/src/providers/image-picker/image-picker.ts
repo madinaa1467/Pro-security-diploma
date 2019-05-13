@@ -70,9 +70,7 @@ export class ImagePickerProvider {
   resolveLocalFilesystemUrl(sourceType: PictureSourceType, imagePath: string, newImg: string): Promise<LocalFileSystem> {
 
     let correctPath, toDelete, currentName;
-    console.log("imagePath:", imagePath)
 
-    console.log("sourceType === PictureSourceType.PHOTOLIBRARY:", sourceType === PictureSourceType.PHOTOLIBRARY)
     if (this.platform.is('android') && sourceType === PictureSourceType.PHOTOLIBRARY) {
       return this.filePath.resolveNativePath(newImg)
         .then(filePath => {
