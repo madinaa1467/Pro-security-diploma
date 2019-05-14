@@ -6,6 +6,7 @@ import {isUndefined} from "util";
 export class Api {
 
   private _url: string = 'http://localhost:1313/prosecurity/api';
+
   // private _url: string = 'https://greetgo.info/prosecurity/api';//'http://192.168.26.193:1313/prosecurity/api';
 
   constructor(private http: HttpClient) {
@@ -17,24 +18,18 @@ export class Api {
 
   get(endpoint: string, params?: any, reqOpts?: any) {
     let defReqOpts = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }),
+      /* headers: new HttpHeaders({
+         'Content-Type': 'application/x-www-form-urlencoded'
+       }),*/
       withCredentials: true,
       params : new HttpParams()
     };
 
-    // if (reqOpts) {
-    //   for (let k in reqOpts) {
-    //     defReqOpts[k] = reqOpts[k];
-    //   }
-    // }
-    // else {
-    // if (!reqOpts) {
-    //   reqOpts = {
-    //     params : new HttpParams()
-    //   };
-    // }
+    if (reqOpts) {
+      for (let k in reqOpts) {
+        defReqOpts[k] = reqOpts[k];
+      }
+    }
 
     // Support easy query params for GET requests
     if (params) {
@@ -62,15 +57,16 @@ export class Api {
       }
     }
 
-    let params: HttpParams = new HttpParams();
+    let params: URLSearchParams = new URLSearchParams();
 
     for (let key in body) {
       let value = body[key];
-      if (!isUndefined(value)) params = params.set(key, value as string);
+      if (!isUndefined(value))  params.append(key, value as string);
     }
 
 
     return this.http.post(this.url(endpoint), params.toString(), defReqOpts);
   }
+
 
 }

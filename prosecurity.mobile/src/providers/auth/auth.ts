@@ -11,6 +11,7 @@ import {ToSave} from "../../model/ToSave";
 export class Auth {
 
   private _accountInfo: AccountInfo;
+  readonly accountInfoChanges$ = new BehaviorSubject(new AccountInfo());
 
 
   get accountInfo(): AccountInfo {
@@ -70,9 +71,9 @@ export class Auth {
       .toPromise().then(res => res);
   }
 
-
   setAccountInfo(res: any) {
     this._accountInfo = AccountInfo.create(res);
+    this.accountInfoChanges$.next(this._accountInfo);
   }
 
 }

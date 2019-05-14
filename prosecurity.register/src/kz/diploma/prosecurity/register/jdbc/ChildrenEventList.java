@@ -20,7 +20,6 @@ public class ChildrenEventList extends EventListConnection {
   void where() {
     sql.where("pc.parent = :parentId");
     sql.setValue("parentId", filter.parentId);
-//    sql.where("pc.parent = 1");
     sql.where("pc.child = c.id");
     sql.where("pc.child = e.child");
     sql.where("c.actual = 1");
@@ -34,8 +33,6 @@ public class ChildrenEventList extends EventListConnection {
       sql.where("date < :endDate");
       sql.setValue("endDate", filter.endDate);
     }
-//    sql.where("date > '2007-02-16'");
-//    sql.where("date <= '2007-02-16 23:59:59'");
 
   }
 
@@ -43,14 +40,12 @@ public class ChildrenEventList extends EventListConnection {
   void limit() {
     sql.limit(":limit");
     sql.setValue("limit", filter.limit);
-//    sql.limit("15");
-
   }
 
   @Override
   void offset() {
     sql.offset(":offset");
-    sql.setValue("offset", filter.offset);
+    sql.setValue("offset", filter.offset * filter.limit);
 //    sql.offset("0");
 
   }

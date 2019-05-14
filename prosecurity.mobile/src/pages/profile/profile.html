@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="white">
-    <ion-title>candelibas</ion-title>
+    <ion-title>Profile</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="goOptions()">
@@ -25,8 +25,11 @@
   <ion-row no-padding no-margin>
     <ion-col no-padding no-margin col-4></ion-col>
     <ion-col no-padding no-margin text-center col-8>
-      <button class="edit-button" ion-button block color="light" (click)="childSaveEdit()">
-        <ion-icon name="person-add"></ion-icon>&nbsp; Add Child</button>
+      <ion-item href="https://www.ionicframework.com">
+        <ion-label>
+          {{accountInfo.fio}}
+        </ion-label>
+      </ion-item>
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
@@ -35,41 +38,45 @@
   <ion-row no-padding no-margin>
     <ion-col no-padding no-margin col-4></ion-col>
       <ion-col no-padding no-margin text-center col-8>
-      <button class="edit-button" ion-button block color="light" (click)="goEditProfile()">
-        <ion-icon name="create"></ion-icon> &nbsp; Edit your profile</button>
+        <ion-item href="https://www.ionicframework.com">
+          <ion-label>
+            My children
+          </ion-label>
+        </ion-item>
+      <!--<button class="edit-button" ion-button block color="light" (click)="goEditProfile()">-->
+        <!--<ion-icon name="create"></ion-icon> &nbsp; Edit your profile</button>-->
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
 
   <!-- Profile info -->
-  <div padding>
-    <p no-margin no-padding><b>Can Delibas</b></p>
-  </div>
+  <!--<div padding>-->
+    <!--<p no-margin no-padding><b>Can Delibas</b></p>-->
+  <!--</div>-->
 
   <!-- Segments -->
-  <div>
-    <ion-segment [(ngModel)]="profile_segment">
-      <ion-segment-button value="grid">
-        <ion-icon name="apps" size="large"></ion-icon> My Children
-      </ion-segment-button>
-    </ion-segment>
-  </div>
+  <button ion-button class="my-children centered-text"  (click)="childSaveEdit()">
+    <p>My Children</p>
+    <ion-icon style="padding-left: 2%" name="ios-add-outline"></ion-icon>
+  </button>
 
   <!-- Segment content -->
   <div [ngSwitch]="profile_segment">
 
-    <ion-list *ngSwitchCase="'grid'">
+    <ion-list>
 
-      <button ion-item *ngFor="let i of childService.parentChildListValueChanges$ | async" (click)="childSaveEdit(i)">
-        <ion-row text-center>
-          <ion-col col-3 class="grid_img">
-            <img [src]="i.img" class="child-avatar" alt="">
-          </ion-col>
-          <ion-col>
-            <p>{{i.fio}}</p>
-          </ion-col>
-        </ion-row>
-      </button>
+      <div *ngFor="let i of childService.parentChildListValueChanges$ | async">
+        <button ion-item *ngIf="i.id != 0" (click)="childSaveEdit(i)">
+          <ion-row text-center>
+            <ion-col col-3 class="grid_img">
+              <img [src]="i.img" class="child-avatar" alt="">
+            </ion-col>
+            <ion-col class="centered-text">
+              <p>{{i.fio}}</p>
+            </ion-col>
+          </ion-row>
+        </button>
+      </div>
     </ion-list>
   </div>
 

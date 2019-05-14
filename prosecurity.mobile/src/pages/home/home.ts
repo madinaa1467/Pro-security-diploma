@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {App, Content, MenuController, NavController, PopoverController} from 'ionic-angular';
-import {PostPopover} from './post-popover';
-import {Messages} from '../messages/messages';
 import {ChildService} from "../../providers/services/child.service";
 import {Subscription} from "rxjs/Subscription";
 import {EventFilter} from "../../model/EventFilter";
@@ -13,18 +11,15 @@ import {EventFilter} from "../../model/EventFilter";
 export class Home implements OnInit, OnDestroy {
   @ViewChild(Content) content: Content;
 
-  public like_btn = {
-    color: 'black',
-    icon_name: 'heart-outline'
-  };
-  public tap: number = 0;
   public activeMenu: string;
+  public dateFilter: string;
   // You can get this data from your API. This is a dumb data for being an example.
   public stories = [];
-  public eventList =[];
+  public eventList = [];
   private storiesChanges$: Subscription;
-  private allChildrenEventListChanges$: Subscription;
+  public allChildrenEventListChanges$: Subscription;
   public filter: EventFilter = new EventFilter();
+  public loadMore: boolean = true;
   // public stories;
   constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
               public childService: ChildService, public menu: MenuController) {
@@ -32,6 +27,8 @@ export class Home implements OnInit, OnDestroy {
     this.filter.childId = 0;
     this.filter.endDate = null;
     this.filter.startDate = null;
+    this.filter.limit = 15;
+    this.filter.offset = 0;
   }
   menuActive() {
     this.activeMenu = 'menu';
@@ -42,71 +39,70 @@ export class Home implements OnInit, OnDestroy {
     this.storiesChanges$ = this.childService.parentChildListValueChanges$.subscribe(list => {
       this.stories = list
     });
+    this.eventList = [];
     this.allChildrenEventListChanges$ = this.childService.allChildrenEventListValueChanges$.subscribe(list => {
-      this.eventList = list
+      if ((list.length == this.eventList.length && this.filter.offset != 0) || this.eventList.length > 30) {
+        this.loadMore = false;
+      } else {
+        this.loadMore = true;
+        this.eventList = (list);
+      }
     });
     this.init();
   }
 
+  test(day) {
+    console.log("day:", day);
+  }
+
   ngOnDestroy() {
     this.storiesChanges$.unsubscribe();
+    this.allChildrenEventListChanges$.unsubscribe();
   }
 
   init() {
     this.childService.load(this.filter);
   }
-  getEventist(childId: number){
-    if(childId != null) {
+  getEventist(childId: number) {
+    if (childId != null) {
       this.filter.childId = childId;
     }
+    this.dateFilter = '';
+    if (this.filter.startDate) {
+      this.dateFilter = new Date(this.filter.startDate).toJSON().substr(0, 10);
+      if (!this.filter.endDate)
+        this.filter.endDate = new Date();
+    }
+    if (this.filter.startDate && this.filter.endDate)
+      this.dateFilter += ' - ';
+    if (this.filter.endDate) {
+      if (!this.filter.startDate)
+        this.dateFilter += '... - ';
+      this.dateFilter += new Date(this.filter.endDate).toJSON().substr(0, 10);
+    }
+    this.eventList = [];
+    this.filter.offset = 0;
     this.callServiceGetEventList();
   }
 
-  clearFilter(){
+  clearFilter() {
     this.filter.startDate = null;
     this.filter.endDate = null;
-    this.callServiceGetEventList();
+    this.getEventist(null);
   }
 
 
-  callServiceGetEventList(){
+  callServiceGetEventList() {
     this.childService.loadEvents(this.filter);
-    this.childService.loadEvents(this.filter).then(list =>{
-      this.eventList = list;
-    });
-  }
-
-  likeButton() {
-    if(this.like_btn.icon_name === 'heart-outline') {
-      this.like_btn.icon_name = 'heart';
-      this.like_btn.color = 'danger';
-      // Do some API job in here for real!
-    }
-    else {
-      this.like_btn.icon_name = 'heart-outline';
-      this.like_btn.color = 'black';
-    }
-  }
-
-  tapPhotoLike(times) { // If we click double times, it will trigger like the post
-    this.tap++;
-    if(this.tap % 2 === 0) {
-      this.likeButton();
-    }
-  }
-
-  presentPostPopover() {
-    let popover = this.popoverCtrl.create(PostPopover);
-    popover.present();
   }
 
   //todo fix swipes
   swipePage(event) {
-    if(event.direction === 1) { // Swipe Left
+    if (event.direction === 1) { // Swipe Left
       console.error("Swap Left");
     }
 
-    if(event.direction === 2) { // Swipe Right
+    if (event.direction === 2) { // Swipe Right
       console.error("Swap Right");
 
       // this.goMessages();
@@ -115,6 +111,27 @@ export class Home implements OnInit, OnDestroy {
   }
 
   scrollToTop() {
-    this.content.scrollToTop();
+    this.content.scrollToTop(1500);
   }
+
+
+  loadData(event) {
+    setTimeout(() => {
+      event.complete();
+
+      if(this.loadMore == true) {
+        this.filter.offset++;
+        this.callServiceGetEventList();
+      }
+    }, 500);
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      refresher.complete();
+      this.filter.offset = 0;
+      this.childService.load(this.filter);
+    }, 500);
+  }
+
 }

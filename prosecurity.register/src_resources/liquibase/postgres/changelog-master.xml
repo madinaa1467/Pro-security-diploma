@@ -8,5 +8,6 @@
   <include file="liquibase/postgres/v001/001_person.xml"/>
 
   <include file="liquibase/postgres/v001/002_school_create_tables.xml"/>
+  <include file="liquibase/postgres/v001/003_file_loader_buffer.xml"/>
 
 </databaseChangeLog>

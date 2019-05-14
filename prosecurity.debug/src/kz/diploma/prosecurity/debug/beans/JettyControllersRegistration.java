@@ -1,12 +1,12 @@
 package kz.diploma.prosecurity.debug.beans;
 
+import kz.diploma.prosecurity.controller.util.Controller;
 import kz.diploma.prosecurity.debug.util.WebAppContextRegistration;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
-import kz.greetgo.mvc.JettyWarServlet;
 import kz.greetgo.mvc.builder.ExecDefinition;
 import kz.greetgo.mvc.interfaces.Views;
-import kz.diploma.prosecurity.controller.util.Controller;
+import kz.greetgo.mvc.model.UploadInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,14 @@ public class JettyControllersRegistration extends JettyWarServlet implements Web
   @Override
   protected Views getViews() {
     return views.get();
+  }
+
+  @Override
+  protected UploadInfo getUploadInfo() {
+    final UploadInfo ret = new UploadInfo();
+    ret.maxFileSize = 50_000_000;
+    ret.fileSizeThreshold = 1_000;
+    return ret;
   }
 
   @Override

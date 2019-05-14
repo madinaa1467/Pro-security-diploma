@@ -1,4 +1,4 @@
-package kz.diploma.prosecurity.register.util;
+package kz.diploma.prosecurity.controller.util;
 
 import kz.diploma.prosecurity.controller.errors.RestException;
 import kz.greetgo.file_storage.errors.UnknownMimeType;

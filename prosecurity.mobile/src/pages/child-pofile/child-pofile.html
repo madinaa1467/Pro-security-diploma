@@ -6,13 +6,14 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Edit Profile</ion-title>
+    <ion-title *ngIf="action === 'edit'">Edit Child</ion-title>
+    <ion-title *ngIf="action === 'save'">Add Child</ion-title>
 
-    <!--<ion-buttons end>-->
-      <!--<button ion-button icon-only (click)="updateProfile()" [disabled]="true">-->
-        <!--<ion-icon name="checkmark" color="primary"></ion-icon>-->
-      <!--</button>-->
-    <!--</ion-buttons>-->
+    <ion-buttons end>
+    <button ion-button icon-only  (click)="saveChild()"  [disabled]="!childForm.valid">
+    <ion-icon name="checkmark" color="primary"></ion-icon>
+    </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -21,134 +22,133 @@
 
 
   <ion-stepper #stepper (selectIndexChange)="selectChange($event)" mode='horizontal'>
-    <ion-step label="Onay"
-              description="Onay card number" icon="card">
+    <ion-step label="Card"
+              description="Onay child card number" icon="card">
       <h2>Enter onay number</h2>
-      <ion-item>
-        <ion-label color="primary" fixed>Onay</ion-label>
-        <ion-input type="text" placeholder="" id="onay_number" required></ion-input>
-      </ion-item>
-
-      <button ion-button small ionicStepperNext>Next</button>
+      <form [formGroup]="childForm">
+        <ion-item>
+          <!--<ion-label color="primary" floating></ion-label>-->
+          <ion-input type="text" placeholder="____ __ _____ ____ ____" id="onay_number" [textMask]="{mask: mask}"
+                     required formControlName="cardNumber"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container>
+            <i></i>
+            <div class="error-message isa_error" *ngIf="formErrors.cardNumber">
+              {{ formErrors.cardNumber }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-row>
+          <ion-col col-12>
+            <button ion-button ionicStepperNext block [disabled]="!childForm.controls['cardNumber'].valid">
+              Next
+            </button>
+          </ion-col>
+        </ion-row>
+      </form>
     </ion-step>
+
+
     <ion-step label="Personal info"
               description="Step1 description" icon="person">
-      <h2>Fill the personal Information</h2>
+      <h2 class="centered-text">Fill the personal Information</h2>
 
-  <!-- Profile picture -->
-  <div text-center>
-    <img *ngIf="child.img" [src]="child.img" class="edit-avatar" alt="">
-    <p *ngIf="child.img" class="change-text" (click)="fileInput.click()">Change Photo</p>
-    <p *ngIf="!child.img" class="change-text" (click)="fileInput.click()">Select Photo</p>
-    <input hidden
-           type="file"
-           #fileInput
-           multiple
-           (change)="handleFile($event.target.files)"></div>
-
+      <!-- Profile picture -->
+      <div text-center>
+        <img [src]="child.img" class="edit-avatar" alt="">
+        <p class="change-text" (click)="fileInput.click()">Change Photo</p>
+        <input hidden
+               type="file"
+               #fileInput
+               multiple
+               (change)="handleFile($event.target.files)"></div>
       <!-- Form -->
-      <form>
+      <form [formGroup]="childForm">
 
-    <ion-item>
-      <ion-label color="primary" fixed>Name</ion-label>
-      <ion-input type="text" placeholder="" id="name" required></ion-input>
-    </ion-item>
-    <!--<div class="validation-errors">
-      <ng-container>
-        <i></i>
-        <div class="error-message isa_error" *ngIf="formErrors.name">
-          {{ formErrors.name }}
+        <ion-item>
+          <ion-label color="primary" fixed>Name</ion-label>
+          <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container>
+            <i></i>
+            <div class="error-message isa_error" *ngIf="formErrors.name">
+              {{ formErrors.name }}
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
-    </div>-->
 
-    <ion-item>
-      <ion-label color="primary" fixed>Surname</ion-label>
-      <ion-input type="text" placeholder="" id="surname"  required></ion-input>
-    </ion-item>
-    <!--<div class="validation-errors">
-      <ng-container>
-        <i></i>
-        <div class="error-message isa_error" *ngIf="formErrors.surname">
-          {{ formErrors.surname }}
+        <ion-item>
+          <ion-label color="primary" fixed>Surname</ion-label>
+          <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container>
+            <i></i>
+            <div class="error-message isa_error" *ngIf="formErrors.surname">
+              {{ formErrors.surname }}
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
-    </div>-->
 
-    <ion-item>
-      <ion-label color="primary" fixed>Patronymic</ion-label>
-      <ion-input type="text" placeholder="" id="patronymic"  ></ion-input>
-    </ion-item>
-    <!--<div class="validation-errors">
-      <ng-container>
-        <i></i>
-        <div class="error-message isa_error" *ngIf="formErrors.patronymic">
-          {{ formErrors.patronymic }}
+        <ion-item>
+          <ion-label color="primary" fixed>Patronymic</ion-label>
+          <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container>
+            <i></i>
+            <div class="error-message isa_error" *ngIf="formErrors.patronymic">
+              {{ formErrors.patronymic }}
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
-    </div>-->
+        <ion-item>
+          <ion-label>Birth Date</ion-label>
+          <ion-datetime formControlName="birthDate" display-format="MMMM YYYY" min="1900" max="2020-10-31"
+                        placeholder="Birth Date"
+                        required></ion-datetime>
+        </ion-item>
 
-    <ion-item>
-      <ion-label>Birth Date</ion-label>
-      <ion-datetime  display-format="MMMM YYYY" min="1900" max="2020-10-31"
-                    placeholder="Birth Date"
-                    required></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>
-        <ion-icon name="transgender" color="gray"></ion-icon>Gender
-      </ion-label>
-      <!--<ion-label>Gender</ion-label>-->
-      <ion-select  >
-        <ion-option value="female">FEMALE</ion-option>
-        <ion-option value="male">male</ion-option>
-      </ion-select>
-    </ion-item>
-    <!--<div class="validation-errors">
-      <ng-container>
-        <i></i>
-        <div class="error-message isa_error" *ngIf="formErrors.gender">
-          {{ formErrors.gender }}
+        <ion-item>
+          <ion-label>Gender</ion-label>
+          <ion-select placeholder="Gender" formControlName="gender">
+            <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container>
+            <i></i>
+            <div class="error-message isa_error" *ngIf="formErrors.gender">
+              {{ formErrors.gender }}
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
-    </div>-->
+
+        <ion-item>
+          <ion-label>Send Notification</ion-label>
+          <ion-toggle slot="end" formControlName="notification" [checked]="true"></ion-toggle>
+        </ion-item>
+      </form>
+
+      <ion-row *ngIf="action === 'edit'">
+        <ion-col col-12>
+          <button ion-button block color="danger" (click)="deleteChild()">
+            <ion-icon name="close"></ion-icon> &nbsp; Delete Child
+          </button>
+        </ion-col>
+      </ion-row>
 
 
-    <ion-item>
-      <ion-label>Send Notification</ion-label>
-      <ion-toggle slot="end" checked="true"></ion-toggle>
-    </ion-item>
-  </form>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button ionicStepperPrevious block color="light">
+            Previous
+          </button>
+        </ion-col>
+      </ion-row>
 
-
-  <ion-row *ngIf="action === 'edit'">
-    <ion-col col-12>
-      <button ion-button block color="primary">
-        <ion-icon name="checkmark"></ion-icon> &nbsp;  Save Changes
-      </button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngIf="action === 'edit'">
-    <ion-col col-12>
-      <button ion-button block color="danger">
-        <ion-icon name="close"></ion-icon> &nbsp;  Delete Child
-      </button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngIf="action === 'save'">
-    <ion-col col-12>
-      <button ion-button block color="primary">
-        <ion-icon name="close"></ion-icon> &nbsp;  Save Child
-      </button>
-    </ion-col>
-  </ion-row>
-
-
-
-      <button ion-button color="light" small ionicStepperPrevious>Previous</button>
     </ion-step>
   </ion-stepper>
 

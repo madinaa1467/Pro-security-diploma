@@ -13,12 +13,16 @@ public class ChildEventList extends EventListConnection {
   void from() {
     sql.from("child as c");
     sql.from("event as e");
+    sql.from("parent_child pc");
   }
 
   @Override
   void where() {
     sql.where("c.id = :childId");
+    sql.where("pc.child = :childId");
     sql.setValue("childId", filter.childId);
+    sql.where("pc.child = c.id");
+    sql.where("pc.actual = 1");
     sql.where("c.id = e.child");
     sql.where("c.actual = 1");
     sql.where("e.actual = 1");
@@ -41,7 +45,7 @@ public class ChildEventList extends EventListConnection {
   @Override
   void offset() {
     sql.offset(":offset");
-    sql.setValue("offset", filter.offset);
+    sql.setValue("offset", filter.offset * filter.limit);
   }
   @Override
   void orderBy() {

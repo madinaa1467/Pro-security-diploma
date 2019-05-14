@@ -57,13 +57,13 @@ public class ParentRegisterImpl implements ParentRegister {
   private void validateOnDuplicate(ToSave toSave) throws ValidationError {
     List<ErrorMessage> errors = new ArrayList<>();
 
-    if (!Objects.equals(toSave.id, parentDao.get().getParentIdByUsername(toSave.username))) {
+    Long id = parentDao.get().getParentIdByUsername(toSave.username);
+    if (id != null && !Objects.equals(toSave.id, id)) {
       errors.add(new ErrorMessage("username", "alreadyInUse"));
-      //errors.add(new ErrorMessage("username", "username_already_in_use"));
     }
-    if (!Objects.equals(toSave.id, parentDao.get().getParentIdByEmail(toSave.email))) {
+    id = parentDao.get().getParentIdByEmail(toSave.email);
+    if (id != null && !Objects.equals(toSave.id, id)) {
       errors.add(new ErrorMessage("email", "alreadyInUse"));
-      //errors.add(new ErrorMessage("email", "email_already_in_use"));
     }
 
     if (errors.size() > 0) throw new ValidationError(errors);
@@ -80,5 +80,25 @@ public class ParentRegisterImpl implements ParentRegister {
     ToSave toSave = this.parentDao.get().getInfo(id);
     toSave.phones = this.parentDao.get().getPhones(id);
     return toSave;
+  }
+
+  @Override
+  public void checkPassword(Long id, String oldPassword) {
+    oldPassword = passwordEncoder.get().encode(oldPassword);
+    if (!Objects.equals(this.parentDao.get().checkPassword(id, oldPassword), id)) {
+      ErrorMessage errorMessage = new ErrorMessage("oldPassword", "notCorrect");
+      throw new ValidationError(errorMessage);
+    }
+  }
+
+
+  @Override
+  public boolean changePassword(Long id, String password) {
+      password = passwordEncoder.get().encode(password);
+      if (Objects.equals(this.parentDao.get().changePassword(id, password), id))
+          return true;
+      else
+          return false;
+
   }
 }

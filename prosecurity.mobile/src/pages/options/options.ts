@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {EditProfile} from "../edit-profile/edit-profile";
+import {EditPrivateInfo} from "../edit-private-info/edit-private-info";
 
 /**
  * Generated class for the Options page.
@@ -25,7 +26,13 @@ export class Options {
 
   goEditProfile() {
     // Open it as a modal page
-    let modal = this.modalCtrl.create(EditProfile);
+    let modal = this.modalCtrl.create('EditProfile');
+    modal.present();
+  }
+
+  goEditPrivateInfo() {
+    console.error("EEedit-private-info")
+    let modal = this.modalCtrl.create('EditPrivateInfo');
     modal.present();
   }
 }

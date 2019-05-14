@@ -13,7 +13,7 @@ page-home {
   /* Stories */
   .story {
     white-space: nowrap;
-    height: 105px
+    height: 15%;
   }
 
   .story_scroll {
@@ -29,10 +29,16 @@ page-home {
     padding-bottom: 0;
     transition: all 1s;
     -webkit-transition: all 0.2s;
-    background: -webkit-linear-gradient(left top, crimson 0%, #f90 100%);
+    //background: -webkit-linear-gradient(left top, #ff99cc 0%, #33ccff 100%);
+    background: linear-gradient(to bottom right, #33ccff 0%, #ff99cc 100%);
   }
 
   .story_img_bg:active {
+    background: -webkit-linear-gradient(left top, #DD2352 0%, #F1642F 100%);
+    transform: scale(1.1);
+  }
+
+  .story_img_bg_active {
     background: -webkit-linear-gradient(left top, #DD2352 0%, #F1642F 100%);
     transform: scale(1.1);
   }
@@ -86,10 +92,62 @@ page-home {
     top: 40%;
     bottom: 23%;
   }
-  //ion-item-divider{
-  //  height: 1em;
-  //}
 
-  //
+  .filter-ok-button {
+    border: none;
+    outline: none;
+    position: absolute;
+    height: 3em;
+    left: 7%;
+    width: 38%;
+    background-color: #01B8FE;
+    border-radius: 0.5em;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+  .filter-clear-button {
+    border: none;
+    outline: none;
+    position: absolute;
+    height: 3em;
+    left: 52%;
+    width: 38%;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    color: #565d6a;
+    border: 1px solid #565d6a;
+    text-transform: uppercase;
+  }
 
+  .filter-menu-shadow-container {
+    height: 3em;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .filter-center-item {
+    width: 60%;
+    margin: auto;
+    color: #bfbfbf;
+  }
+
+  .filter-date-icon {
+    background-size: 100%;
+    width: 2em;
+    height: 2em;
+    background: url(../../assets/src/calendar.png) no-repeat center;
+  }
+
+  .filter-label {
+    margin: 0;
+    color: #565d6a;
+    left: 11%;
+    text-align: center;
+    font-size: 1em;
+    padding: 4%;
+  }
+
+  hr {
+    height: 0.1rem !important;
+  }
 }
