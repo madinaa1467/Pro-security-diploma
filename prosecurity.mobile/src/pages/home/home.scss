@@ -38,6 +38,11 @@ page-home {
     transform: scale(1.1);
   }
 
+  .story_img_bg_active {
+    background: -webkit-linear-gradient(left top, #DD2352 0%, #F1642F 100%);
+    transform: scale(1.1);
+  }
+
   .story_img {
     width: 70px;
     border-radius: 50%;
