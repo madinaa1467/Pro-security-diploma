@@ -1,0 +1,5 @@
+@mixin app-auth-theme() {
+  app-auth .navigation .link .icon {
+    font-weight: nb-theme(font-weight-bold);
+  }
+}

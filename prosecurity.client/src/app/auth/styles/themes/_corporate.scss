@@ -1,0 +1,7 @@
+$theme: (
+  accept-group-link-color: color-fg,
+  socials-color: color-fg,
+  socials-hover-color: color-fg-text,
+);
+
+$nb-themes: nb-register-theme($theme, corporate, corporate);
