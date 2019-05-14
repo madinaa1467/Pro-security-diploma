@@ -5,7 +5,7 @@ import {isUndefined} from "util";
 @Injectable()
 export class Api {
 
-  private _url: string = 'http://192.168.1.5:1313/prosecurity/api';
+  private _url: string = 'http://192.168.11.181:1313/prosecurity/api';
 
   // private _url: string = 'https://greetgo.info/prosecurity/api';//'http://192.168.26.193:1313/prosecurity/api';
 

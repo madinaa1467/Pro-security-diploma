@@ -2,12 +2,11 @@ import {Injectable} from '@angular/core';
 import {normalizeURL, Platform} from "ionic-angular";
 import {File as NativeFile} from "@ionic-native/file";
 import {FileProvider} from "../";
-import {PictureSourceType} from "@ionic-native/camera";
 import {FilePath} from "@ionic-native/file-path";
 
-export class LocalFileSystem {
-  constructor(public path: string, public name: string) {
-  }
+export interface ImageEntry {
+  path: string;
+  name: string;
 }
 
 @Injectable()
@@ -64,39 +63,6 @@ export class ImagePickerProvider {
         });
       });
     });
-  }
-
-
-  resolveLocalFilesystemUrl(sourceType: PictureSourceType, imagePath: string, newImg: string): Promise<LocalFileSystem> {
-
-    let correctPath, toDelete, currentName;
-
-    if (this.platform.is('android') && sourceType === PictureSourceType.PHOTOLIBRARY) {
-      return this.filePath.resolveNativePath(newImg)
-        .then(filePath => {
-          correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-          toDelete = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-          currentName = newImg.substring(newImg.lastIndexOf('/') + 1, newImg.lastIndexOf('?'));
-          //this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-          return this.file.removeFile(correctPath, toDelete).then(res => {
-            return new LocalFileSystem(correctPath, currentName);
-          });
-        });
-    } else {
-      correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-      toDelete = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-      currentName = newImg.substr(newImg.lastIndexOf('/') + 1, newImg.lastIndexOf('?'));
-      //this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-
-      return this.file.removeFile(correctPath, toDelete).then(res => {
-        return new LocalFileSystem(correctPath, currentName);
-      });
-    }
-
-    /*return this.file.resolveLocalFilesystemUrl(imagePath).then(entry => {
-      let file: any;
-      (<FileEntry> entry).file(fileEntry => file = fileEntry);
-    });*/
   }
 
   copyFileToLocalDir(namePath, currentName, newFileName) {
