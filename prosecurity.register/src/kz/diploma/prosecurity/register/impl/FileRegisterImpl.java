@@ -1,7 +1,6 @@
 package kz.diploma.prosecurity.register.impl;
 
 import kz.diploma.prosecurity.controller.errors.RestError;
-import kz.diploma.prosecurity.controller.model.FileHolder;
 import kz.diploma.prosecurity.controller.model.FileModel;
 import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.controller.util.MimeTypeUtil;
@@ -11,12 +10,7 @@ import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.file_storage.FileDataReader;
 import kz.greetgo.file_storage.FileStorage;
-import kz.greetgo.file_storage.FileStoringOperation;
-import kz.greetgo.file_storage.impl.DatabaseNotPrepared;
-import kz.greetgo.file_storage.impl.FileStorageMonoDbLogic;
-import kz.greetgo.file_storage.impl.MonoDbOperations;
 
-import java.lang.reflect.Field;
 import java.util.Base64;
 
 @Bean
@@ -64,5 +58,9 @@ public class FileRegisterImpl implements FileRegister {
     return fileStorage.get().readOrNull(fileId);
   }
 
+  @Override
+  public void delete(String fileId) {
+    fileStorage.get().delete(fileId);
+  }
 
 }
