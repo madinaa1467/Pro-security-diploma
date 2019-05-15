@@ -1,3 +1,138 @@
-<p>
-  profile works!
-</p>
+<div class="row">
+  <!--PROFILE-->
+  <div class="col-xxxl-2 col-xxl-2 col-md-2 col-lg-2">
+    <nb-card size="medium">
+
+      <nb-card-body>
+        <div class="picture">
+          <div class="no-profile"></div>
+        </div>
+
+        <div class="details">
+          <div class="title">
+            <p>Фамилия : {{client.surname}}</p>
+            <p>Имя : {{client.name}}</p>
+            <p>Отчество : {{client.midname}}</p>
+          </div>
+        </div>
+      </nb-card-body>
+
+
+      <nb-card-footer>
+
+      </nb-card-footer>
+    </nb-card>
+  </div>
+
+
+  <!--STEPPER-->
+  <nb-card class="col-xxxl-8 col-xxl-8 col-md-8 col-lg-8">
+    <nb-card-body class="m-3">
+      <nb-stepper #stepper orientation="horizontal">
+        <nb-step [label]="labelOne">
+          <ng-template #labelOne>First step</ng-template>
+          <h3>Step content #1</h3>
+        </nb-step>
+        <nb-step [label]="labelTwo">
+          <ng-template #labelTwo>Second step</ng-template>
+          <h3>Step content #2</h3>
+        </nb-step>
+        <nb-step label="Third step">
+          <h3>Step content #3</h3>
+        </nb-step>
+        <nb-step [label]="labelFour">
+          <ng-template #labelFour>Fourth step</ng-template>
+          <h3>Step content #4</h3>
+        </nb-step>
+      </nb-stepper>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button nbButton (click)="prevStep()">Предыдущий</button>
+      <button nbButton (click)="nextStep()">Следующий</button>
+    </nb-card-footer>
+  </nb-card>
+
+  <!--PROFILE-->
+  <div class="col-xxxl-2 col-xxl-2 col-md-2 col-lg-2">
+    <nb-card size="medium">
+      <nb-card-header class="title">
+        Создать заявку
+      </nb-card-header>
+
+      <nb-card-body style="padding: 0.5em">
+
+        <div class="form-group">
+          <input type="text" placeholder="Введите заголовок" class="form-control"/>
+          <small class="form-text"></small>
+        </div>
+
+        <div class="input-group h-100">
+          <textarea placeholder="Детальная информация по заявке" class="form-control"></textarea>
+        </div>
+
+      </nb-card-body>
+
+
+      <nb-card-footer>
+        <button nbButton hero status="primary" (click)="openConfirmDialog()">Запустить</button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+
+</div>
+<div class="row ">
+  <!--PROFILE-->
+  <div class="col-xxxl-2 col-xxl-2 col-md-2 col-lg-2">
+    <nb-card size="small">
+      <nb-card-header class="title">
+        Контактные данные
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item *ngFor="let phone of client.phoneList">
+            <div style="position: relative">
+              <p>{{ phone.number }}</p>
+              <nb-badge style="width: 25px" text="{{phone.callCount}}" status="info"
+                        position="bottom top right"></nb-badge>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+
+  <!--STEPPER-->
+  <nb-card size="small" class="own-scroll col-xxxl-8 col-xxl-8 col-md-8 col-lg-8">
+    <nb-card-header class="title">
+      История заявок абонента
+    </nb-card-header>
+    <nb-list
+      nbInfiniteList
+      [threshold]="500"
+      (bottomThreshold)="loadNextTicket()">
+      <nb-list-item *ngFor="let ticket of client.tickets">
+        <ngx-ticket-item [ticket]="ticket"></ngx-ticket-item>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+
+  <div class="col-xxxl-2 col-xxl-2 col-md-2 col-lg-2">
+    <nb-card size="small">
+      <nb-card-header class="title">
+        История звонков
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <
+          <nb-list-item *ngFor="let ticket of client.tickets">
+            <p>{{ticket.startDate| date:'dd-MM-yyyy'}} | {{ client.phoneList[0].number }}</p>
+
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>

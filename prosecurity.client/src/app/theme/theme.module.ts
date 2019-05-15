@@ -4,14 +4,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   NbActionsModule,
   NbAlertModule,
+  NbBadgeModule,
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
   NbContextMenuModule,
   NbInputModule,
   NbLayoutModule,
+  NbListModule,
   NbMenuModule,
   NbSidebarModule,
+  NbStepperModule,
   NbThemeModule,
   NbUserModule
 } from "@nebular/theme";
@@ -34,6 +37,9 @@ const NB_MODULES = [
   NbActionsModule,
   NbSidebarModule,
   NbContextMenuModule,
+  NbStepperModule,
+  NbBadgeModule,
+  NbListModule
 ];
 
 const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
