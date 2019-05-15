@@ -11,7 +11,7 @@ public class ToSave {
   public String surname;
   public String name;
   public String patronymic;
-//  public String img;
+  public String img;
   public Date birthDate;
   public Phone[] phones;
 

@@ -6,6 +6,7 @@ import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.Phone;
 import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
+import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.register.dao.ParentDao;
 import kz.greetgo.depinject.core.Bean;
@@ -22,6 +23,7 @@ public class ParentRegisterImpl implements ParentRegister {
   public BeanGetter<ParentDao> parentDao;
 
   public BeanGetter<AuthRegister> authRegister;
+  public BeanGetter<FileRegister> fileRegister;
 
   @Override
   public Long register(ToSave toSave) {
@@ -44,11 +46,18 @@ public class ParentRegisterImpl implements ParentRegister {
 
     /*String email = toSave.email;
     toSave.username = email.substring(0, email.indexOf('@'));*/
+
+    String oldImgId = parentDao.get().getImgIdById(toSave.id);
+
     parentDao.get().upsertParent(toSave);
 
     this.parentDao.get().deactualPhone(id);
     for (Phone phone : toSave.phones) {
       parentDao.get().upsertPhone(id, phone);
+    }
+
+    if (oldImgId != null && !Objects.equals(toSave.img, oldImgId)) {
+      fileRegister.get().delete(oldImgId);
     }
 
     return authRegister.get().accountInfo(id);

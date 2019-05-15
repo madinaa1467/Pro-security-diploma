@@ -1,11 +1,11 @@
 package kz.diploma.prosecurity.register.test.beans.develop;
 
 import kz.diploma.prosecurity.controller.model.Phone;
+import kz.diploma.prosecurity.controller.model.UserCan;
 import kz.diploma.prosecurity.register.beans.all.IdGenerator;
+import kz.diploma.prosecurity.register.test.dao.AuthTestDao;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
-import kz.diploma.prosecurity.controller.model.UserCan;
-import kz.diploma.prosecurity.register.test.dao.AuthTestDao;
 import kz.greetgo.security.password.PasswordEncoder;
 import kz.greetgo.util.RND;
 import org.apache.log4j.Logger;
@@ -123,10 +123,10 @@ public class DbLoader {
 
   private void phone(int id)  {
     Phone phone1 = new Phone();
-    phone1.number = "+1111111111";
+    phone1.number = "81111111111";
     phone1.type = "mob";
     Phone phone2 = new Phone();
-    phone2.number = "+2222222222";
+    phone2.number = "82222222222";
     phone2.type = "home";
 
     authTestDao.get().upsertPhone(id, phone1);

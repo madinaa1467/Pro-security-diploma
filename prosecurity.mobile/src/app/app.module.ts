@@ -18,10 +18,6 @@ import {SavedProfile} from '../pages/saved-profile/saved-profile';
 import {Options} from '../pages/options/options';
 import {Comments} from '../pages/comments/comments';
 import {TabsPage} from '../pages/tabs/tabs';
-
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {Camera} from '@ionic-native/camera';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
@@ -104,15 +100,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TabsPage
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    Camera,
     PROVIDERS,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoader], multi: true},
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
+    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
   ]
 })
 

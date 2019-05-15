@@ -1,11 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  Platform,
+  ToastController,
+  ViewController
+} from 'ionic-angular';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
-import {FileProvider} from "../../providers";
-import {FileModel} from "../../model/file-model";
+import {Camera} from "@ionic-native/camera";
+import {File as NativeFile} from "@ionic-native/file";
+import {FilePath} from "@ionic-native/file-path";
+import {Crop} from "@ionic-native/crop";
+import {ParentDetails} from "../../model/parent-details";
+import {ImagePickerComponent} from "../../components/image-picker/image-picker";
 
 @IonicPage()
 @Component({
@@ -28,6 +40,11 @@ export class EditProfile implements OnInit {
     phone: '',
     gender: 'male'
   };
+
+  @ViewChild(ImagePickerComponent) imagePicker: ImagePickerComponent;
+
+  placeholder: string;
+  chosenPictureId: string;
 
   public phoneTypes: PhoneType[] = phoneTypes;
   public genderTypes: GenderType[] = genderTypes;
@@ -84,18 +101,24 @@ export class EditProfile implements OnInit {
 
 
   constructor(
+    private platform: Platform,
+    private toastCtrl: ToastController,
+    private camera:Camera,
+    private cropService: Crop,
     public navCtrl: NavController,
     public navParams: NavParams,
+    private file: NativeFile,
+    private filePath: FilePath,
     public viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
-    private parentService: ParentService,
-    private fileProvider: FileProvider) {
+    private parentService: ParentService) {
   }
 
   ngOnInit() {
+
     this.buildForm();
-    this.parentService.loadParentInfo().then(list => {
+    this.parentService.loadParentInfo().then((list: ParentDetails) => {
       if(list.phones){
         list.phones.forEach(x => {
           this.phones.push(this.createPhone())
@@ -103,11 +126,9 @@ export class EditProfile implements OnInit {
       }
 
       this.userForm.patchValue(list);
-    });
 
-   /* this.parentService.loadFile('2h8nnf5Y0c6oG').then(res => {
-      this.user_data.profile_img = res['url'];
-    });*/
+      this.chosenPictureId = this.userForm.get("img").value;
+    });
   }
 
   updateProfile() {
@@ -115,26 +136,29 @@ export class EditProfile implements OnInit {
     const loading = this.loadingCtrl.create();
     loading.present();
 
-    this.parentService.save(this.userForm.getRawValue()).then(_ =>{
-      loading.dismiss();
-      this.navCtrl.pop();
+    this.imagePicker.getValue().then(img => {
+      this.userForm.patchValue({img: img});
 
-    }).catch(err => {
-      loading.dismiss();
+      this.parentService.save(this.userForm.getRawValue()).then(_ => {
+        loading.dismiss();
+        this.navCtrl.pop();
 
-      if (err.status == 400) {
-        let errors = err.error;
+      }).catch(err => {
+        loading.dismiss();
 
-        errors.forEach((error) => {
-          let field = this.userForm.controls[error.code];
-          field.setErrors({[error.message]: true});
-        });
+        if (err.status == 400) {
+          let errors = err.error;
 
-        this.onValueChanged();
-        return;
-      }
+          errors.forEach((error) => {
+            let field = this.userForm.controls[error.code];
+            field.setErrors({[error.message]: true});
+          });
 
-    });
+          this.onValueChanged();
+          return;
+        }
+      });
+    }).catch(err => console.error("err:", err));
   }
 
   dismiss() {
@@ -143,6 +167,7 @@ export class EditProfile implements OnInit {
 
   buildForm() {
     this.userForm = this.fb.group({
+      'img': null,
       'email': ['', [
         Validators.required,
         Validators.email
@@ -241,26 +266,13 @@ export class EditProfile implements OnInit {
     return this.userForm.get('phones') as FormArray;
   }
 
-  handleFile(files: any) {
-    /* this.fileProvider.upload(files[0]).toPromise().then(fileId => {
-       this.fileProvider.load(fileId).then(res => {
-         const reader = new FileReader();
-         reader.readAsDataURL(res);
-         reader.onloadend = () => {
-           this.user_data.profile_img = reader.result;
-           console.log("reader.result:",reader.result);
-         };
-       });
-     });*/
-  }
-
   createPhone(number?:string): FormGroup {
     return this.fb.group({
       type: [this.phoneTypes[0].value, [Validators.required]],
       number: [number, [
-          Validators.required,
-          Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}[\\w]?')
-        ]
+        Validators.required,
+        Validators.pattern('[\\d]{1}\\(?[\\d]{3}\\)?[\\d]{3}-?[\\d]{2}-?[\\d]{2}[\\w]?')
+      ]
       ],
     });
   }
@@ -271,4 +283,5 @@ export class EditProfile implements OnInit {
       filed.patchValue({number: value.slice(0, -1)});
     }
   }
+
 }
