@@ -48,7 +48,7 @@ export class ImagePickerProvider {
         return;
       }
 
-      let fileName = fileId + ".jpg";
+      let fileName = this.fileNameByFileId(fileId);
 
       this.file.checkFile(this.file.dataDirectory, fileName).then(res => {
         console.log("load file from device");
@@ -81,4 +81,9 @@ export class ImagePickerProvider {
       return converted;
     }
   }
+
+  fileNameByFileId(fileId: string) {
+    return fileId + ".jpg";
+  }
+
 }

@@ -11,16 +11,16 @@ import {File as NativeFile, FileEntry} from "@ionic-native/file";
   templateUrl: 'image-picker.html'
 })
 export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() placeholder: string = 'assets/src/unknown.png';
-  @Input() fileId: string;
 
   fileInput: HTMLElement;
-
-  chosenPicture: any;
 
   holdChosenPicture: any;
   holdImgFile: any;
   holdImgFileId: string;
+
+  @Input() placeholder: string = 'assets/src/unknown.png';
+  @Input() fileId: string;
+  chosenPicture: any;
 
   constructor(private imgProvider: ImagePickerProvider,
               private toastCtrl: ToastController,
@@ -36,6 +36,8 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
     const fileId: SimpleChange = changes.fileId;
 
     if (!fileId.firstChange && fileId.currentValue != fileId.previousValue) {
+      this.holdImgFileId = fileId.currentValue;
+
       this.imgProvider.getFileById(this.fileId).then(res => {
         this.chosenPicture = res;
       }).catch(error => {
@@ -112,20 +114,54 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
 
     this.camera.getPicture(options).then(imagePath => {
       this.cropService.crop(imagePath, {quality: 75}).then(newImg => {
+        this.holdImgFileId = null;
         this.holdChosenPicture = newImg;
 
         this.resolveNativePathWithName(imagePath, sourceType).then((imgEntry: ImageEntry) => {
           return this.removeOldFile(imgEntry.path, imgEntry.name);
         }).catch(err => console.log("err:", err));
-
       });
     });
   }
 
-  private removeOldFile (path: string, name: string) {
-    this.file.removeFile(path, name).catch(err => console.error(err));
+  private removeFile() {
+    this.chosenPicture = null;
+    this.clearFile();
+
+    this.removeCachedFileFromDevice().catch(err => console.error(err));
   }
 
+  private removeCachedFileFromDevice() {
+    return new Promise<any>((resolve, reject) => {
+
+      if (this.imgProvider.isApp && !!this.fileId) {
+        let fileName = this.imgProvider.fileNameByFileId(this.fileId)
+        this.removeOldFile(this.file.dataDirectory, fileName)
+          .then(res => {
+
+            /*this.file.listDir(this.file.dataDirectory, "").then(list => {
+              console.log("list:", list)
+              for (let file of list) {
+                if (file.isFile) {
+                  this.removeOldFile(this.file.dataDirectory, file.name).then()
+                }
+              }
+              resolve(res);
+            });*/
+
+            resolve(res);
+
+          }, err => reject(err));
+        return;
+      }
+
+      resolve();
+    });
+  }
+
+  private removeOldFile (path: string, name: string) {
+    return this.file.removeFile(path, name).catch(err => console.error(err));
+  }
 
   photoChanged(files: any) {
     this.holdImgFile = files[0];
@@ -148,12 +184,12 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
 
   getValue() {
     return new Promise((resolve, reject) => {
-      if (!this.holdChosenPicture) {
-        resolve(this.fileId);
+      /*if (!this.holdChosenPicture) {
+        resolve(this.holdImgFileId);
         return;
-      }
+      }*/
 
-      if (this.holdImgFileId) {
+      if (this.holdImgFileId || !this.holdChosenPicture) {
         resolve(this.holdImgFileId);
         return;
       }
@@ -174,7 +210,8 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
           this.holdImgFile = file;
           this.upload().then(fileId => {
             return this.resolveNativePathWithName(this.holdChosenPicture).then((imgEntry: ImageEntry) => {
-              return this.imgProvider.copyFileToLocalDir(imgEntry.path, imgEntry.name, fileId + ".jpg").then(img => {
+              let fileName = this.imgProvider.fileNameByFileId(fileId);
+              return this.imgProvider.copyFileToLocalDir(imgEntry.path, imgEntry.name, fileName).then(img => {
                 this.holdChosenPicture = img;
                 resolve(fileId);
               });
@@ -188,21 +225,16 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  private removeFile() {
-    this.chosenPicture = null;
-    this.clearFile();
-
-    if (this.imgProvider.isApp) {
-
-    }
-  }
-
   private upload (): Promise<string> {
     return this.imgProvider.upload(this.holdImgFile).toPromise()
       .then(fileId => {
         this.holdImgFile = null;
+
         this.holdImgFileId = fileId;
-        return fileId;
+
+        return this.removeCachedFileFromDevice().then(res => {
+          return fileId;
+        });
       });
   }
 
