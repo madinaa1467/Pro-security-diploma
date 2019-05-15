@@ -3,7 +3,16 @@ import {RouterModule, Routes} from '@angular/router';
 import {PagesComponent} from "./pages.component";
 
 const routes: Routes = [
-  {path: '', component: PagesComponent}
+  {
+    path: '',
+    component: PagesComponent,
+    children: [
+      {
+        path: 'profile',
+        loadChildren: './profile/profile.module#ProfileModule',
+      },
+    ]
+  }
 ];
 
 @NgModule({
