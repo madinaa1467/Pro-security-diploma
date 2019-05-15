@@ -17,7 +17,7 @@ import {
 } from "@nebular/theme";
 import {CORPORATE_THEME} from "./styles/theme.corporate";
 import {PageLayoutComponent} from "./layouts";
-import {FooterComponent, HeaderComponent} from "./components";
+import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsButtonComponent} from "./components";
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -36,7 +36,7 @@ const NB_MODULES = [
   NbContextMenuModule,
 ];
 
-const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent];
+const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
 
 const ENTRY_COMPONENTS = [];
 
