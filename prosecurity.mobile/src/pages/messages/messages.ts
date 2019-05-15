@@ -1,17 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
 import { MessageDetail } from '../message-detail/message-detail';
 import { NewMessage } from '../new-message/new-message';
 import {ChildService} from "../../providers/services/child.service";
+import {Subscription} from "rxjs/Subscription";
 
 @IonicPage()
 @Component({
   selector: 'page-messages',
   templateUrl: 'messages.html',
 })
-export class Messages implements OnInit {
+export class Messages implements OnInit, OnDestroy {
 
   public messageList;
+  private lastMessageChanges$: Subscription;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -19,11 +21,15 @@ export class Messages implements OnInit {
   }
 
   ngOnInit(): void {
-    this.childService.getLastEventsList().then(resp=> {
-        this.messageList = resp;
-      }
-    );
 
+    this.lastMessageChanges$ = this.childService.lastEventMessagesChanges$.subscribe(list => {
+      this.messageList = list;
+    });
+    this.childService.getLastEventsList();
+  }
+
+  ngOnDestroy(): void {
+    this.lastMessageChanges$.unsubscribe();
   }
 
   // goNewMessage() {
@@ -37,9 +43,7 @@ export class Messages implements OnInit {
   doRefresh(refresher) {
     setTimeout(() => {
       refresher.complete();
-      this.childService.getLastEventsList().then(resp=> {
-        this.messageList = resp;
-      });
+      this.childService.getLastEventsList();
     }, 500);
   }
 

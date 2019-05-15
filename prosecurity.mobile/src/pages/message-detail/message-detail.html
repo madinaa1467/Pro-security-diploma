@@ -13,6 +13,8 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
+  <div class="messages-container">
+    <div class="messages-container-content">
   <ion-list *ngFor="let message of messages">
     <ion-note><p text-center no-padding no-margin>{{message.date}}</p></ion-note>
     <ion-item *ngFor="let event of message.events" no-lines no-margin no-padding text-wrap>
@@ -24,5 +26,7 @@
       </div>
     </ion-item>
   </ion-list>
+    </div>
+  </div>
 
 </ion-content>

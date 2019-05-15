@@ -57,6 +57,7 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.storiesChanges$.unsubscribe();
+    this.allChildrenEventListChanges$.unsubscribe();
   }
 
   init() {
