@@ -7,10 +7,14 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      {path: '', redirectTo: 'profile', pathMatch: 'full'},
+      {path: '', redirectTo: 'history', pathMatch: 'full'},
       {
         path: 'profile',
         loadChildren: './profile/profile.module#ProfileModule',
+      },
+      {
+        path: 'history',
+        loadChildren: './history/history.module#HistoryModule',
       },
     ]
   }
