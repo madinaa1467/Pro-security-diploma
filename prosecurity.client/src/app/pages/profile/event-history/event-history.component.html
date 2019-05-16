@@ -1,0 +1,14 @@
+<div>
+  <article>
+    <div style="margin-bottom: 1em">
+      <h3>{{_ticket.title}}</h3>
+      <p>{{_ticket.description}}</p>
+    </div>
+
+    <h4> Дата подачи заявки : {{_ticket.startDate | date:'dd-MM-yyyy' }} </h4>
+    <h4> Дата выхода результата заявки : {{_ticket.endDate | date:'dd-MM-yyyy' }} </h4>
+
+    <h4> Статус : Закрыт </h4>
+
+  </article>
+</div>

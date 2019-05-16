@@ -9,6 +9,7 @@ import {
   NbCardModule,
   NbCheckboxModule,
   NbContextMenuModule,
+  NbDialogModule,
   NbInputModule,
   NbLayoutModule,
   NbListModule,
@@ -39,7 +40,9 @@ const NB_MODULES = [
   NbContextMenuModule,
   NbStepperModule,
   NbBadgeModule,
-  NbListModule
+  NbListModule,
+  NbDialogModule
+
 ];
 
 const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
@@ -57,6 +60,7 @@ const NB_THEME_PROVIDERS = [
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
+  ...NbDialogModule.forRoot().providers,
 ];
 
 @NgModule({

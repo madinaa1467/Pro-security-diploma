@@ -113,7 +113,7 @@
       [threshold]="500"
       (bottomThreshold)="loadNextTicket()">
       <nb-list-item *ngFor="let ticket of client.tickets">
-        <ngx-ticket-item [ticket]="ticket"></ngx-ticket-item>
+        <app-event-history [ticket]="ticket"></app-event-history>
       </nb-list-item>
     </nb-list>
   </nb-card>

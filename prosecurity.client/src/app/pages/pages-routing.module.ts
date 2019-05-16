@@ -7,6 +7,7 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
+      {path: '', redirectTo: 'profile', pathMatch: 'full'},
       {
         path: 'profile',
         loadChildren: './profile/profile.module#ProfileModule',
