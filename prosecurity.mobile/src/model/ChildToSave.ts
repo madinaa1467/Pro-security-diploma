@@ -18,8 +18,8 @@ export class ChildToSave {
   assign(a: any) {
     this.id = a.id;
     this.gender = a.gender;
-    // if (a.img)
-    //   this.img = a.img;
+    this.img = a.img;
+
     // else
     //   this.img = '../../assets/src/unknown.png';
     this.name = a.name;

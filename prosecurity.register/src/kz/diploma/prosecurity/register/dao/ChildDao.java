@@ -12,7 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface ChildDao {
-  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.img, c.name, c.surname, c" +
+    ".patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
     "    from parent_child as pc, child as c\n" +
     "where pc.parent =  #{parentId} AND pc.child = c.id AND c.actual = 1 AND pc.actual = 1;")
   List<Child> loadChildren(Long parentId);
@@ -27,17 +28,17 @@ public interface ChildDao {
                          @Param("notification") int notification,
                          @Param("actual") int actual);
 
-  @Insert("insert into Child (id, card_number, surname, name, patronymic, gender, birth_date, actual)\n " +
+  @Insert("insert into Child (id, card_number, surname, name, patronymic, gender, birth_date, img, actual)\n " +
     "values ( #{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}," +
-    "#{toSave.gender}, #{toSave.birthDate}, 1);")
+    "#{toSave.gender}, #{toSave.birthDate}, #{toSave.img} 1);")
   Long insertChild(@Param("toSave") ChildToSave toSave);
 
   @Select("select nextval('pro_seq')")
   Long proSeqNext();
 
-  @Insert("insert into child (id, card_number, surname, name, patronymic, gender, birth_date, actual)" +
+  @Insert("insert into child (id, card_number, surname, name, patronymic, gender, birth_date, img, actual)" +
     "values (#{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
-    "#{toSave.gender}, #{toSave.birthDate}, 1)" +
+    "#{toSave.gender}, #{toSave.birthDate}, #{toSave.img}, 1)" +
     "on conflict (id) do update set\n" +
     "  card_number = excluded.card_number,\n" +
     "  surname = excluded.surname,\n" +
@@ -45,9 +46,13 @@ public interface ChildDao {
     "  patronymic = excluded.patronymic,\n" +
     "  gender = excluded.gender,\n" +
     "  birth_date = excluded.birth_date,\n" +
+    "  img = excluded.img,\n" +
     "  actual = excluded.actual\n" +
     "    returning id;")
   Long upsertChild(@Param("toSave") ChildToSave toSave);
+
+  @Select("select img from child where id=#{id}")
+  String getImgIdById(@Param("id") Long id);
 
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
     "from child as c, parent_child as pc\n" +

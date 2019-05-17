@@ -56,13 +56,17 @@
 
       <!-- Profile picture -->
       <div text-center>
-        <img [src]="child.img" class="edit-avatar" alt="">
+
+        <image-picker [fileId]="chosenPictureId"></image-picker>
+
+        <!--<img [src]="child.img" class="edit-avatar" alt="">
         <p class="change-text" (click)="fileInput.click()">Change Photo</p>
         <input hidden
                type="file"
                #fileInput
                multiple
-               (change)="handleFile($event.target.files)"></div>
+               (change)="handleFile($event.target.files)">-->
+      </div>
       <!-- Form -->
       <form [formGroup]="childForm">
 

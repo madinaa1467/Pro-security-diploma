@@ -3,6 +3,7 @@ export class Child {
   public fio: string;
   public gender: string;
   public img: string;
+  public imgId: string;
   public name: string;
   public surname: string;
   public patronymic: string;
@@ -20,10 +21,15 @@ export class Child {
     this.id = a.id;
     this.fio = a.fio;
     this.gender = a.gender;
+
+    // TODO: msultanova 5/17/19 remove me
+    this.imgId = a.img;
+
     if (a.img)
       this.img = a.img;
     else
       this.img = '../../assets/src/unknown.png';
+
     this.name = a.name;
     this.surname = a.surname;
     this.patronymic = a.patronymic;
