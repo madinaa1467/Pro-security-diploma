@@ -16,7 +16,9 @@
   <ion-row style="margin: 5px;">
     <!-- Avatar -->
     <ion-col col-3>
-      <img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=120" class="avatar" alt="">
+      <img [src]="(accountInfo.img | secure) | async" class="avatar" alt=""
+           onerror="this.src='assets/src/unknown.png'">
+      <!--<img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=120" class="avatar" alt="">-->
     </ion-col>
   </ion-row>
 
@@ -69,7 +71,8 @@
         <button ion-item *ngIf="i.id != 0" (click)="childSaveEdit(i)">
           <ion-row text-center>
             <ion-col col-3 class="grid_img">
-              <img [src]="i.img" class="child-avatar" alt="">
+              <img [src]="(i.img | secure) | async" class="child-avatar" alt=""
+                   onerror="this.src='assets/src/unknown.png'">
             </ion-col>
             <ion-col class="centered-text">
               <p>{{i.fio}}</p>

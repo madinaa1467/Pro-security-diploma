@@ -3,6 +3,7 @@ export class AccountInfo {
   public id: number;
   public username: string;
   public fio:string;
+  public img: string;
 
   public static create(a: any): AccountInfo {
     const ret = new AccountInfo();
@@ -14,6 +15,7 @@ export class AccountInfo {
     this.id = a.id;
     this.username = a.username;
     this.fio = a.fio;
+    this.img = a.img;
 
   }
 }

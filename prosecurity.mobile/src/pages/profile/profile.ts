@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 
-import { ModalPost } from '../modal-post/modal-post';
-import { EditProfile } from '../edit-profile/edit-profile';
-import { Options } from '../options/options';
-import { TaggedProfile } from '../tagged-profile/tagged-profile';
-import { SavedProfile } from '../saved-profile/saved-profile';
+import {ModalPost} from '../modal-post/modal-post';
+import {EditProfile} from '../edit-profile/edit-profile';
+import {Options} from '../options/options';
+import {TaggedProfile} from '../tagged-profile/tagged-profile';
+import {SavedProfile} from '../saved-profile/saved-profile';
 import {ChildPofile} from "../child-pofile/child-pofile";
 import {ChildService} from "../../providers/services/child.service";
 import {Child} from "../../model/Child";
@@ -22,6 +22,7 @@ export class Profile implements OnInit, OnDestroy  {
 
   public accountInfo$: Subscription;
   public accountInfo: AccountInfo;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modalCtrl: ModalController, public childService: ChildService, private auth: Auth) {
   }

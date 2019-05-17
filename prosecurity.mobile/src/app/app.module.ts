@@ -12,7 +12,6 @@ import {Search} from '../pages/search/search';
 import {ModalPost} from '../pages/modal-post/modal-post';
 import {NewMessage} from '../pages/new-message/new-message';
 import {Notifications} from '../pages/notifications/notifications';
-import {Profile} from '../pages/profile/profile';
 import {TaggedProfile} from '../pages/tagged-profile/tagged-profile';
 import {SavedProfile} from '../pages/saved-profile/saved-profile';
 import {Options} from '../pages/options/options';
@@ -60,7 +59,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalPost,
     NewMessage,
     Notifications,
-    Profile,
+    // Profile,
     TaggedProfile,
     SavedProfile,
     Options,
@@ -92,7 +91,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalPost,
     NewMessage,
     Notifications,
-    Profile,
+    // Profile,
     TaggedProfile,
     SavedProfile,
     Options,

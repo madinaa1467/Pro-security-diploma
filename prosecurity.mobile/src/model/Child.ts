@@ -24,11 +24,12 @@ export class Child {
 
     // TODO: msultanova 5/17/19 remove me
     this.imgId = a.img;
-
+    this.img = a.img;
+    /*
     if (a.img)
       this.img = a.img;
     else
-      this.img = '../../assets/src/unknown.png';
+      this.img = '../../assets/src/unknown.png';*/
 
     this.name = a.name;
     this.surname = a.surname;
