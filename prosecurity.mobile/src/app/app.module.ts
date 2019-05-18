@@ -6,7 +6,6 @@ import {MyApp} from './app.component';
 import {IonicStorageModule, Storage} from "@ionic/storage";
 import {AppLoader, AuthInterceptor, MODULES, PROVIDERS, Settings} from "./app.imports";
 import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
-import {Home} from '../pages/home/home';
 import {PostPopover} from '../pages/home/post-popover';
 import {Search} from '../pages/search/search';
 import {ModalPost} from '../pages/modal-post/modal-post';
@@ -53,7 +52,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     // App Core
     MyApp,
-    Home,
     PostPopover,
     Search,
     ModalPost,
@@ -85,7 +83,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Home,
     PostPopover,
     Search,
     ModalPost,

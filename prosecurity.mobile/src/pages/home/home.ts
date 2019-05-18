@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {App, Content, MenuController, NavController, PopoverController} from 'ionic-angular';
+import {App, Content, IonicPage, MenuController, NavController, PopoverController} from 'ionic-angular';
 import {ChildService} from "../../providers/services/child.service";
 import {Subscription} from "rxjs/Subscription";
 import {EventFilter} from "../../model/EventFilter";
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -20,6 +21,7 @@ export class Home implements OnInit, OnDestroy {
   public allChildrenEventListChanges$: Subscription;
   public filter: EventFilter = new EventFilter();
   public loadMore: boolean = true;
+
   // public stories;
   constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
               public childService: ChildService, public menu: MenuController) {
@@ -30,6 +32,7 @@ export class Home implements OnInit, OnDestroy {
     this.filter.limit = 15;
     this.filter.offset = 0;
   }
+
   menuActive() {
     this.activeMenu = 'menu';
     this.menu.enable(true, 'menu');
@@ -63,6 +66,7 @@ export class Home implements OnInit, OnDestroy {
   init() {
     this.childService.load(this.filter);
   }
+
   getEventist(childId: number) {
     if (childId != null) {
       this.filter.childId = childId;
