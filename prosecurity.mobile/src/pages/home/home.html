@@ -75,7 +75,7 @@
         <!--{{test(day)}}-->
         <ion-item-divider color="light" class="custom-divider" sticky>{{day.date}}</ion-item-divider>
         <div *ngFor="let event of day.events; let i = index">
-          <ion-item no-lines text-wrap>
+          <ion-item no-lines text-wrap (click)="openEventDetails(event)">
             <ion-avatar item-left>
               <img [src]="(event.img | secure) | async" alt=""
                    onerror="this.src='assets/src/unknown.png'">
