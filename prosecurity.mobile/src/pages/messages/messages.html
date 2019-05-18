@@ -13,7 +13,8 @@
   <ion-list>
     <ion-item no-lines *ngFor="let m of messageList" (click)="goMessageDetail(m.childId, m.fio, m.img)">
       <ion-avatar item-left>
-        <img [src]="m.img">
+        <img [src]="(m.img | secure) | async"
+             onerror="this.src='assets/src/unknown.png'">
       </ion-avatar>
       <h2 style="font-weight: bold;  display: inline;">{{ m.fio }}</h2>
       <p style="display: inline;"><ion-note item-right style="padding-left: 2px;">

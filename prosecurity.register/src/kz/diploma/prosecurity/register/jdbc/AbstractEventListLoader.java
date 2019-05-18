@@ -24,7 +24,8 @@ public abstract class AbstractEventListLoader<T> implements ConnectionCallback<T
               .select("e.action")
               .select("c.id as childId")
               .select("c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio")
-              .select("c.gender as gender");
+        .select("c.gender as gender")
+        .select("c.img as img");
     }
 
   abstract void prepareSql(DbType dbType);

@@ -1,4 +1,3 @@
-
 import {Auth} from "../../providers/auth/auth";
 import {PhoneType, phoneTypes} from "../../model/phone/phone-type";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
@@ -126,27 +125,27 @@ export class SignupPage implements OnInit {
       ],
       'username': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[a-z0-9_.]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
       ],
       'name': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[А-Яа-яA-Za-z]*[ _-]*[А-Яа-яA-Za-z]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
       ],
       'surname': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[А-Яа-яA-Za-z]*[ _-]*[А-Яа-яA-Za-z]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
       ],
       'patronymic': ['', [
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[А-Яа-яA-Za-z]*[ _-]*[А-Яа-яA-Za-z]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]

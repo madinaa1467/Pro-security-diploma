@@ -103,7 +103,8 @@ public interface ChildDao {
   Long[] getChildIdByParent(@Param("parentId") Long parentId);
 
   @Select("select  e.id, to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date, e.action, c.id as childId,\n" +
-    "              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as fio, c.gender as gender\n" +
+    "              c.name||' '||substring(c.surname from 1 for 1)||'. '||substring(c.patronymic from 1 for 1)||'.' as" +
+    " fio, c.img, c.gender as gender\n" +
     "from child as c, event as e, parent_child as pc\n" +
     "where c.id = #{childId} AND c.id = e.child AND pc.child = c.id AND pc.parent = #{parentId}\n" +
     "      AND c.actual = 1 AND e.actual = 1 AND pc.actual = 1\n" +

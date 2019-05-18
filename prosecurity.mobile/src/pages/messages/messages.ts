@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
-import { MessageDetail } from '../message-detail/message-detail';
-import { NewMessage } from '../new-message/new-message';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {MessageDetail} from '../message-detail/message-detail';
 import {ChildService} from "../../providers/services/child.service";
 import {Subscription} from "rxjs/Subscription";
 

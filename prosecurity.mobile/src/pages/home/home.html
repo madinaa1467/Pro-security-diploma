@@ -51,7 +51,9 @@
   <ion-scroll class="story" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
       <div class="story_img_bg" [class.story_img_bg_active]="filter.childId == s.id" (click)="getEventist(s.id)">
-        <img no-margin no-padding class="story_img" [src]="s.img"></div>
+        <img no-margin no-padding class="story_img"
+             [src]="(s.img | secure) | async"
+             onerror="this.src='assets/src/unknown.png'"></div>
       <p no-margin no-padding text-center class="story_text">{{ s.fio }}</p>
     </div>
   </ion-scroll>
@@ -75,7 +77,8 @@
         <div *ngFor="let event of day.events; let i = index">
           <ion-item no-lines text-wrap>
             <ion-avatar item-left>
-              <img src="../../assets/src/girl (1).png">
+              <img [src]="(event.img | secure) | async" alt=""
+                   onerror="this.src='assets/src/unknown.png'">
             </ion-avatar>
             <ion-row>
               <ion-col col-10 no-padding no-margin>

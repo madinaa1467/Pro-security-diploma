@@ -175,27 +175,27 @@ export class EditProfile implements OnInit {
       ],
       'username': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),//'^[\\w\u0430-\u044f]*[ -]*[\\w\u0430-\u044f]*$'
+        Validators.pattern('^[a-z0-9_.]+$'),//'^[\\w\u0430-\u044f]*[ -]*[\\w\u0430-\u044f]*$'
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
       ],
       'name': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),//'^[\\w\u0430-\u044f]*[ -]*[\\w\u0430-\u044f]*$'
+        Validators.pattern('^[А-Яа-яA-Za-z]*[ _-]*[А-Яа-яA-Za-z]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
       ],
       'surname': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[А-Яа-яA-Za-z]*[ _-]*[А-Яа-яA-Za-z]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]
       ],
       'patronymic': ['', [
-        Validators.pattern('^[a-zA-Z]*[ -]*[a-zA-Z]*$'),
+        Validators.pattern('^[А-Яа-яA-Za-z]*[ _-]*[А-Яа-яA-Za-z]+$'),
         Validators.minLength(2),
         Validators.maxLength(25)
       ]

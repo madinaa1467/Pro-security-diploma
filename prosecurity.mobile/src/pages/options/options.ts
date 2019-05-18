@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {EditProfile} from "../edit-profile/edit-profile";
 import {EditPrivateInfo} from "../edit-private-info/edit-private-info";
+import {Auth} from "../../providers";
 
 /**
  * Generated class for the Options page.
@@ -16,8 +17,10 @@ import {EditPrivateInfo} from "../edit-private-info/edit-private-info";
 })
 export class Options {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public modalCtrl: ModalController,
+              private auth: Auth) {
   }
 
   ionViewDidLoad() {
@@ -34,5 +37,9 @@ export class Options {
     console.error("EEedit-private-info")
     let modal = this.modalCtrl.create('EditPrivateInfo');
     modal.present();
+  }
+
+  logOut(){
+    this.auth.logout();
   }
 }

@@ -39,6 +39,7 @@ public abstract class EventListConnection extends AbstractEventListLoader<List<E
     ret.childId = rs.getLong("childId");
     ret.fio = rs.getString("fio");
     ret.gender = rs.getString("gender");
+    ret.img = rs.getString("img");
     return ret;
   }
 

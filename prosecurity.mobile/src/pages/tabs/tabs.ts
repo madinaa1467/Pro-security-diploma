@@ -14,7 +14,7 @@ export class TabsPage {
 
   index:number = 1;
 
-  tab1Root = Home;
+  tab1Root = 'Home';
   // tab2Root = Search;
   // tab3Root = null;
   tab4Root = 'Messages';
