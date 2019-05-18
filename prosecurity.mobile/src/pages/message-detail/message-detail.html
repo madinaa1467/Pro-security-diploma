@@ -19,7 +19,8 @@
     <ion-note><p text-center no-padding no-margin>{{message.date}}</p></ion-note>
     <ion-item *ngFor="let event of message.events" no-lines no-margin no-padding text-wrap>
       <ion-avatar item-left>
-        <img [src]="childImg">
+        <img [src]="(childImg | secure) | async" class="avatar" alt=""
+             onerror="this.src='assets/src/unknown.png'">
       </ion-avatar>
       <div class="chatbox">
         {{ ('MESSAGE.'+event.action+'_'+event.gender) | translate:{childFio:event.fio, time: (event.date|dateFormat)} }}

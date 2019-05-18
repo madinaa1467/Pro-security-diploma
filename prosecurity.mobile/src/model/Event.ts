@@ -26,7 +26,7 @@ export class Event {
     this.childId = a.childId;
     this.fio = a.fio;
     this.gender = a.gender;
-    this.img = 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120';
+    this.img = a.img;
 
     if(a.when)
       this.when = a.when;
