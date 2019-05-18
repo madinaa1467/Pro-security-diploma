@@ -4,6 +4,7 @@ import kz.diploma.prosecurity.controller.errors.ErrorMessage;
 import kz.diploma.prosecurity.controller.errors.ValidationError;
 import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
+import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
 import kz.diploma.prosecurity.register.jdbc.ChildEventList;
 import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ChildDao> childDao;
   public BeanGetter<Jdbc> jdbc;
+  public BeanGetter<FileRegister> fileRegister;
 
   @Override
   public List<EventList> listAllEvents(Long parentId, EventFilter filter) {
@@ -69,13 +71,22 @@ public class ChildRegisterImpl implements ChildRegister {
   @Override
   public boolean saveOrUpdateChild(Long parentId, ChildToSave childToSave) {
     if (childToSave.id != null) {
-      Child child = this.getChildByCardFromDB(childToSave.cardNumber, childToSave.id);
 
+      String oldImgId = childDao.get().getImgIdById(childToSave.id);
+
+      Child child = this.getChildByCardFromDB(childToSave.cardNumber, childToSave.id);
       this.childDao.get().upsertParentChild(parentId, childToSave.id, childToSave.notification, 1);
 
       if (!Objects.equals(child.cardNumber, childToSave.cardNumber) && child.cardNumber != null)
         childToSave.cardNumber = child.cardNumber;
-      return this.childDao.get().upsertChild(childToSave) > 0;
+
+      boolean flag = this.childDao.get().upsertChild(childToSave) > 0;
+
+      if (oldImgId != null && !Objects.equals(childToSave.img, oldImgId)) {
+        fileRegister.get().delete(oldImgId);
+      }
+
+      return flag;
     } else {
       childToSave.id = childDao.get().proSeqNext();
       this.childDao.get().insertChild(childToSave);

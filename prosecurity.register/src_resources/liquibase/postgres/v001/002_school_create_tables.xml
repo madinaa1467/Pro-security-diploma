@@ -35,6 +35,7 @@
         patronymic varchar(50),
         gender varchar(6) not null,
         birth_date date not null,
+        img varchar(30) null,
         actual integer,
         primary key(id)
       )

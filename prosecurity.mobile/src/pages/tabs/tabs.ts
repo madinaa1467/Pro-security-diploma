@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { Home } from '../home/home';
-import { Search } from '../search/search';
-import { Notifications } from '../notifications/notifications';
-import { Profile } from '../profile/profile';
+import {Home} from '../home/home';
+import {Profile} from '../profile/profile';
 
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import {Camera} from '@ionic-native/camera';
 import {Messages} from "../messages/messages";
 import {App} from "ionic-angular";
 
@@ -20,7 +18,7 @@ export class TabsPage {
   // tab2Root = Search;
   // tab3Root = null;
   tab4Root = 'Messages';
-  tab5Root = Profile;
+  tab5Root = 'Profile';
 
   constructor(private camera: Camera, public app: App) {
 

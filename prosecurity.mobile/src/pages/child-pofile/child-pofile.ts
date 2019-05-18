@@ -4,6 +4,7 @@ import {AlertController, IonicPage, LoadingController, NavController, NavParams,
 import {Component, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
+import {ImagePickerComponent} from "../../components/image-picker/image-picker";
 
 /**
  * Generated class for the ChildPofilePage page.
@@ -23,6 +24,10 @@ export class ChildPofile implements OnInit {
   public action: string;
   childForm: FormGroup;
   public genderTypes: GenderType[] = genderTypes;
+  public isCheck: boolean = false;
+
+  @ViewChild(ImagePickerComponent) imagePicker: ImagePickerComponent;
+  public chosenPictureId: string;
 
   mask: any[] = [ /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/,  /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
   @ViewChild('stepper') stepper;
@@ -35,6 +40,7 @@ export class ChildPofile implements OnInit {
     private fb: FormBuilder,
     private alertCtrl: AlertController,
     private childService: ChildService) {
+
     this.buildForm();
     this.child = this.navParams.get('child');
     this.action = this.navParams.get('action');
@@ -42,6 +48,7 @@ export class ChildPofile implements OnInit {
       this.child = Child;
     }
     console.error('Opened Modal with param', this.child);
+    console.error('this.child[\'imgId\']:', this.child['imgId']);
     this.childForm.patchValue(this.child);
   }
 
@@ -51,7 +58,12 @@ export class ChildPofile implements OnInit {
 
   selectChange(e) {
     console.log(e);
-    if(e == 1){
+    if (e == 0) {
+      // TODO: msultanova 5/17/19 remove me
+      this.isCheck = false;
+    } else if (e == 1) {
+      this.isCheck = true;
+      this.chosenPictureId = this.child['imgId']; //this.childForm.get("imgId").value;
       const loading = this.loadingCtrl.create();
       let card_id = this.childForm.controls['cardNumber'].value;
       this.childForm.controls['cardNumber'].patchValue(card_id.substring(0, 23));
@@ -97,52 +109,57 @@ export class ChildPofile implements OnInit {
     const loading = this.loadingCtrl.create();
     loading.present();
 
-    let card_id = this.childForm.controls['cardNumber'].value;
-    card_id = card_id.replace(/\D/g,'').substring(0, 19);
-    this.childForm.controls['cardNumber'].patchValue(card_id);
-    this.childService.save(this.childForm.getRawValue()).then(_resp =>{
-      loading.dismiss();
-      let alert;
-      if(this.action == 'edit') {
-         alert = this.alertCtrl.create({
-          //todo change by languge
-          title: ' Уведомление',
-          message: 'Вы успешнo изменили запись!',
-          buttons: [{
-            text: 'Ok',
-            handler: data => {
-              this.dismiss();
-            }
-          }]
-        });
-      } else {
-         alert = this.alertCtrl.create({
-          //todo change by languge
-          title: ' Уведомление',
-          message: 'Вы успешнo добавили ребенка!',
-          buttons: [{
-            text: 'Ok',
-            handler: data => {
-              this.dismiss();
-            }
-          }]
-        });
-      }
-      alert.present();
-    }).catch(err => {
-      loading.dismiss();
-      if (err.status == 400) {
-        let errors = err.error;
+    this.imagePicker.getValue().then(imgId => {
 
-        errors.forEach((error) => {
-          let field = this.childForm.controls[error.code];
-          field.setErrors({[error.message]: true});
-        });
+      let card_id = this.childForm.controls['cardNumber'].value;
+      card_id = card_id.replace(/\D/g, '').substring(0, 19);
+      // this.childForm.controls['cardNumber'].patchValue(card_id);
 
-        this.onValueChanged();
-        this.stepper.selectedIndex = 0;
-        return;
-      }
+      this.childForm.patchValue({img: imgId, cardNumber: card_id});
+      this.childService.save(this.childForm.getRawValue()).then(_resp => {
+        loading.dismiss();
+        let alert;
+        if (this.action == 'edit') {
+          alert = this.alertCtrl.create({
+            //todo change by languge
+            title: ' Уведомление',
+            message: 'Вы успешнo изменили запись!',
+            buttons: [{
+              text: 'Ok',
+              handler: data => {
+                this.dismiss();
+              }
+            }]
+          });
+        } else {
+          alert = this.alertCtrl.create({
+            //todo change by languge
+            title: ' Уведомление',
+            message: 'Вы успешнo добавили ребенка!',
+            buttons: [{
+              text: 'Ok',
+              handler: data => {
+                this.dismiss();
+              }
+            }]
+          });
+        }
+        alert.present();
+      }).catch(err => {
+        loading.dismiss();
+        if (err.status == 400) {
+          let errors = err.error;
+
+          errors.forEach((error) => {
+            let field = this.childForm.controls[error.code];
+            field.setErrors({[error.message]: true});
+          });
+
+          this.onValueChanged();
+          this.stepper.selectedIndex = 0;
+          return;
+        }
+      });
     });
   }
 
@@ -218,6 +235,7 @@ export class ChildPofile implements OnInit {
   buildForm() {
     this.childForm = this.fb.group({
       'id': null,
+      'img': null,
       'cardNumber': ['', [
         Validators.required,
         Validators.pattern('[\\d]{4}[- ]?[\\d]{2}[- ]?[\\d]{5}[- ]?[\\d]{4}[- ]?[\\d]{4}[\\w]?'),

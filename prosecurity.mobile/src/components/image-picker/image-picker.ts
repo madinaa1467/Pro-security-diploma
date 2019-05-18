@@ -1,4 +1,14 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {ImageEntry, ImagePickerProvider} from "../../providers";
 import {ActionSheetController, Platform, ToastController} from "ionic-angular";
 import {Camera, CameraOptions, MediaType, PictureSourceType} from "@ionic-native/camera";
@@ -13,6 +23,7 @@ import {File as NativeFile, FileEntry} from "@ionic-native/file";
 export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
 
   fileInput: HTMLElement;
+  @ViewChild("fileInput") fileInputRef: ElementRef;
 
   holdChosenPicture: any;
   holdImgFile: any;
@@ -49,7 +60,7 @@ export class ImagePickerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.fileInput = document.getElementById("fileInput") as HTMLElement;
+    this.fileInput = this.fileInputRef.nativeElement as HTMLElement;
   }
 
   ngOnDestroy(): void {
