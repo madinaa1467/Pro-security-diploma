@@ -22,6 +22,8 @@ import {
 import {CORPORATE_THEME} from "./styles/theme.corporate";
 import {PageLayoutComponent} from "./layouts";
 import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsButtonComponent} from "./components";
+import {NotificationsComponent} from './components/notifications/notifications.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -41,7 +43,8 @@ const NB_MODULES = [
   NbStepperModule,
   NbBadgeModule,
   NbListModule,
-  NbDialogModule
+  NbDialogModule,
+  NgbModule
 
 ];
 
@@ -66,7 +69,7 @@ const NB_THEME_PROVIDERS = [
 @NgModule({
   imports: [...BASE_MODULES, ...NB_MODULES],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, NotificationsComponent],
   entryComponents: [...ENTRY_COMPONENTS]
 })
 export class ThemeModule {

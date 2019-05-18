@@ -15,6 +15,10 @@ export class HeaderComponent implements OnInit {
 
   userMenu = [{title: 'Profile'}, {title: 'Log out'}];
 
+  sidebarEnd = false;
+  expanded = false;
+  wasExpanded = false;
+
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               // TODO: asset 5/14/19   private userService: UserData,
@@ -34,6 +38,12 @@ export class HeaderComponent implements OnInit {
 
   goToHome() {
     this.menuService.navigateHome();
+  }
+
+  toggleNotification() {
+    this.sidebarService.toggle(false, 'settings-sidebar');
+    this.expanded = !this.expanded;
+    this.wasExpanded = true;
   }
 
 }
