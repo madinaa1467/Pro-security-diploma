@@ -134,4 +134,8 @@ export class Home implements OnInit, OnDestroy {
     }, 500);
   }
 
+  openEventDetails(event){
+    console.error('OOOOOOOOOOpnen')
+    this.navCtrl.push('EventDetail', { event: event});
+  }
 }
