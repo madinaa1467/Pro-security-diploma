@@ -10,9 +10,32 @@ import org.apache.ibatis.annotations.Update;
 
 public interface ParentDao {
 
+    @Insert("insert into Person (id, username, encoded_password, surname, name, patronymic,email, actual) " +
+            "values (#{id}, #{username}, #{encodedPassword}, #{surname}, #{name}, #{patronymic}, #{email}, 1)")
+    void insertPerson(@Param("id") Long id,
+                      @Param("username") String username,
+                      @Param("surname") String surname,
+                      @Param("name") String name,
+                      @Param("patronymic") String patronymic,
+                      @Param("email") String email,
+                      @Param("encodedPassword") String encodedPassword
+    );
+
+  @Insert("insert into Person (id, username, encoded_password, account_id, actual) " +
+          "values (#{id}, #{username}, #{encodedPassword}, #{account_id}, 1)" +
+          "on conflict (account_id) do update set\n" +
+          "  username = excluded.username,\n" +
+          "  encoded_password = excluded.encoded_password\n" +
+          "  actual = excluded.actual\n" +
+          "    returning id;")
+  void upsertPerson(@Param("id") Long id,
+                    @Param("username") String username,
+                    @Param("account_id") Long account_id,
+                    @Param("encodedPassword") String encodedPassword
+  );
+
   @Select("select * from parent where username = #{username} and actual = 1")
   PersonLogin selectByUsername(@Param("username") String username);
-
 
   @Select("select * from parent where id = #{id} and actual = 1")
   ToSave getInfo(@Param("id") Long id);
@@ -20,10 +43,9 @@ public interface ParentDao {
   @Select("select * from parent_phone where parent = #{parent} and actual = 1")
   Phone[] getPhones(@Param("parent") Long parent);
 
-  @Select("with parent as (insert into parent (id, email, username, encoded_password, surname, name, patronymic, " +
+  @Select("with parent as (insert into parent (id, " +
     "gender, birth_date, actual) " +
-    "values (nextval('pro_seq'), #{toSave.email}, #{toSave.username}, #{toSave.password}, #{toSave.surname}, #{toSave" +
-    ".name}, #{toSave.patronymic}, " +
+    "values (nextval('pro_seq')," +
     "#{toSave.gender}, #{toSave.birthDate}, 1 )" +
     "returning id)\n" +
     "select * from parent")
@@ -63,16 +85,19 @@ public interface ParentDao {
     @Update("update parent set actual = 0 where id = #{id};")
     void deactualParent(@Param("id") Long id);
 
-  @Select("select id from parent where email=#{email} limit 1")
+    @Update("update person set actual = 0 where id = #{id};")
+    void deactualPerson(@Param("id") Long id);
+
+  @Select("select id from person where email=#{email} limit 1")
   Long getParentIdByEmail(@Param("email") String email);
 
-  @Select("select id from parent where username=#{username} limit 1")
+  @Select("select id from person where username=#{username} limit 1")
   Long getParentIdByUsername(@Param("username") String username);
 
-  @Select("select id from parent where id = #{id} and encoded_password =#{encoded_password};")
+  @Select("select id from person where id = #{id} and encoded_password =#{encoded_password};")
   Long checkPassword(@Param("id") Long id, @Param("encoded_password") String encoded_password);
 
-  @Select("update parent set encoded_password = #{encoded_password} where id \n" +
+  @Select("update person set encoded_password = #{encoded_password} where id \n" +
     "= #{id} returning id;")
   Long changePassword(@Param("id") Long id, @Param("encoded_password") String encoded_password);
 

@@ -33,9 +33,6 @@ public interface ChildDao {
     "#{toSave.gender}, #{toSave.birthDate}, #{toSave.img} 1);")
   Long insertChild(@Param("toSave") ChildToSave toSave);
 
-  @Select("select nextval('pro_seq')")
-  Long proSeqNext();
-
   @Insert("insert into child (id, card_number, surname, name, patronymic, gender, birth_date, img, actual)" +
     "values (#{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}, " +
     "#{toSave.gender}, #{toSave.birthDate}, #{toSave.img}, 1)" +

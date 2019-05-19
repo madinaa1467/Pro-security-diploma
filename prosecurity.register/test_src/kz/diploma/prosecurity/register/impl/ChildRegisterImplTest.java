@@ -5,6 +5,7 @@ import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
+import kz.diploma.prosecurity.register.dao.SequenceDao;
 import kz.diploma.prosecurity.register.jdbc.ChildEventList;
 import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
@@ -19,6 +20,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
   public BeanGetter<ChildRegister> childRegisterBeanGetter;
   public BeanGetter<Jdbc> jdbc;
+  public BeanGetter<SequenceDao> sequenceDao;
 
   public EventFilter getFilter() {
     EventFilter eventFilter = new EventFilter();
@@ -99,7 +101,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
   @Test
   public void test() {
-    System.out.println("nextVal: " + dao.get().proSeqNext());
+    System.out.println("nextVal: " + sequenceDao.get().proSeqNext());
   }
 
 }

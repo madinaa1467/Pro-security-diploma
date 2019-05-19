@@ -9,6 +9,7 @@ import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.register.dao.ParentDao;
+import kz.diploma.prosecurity.register.dao.SequenceDao;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.security.password.PasswordEncoder;
@@ -24,17 +25,18 @@ public class ParentRegisterImpl implements ParentRegister {
 
   public BeanGetter<AuthRegister> authRegister;
   public BeanGetter<FileRegister> fileRegister;
+  public BeanGetter<SequenceDao> sequenceDao;
 
   @Override
   public Long register(ToSave toSave) {
     validateOnDuplicate(toSave);
 
-    toSave.password = passwordEncoder.get().encode(toSave.password);
+    toSave.id = sequenceDao.get().proSeqNext();
     Long parent = parentDao.get().insertParent(toSave);
     for (Phone phone : toSave.phones) {
       parentDao.get().upsertPhone(parent, phone);
     }
-
+    parentDao.get().insertPerson(toSave.id, toSave.username, toSave.surname, toSave.name, toSave.patronymic, toSave.email, passwordEncoder.get().encode(toSave.password));
     return parent;
   }
 
@@ -50,6 +52,7 @@ public class ParentRegisterImpl implements ParentRegister {
     String oldImgId = parentDao.get().getImgIdById(toSave.id);
 
     parentDao.get().upsertParent(toSave);
+//    parentDao.get().upsertPerson();
 
     this.parentDao.get().deactualPhone(id);
     for (Phone phone : toSave.phones) {

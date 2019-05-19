@@ -59,18 +59,11 @@
   <changeSet author="madina" id="create-table-parent">
     <sql endDelimiter=";;"><![CDATA[
       create table parent (
-        id serial not null,
-        username varchar(100) not null,
-        surname varchar(50) not null,
-        name varchar(50) not null,
-        patronymic varchar(50),
-        email varchar(100) not null,
+        id serial not null primary key,
         gender varchar(6) not null,
         birth_date date,
-        encoded_password varchar(255),
         img varchar(30) null,
-        actual integer,
-        primary key(id)
+        actual integer
       )
     ]]></sql>
   </changeSet>

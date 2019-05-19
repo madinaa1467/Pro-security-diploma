@@ -10,10 +10,14 @@ import org.apache.ibatis.annotations.Update;
 import java.util.Date;
 
 public interface AuthTestDao {
-  @Insert("insert into Person (id, username, encoded_password, blocked) " +
-    "values (#{id}, #{username}, #{encodedPassword}, 0)")
-  void insertPerson(@Param("id") String id,
+  @Insert("insert into Person (id, username, encoded_password, surname, name, patronymic,email, actual) " +
+    "values (#{id}, #{username}, #{encodedPassword}, #{surname}, #{name}, #{patronymic}, #{email}, 1)")
+  void insertPerson(@Param("id") Long id,
                     @Param("username") String username,
+                    @Param("surname") String surname,
+                    @Param("name") String name,
+                    @Param("patronymic") String patronymic,
+                    @Param("email") String email,
                     @Param("encodedPassword") String encodedPassword
   );
 
@@ -28,33 +32,26 @@ public interface AuthTestDao {
 
   @Insert("insert into person_cans (person_id, user_can)" +
     " select p.id as person_id, #{can} as user_can" +
-    " from person p, user_can where p.username = #{username} and p.blocked = 0" +
+    " from person p, user_can where p.username = #{username} and p.actual = 1" +
     " on conflict (person_id, user_can) do nothing")
   void personCan(@Param("username") String username, @Param("can") String can);
 
 
-  @Insert("insert into Parent (id, username, encoded_password, actual, surname, name, patronymic, gender," +
-          "birth_date, email) " +
-          "values (#{id}, #{username}, #{encodedPassword}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
-          "#{gender}, #{birth_date}, #{email})")
-  void insertParent(@Param("id") int id,
-                    @Param("username") String username,
-                    @Param("encodedPassword") String encodedPassword,
+  @Insert("insert into Parent (id, actual, gender," +
+          "birth_date) " +
+          "values (#{id}, #{actual}, " +
+          "#{gender}, #{birth_date})")
+  void insertParent(@Param("id") Long id,
                     @Param("actual") int actual,
-                    @Param("surname") String surname,
-                    @Param("name") String name,
-                    @Param("patronymic") String patronymic,
                     @Param("gender") String gender,
-                    @Param("birth_date") Date birth_date,
-                    @Param("email") String email
-  );
+                    @Param("birth_date") Date birth_date);
 
   @Insert("insert into parent_phone ( parent, number, type, actual)\n" +
     "values (#{parentId}, #{phone.number}, #{phone.type}, 1)\n" +
     "on conflict (parent, number) do update set\n" +
     "  type = excluded.type,\n" +
     "  actual = excluded.actual;")
-  void upsertPhone(@Param("parentId") long parentId,
+  void upsertPhone(@Param("parentId") Long parentId,
                    @Param("phone") Phone phone);
 
 
@@ -62,7 +59,7 @@ public interface AuthTestDao {
           "birth_date) " +
           "values (#{id}, #{cardNumber}, #{actual}, #{surname}, #{name}, #{patronymic}, " +
           "#{gender}, #{birth_date} )")
-  void insertChild(@Param("id") int id,
+  void insertChild(@Param("id") Long id,
                    @Param("cardNumber") String cardNumber,
                    @Param("surname") String surname,
                    @Param("name") String name,
@@ -74,8 +71,8 @@ public interface AuthTestDao {
 
   @Insert("insert into Parent_child (parent, child, notification, actual) " +
     "values (#{parent}, #{child},#{notification}, #{actual})")
-  void insertParentChild(@Param("parent") int parent,
-                         @Param("child") int child,
+  void insertParentChild(@Param("parent") Long parent,
+                         @Param("child") Long child,
                          @Param("notification") int notification,
                          @Param("actual") int actual
   );
@@ -83,7 +80,7 @@ public interface AuthTestDao {
   @Insert("insert into Event (action, date, child, actual) " +
           "values (#{action}, #{date}, #{child}, #{actual})")
   void insertEvent(@Param("action") String action,
-                   @Param("child") int child,
+                   @Param("child") Long child,
                    @Param("date") Date date,
                    @Param("actual") int actual
   );
@@ -91,7 +88,7 @@ public interface AuthTestDao {
   @Insert("insert into Event (action, child, actual) " +
     "values (#{action}, #{child}, #{actual})")
   void insertEventWithoutDate(@Param("action") String action,
-                   @Param("child") int child,
+                   @Param("child") Long child,
                    @Param("actual") int actual
   );
 
