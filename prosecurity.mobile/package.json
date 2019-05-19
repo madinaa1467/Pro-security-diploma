@@ -69,11 +69,11 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-whitelist": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-file": {},
       "cordova-plugin-filepath": {},
-      "cordova-plugin-crop": {}
+      "cordova-plugin-crop": {},
+      "cordova-plugin-whitelist": {}
     }
   }
 }
