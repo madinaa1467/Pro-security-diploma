@@ -24,11 +24,15 @@ import {PageLayoutComponent} from "./layouts";
 import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsButtonComponent} from "./components";
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {SecurityModule} from "../security";
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const NB_MODULES = [
+  SecurityModule,
+
+
   NbLayoutModule,
   NbCardModule,
   NbAlertModule,
