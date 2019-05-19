@@ -1,3 +1,33 @@
 page-event-detail {
 
+  .text{
+    color: darkgray;
+    font-size: 2rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+  }
+
+  .upper-card-text{
+    margin-left: 2rem;
+    margin-top: 4rem;
+    //color: #565d6a;
+  }
+
+  .upper-card-detail{
+    margin-left: 2rem;
+    margin-top: 1rem;
+    //color: #a9abaf;// #666;
+  }
+
+  .card-content-key{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-content-value{
+    color: gray;
+    font-size: 3rem;
+  }
 }

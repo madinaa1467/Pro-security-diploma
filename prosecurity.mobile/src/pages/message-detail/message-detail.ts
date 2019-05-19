@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ChildService} from "../../providers/services/child.service";
 import {EventFilter} from "../../model/EventFilter";
@@ -18,9 +18,11 @@ export class MessageDetail {
   public filter: EventFilter = new EventFilter();
 
   public messages = [];
+  @ViewChild('messagesContent') elementView: ElementRef;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private childService: ChildService) {
+              private childService: ChildService, public renderer: Renderer2) {
     this.childFio = this.navParams.get('childFio');
     this.childId = this.navParams.get('childId');
     this.childImg = this.navParams.get('childImg');
@@ -39,6 +41,13 @@ export class MessageDetail {
         if (this.filter.offset == 0) {
           this.messages = resp.reverse();
           setTimeout(() => {
+
+            if(this.elementView &&
+              (this.elementView.nativeElement.scrollHeight > this.elementView.nativeElement.offsetHeight)){
+              this.renderer.setStyle(this.elementView.nativeElement, 'height', 100 + '%');
+            } else{
+              this.renderer.setStyle(this.elementView.nativeElement, 'height', 60 + '%');
+            }
             this.content.scrollToBottom();
           }, 200);
         } else {
