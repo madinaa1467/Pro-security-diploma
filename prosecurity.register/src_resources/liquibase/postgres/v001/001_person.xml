@@ -34,6 +34,7 @@
         surname varchar(255),
         name varchar(255),
         patronymic varchar(255),
+        img varchar(30) null,
         encoded_password varchar(255),
         actual integer
       )

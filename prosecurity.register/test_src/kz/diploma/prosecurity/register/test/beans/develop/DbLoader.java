@@ -39,7 +39,7 @@ public class DbLoader {
 
     Long id = sequenceDao.get().proSeqNext();
 
-    user( id,"pushkin");
+    user( id,"1");
     add_can("pushkin", UserCan.VIEW_USERS);
 
     parent(id, "1980-07-23", "1", "male");
@@ -58,7 +58,7 @@ public class DbLoader {
   }
 
   private void user(Long id, String accountName) throws Exception {
-    String encryptPassword = passwordEncoder.get().encode("111");
+    String encryptPassword = passwordEncoder.get().encode("1");
     String[] fio = "Пушкин Александр Сергеевич".split("\\s+");
     authTestDao.get().insertPerson(id, accountName, fio[0], fio[1], fio[2],accountName+"@gmail.com", encryptPassword);
   }

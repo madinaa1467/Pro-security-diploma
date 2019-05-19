@@ -62,7 +62,6 @@
         id serial not null primary key,
         gender varchar(6) not null,
         birth_date date,
-        img varchar(30) null,
         actual integer
       )
     ]]></sql>

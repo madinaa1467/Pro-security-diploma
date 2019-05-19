@@ -6,9 +6,8 @@ import org.apache.ibatis.annotations.Select;
 
 public interface AuthDao {
 
-
   @Select("select p.id, p.surname||' '||p.name||' '||p.patronymic as fio, p.username, p.img\n" +
-          "from parent as p\n" +
-          "where id = #{parentId}")
-  AccountInfo loadAccountInfo(@Param("parentId") Long parentId);
+          "from person as p\n" +
+          "where id = #{id}")
+  AccountInfo loadAccountInfo(@Param("id") Long id);
 }

@@ -6,6 +6,7 @@ import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
 import kz.diploma.prosecurity.register.dao.ParentDao;
+import kz.diploma.prosecurity.register.dao.PersonDao;
 import kz.diploma.prosecurity.register.model.PersonLogin;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
@@ -18,6 +19,7 @@ public class AuthRegisterImpl implements AuthRegister {
 
   public BeanGetter<AuthDao> authDao;
   public BeanGetter<ParentDao> parentDao;
+  public BeanGetter<PersonDao> personDao;
   public BeanGetter<PasswordEncoder> passwordEncoder;
   public BeanGetter<SessionService> sessionService;
   private final ThreadLocal<SessionHolder> sessionDot = new ThreadLocal<>();
@@ -25,7 +27,7 @@ public class AuthRegisterImpl implements AuthRegister {
   @Override
   public SessionIdentity login(String username, String password) {
 
-    PersonLogin personLogin = parentDao.get().selectByUsername(username);
+    PersonLogin personLogin = personDao.get().selectByUsername(username);
     if (personLogin == null) {
       throw new IllegalLoginOrPassword();
     }
@@ -55,10 +57,10 @@ public class AuthRegisterImpl implements AuthRegister {
 
 
   @Override
-  public AccountInfo accountInfo(Long parentId) {
-    AccountInfo ret = authDao.get().loadAccountInfo(parentId);
+  public AccountInfo accountInfo(Long id) {
+    AccountInfo ret = authDao.get().loadAccountInfo(id);
     if (ret == null) {
-      throw new NullPointerException("No person with parentId = " + parentId);
+      throw new NullPointerException("No person with parentId = " + id);
     }
     return ret;
   }

@@ -56,8 +56,8 @@ public class AuthController implements Controller {
 
   @ToJson
   @OnGet("/accountInfo")
-  public AccountInfo accountInfo(@ParSession(PARENT_ID) Long parentId) {
-    return authRegister.get().accountInfo(parentId);
+  public AccountInfo accountInfo(@ParSession(PARENT_ID) Long id) {
+    return authRegister.get().accountInfo(id);
   }
 
   @AsIs
