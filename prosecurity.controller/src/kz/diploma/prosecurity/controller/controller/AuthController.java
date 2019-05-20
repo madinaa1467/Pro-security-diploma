@@ -20,8 +20,6 @@ import kz.greetgo.mvc.annotations.on_methods.OnPost;
 import kz.greetgo.mvc.interfaces.TunnelCookies;
 import kz.greetgo.security.session.SessionIdentity;
 
-import java.util.HashSet;
-
 /**
  * как составлять контроллеры написано
  * <a href="https://github.com/greetgo/greetgo.mvc/blob/master/doc/controller_spec.md">здесь</a>
@@ -77,7 +75,6 @@ public class AuthController implements Controller {
   @ToJson
   @OnGet("/user-info")
   public UserInfo userInfo(@ParSession(PARENT_ID) Long personId) {
-    return new UserInfo("Vasilisa Pupkina", "vasilisa1998", new HashSet<>());
-    //return authRegister.get().getUserInfo(personId);
+    return authRegister.get().getUserInfo(personId);
   }
 }

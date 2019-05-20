@@ -40,7 +40,8 @@ public class DbLoader {
     Long id = sequenceDao.get().proSeqNext();
 
     user( id,"1");
-    add_can("pushkin", UserCan.VIEW_USERS);
+    add_can("1", UserCan.VIEW_USERS);
+    add_can("1", UserCan.VIEW_ABOUT);
 
     parent(id, "1980-07-23", "1", "male");
     phone(id);

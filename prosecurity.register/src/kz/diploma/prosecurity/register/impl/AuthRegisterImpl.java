@@ -3,6 +3,7 @@ package kz.diploma.prosecurity.register.impl;
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
 import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
+import kz.diploma.prosecurity.controller.model.UserInfo;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
 import kz.diploma.prosecurity.register.dao.ParentDao;
@@ -68,5 +69,14 @@ public class AuthRegisterImpl implements AuthRegister {
   @Override
   public void deleteSession(String sessionId) {
     sessionService.get().removeSession(sessionId);
+  }
+
+
+  @Override
+  public UserInfo getUserInfo(Long personId) {
+    UserInfo ret = authDao.get().loadAccountInfo(personId).toUserInfo();
+    ret.cans.addAll(authDao.get().getUserCans(personId));
+    
+    return ret;
   }
 }
