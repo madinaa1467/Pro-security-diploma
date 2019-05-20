@@ -1,9 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Auth} from "..";
-import {USERNAME} from "../auth/auth.metadata";
-import {Storage} from "@ionic/storage";
-import {AccountInfo} from "../../model/auth/account-info";
-import {BehaviorSubject} from "../../../node_modules/rxjs";
 
 @Injectable()
 export class AppLoader {

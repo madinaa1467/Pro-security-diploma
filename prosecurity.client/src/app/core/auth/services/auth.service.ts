@@ -5,15 +5,17 @@
  */
 import {Injectable} from '@angular/core';
 
-import {Observable, of as observableOf} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {TokenService} from './token/token.service';
+import {switchMap} from "rxjs/internal/operators";
+import {HttpService} from "../../../http/services";
 
 
 @Injectable()
 export class AuthService {
 
-  constructor(protected tokenService: TokenService) {
+  constructor(private http: HttpService, private tokenService: TokenService) {
   }
 
   getToken(): Observable<string> {
@@ -34,26 +36,29 @@ export class AuthService {
       .pipe(map((token: string) => !!token));
   }
 
-  authenticate(string, data?: any): Observable<string> {
-    return this.getStrategy(strategyName).authenticate(data)
+  authenticate(credentials): Observable<string> {
+    return this.http.post('/auth/login', credentials, {responseType: 'text'})
+      .pipe(
+        switchMap((res: string) => {
+            return this.processResultToken(res)
+          }
+        )
+      );
+  }
+
+  register(data?: any): Observable<string> {
+    return null;
+    /*return this.getStrategy(strategyName).register(data)
       .pipe(
         switchMap((result: GgAuthResult) => {
           return this.processResultToken(result);
         }),
-      );
+      );*/
   }
 
-  register(data?: any): Observable<GgAuthResult> {
-    return this.getStrategy(strategyName).register(data)
-      .pipe(
-        switchMap((result: GgAuthResult) => {
-          return this.processResultToken(result);
-        }),
-      );
-  }
-
-  logout(): Observable<GgAuthResult> {
-    return this.getStrategy(strategyName).logout()
+  logout(): Observable<string> {
+    return null;
+    /*return this.getStrategy(strategyName).logout()
       .pipe(
         switchMap((result: GgAuthResult) => {
           if (result.isSuccess()) {
@@ -62,15 +67,17 @@ export class AuthService {
           }
           return observableOf(result);
         }),
-      );
+      );*/
   }
 
-  requestPassword(data?: any): Observable<GgAuthResult> {
-    return this.getStrategy(strategyName).requestPassword(data);
+  requestPassword(data?: any): Observable<string> {
+    return null;
+    //return this.getStrategy(strategyName).requestPassword(data);
   }
 
-  resetPassword(data?: any): Observable<GgAuthResult> {
-    return this.getStrategy(strategyName).resetPassword(data);
+  resetPassword(data?: any): Observable<string> {
+    return null;
+    //return this.getStrategy(strategyName).resetPassword(data);
   }
 
   private processResultToken(token: string) {

@@ -1,7 +1,7 @@
-import {CanIProvider} from "../security";
+import {CanIProvider} from "../../security/index";
 import {Observable} from "rxjs/Rx";
 import {Injectable} from "@angular/core";
-import {UserInfo, UserService} from "../core/data/users";
+import {UserInfo, UserService} from "../data/users";
 import {map} from "rxjs/internal/operators";
 
 @Injectable()

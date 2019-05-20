@@ -1,5 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthService} from "../../../core/auth/services";
+import {UserService} from "../../../core/data/users";
+import {catchError, map, switchMap} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-login',
@@ -8,33 +11,39 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-  redirectDelay: number = 0;
   showMessages: any = {};
-  strategy: string = '';
 
   errors: string[] = [];
-  messages: string[] = [];
   user: any = {};
   submitted: boolean = false;
-  rememberMe = false;
 
   constructor(private cd: ChangeDetectorRef,
-              private router: Router) { }
+              private router: Router,
+              private service: AuthService,
+              private userService: UserService) { }
 
   ngOnInit() {
-
-    /*this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
-    this.showMessages = this.getConfigValue('forms.login.showMessages');
-    this.strategy = this.getConfigValue('forms.login.strategy');
-    this.socialLinks = this.getConfigValue('forms.login.socialLinks');
-    this.rememberMe = this.getConfigValue('forms.login.rememberMe');*/
   }
 
   login(): void {
     this.errors = [];
-    this.messages = [];
     this.submitted = true;
-
+    this.service.authenticate(this.user).pipe(
+      switchMap(result => {
+        return this.userService.loadUserInfo().pipe(
+          map(() => result)
+        )
+      }),
+      catchError(err => {
+        console.error('err:', err);
+        this.errors.push(err.error);
+        this.cd.detectChanges();
+        return err;
+      })
+    ).subscribe(res => {
+      this.cd.detectChanges();
+      console.log('res:', res);
+    })
   }
 
   getConfigValue(key: string): any {

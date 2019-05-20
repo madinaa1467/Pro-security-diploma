@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {throwIfAlreadyLoaded} from "./module-import-guard";
 import {LayoutService} from "./utils";
@@ -7,7 +7,11 @@ import {SmartTableService} from "./mock/smart-table.service";
 import {UserInfoLocalStorage, UserInfoStorage, UserService} from "./data/users";
 import {AppLoaderService} from "./utils/app-loader.service";
 import {CanIProvider, SecurityModule} from "../security";
-import {CustomCanIProvider} from "../auth/can.i.provider";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthSimpleInterceptor} from "./auth/auth-simple-interceptor";
+import {AuthGuard} from "./auth/auth-guard.service";
+import {CustomCanIProvider} from "./auth";
+import {AuthService, TokenLocalStorage, TokenService, TokenStorage} from "./auth/services";
 
 export function initApp(appLoaderService: AppLoaderService) {
   return () => appLoaderService.initApp();
@@ -15,20 +19,22 @@ export function initApp(appLoaderService: AppLoaderService) {
 
 const DATA_SERVICES = [
   UserService,
+  AuthService,
+  TokenService,
   {provide: SmartTableData, useClass: SmartTableService},
   {provide: UserInfoStorage, useClass: UserInfoLocalStorage},
   {provide: CanIProvider, useClass: CustomCanIProvider},
+  {provide: TokenStorage, useClass: TokenLocalStorage},
 ];
 
 const NB_CORE_PROVIDERS = [
   ...DATA_SERVICES,
+  SecurityModule.forRoot().providers,
   LayoutService,
-  // TODO: asset 5/19/19 uncomment {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoaderService], multi: true},
-  // TODO: asset 5/19/19  AuthGuard
-  // TODO: asset 5/19/19  {provide: HTTP_INTERCEPTORS, useClass: AuthSimpleInterceptor, multi: true},
-  SecurityModule.forRoot()
-
-
+  AppLoaderService,
+  AuthGuard,
+  {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoaderService], multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: AuthSimpleInterceptor, multi: true},
 ];
 
 @NgModule({

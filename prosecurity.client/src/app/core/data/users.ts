@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../../gg-http/services";
 import {BehaviorSubject, Observable, of as observableOf} from "rxjs/index";
 import {filter, share} from "rxjs/operators";
 import {map, tap} from "rxjs/internal/operators";
+import {HttpService} from "../../http/services";
 
 export class UserInfo {
   public displayName: string;
