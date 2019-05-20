@@ -1,17 +1,11 @@
 package kz.diploma.prosecurity.server.beans;
 
-import kz.greetgo.depinject.core.Bean;
 import kz.diploma.prosecurity.controller.logging.LogIdentity;
+import kz.greetgo.depinject.core.Bean;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.EnumSet;
 
@@ -23,15 +17,31 @@ public class Utf8AndTraceResetFilter implements Filter {
   }
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
     throws IOException, ServletException {
+
+    if (!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse)) {
+      throw new ServletException(getClass().getSimpleName() + " can work only with HTTP protocol");
+    }
 
     LogIdentity.resetThread();
 
+    HttpServletRequest request = (HttpServletRequest) servletRequest;
+    HttpServletResponse response = (HttpServletResponse) servletResponse;
+
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
-    chain.doFilter(request, response);
 
+    response.addHeader("Access-Control-Allow-Credentials", "true");
+    response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+
+    response.addHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+    response.addHeader("Access-Control-Allow-Headers", "origin,x-requested-with,access-control-request-headers," +
+      "content-type,access-control-request-method,accept,token,set-cookie");
+    response.addHeader("Access-Control-Max-Age", "1800");
+    response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
+
+    chain.doFilter(request, response);
   }
 
   @Override

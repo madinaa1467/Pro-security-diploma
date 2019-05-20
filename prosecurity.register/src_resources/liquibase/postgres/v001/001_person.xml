@@ -6,7 +6,7 @@
   <changeSet author="pompei" id="create-table-user_params">
     <sql endDelimiter=";;"><![CDATA[
       create table user_params (
-        person_id varchar(30) not null,
+        person_id integer not null,
         name varchar(50) not null,
         value varchar(1000),
         primary key(person_id, name)
@@ -28,14 +28,15 @@
   <changeSet author="pompei" id="create-table-person">
     <sql endDelimiter=";;"><![CDATA[
       create table person (
-        id varchar(30) not null primary key,
+        id serial not null primary key,
         username varchar(100) not null,
+        email varchar(100) not null,
         surname varchar(255),
         name varchar(255),
         patronymic varchar(255),
-        birth_date date,
+        img varchar(30) null,
         encoded_password varchar(255),
-        blocked smallint not null default 1
+        actual integer
       )
     ]]></sql>
   </changeSet>
@@ -53,7 +54,7 @@
   <changeSet author="pompei" id="create-table-person_cans">
     <sql endDelimiter=";;"><![CDATA[
       create table person_cans (
-        person_id varchar(50) references person,
+        person_id integer references person,
         user_can varchar(50) references user_can,
         primary key(person_id, user_can)
       )

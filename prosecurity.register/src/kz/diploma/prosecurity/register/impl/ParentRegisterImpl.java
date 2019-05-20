@@ -9,6 +9,8 @@ import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
 import kz.diploma.prosecurity.register.dao.ParentDao;
+import kz.diploma.prosecurity.register.dao.PersonDao;
+import kz.diploma.prosecurity.register.dao.SequenceDao;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.security.password.PasswordEncoder;
@@ -21,21 +23,25 @@ import java.util.Objects;
 public class ParentRegisterImpl implements ParentRegister {
   public BeanGetter<PasswordEncoder> passwordEncoder;
   public BeanGetter<ParentDao> parentDao;
+  public BeanGetter<PersonDao> personDao;
 
   public BeanGetter<AuthRegister> authRegister;
   public BeanGetter<FileRegister> fileRegister;
+  public BeanGetter<SequenceDao> sequenceDao;
 
   @Override
   public Long register(ToSave toSave) {
     validateOnDuplicate(toSave);
 
+    toSave.id = sequenceDao.get().proSeqNext();
     toSave.password = passwordEncoder.get().encode(toSave.password);
-    Long parent = parentDao.get().insertParent(toSave);
-    for (Phone phone : toSave.phones) {
-      parentDao.get().upsertPhone(parent, phone);
-    }
 
-    return parent;
+    personDao.get().insertPerson(toSave);
+    parentDao.get().insertParent(toSave);
+    for (Phone phone : toSave.phones) {
+      parentDao.get().upsertPhone(toSave.id, phone);
+    }
+    return toSave.id;
   }
 
 
@@ -47,9 +53,10 @@ public class ParentRegisterImpl implements ParentRegister {
     /*String email = toSave.email;
     toSave.username = email.substring(0, email.indexOf('@'));*/
 
-    String oldImgId = parentDao.get().getImgIdById(toSave.id);
+    String oldImgId = personDao.get().getImgIdById(toSave.id);
 
     parentDao.get().upsertParent(toSave);
+    personDao.get().upsertPerson(toSave);
 
     this.parentDao.get().deactualPhone(id);
     for (Phone phone : toSave.phones) {
@@ -66,11 +73,11 @@ public class ParentRegisterImpl implements ParentRegister {
   private void validateOnDuplicate(ToSave toSave) throws ValidationError {
     List<ErrorMessage> errors = new ArrayList<>();
 
-    Long id = parentDao.get().getParentIdByUsername(toSave.username);
+    Long id = personDao.get().getPersonIdByUsername(toSave.username);
     if (id != null && !Objects.equals(toSave.id, id)) {
       errors.add(new ErrorMessage("username", "alreadyInUse"));
     }
-    id = parentDao.get().getParentIdByEmail(toSave.email);
+    id = personDao.get().getPersonIdByEmail(toSave.email);
     if (id != null && !Objects.equals(toSave.id, id)) {
       errors.add(new ErrorMessage("email", "alreadyInUse"));
     }
@@ -80,6 +87,7 @@ public class ParentRegisterImpl implements ParentRegister {
 
   @Override
   public void deleteParent(Long id) {
+    this.personDao.get().deactualPerson(id);
     this.parentDao.get().deactualParent(id);
     this.parentDao.get().deactualPhone(id);
   }
@@ -94,7 +102,7 @@ public class ParentRegisterImpl implements ParentRegister {
   @Override
   public void checkPassword(Long id, String oldPassword) {
     oldPassword = passwordEncoder.get().encode(oldPassword);
-    if (!Objects.equals(this.parentDao.get().checkPassword(id, oldPassword), id)) {
+    if (!Objects.equals(this.personDao.get().checkPassword(id, oldPassword), id)) {
       ErrorMessage errorMessage = new ErrorMessage("oldPassword", "notCorrect");
       throw new ValidationError(errorMessage);
     }
@@ -104,10 +112,9 @@ public class ParentRegisterImpl implements ParentRegister {
   @Override
   public boolean changePassword(Long id, String password) {
       password = passwordEncoder.get().encode(password);
-      if (Objects.equals(this.parentDao.get().changePassword(id, password), id))
+      if (Objects.equals(this.personDao.get().changePassword(id, password), id))
           return true;
       else
           return false;
-
   }
 }

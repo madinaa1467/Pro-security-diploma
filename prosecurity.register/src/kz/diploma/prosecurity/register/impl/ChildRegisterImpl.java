@@ -6,6 +6,7 @@ import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
+import kz.diploma.prosecurity.register.dao.SequenceDao;
 import kz.diploma.prosecurity.register.jdbc.ChildEventList;
 import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
 import kz.greetgo.db.Jdbc;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Bean
 public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<ChildDao> childDao;
+  public BeanGetter<SequenceDao> sequenceDao;
   public BeanGetter<Jdbc> jdbc;
   public BeanGetter<FileRegister> fileRegister;
 
@@ -88,7 +90,7 @@ public class ChildRegisterImpl implements ChildRegister {
 
       return flag;
     } else {
-      childToSave.id = childDao.get().proSeqNext();
+      childToSave.id = sequenceDao.get().proSeqNext();
       this.childDao.get().insertChild(childToSave);
       this.childDao.get().upsertParentChild(parentId, childToSave.id, childToSave.notification, 1);
       return true;

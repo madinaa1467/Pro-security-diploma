@@ -10,39 +10,26 @@ import org.apache.ibatis.annotations.Update;
 
 public interface ParentDao {
 
-  @Select("select * from parent where username = #{username} and actual = 1")
-  PersonLogin selectByUsername(@Param("username") String username);
-
-
-  @Select("select * from parent where id = #{id} and actual = 1")
+  @Select("select parent.id, person.username, person.surname, person.name, person.patronymic," +
+    " parent.gender, parent.birth_date as birthDate, person.email" +
+    " from parent, person where parent.id = #{id} and person.id = parent.id" +
+    " and parent.actual = 1 and person.actual = 1")
   ToSave getInfo(@Param("id") Long id);
 
   @Select("select * from parent_phone where parent = #{parent} and actual = 1")
   Phone[] getPhones(@Param("parent") Long parent);
 
-  @Select("with parent as (insert into parent (id, email, username, encoded_password, surname, name, patronymic, " +
-    "gender, birth_date, actual) " +
-    "values (nextval('pro_seq'), #{toSave.email}, #{toSave.username}, #{toSave.password}, #{toSave.surname}, #{toSave" +
-    ".name}, #{toSave.patronymic}, " +
-    "#{toSave.gender}, #{toSave.birthDate}, 1 )" +
-    "returning id)\n" +
-    "select * from parent")
-  Long insertParent(@Param("toSave") ToSave toSave);
+  @Select("insert into parent (id, gender, birth_date, actual) " +
+    "values (#{toSave.id}, #{toSave.gender}, #{toSave.birthDate}, 1)")
+  void insertParent(@Param("toSave") ToSave toSave);
 
   //todo убрать returing если не нужно будет
-  @Insert("insert into parent (id, img, username, surname, name, patronymic, gender, birth_date, email, actual)" +
-    "values (#{toSave.id}, #{toSave.img}, #{toSave.username}, #{toSave.surname}, #{toSave.name}, #{toSave" +
-    ".patronymic}, " +
-    "#{toSave.gender}, #{toSave.birthDate}, #{toSave.email}, 1)" +
+  @Insert("insert into parent (id, gender, birth_date, actual)" +
+    "values (#{toSave.id}," +
+    "#{toSave.gender}, #{toSave.birthDate}, 1)" +
     "on conflict (id) do update set\n" +
-          "  img = excluded.img,\n" +
-    "  username = excluded.username,\n" +
-    "  surname = excluded.surname,\n" +
-    "  name = excluded.name,\n" +
-    "  patronymic = excluded.patronymic,\n" +
     "  gender = excluded.gender,\n" +
     "  birth_date = excluded.birth_date,\n" +
-    "  email = excluded.email,\n" +
     "  actual = excluded.actual\n" +
     "    returning id;")
   Long upsertParent(@Param("toSave") ToSave toSave);
@@ -56,26 +43,11 @@ public interface ParentDao {
                    @Param("phone") Phone phone);
 
 
-    @Update("update parent_phone set actual = 0 where parent " +
-            "= #{parent}")
-    void deactualPhone(@Param("parent") Long parent);
+  @Update("update parent_phone set actual = 0 where parent " +
+    "= #{parent}")
+  void deactualPhone(@Param("parent") Long parent);
 
-    @Update("update parent set actual = 0 where id = #{id};")
-    void deactualParent(@Param("id") Long id);
+  @Update("update parent set actual = 0 where id = #{id};")
+  void deactualParent(@Param("id") Long id);
 
-  @Select("select id from parent where email=#{email} limit 1")
-  Long getParentIdByEmail(@Param("email") String email);
-
-  @Select("select id from parent where username=#{username} limit 1")
-  Long getParentIdByUsername(@Param("username") String username);
-
-  @Select("select id from parent where id = #{id} and encoded_password =#{encoded_password};")
-  Long checkPassword(@Param("id") Long id, @Param("encoded_password") String encoded_password);
-
-  @Select("update parent set encoded_password = #{encoded_password} where id \n" +
-    "= #{id} returning id;")
-  Long changePassword(@Param("id") Long id, @Param("encoded_password") String encoded_password);
-
-  @Select("select img from parent where id=#{id}")
-  String getImgIdById(@Param("id") Long id);
 }
