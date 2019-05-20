@@ -59,9 +59,7 @@ export class AuthService {
   logout(): Observable<any> {
     // TODO: msultanova 5/20/19 internet connection
     return this.http.get('/auth/exit').pipe(
-      switchMap(() => {
-        return this.tokenService.clear();
-      })
+      switchMap(() => this.tokenService.clear())
     );
   }
 
