@@ -1,10 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from "./core/auth";
 
 const routes: Routes = [
-  {path: '', redirectTo: 'auth', pathMatch: 'full'},
+  {path: '', redirectTo: 'pages', pathMatch: 'full'},
   {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
-  {path: 'pages', loadChildren: './pages/pages.module#PagesModule'},
+  {
+    path: 'pages',
+    canActivate: [AuthGuard],
+    loadChildren: './pages/pages.module#PagesModule'
+  },
 ];
 
 @NgModule({

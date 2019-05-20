@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NbMenuService, NbSidebarService} from "@nebular/theme";
 import {LayoutService} from "../../../core/utils";
+import {UserInfo, UserService} from "../../../core/data/users";
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,14 @@ export class HeaderComponent implements OnInit {
 
   user: any;
 
-  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+  userMenu = [
+    {
+      title: 'Profile'
+    },
+    {
+      title: 'Log out',
+      link: '/auth/logout',
+    }];
 
   sidebarEnd = false;
   expanded = false;
@@ -21,12 +29,17 @@ export class HeaderComponent implements OnInit {
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
-              // TODO: asset 5/14/19   private userService: UserData,
+              private userService: UserService,
               private layoutService: LayoutService) { }
 
   ngOnInit() {
-    //todo here must be userService to get user
-    this.user = {name: 'Vasya Pupkin', picture: 'assets/images/nick.png'};
+    //this.user = {name: 'Vasya Pupkin', picture: 'assets/images/nick.png'};
+    this.userService.getUserInfo().subscribe((userInfo: UserInfo) => {
+      this.user = {
+        name: userInfo.displayName,
+        picture: 'assets/images/nick.png'
+      };
+    })
   }
 
   toggleSidebar(): boolean {

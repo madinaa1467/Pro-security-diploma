@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
       })
     ).subscribe(res => {
       this.submitted = false;
+
+      this.router.navigateByUrl("/pages");
       this.cd.detectChanges();
     })
   }
