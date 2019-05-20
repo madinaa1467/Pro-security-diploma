@@ -28,7 +28,6 @@ export class AuthSimpleInterceptor implements HttpInterceptor {
       }),
       catchError(err => {
         if (err.status === 401) this.router.navigateByUrl('/auth/logout');
-
         return _throw(err);
       })
     );

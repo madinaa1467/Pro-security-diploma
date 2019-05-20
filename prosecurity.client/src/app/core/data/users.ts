@@ -78,6 +78,12 @@ export class UserService {
     );
   }
 
+  clear(): Observable<null> {
+    this.userInfoStorage.clear();
+    this.publishStoredUserInfo();
+    return observableOf(null);
+  }
+
   protected publishStoredUserInfo() {
     this.userInfo$.next(this.userInfoStorage.get());
   }

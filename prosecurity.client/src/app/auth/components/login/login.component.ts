@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.errors = [];
     this.submitted = true;
+    // TODO: msultanova 5/20/19 future tips add AuthResult.ts for correct password strategy
     this.service.authenticate(this.user).pipe(
       switchMap(result => {
         return this.userService.loadUserInfo().pipe(
@@ -35,14 +36,14 @@ export class LoginComponent implements OnInit {
         )
       }),
       catchError(err => {
-        console.error('err:', err);
+        this.submitted = false;
         this.errors.push(err.error);
         this.cd.detectChanges();
         return err;
       })
     ).subscribe(res => {
+      this.submitted = false;
       this.cd.detectChanges();
-      console.log('res:', res);
     })
   }
 

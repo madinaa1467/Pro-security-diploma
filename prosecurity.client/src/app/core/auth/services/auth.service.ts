@@ -5,11 +5,11 @@
  */
 import {Injectable} from '@angular/core';
 
-import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TokenService} from './token/token.service';
 import {switchMap} from "rxjs/internal/operators";
 import {HttpService} from "../../../http/services";
+import {Observable} from 'rxjs';
 
 
 @Injectable()
@@ -56,18 +56,13 @@ export class AuthService {
       );*/
   }
 
-  logout(): Observable<string> {
-    return null;
-    /*return this.getStrategy(strategyName).logout()
-      .pipe(
-        switchMap((result: GgAuthResult) => {
-          if (result.isSuccess()) {
-            this.tokenService.clear()
-              .pipe(map(() => result));
-          }
-          return observableOf(result);
-        }),
-      );*/
+  logout(): Observable<any> {
+    // TODO: msultanova 5/20/19 internet connection
+    return this.http.get('/auth/exit').pipe(
+      switchMap(() => {
+        return this.tokenService.clear();
+      })
+    );
   }
 
   requestPassword(data?: any): Observable<string> {

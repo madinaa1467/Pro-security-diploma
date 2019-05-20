@@ -1,14 +1,15 @@
 package kz.diploma.prosecurity.controller.controller;
 
 import kz.diploma.prosecurity.controller.model.AccountInfo;
+import kz.diploma.prosecurity.controller.model.UserInfo;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
 import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.SESSION_ID;
 import kz.diploma.prosecurity.controller.util.ProSecurityViews;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
-import kz.greetgo.file_storage.FileStorage;
 import kz.greetgo.mvc.annotations.AsIs;
 import kz.greetgo.mvc.annotations.Par;
 import kz.greetgo.mvc.annotations.ParSession;
@@ -18,6 +19,8 @@ import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
 import kz.greetgo.mvc.interfaces.TunnelCookies;
 import kz.greetgo.security.session.SessionIdentity;
+
+import java.util.HashSet;
 
 /**
  * как составлять контроллеры написано
@@ -63,11 +66,18 @@ public class AuthController implements Controller {
   @AsIs
   @PublicAccess
   @OnGet("/exit")
-  public void exit(@ParSession("sessionId") String sessionId, TunnelCookies cookies) {
+  public void exit(@ParSession(SESSION_ID) String sessionId, TunnelCookies cookies) {
     authRegister.get().deleteSession(sessionId);
 
     cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")
       .remove();
+  }
+
+  @ToJson
+  @OnGet("/user-info")
+  public UserInfo userInfo(@ParSession(PARENT_ID) Long personId) {
+    return new UserInfo("Vasilisa Pupkina", "vasilisa1998", new HashSet<>());
+    //return authRegister.get().getUserInfo(personId);
   }
 }
