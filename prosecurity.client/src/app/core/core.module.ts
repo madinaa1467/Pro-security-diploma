@@ -13,6 +13,8 @@ import {AuthGuard} from "./auth/auth-guard.service";
 import {CustomCanIProvider} from "./auth";
 import {AuthService, TokenLocalStorage, TokenService, TokenStorage} from "./auth/services";
 import {SampleGuard} from "./guards";
+import {UserActivityData, UserActivityService} from "./data/user-activity";
+import {PeriodsService} from "./data/periods.service";
 
 export function initApp(appLoaderService: AppLoaderService) {
   return () => appLoaderService.initApp();
@@ -26,6 +28,8 @@ const DATA_SERVICES = [
   {provide: UserInfoStorage, useClass: UserInfoLocalStorage},
   {provide: CanIProvider, useClass: CustomCanIProvider},
   {provide: TokenStorage, useClass: TokenLocalStorage},
+  // TODO: msultanova 5/21/19 fake data should be removed
+  {provide: UserActivityData, useClass: UserActivityService},
 ];
 
 const NB_CORE_PROVIDERS = [
@@ -34,8 +38,9 @@ const NB_CORE_PROVIDERS = [
   LayoutService,
   AppLoaderService,
   AuthGuard,
-
+  // TODO: asset 5/21/19 should be removed
   SampleGuard,
+  PeriodsService,
 
   {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoaderService], multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: AuthSimpleInterceptor, multi: true},

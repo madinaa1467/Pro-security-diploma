@@ -1,59 +1,142 @@
 @import "../../styles/themes";
+@import '~@nebular/theme/styles/global/typography/typography';
 
 @include nb-install-component() {
-  h6 {
-    margin-bottom: 0.875rem;
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 0 0 8px rgba(0, 0, 0, 0.16);
+
+  nb-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
   }
 
   nb-card-body {
-    display: flex;
-    flex-direction: column;
     padding: 0;
   }
 
-  .picture {
-    padding-top: 1.5em;
+  .dropdown {
+    min-width: 100px;
+  }
+
+  .user-activity-list {
+    padding: 0;
+    margin: 0;
+  }
+
+  .user-activity-list li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     position: relative;
-    background-position: center;
-    border-top-left-radius: nb-theme(card-border-radius);
-    border-top-right-radius: nb-theme(card-border-radius);
-    flex: 0.5;
+    color: nb-theme(color-fg);
+    padding: nb-theme(card-padding);
+    border-bottom: nb-theme(list-item-border-width) nb-theme(card-header-border-type) nb-theme(separator);
+
+    &:first-child {
+      border-top: nb-theme(list-item-border-width) nb-theme(card-header-border-type) nb-theme(separator);
+    }
+
+    &:hover {
+      background-color: nb-theme(layout-bg);
+
+      &::before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 6px;
+        left: 0;
+        top: 0;
+        background-color: nb-theme(color-success);
+        border-radius: nb-theme(radius);
+      }
+    }
   }
-  .no-profile {
-    background-size: 100% 100%;
-    margin: auto;
-    width: 75%;
-    height: 100%;
-    background-image: url("../../../../assets/images/noProfileImg.png");
+
+  .visited-date,
+  .value,
+  .title {
+    font-size: 1.25rem;
   }
 
-  .details {
-    padding: 1.25rem 1.25rem 0;
+  .visited-date {
+    color: nb-theme(color-fg-heading);
 
-    .title {
-      font-family: nb-theme(font-secondary);
-      font-weight: nb-theme(font-weight-bold);
-      color: nb-theme(color-fg-heading);
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+    @include nb-for-theme(cosmic) {
+      color: nb-theme(color-fg);
+    }
+  }
 
-      @include nb-for-theme(cosmic) {
-        font-weight: nb-theme(font-weight-bolder);
+  .title {
+    font-size: 1rem;
+  }
+
+  .value {
+    margin-top: 0.5rem;
+    color: nb-theme(color-success);
+  }
+
+  .delta {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &::before {
+      content: '';
+      right: 100%;
+      margin-right: 0.7rem;
+      @include nb-rtl(margin-right, 0);
+      @include nb-rtl(margin-left, 0.7rem);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+    }
+
+    &.down {
+      color: text-danger();
+
+      &::before {
+        border-top: 6px solid text-danger();
       }
     }
 
-    .description {
-      text-align: justify;
-      color: nb-theme(color-fg-text);
-      font-weight: nb-theme(font-weight-light);
+    &.up {
+      color: text-success();
 
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-height: calc(1rem * 8 * #{nb-theme(line-height)});
+      &::before {
+        border-bottom: 6px solid text-success();
+      }
     }
   }
 
+  @include nb-for-theme(corporate) {
+    .user-activity-list li {
+      border-color: nb-theme(tabs-separator);
+
+      &:first-child {
+        border-color: nb-theme(tabs-separator);
+      }
+
+      &:hover {
+        &::before {
+          background-color: nb-theme(color-primary);
+        }
+      }
+    }
+
+    .visited-pages-count {
+      .value {
+        color: nb-theme(color-fg-heading);
+      }
+    }
+
+    .delta {
+      &.up {
+        color: text-primary();
+
+        &::before {
+          border-bottom-color: text-primary();
+        }
+      }
+    }
+  }
 }
