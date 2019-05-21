@@ -1,7 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
-import {NbThemeService} from "@nebular/theme";
+import {RecentUsers, UserService} from "../../../core/data/users";
 import {takeWhile} from "rxjs/internal/operators";
-import {UserActive, UserActivityData} from "../../../core/data/user-activity";
 
 @Component({
   selector: 'app-recent-event',
@@ -11,24 +10,25 @@ import {UserActive, UserActivityData} from "../../../core/data/user-activity";
 export class RecentEventComponent implements OnDestroy {
   private alive = true;
 
-  userActivity: UserActive[] = [];
+  recent: any[];
+
   type = 'month';
   types = ['week', 'month', 'year'];
-  currentTheme: string;
 
-  constructor(private themeService: NbThemeService,
-              private userActivityService: UserActivityData) {
-    this.currentTheme = 'corporate'
+  constructor(private userService: UserService) {
+    this.userService.getRecentUsers()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((recent: RecentUsers[]) => this.recent = recent);
 
-    this.getUserActivity(this.type);
   }
 
   getUserActivity(period: string) {
-    this.userActivityService.getUserActivityData(period)
+    console.log('period:', period);
+    /*this.userActivityService.getUserActivityData(period)
       .pipe(takeWhile(() => this.alive))
       .subscribe(userActivityData => {
         this.userActivity = userActivityData;
-      });
+      });*/
   }
 
   ngOnDestroy() {

@@ -17,7 +17,12 @@
   </nb-card-header>
   <nb-card-body>
     <ul class="user-activity-list">
-      <li *ngFor="let item of userActivity">
+      <li *ngFor="let c of recent">
+        <nb-user [picture]="c.user.picture" [name]="c.user.name" [title]="c.type" size="large"></nb-user>
+        <span class="time">{{ c.time | date: 'shortTime' }}</span>
+      </li>
+
+      <!--<li *ngFor="let item of userActivity">
         <div class="visited-date">
           {{ item.date }}
         </div>
@@ -33,7 +38,9 @@
             {{ item.newVisits }}%
           </div>
         </div>
-      </li>
+      </li>-->
+
+
     </ul>
   </nb-card-body>
 </nb-card>

@@ -53,61 +53,6 @@
     }
   }
 
-  .visited-date,
-  .value,
-  .title {
-    font-size: 1.25rem;
-  }
-
-  .visited-date {
-    color: nb-theme(color-fg-heading);
-
-    @include nb-for-theme(cosmic) {
-      color: nb-theme(color-fg);
-    }
-  }
-
-  .title {
-    font-size: 1rem;
-  }
-
-  .value {
-    margin-top: 0.5rem;
-    color: nb-theme(color-success);
-  }
-
-  .delta {
-    display: flex;
-    align-items: center;
-    position: relative;
-
-    &::before {
-      content: '';
-      right: 100%;
-      margin-right: 0.7rem;
-      @include nb-rtl(margin-right, 0);
-      @include nb-rtl(margin-left, 0.7rem);
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-    }
-
-    &.down {
-      color: text-danger();
-
-      &::before {
-        border-top: 6px solid text-danger();
-      }
-    }
-
-    &.up {
-      color: text-success();
-
-      &::before {
-        border-bottom: 6px solid text-success();
-      }
-    }
-  }
-
   @include nb-for-theme(corporate) {
     .user-activity-list li {
       border-color: nb-theme(tabs-separator);
@@ -122,21 +67,35 @@
         }
       }
     }
+  }
 
-    .visited-pages-count {
-      .value {
-        color: nb-theme(color-fg-heading);
+  .time {
+    font-size: 0.875rem;
+    font-weight: nb-theme(font-weight-light);
+    text-transform: uppercase;
+  }
+
+  nb-user /deep/ {
+    .info-container {
+      @include nb-ltr(margin-left, 0.875rem);
+      @include nb-rtl(margin-right, 0.875rem);
+    }
+
+    .user-name {
+      font-family: nb-theme(font-secondary);
+      font-weight: nb-theme(font-weight-bold);
+      color: nb-theme(color-fg-heading);
+      font-size: 1.25rem;
+
+      @include nb-for-theme(cosmic) {
+        font-weight: nb-theme(font-weight-bolder);
       }
     }
 
-    .delta {
-      &.up {
-        color: text-primary();
-
-        &::before {
-          border-bottom-color: text-primary();
-        }
-      }
+    .user-title {
+      font-size: 0.875rem;
+      font-weight: nb-theme(font-weight-light);
+      text-transform: uppercase;
     }
   }
 }
