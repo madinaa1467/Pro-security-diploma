@@ -3,7 +3,7 @@
     <app-header></app-header>
   </nb-layout-header>
 
-  <nb-sidebar class="menu-sidebar"
+  <nb-sidebar *canI="['VIEW_MENU']" class="menu-sidebar"
               [tag]="tag"
               responsive
               [end]="sideBarEnd">

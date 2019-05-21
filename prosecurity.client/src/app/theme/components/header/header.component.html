@@ -1,7 +1,7 @@
 <div class="header-container"
      [class.left]="position === 'normal'">
   <div class="logo-containter">
-    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <a *canI="['VIEW_MENU']" (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
     <div class="logo" (click)="goToHome()">Pro<span>-Security</span></div>
   </div>
 </div>

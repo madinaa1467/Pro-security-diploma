@@ -41,11 +41,9 @@ public class DbLoader {
 
     {
       user(id, "1");
-      add_can("1", UserCan.VIEW_PARENT);
-      add_can("1", UserCan.VIEW_CHILD);
-      add_can("1", UserCan.VIEW_EVENT_LIST);
-      add_can("1", UserCan.VIEW_EDIT_MODERATOR);
-      add_can("1", UserCan.VIEW_CREATE_MODERATOR);
+      for (UserCan can : UserCan.values()) {
+        add_can("1", can);
+      }
     }
     {
       user(sequenceDao.get().proSeqNext(), "user");
