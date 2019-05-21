@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PagesComponent} from "./pages.component";
+import {SampleGuard} from "../core/guards/sample-guard.service";
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
       {
         path: 'history',
         loadChildren: './history/history.module#HistoryModule',
+      },
+      {
+        path: 'sample',
+        canActivate: [SampleGuard],
+        loadChildren: './sample/sample.module#SampleModule',
       },
     ]
   }

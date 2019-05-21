@@ -11,10 +11,7 @@ export class CustomCanIProvider implements CanIProvider {
 
   getCans(): Observable<Set<string>> {
     return this.userService.userInfoChange().pipe(
-      map((userInfo: UserInfo) => {
-        console.log('userInfo:', userInfo);
-        return userInfo.cans;
-      })
+      map((userInfo: UserInfo) => userInfo.cans)
     );
   }
 }

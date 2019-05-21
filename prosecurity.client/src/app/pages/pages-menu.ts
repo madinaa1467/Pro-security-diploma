@@ -9,17 +9,17 @@ export const MENU_ITEMS: MenuItem[] = [
     title: 'Profile',
     icon: 'nb-grid-b',
     link: '/pages/profile',
-    permission: "ASD"
+    permission: ["VIEW_PARENT", "VIEW_EDIT_MODERATOR"]
   },
   {
     title: 'History',
     icon: 'nb-grid-b',
     link: '/pages/history',
     home: true,
-    permission: "VIEW_USERS"
+    permission: "VIEW_EVENT_LIST"
   },
   {
-    title: 'Sdsd',
+    title: 'No permission',
     icon: 'nb-grid-b',
     link: '/pages/profile'
   },

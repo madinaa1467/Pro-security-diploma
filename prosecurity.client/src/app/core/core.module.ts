@@ -12,6 +12,7 @@ import {AuthSimpleInterceptor} from "./auth/auth-simple-interceptor";
 import {AuthGuard} from "./auth/auth-guard.service";
 import {CustomCanIProvider} from "./auth";
 import {AuthService, TokenLocalStorage, TokenService, TokenStorage} from "./auth/services";
+import {SampleGuard} from "./guards";
 
 export function initApp(appLoaderService: AppLoaderService) {
   return () => appLoaderService.initApp();
@@ -33,6 +34,9 @@ const NB_CORE_PROVIDERS = [
   LayoutService,
   AppLoaderService,
   AuthGuard,
+
+  SampleGuard,
+
   {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoaderService], multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: AuthSimpleInterceptor, multi: true},
 ];

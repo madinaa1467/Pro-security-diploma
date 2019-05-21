@@ -39,9 +39,21 @@ public class DbLoader {
 
     Long id = sequenceDao.get().proSeqNext();
 
-    user( id,"1");
-    add_can("1", UserCan.VIEW_USERS);
-    add_can("1", UserCan.VIEW_ABOUT);
+    {
+      user(id, "1");
+      add_can("1", UserCan.VIEW_PARENT);
+      add_can("1", UserCan.VIEW_CHILD);
+      add_can("1", UserCan.VIEW_EVENT_LIST);
+      add_can("1", UserCan.VIEW_EDIT_MODERATOR);
+      add_can("1", UserCan.VIEW_CREATE_MODERATOR);
+    }
+    {
+      user(sequenceDao.get().proSeqNext(), "user");
+      add_can("user", UserCan.VIEW_PARENT);
+      add_can("user", UserCan.VIEW_CHILD);
+      add_can("user", UserCan.VIEW_EVENT_LIST);
+    }
+
 
     parent(id, "1980-07-23", "1", "male");
     phone(id);

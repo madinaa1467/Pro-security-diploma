@@ -3,10 +3,10 @@ package kz.diploma.prosecurity.controller.model;
 
 
 public enum UserCan {
-  VIEW_USERS,
-  VIEW_ABOUT,
-  ;
-
-  //The following code would be not removed after regenerating
-  ///LEAVE_FURTHER
+  VIEW_PARENT,
+  VIEW_CHILD,
+  VIEW_RECENT_EVENT_LIST,
+  VIEW_EVENT_LIST,
+  VIEW_EDIT_MODERATOR,
+  VIEW_CREATE_MODERATOR
 }

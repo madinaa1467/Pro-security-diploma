@@ -18,7 +18,7 @@
     <app-footer></app-footer>
   </nb-layout-footer>
 
-  <nb-sidebar class="settings-sidebar"
+  <nb-sidebar *canI="['VIEW_RECENT_EVENT_LIST']" class="settings-sidebar"
               tag="settings-sidebar"
               state="collapsed"
               fixed
