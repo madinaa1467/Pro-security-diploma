@@ -2,7 +2,6 @@ package kz.diploma.prosecurity.register.dao;
 
 import kz.diploma.prosecurity.controller.model.Phone;
 import kz.diploma.prosecurity.controller.model.ToSave;
-import kz.diploma.prosecurity.register.model.PersonLogin;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -10,7 +9,7 @@ import org.apache.ibatis.annotations.Update;
 
 public interface ParentDao {
 
-  @Select("select parent.id, person.username, person.surname, person.name, person.patronymic," +
+  @Select("select parent.id, person.username, person.surname, person.name, person.patronymic, person.img," +
     " parent.gender, parent.birth_date as birthDate, person.email" +
     " from parent, person where parent.id = #{id} and person.id = parent.id" +
     " and parent.actual = 1 and person.actual = 1")

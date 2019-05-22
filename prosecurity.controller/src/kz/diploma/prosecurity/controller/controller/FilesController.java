@@ -15,7 +15,6 @@ import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
 import kz.greetgo.mvc.interfaces.RequestTunnel;
-import kz.greetgo.mvc.util.MimeUtil;
 
 import java.io.IOException;
 
@@ -32,7 +31,6 @@ public class FilesController implements Controller {
     return fileRegister.get().save(file, isLast);
   }
 
-  @PublicAccess
   @OnGet("/get")
   public void get(@Par("fileId") String fileId, RequestTunnel tunnel) throws IOException {
     FileDataReader file = fileRegister.get().getFile(fileId);

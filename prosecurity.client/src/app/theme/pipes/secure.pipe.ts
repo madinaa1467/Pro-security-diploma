@@ -1,7 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {FileService} from "../../core/utils";
-import {map} from "rxjs/internal/operators";
-import {of as observableOf} from "rxjs";
 import {isNullOrUndefined} from "util";
 
 @Pipe({
@@ -11,19 +9,20 @@ export class SecurePipe implements PipeTransform {
   constructor(private fileService: FileService) {}
 
   transform(fileId: string) {
-    if (isNullOrUndefined(fileId)) return observableOf(null);
+    return new Promise((resolve, reject) => {
+      if (isNullOrUndefined(fileId)) {
+        resolve(null);
+        return;
+      }
 
-    return this.fileService.load(fileId).pipe(
-      map(res => {
-        let source = null;
-
-        const reader = new FileReader();
-        reader.onloadend = () => source = reader.result;
-        reader.readAsDataURL(res);
-
-        return source;
-      })
-    );
+      this.fileService.load(fileId).toPromise()
+        .then(response => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(response);
+        })
+        .catch(err => reject(err));
+    });
   }
 
 }
