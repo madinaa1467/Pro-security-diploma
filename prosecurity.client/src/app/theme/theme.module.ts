@@ -22,7 +22,6 @@ import {
 import {CORPORATE_THEME} from "./styles/theme.corporate";
 import {PageLayoutComponent} from "./layouts";
 import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsButtonComponent} from "./components";
-import {NotificationsComponent} from './components/notifications/notifications.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security";
 import {SecurePipe} from './pipes/secure.pipe';
@@ -53,7 +52,7 @@ const NB_MODULES = [
 
 ];
 
-const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent, NotificationsComponent];
+const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
 
 const ENTRY_COMPONENTS = [];
 
