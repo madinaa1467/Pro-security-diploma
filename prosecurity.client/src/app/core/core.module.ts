@@ -1,11 +1,10 @@
 import {APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {throwIfAlreadyLoaded} from "./module-import-guard";
-import {LayoutService} from "./utils";
+import {AppLoaderService, FileService, LayoutService} from "./utils";
 import {SmartTableData} from "./data/smart-table";
 import {SmartTableService} from "./mock/smart-table.service";
 import {UserInfoLocalStorage, UserInfoStorage, UserService} from "./data/users";
-import {AppLoaderService} from "./utils/app-loader.service";
 import {CanIProvider, SecurityModule} from "../security";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthSimpleInterceptor} from "./auth/auth-simple-interceptor";
@@ -37,7 +36,9 @@ const NB_CORE_PROVIDERS = [
   SecurityModule.forRoot().providers,
   LayoutService,
   AppLoaderService,
+  FileService,
   AuthGuard,
+
   // TODO: asset 5/21/19 should be removed
   SampleGuard,
   PeriodsService,

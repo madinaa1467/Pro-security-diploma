@@ -25,6 +25,7 @@ import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsBu
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security";
+import {SecurePipe} from './pipes/secure.pipe';
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -73,7 +74,7 @@ const NB_THEME_PROVIDERS = [
 @NgModule({
   imports: [...BASE_MODULES, ...NB_MODULES],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
-  declarations: [...COMPONENTS, NotificationsComponent],
+  declarations: [...COMPONENTS, NotificationsComponent, SecurePipe],
   entryComponents: [...ENTRY_COMPONENTS]
 })
 export class ThemeModule {

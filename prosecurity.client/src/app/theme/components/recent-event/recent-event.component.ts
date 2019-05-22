@@ -10,6 +10,7 @@ import {takeWhile} from "rxjs/internal/operators";
 export class RecentEventComponent implements OnDestroy {
   private alive = true;
 
+  placeholder: string = 'assets/images/unknown.png';
   recent: any[];
 
   type = 'month';
