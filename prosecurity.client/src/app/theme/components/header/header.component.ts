@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NbMenuService, NbSidebarService} from "@nebular/theme";
 import {LayoutService} from "../../../core/utils";
-import {UserInfo, UserService} from "../../../core/data/users";
+import {UserCan, UserInfo, UserService} from "../../../core/data/users";
 
 @Component({
   selector: 'app-header',
@@ -11,6 +11,8 @@ import {UserInfo, UserService} from "../../../core/data/users";
 export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
+  VIEW_MENU: UserCan = UserCan.VIEW_MENU;
+  VIEW_RECENT_EVENT_LIST: UserCan = UserCan.VIEW_RECENT_EVENT_LIST;
 
   user: any;
 

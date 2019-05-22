@@ -7,6 +7,7 @@ import {
   NbThemeService
 } from "@nebular/theme";
 import {delay, takeWhile, withLatestFrom} from "rxjs/internal/operators";
+import {UserCan} from "../../../core/data/users";
 
 @Component({
   selector: 'app-page-layout',
@@ -14,6 +15,9 @@ import {delay, takeWhile, withLatestFrom} from "rxjs/internal/operators";
   templateUrl: './page.layout.html',
 })
 export class PageLayoutComponent implements OnDestroy {
+
+  VIEW_MENU: UserCan = UserCan.VIEW_MENU;
+  VIEW_RECENT_EVENT_LIST: UserCan = UserCan.VIEW_RECENT_EVENT_LIST;
 
   sideBarEnd: boolean = false;
   tag: string = 'menu-sidebar';

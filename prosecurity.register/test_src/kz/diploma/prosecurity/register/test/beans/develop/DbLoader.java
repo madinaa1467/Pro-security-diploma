@@ -40,18 +40,30 @@ public class DbLoader {
     Long id = sequenceDao.get().proSeqNext();
 
     {
+      user(id, "all");
+      for (UserCan can : UserCan.values()) {
+        add_can("all", can);
+      }
+    }
+    {
+      user(sequenceDao.get().proSeqNext(), "admin");
+      add_can("admin", UserCan.ADMIN);
+    }
+    {
+      user(sequenceDao.get().proSeqNext(), "user");
+      add_can("user", UserCan.USER);
+    }
+    {
+      user(sequenceDao.get().proSeqNext(), "moderator");
+      add_can("moderator", UserCan.MODERATOR);
+    }
+
+    {
       user(id, "1");
       for (UserCan can : UserCan.values()) {
         add_can("1", can);
       }
     }
-    {
-      user(sequenceDao.get().proSeqNext(), "user");
-      add_can("user", UserCan.VIEW_PARENT);
-      add_can("user", UserCan.VIEW_CHILD);
-      add_can("user", UserCan.VIEW_EVENT_LIST);
-    }
-
 
     parent(id, "1980-07-23", "1", "male");
     phone(id);

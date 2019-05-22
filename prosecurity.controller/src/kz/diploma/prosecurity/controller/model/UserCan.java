@@ -3,6 +3,11 @@ package kz.diploma.prosecurity.controller.model;
 
 
 public enum UserCan {
+  USER,
+  MODERATOR,
+  ADMIN,
+
+  //TODO remove
   VIEW_PARENT,
   VIEW_CHILD,
   VIEW_MENU,
