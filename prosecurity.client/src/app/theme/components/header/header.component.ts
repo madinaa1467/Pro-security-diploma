@@ -11,8 +11,11 @@ import {UserCan, UserInfo, UserService} from "../../../core/data/users";
 export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
+
   VIEW_MENU: UserCan = UserCan.VIEW_MENU;
   VIEW_RECENT_EVENT_LIST: UserCan = UserCan.VIEW_RECENT_EVENT_LIST;
+
+  placeholder: string = 'assets/images/unknown.png';
 
   user: any;
 
@@ -39,7 +42,7 @@ export class HeaderComponent implements OnInit {
     this.userService.getUserInfo().subscribe((userInfo: UserInfo) => {
       this.user = {
         name: userInfo.displayName,
-        picture: 'assets/images/nick.png'
+        img: userInfo.img
       };
     })
   }

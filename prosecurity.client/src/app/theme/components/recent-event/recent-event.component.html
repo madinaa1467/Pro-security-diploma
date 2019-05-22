@@ -18,7 +18,8 @@
   <nb-card-body>
     <ul class="user-activity-list">
       <li *ngFor="let c of recent">
-        <nb-user [picture]="c.user.picture || placeholder" [name]="c.user.name" [title]="c.type" size="large"></nb-user>
+        <nb-user [picture]="(user?.img | secure | async) || placeholder" [name]="c.user.name" [title]="c.type"
+                 size="large"></nb-user>
         <span class="time">{{ c.time | date: 'shortTime' }}</span>
       </li>
 

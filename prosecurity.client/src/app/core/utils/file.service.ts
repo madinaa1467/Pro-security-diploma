@@ -10,7 +10,7 @@ export class FileService {
   constructor(private http: HttpService) { }
 
   load(fileId: string): Observable<File> {
-    return this.http.get('files/get', {fileId: fileId}, {observe: 'response', responseType: 'blob'})
+    return this.http.get('/files/get', {fileId: fileId}, {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
         const filename: string = response.headers.get('Content-Disposition')
           .split(';')[1]

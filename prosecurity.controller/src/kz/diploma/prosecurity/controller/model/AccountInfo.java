@@ -10,6 +10,7 @@ public class AccountInfo {
     UserInfo ret = new UserInfo();
     ret.displayName = fio == null ? username : fio;
     ret.username = username;
+    ret.img = img;
     return ret;
   }
 }

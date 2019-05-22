@@ -40,7 +40,7 @@ public class DbLoader {
     Long id = sequenceDao.get().proSeqNext();
 
     {
-      user(id, "all");
+      user(sequenceDao.get().proSeqNext(), "all");
       for (UserCan can : UserCan.values()) {
         add_can("all", can);
       }

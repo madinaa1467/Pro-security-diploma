@@ -53,11 +53,11 @@ const NB_MODULES = [
 
 ];
 
-const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
+const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent, NotificationsComponent];
 
 const ENTRY_COMPONENTS = [];
 
-const PIPES = [];
+const PIPES = [SecurePipe];
 
 const NB_THEME_PROVIDERS = [
   ...NbThemeModule.forRoot(
@@ -73,8 +73,8 @@ const NB_THEME_PROVIDERS = [
 
 @NgModule({
   imports: [...BASE_MODULES, ...NB_MODULES],
-  exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
-  declarations: [...COMPONENTS, NotificationsComponent, SecurePipe],
+  exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...ENTRY_COMPONENTS]
 })
 export class ThemeModule {

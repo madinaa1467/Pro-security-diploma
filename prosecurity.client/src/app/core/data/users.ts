@@ -7,6 +7,7 @@ import {HttpService} from "../../http/services";
 export class UserInfo {
   public displayName: string;
   public username: string;
+  public img: string;
   public role: string;
   public cans: Set<string>;
 
@@ -19,6 +20,7 @@ export class UserInfo {
   assign(a: any) {
     this.displayName = a.displayName;
     this.username = a.username;
+    this.img = a.img;
     this.role = a.role;
     this.cans = (a.cans instanceof Array) ? new Set(a.cans) : new Set();
   }
@@ -116,12 +118,12 @@ export class UserService {
   private time: Date = new Date;
 
   private users = {
-    nick: {name: 'Nick Jones', picture: 'assets/images/nick.png'},
-    eva: {name: 'Eva Moor', picture: null},
-    jack: {name: 'Jack Williams', picture: null},
-    lee: {name: 'Lee Wong', picture: null},
-    alan: {name: 'Alan Thompson', picture: null},
-    kate: {name: 'Kate Martinez', picture: null},
+    nick: {name: 'Nick Jones', img: 'assets/images/nick.png'},
+    eva: {name: 'Eva Moor', img: null},
+    jack: {name: 'Jack Williams', img: null},
+    lee: {name: 'Lee Wong', img: null},
+    alan: {name: 'Alan Thompson', img: null},
+    kate: {name: 'Kate Martinez', img: null},
   };
   private types = {
     mobile: 'mobile',
@@ -145,7 +147,7 @@ export class UserService {
 // TODO: msultanova 5/21/19 remove fake data
 export interface User {
   name: string;
-  picture: string;
+  img: string;
 }
 
 export interface Contacts {
