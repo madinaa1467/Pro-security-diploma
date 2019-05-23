@@ -1,0 +1,15 @@
+.picture {
+  padding-top: 1.5em;
+  position: relative;
+  background-position: center;
+  border-top-left-radius: nb-theme(card-border-radius);
+  border-top-right-radius: nb-theme(card-border-radius);
+  flex: 0.5;
+}
+.no-profile {
+  background-size: 100% 100%;
+  margin: auto;
+  width: 75%;
+  height: 100%;
+  background-image: url("../../../../assets/images/noProfileImg.png");
+}
