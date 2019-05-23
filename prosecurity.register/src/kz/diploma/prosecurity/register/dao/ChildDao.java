@@ -30,7 +30,7 @@ public interface ChildDao {
 
   @Insert("insert into Child (id, card_number, surname, name, patronymic, gender, birth_date, img, actual)\n " +
     "values ( #{toSave.id}, #{toSave.cardNumber}, #{toSave.surname}, #{toSave.name}, #{toSave.patronymic}," +
-    "#{toSave.gender}, #{toSave.birthDate}, #{toSave.img} 1);")
+    "#{toSave.gender}, #{toSave.birthDate}, #{toSave.img}, 1);")
   Long insertChild(@Param("toSave") ChildToSave toSave);
 
   @Insert("insert into child (id, card_number, surname, name, patronymic, gender, birth_date, img, actual)" +

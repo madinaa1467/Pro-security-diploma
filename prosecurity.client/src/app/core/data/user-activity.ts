@@ -1,6 +1,6 @@
 import {Observable, of as observableOf} from 'rxjs';
-import {Injectable} from "@angular/core";
-import {PeriodsService} from "./periods.service";
+import {Injectable} from '@angular/core';
+import {PeriodsService} from './periods.service';
 
 export interface UserActive {
   date: string;

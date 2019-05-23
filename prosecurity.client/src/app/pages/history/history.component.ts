@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {SmartTableData} from "../../core/data/smart-table";
 
@@ -7,7 +7,7 @@ import {SmartTableData} from "../../core/data/smart-table";
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit{
 
   source: LocalDataSource = new LocalDataSource();
 
