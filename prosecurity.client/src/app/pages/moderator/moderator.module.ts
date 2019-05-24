@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ModeratorRoutingModule } from './moderator-routing.module';
-import { ModeratorComponent } from './moderator.component';
+import {ModeratorRoutingModule} from './moderator-routing.module';
+import {ModeratorComponent} from './moderator.component';
 import {ThemeModule} from '../../theme/theme.module';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
-import { EventHistoryTableComponent } from './event-history-table/event-history-table.component';
-import {ProrileInfoComponent} from './prorile-info/prorile-info.component';
+import {EventHistoryTableComponent} from './event-history-table/event-history-table.component';
+import {ProfileInfoComponent} from './profile-info/profile-info.component';
 
 @NgModule({
-  declarations: [ModeratorComponent, EventHistoryTableComponent, ProrileInfoComponent],
+  declarations: [ModeratorComponent, EventHistoryTableComponent, ProfileInfoComponent],
   exports: [
     EventHistoryTableComponent
   ],

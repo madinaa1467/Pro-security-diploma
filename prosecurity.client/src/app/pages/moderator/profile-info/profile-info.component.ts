@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ClientData} from '../../../model/ClientData';
 
 @Component({
-  selector: 'app-prorile-info',
-  templateUrl: './prorile-info.component.html',
-  styleUrls: ['./prorile-info.component.scss']
+  selector: 'app-profile-info',
+  templateUrl: './profile-info.component.html',
+  styleUrls: ['./profile-info.component.scss']
 })
-export class ProrileInfoComponent implements OnInit {
+export class ProfileInfoComponent implements OnInit {
   client: ClientData = new ClientData();
 
   constructor() {
