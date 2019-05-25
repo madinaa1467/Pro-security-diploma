@@ -3,6 +3,7 @@ import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angula
 import {EditProfile} from "../edit-profile/edit-profile";
 import {EditPrivateInfo} from "../edit-private-info/edit-private-info";
 import {Auth} from "../../providers";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * Generated class for the Options page.
@@ -20,7 +21,7 @@ export class Options {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public modalCtrl: ModalController,
-              private auth: Auth) {
+              private auth: Auth, public translate: TranslateService) {
   }
 
   ionViewDidLoad() {

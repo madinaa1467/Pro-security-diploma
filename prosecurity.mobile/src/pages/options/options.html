@@ -18,6 +18,7 @@
       <!--<ion-label color="black">Private Account</ion-label>-->
       <!--<ion-toggle checked="true"></ion-toggle>-->
     <!--</ion-item>-->
+    <ion-item (click)="logOut()">Log Out</ion-item>
   </div>
 
   <div padding-top margin-top>
@@ -30,6 +31,12 @@
   <div padding-top margin-top>
     <h4 no-margin no-padding class="info-text">Application</h4>
     <hr class="custom-hr" color="gray">
-    <ion-item (click)="logOut()">Log Out</ion-item>
+
+    <ion-item><ion-label>{{ 'CHANGE_LANGUAGE' | translate }}</ion-label>
+      <ion-select #langSelect
+                  (ionChange)="translate.use(langSelect.value)">
+        <ion-option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</ion-option>
+      </ion-select>
+    </ion-item>
   </div>
 </ion-content>
