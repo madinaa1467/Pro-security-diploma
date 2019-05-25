@@ -7,56 +7,32 @@
 </ion-header>
 
 
-<ion-content #content>
-  <ion-card no-padding padding-bottom padding-bottom no-margin class="card">
-
-    <ion-row>
-      <ion-col col-5>
-        <ion-item>
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/sarah-avatar.png.jpeg">
-        </ion-item>
-      </ion-col>
-      <ion-col col-7>
-
-        <p class="text upper-card-text">Surname</p>
-        <p class="text upper-card-detail">Name</p>
-        <p class="text upper-card-detail">Patronymic</p>
-      </ion-col>
-    </ion-row>
-
+<ion-content #content parallax-header no-bounce class="bg-modal">
+  <div class="header-image"></div>
+  <div class="main-content" text-wrap text-center>
+    <div class="circular"></div>
+    <h2>{{event.fio}}</h2>
+    <p>{{ ('EVENT.'+event.action+'_'+event.gender) | translate}}</p>
+<!--    <p class="profile-description">-->
+<!--      {{ ('EVENT.'+event.action+'_'+event.gender) | translate}}-->
+<!--    </p>-->
     <hr>
+    <ion-list no-lines>
+      <ion-item>
+        <ion-icon name="md-exit" color="primary" item-start></ion-icon>
+        {{ ('EVENT.date-'+event.action) | translate}}
+        <a button ion-button color="primary" item-end medium>{{event.date  | date:'dd-MM-yyyy'  }}</a>
+      </ion-item>
 
-    <ion-card-content>
-      <ion-row>
-        <ion-col col-12>
-          <ion-item>
-            <p class="text card-content-key">Key</p>
-            <p class="text card-content-value">Value</p>
-          </ion-item>
-        </ion-col>
-        <hr>
-        <ion-col col-12>
-          <ion-item>
-            <p class="text card-content-key">Key</p>
-            <p class="text card-content-value">Value</p>
-          </ion-item>
-        </ion-col>
-        <hr>
-        <ion-col col-12>
-          <ion-item>
-            <p class="text card-content-key">Key</p>
-            <p class="text card-content-value">Value</p>
-          </ion-item>
-        </ion-col>
-        <hr>
-
-
-      </ion-row>
-
-
-    </ion-card-content>
-
-  </ion-card>
-
-
+      <ion-item>
+        <ion-icon item-start name="ios-clock"></ion-icon>
+        {{ ('EVENT.time-'+event.action) | translate}}
+        <a button ion-button color="secondary" item-end medium>{{event.time}}</a>
+      </ion-item>
+      <ion-item>
+        <ion-icon item-start name="pin" color="twitter"></ion-icon>
+        <p>{{ ('EVENT.'+event.action) | translate}}</p>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

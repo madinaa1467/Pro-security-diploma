@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import {SharedModule} from "../../app/shared.module";
 import {EventDetail} from "./event-detail";
+import {ParallaxHeaderDirectiveModule} from "../../components/parallax-header/parallax-header.module";
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import {EventDetail} from "./event-detail";
   ],
   imports: [
     IonicPageModule.forChild(EventDetail),
-    SharedModule
+    SharedModule,
+    ParallaxHeaderDirectiveModule
   ],
   exports: [
     EventDetail
