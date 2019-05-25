@@ -1,66 +1,87 @@
 page-profile {
-  /* Profile avatar */
-  .avatar {
-    border-radius: 100%;
-    position: absolute;
-  }
-  .child-avatar {
-    vertical-align: super;
-    //width: 8em;
-    //height: 4em;
-    max-width: 50%;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-
-    -webkit-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
-    box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
-  }
-
-  /* Small for notifications */
-  .badge-container {
-    position: relative;
-  }
-
-  .custom-badge {
-    position:absolute;
-    top:5px;
-    left:15px;
-    background: map-get($colors, danger);
-    border-radius: 100%;
-    color: #fff;
-    font-size: 12px !important;
-    padding: 4px;
-    font-weight: bold;
-  }
-
-  .info {
-    padding-top: 4px;
-  }
-
-  /* Profile edit button */
-  .edit-button {
-    //background: #fff;
-    border: 1px solid #ccc;
-    font-size: 13px;
-    border-radius: 3px;
-    padding: 5px;
-    font-weight: bold;
-    width: 90%;
-    margin-right: 30px;
-  }
-
-  .edit-button:active {
-    border-color: #dce2ed;
-  }
-
-
-  .my-children{
+  #profile-bg {
+    position: fixed;
+    left: 0;
     width: 100%;
-    color: #ffffff;
-    text-transform: uppercase;
-    height: 3em;
-    background-color: #01B8FE;
+    height: 150px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 20%;
+
+    text-align: center;
   }
+
+  #content {
+    position: relative;
+    margin-top: 150px;
+    background-color: white;
+    box-shadow: 0px -1px 10px rgba(0,0,0,0.4);
+    padding-top: 40%;
+  }
+
+  #profile-info {
+    position: absolute;
+    top: -95px;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+  }
+  #profile-name {
+    color: #444;
+    font-size: 26px;
+  }
+  #profile-description {
+    font-size: 15px;
+    color: #888;
+  }
+  #profile-description a {
+    color: #888;
+  }
+
+  #profile-image {
+    display: block;
+    border-radius: 100px;
+    border: 1px solid #fff;
+    width: 128px;
+    height: 128px;
+    margin: 30px auto 0;
+    box-shadow: 0 0 4px rgba(0,0,0,0.7);
+  }
+
+  .list-item-content {
+    padding: 5px;
+  }
+
+  .list-item {
+    color: #666666;
+  }
+
+  .post {
+    color: #444;
+  }
+
+  .post-time {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 11px;
+    color: #888;
+  }
+
+  .post-profile-image {
+    display: inline-block;
+    vertical-align: top;
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+  }
+  .post-options {
+    position: absolute;
+    font-size: 16px;
+    right: 5px;
+    bottom: 5px;
+    color: #888;
+  }
+
 }

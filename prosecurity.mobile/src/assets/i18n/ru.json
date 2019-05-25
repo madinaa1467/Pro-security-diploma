@@ -43,5 +43,8 @@
     "HOURS_AGO": "{{when}}ч",
     "MINUTES_AGO": "{{when}}мин",
     "SECONDS_AGO": "{{when}}сек"
+  },
+  "PROFILE":{
+    "add_child": "Register My child"
   }
 }
