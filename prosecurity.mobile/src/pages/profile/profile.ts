@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 
 import {Options} from '../options/options';
-import {ChildPofile} from "../child-pofile/child-pofile";
 import {ChildService} from "../../providers/services/child.service";
 import {Child} from "../../model/Child";
 import {AccountInfo} from "../../model/auth/account-info";
@@ -14,7 +13,7 @@ import {Subscription} from "rxjs";
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
-export class Profile implements OnInit, OnDestroy  {
+export class Profile implements OnInit, OnDestroy {
 
   public accountInfo$: Subscription;
   public accountInfo: AccountInfo;
@@ -22,12 +21,14 @@ export class Profile implements OnInit, OnDestroy  {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modalCtrl: ModalController, public childService: ChildService, private auth: Auth) {
   }
+
   ngOnInit(): void {
     this.accountInfo$ = this.auth.accountInfoChanges$.subscribe(list => {
       this.accountInfo = list;
     });
     console.error('accountInfo', this.accountInfo)
   }
+
   ngOnDestroy(): void {
     this.accountInfo$.unsubscribe();
   }
@@ -40,10 +41,10 @@ export class Profile implements OnInit, OnDestroy  {
   childSaveEdit(child: Child) {
     console.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAsDDDDDDDDDDDDD", child);
     let modal;
-    if(child) {
-      modal = this.modalCtrl.create('ChildPofile', {child: child, action: 'edit'});
-    } else{
-      modal = this.modalCtrl.create('ChildPofile', {child: child, action: 'save'});
+    if (child) {
+      modal = this.modalCtrl.create('ChildProfile', {child: child, action: 'edit'});
+    } else {
+      modal = this.modalCtrl.create('ChildProfile', {child: child, action: 'save'});
     }
     modal.present();
   }

@@ -1,7 +1,7 @@
 import {Child} from "../../model/Child";
 import {ChildService} from "../../providers/services/child.service";
 import {AlertController, IonicPage, LoadingController, NavController, NavParams, ViewController} from "ionic-angular";
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
 import {ImagePickerComponent} from "../../components/image-picker/image-picker";
@@ -9,10 +9,10 @@ import {ToastNotificationService} from "../../providers/services/toast-notificat
 
 @IonicPage()
 @Component({
-  selector: 'page-child-pofile',
-  templateUrl: 'child-pofile.html',
+  selector: 'page-child-profile',
+  templateUrl: 'child-profile.html',
 })
-export class ChildPofile implements OnInit {
+export class ChildProfile implements OnInit {
 
   public child = Child;
   public action: string;
@@ -23,7 +23,7 @@ export class ChildPofile implements OnInit {
   @ViewChild(ImagePickerComponent) imagePicker: ImagePickerComponent;
   public chosenPictureId: string;
 
-  mask: any[] = [ /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/,  /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+  mask: any[] = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
   @ViewChild('stepper') stepper;
 
   constructor(
@@ -39,7 +39,7 @@ export class ChildPofile implements OnInit {
     this.buildForm();
     this.child = this.navParams.get('child');
     this.action = this.navParams.get('action');
-    if(!this.child){
+    if (!this.child) {
       this.child = Child;
     }
     console.error('Opened Modal with param', this.child);
@@ -64,15 +64,15 @@ export class ChildPofile implements OnInit {
       this.childForm.controls['cardNumber'].patchValue(card_id.substring(0, 23));
       console.log("Send: ", this.childForm.controls['cardNumber'].value);
       loading.present();
-      this.childService.getChildByCard(card_id.replace(/\D/g,'').substring(0, 19),
+      this.childService.getChildByCard(card_id.replace(/\D/g, '').substring(0, 19),
         this.childForm.controls['password'].value,
         this.childForm.controls['id'].value)
         .then(list => {
-        loading.dismiss();
-        console.error("Answer: ", list);
-        console.error("this.childForm: ", this.childForm.controls);
-        this.childForm.patchValue(list);
-      }).catch(err => {
+          loading.dismiss();
+          console.error("Answer: ", list);
+          console.error("this.childForm: ", this.childForm.controls);
+          this.childForm.patchValue(list);
+        }).catch(err => {
         loading.dismiss();
         if (err.status == 400) {
           let errors = err.error;
@@ -141,7 +141,7 @@ export class ChildPofile implements OnInit {
   }
 
 
-  deleteChild(){
+  deleteChild() {
     //todo действительно ли вы хотите удалить?
 
     const deleteFor = this.alertCtrl.create({
@@ -165,23 +165,23 @@ export class ChildPofile implements OnInit {
   }
 
 
-  delete(how: string){
+  delete(how: string) {
     const loading = this.loadingCtrl.create();
     loading.present();
     let childId = this.childForm.controls['id'].value;
-    if(childId) {
+    if (childId) {
       this.childService.delete(childId, how).then(_resp => {
         this.dismiss();
         this.toastNotificationService.presentToast('Вы успешнo удалили запись везде!');
       });
-    } else{
+    } else {
       this.dismiss();
       this.toastNotificationService.presentToast('Вы не можете удалить!');
     }
   }
 
   static ionViewDidLoad() {
-    console.log('ionViewDidLoad ChildPofile Modal -Page');
+    console.log('ionViewDidLoad ChildProfile Modal -Page');
   }
 
   static handleFile(files: any) {
@@ -268,14 +268,15 @@ export class ChildPofile implements OnInit {
 
 
   }
+
   formErrors = {
     'cardNumber': '',
     'name': '',
     'surname': '',
     'patronymic': '',
     'gender': '',
-    'notification' : '',
-    'password' : ''
+    'notification': '',
+    'password': ''
   };
 
   validationMessages = {
@@ -306,8 +307,7 @@ export class ChildPofile implements OnInit {
     'gender': {
       'required': 'Please choose your gender',
     },
-    'notification': {
-    },
+    'notification': {},
     'password': {
       'required': 'Please enter password',
       'notCorrect': 'This password is not correct!'

@@ -36,7 +36,7 @@ export function initApp(appLoadService: AppLoader) {
 }
 
 export function setTranslateLoader(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');//, './assets/i18n/', '.json'
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -86,13 +86,5 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
   ]
 })
-
-// providers: [
-//   PROVIDERS,
-//   {provide: Settings, useFactory: provideSettings, deps: [Storage]},
-//   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-//   {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoader], multi: true},
-//   {provide: ErrorHandler, useClass: IonicErrorHandler},
-// ]
 export class AppModule {
 }
