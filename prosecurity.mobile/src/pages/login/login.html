@@ -1,33 +1,37 @@
 <ion-content padding class="transparent-header">
   <ion-header>
     <ion-navbar>
+      <div style="float:right" (click)="langSelect.open()">
+        <ion-label>
+          <ion-icon ios="ios-globe" md="md-globe"></ion-icon>
+        </ion-label>
+        <ion-select #langSelect [hidden]="true"
+                    (ionChange)="translate.use(langSelect.value)">
+          <ion-option *ngFor="let lang of translate.getLangs()" [value]="lang"
+                      [selected]="lang === translate.currentLang">{{ lang }}</ion-option>
+        </ion-select>
+      </div>
     </ion-navbar>
   </ion-header>
-  <img class="logo" src="assets/img/logo/logo-white.png" />
+  <img class="logo" src="assets/img/logo/logo-white.png"/>
   <div padding>
     <form [formGroup]="form" (submit)="login()">
-    <ion-item>
-      <ion-input formControlName="username" type="text" placeholder="{{ 'LOGIN.USERNAME' | translate}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input formControlName="password" type="password" placeholder="{{ 'LOGIN.PASSWORD' | translate}}"></ion-input>
-    </ion-item>
-    <button ion-button block outline color="light" class="login-button">{{ 'LOGIN.SIGN_IN' | translate}}</button>
+      <ion-item>
+        <ion-input formControlName="username" type="text" placeholder="{{ 'LOGIN.USERNAME' | translate}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="password" type="password"
+                   placeholder="{{ 'LOGIN.PASSWORD' | translate}}"></ion-input>
+      </ion-item>
+      <button ion-button block outline color="light" class="login-button">{{ 'LOGIN.SIGN_IN' | translate}}</button>
     </form>
   </div>
   <div class="strike">
     <span>OR</span>
   </div>
   <div padding>
-  <button ion-button block outline (click)="goToSignup()" color="light" class="login-button"> {{ 'LOGIN.SIGN_UP' | translate }}</button>
+    <button ion-button block outline (click)="goToSignup()" color="light"
+            class="login-button"> {{ 'LOGIN.SIGN_UP' | translate }}</button>
   </div>
 </ion-content>
-<ion-footer>
-  <ion-toolbar class="footer">
-      <ion-label>{{ 'CHANGE_LANGUAGE' | translate }}</ion-label>
-        <ion-select #langSelect
-                     (ionChange)="translate.use(langSelect.value)">
-        <ion-option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</ion-option>
-      </ion-select>
-  </ion-toolbar>
-</ion-footer>
+

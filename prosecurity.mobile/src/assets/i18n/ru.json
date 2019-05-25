@@ -45,6 +45,6 @@
     "SECONDS_AGO": "{{when}}сек"
   },
   "PROFILE":{
-    "add_child": "Register My child"
+    "add_child": "Register child"
   }
 }

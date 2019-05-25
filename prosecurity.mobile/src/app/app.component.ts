@@ -18,7 +18,10 @@ export class MyApp {
 
 
   constructor(private platform: Platform, private statusBar: StatusBar,
-              private splashScreen: SplashScreen, private auth: Auth, public translate: TranslateService) {
+              private splashScreen: SplashScreen, private auth: Auth, public translate: TranslateService,) {
+
+
+    console.log("LANG" + navigator.language);
     // platform.ready().then(() => {
     //   // Okay, so the platform is ready and our plugins are available.
     //   // Here you can do any higher level native things you might need.

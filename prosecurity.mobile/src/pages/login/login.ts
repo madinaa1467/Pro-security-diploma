@@ -19,7 +19,7 @@ import {ToastNotificationService} from "../../providers/services/toast-notificat
 export class LoginPage {
   public loginForm: any;
   form: FormGroup;
-
+  isShowLang: boolean = false;
 
   constructor(private loadingCtrl: LoadingController,
               private alertCtrl: AlertController,
@@ -68,12 +68,12 @@ export class LoginPage {
   // A programmatically way to make a nice rainbow effect, there you go.
   // NOTE: It probably won't work because it will crash your phone as this method is heavy \o/
   colors = new Array(
-    [62, 35, 255],
-    [60, 255, 60],
-    [255, 35, 98],
-    [45, 175, 230],
-    [255, 0, 255],
-    [255, 128, 0]);
+    [117, 208, 227],
+    [101, 197, 218],
+    [119, 166, 228],
+    [119, 148, 228],
+    [119, 133, 228],
+    [122, 119, 228]);
 
   step = 0;
   // color table indices for:
@@ -124,5 +124,9 @@ export class LoginPage {
     setInterval(() => {
       this.updateGradient();
     }, 40);
+  }
+
+  showLang() {
+
   }
 }
