@@ -7,6 +7,7 @@ export class ChildToSave {
   public patronymic: string;
   public birthDate: Date;
   public cardNumber: string;
+  public password: string;
   public notification: number;
 
   public static create(a: any): ChildToSave {
@@ -27,6 +28,7 @@ export class ChildToSave {
     this.patronymic = a.patronymic;
     this.birthDate = a.birthDate;
     this.cardNumber = a.cardNumber;
+    this.password = a.password;
     this.notification = (!!a.notification) ? 1 : 0;
   }
 }

@@ -70,6 +70,7 @@ export class ChildPofile implements OnInit {
       console.log("Send: ", this.childForm.controls['cardNumber'].value);
       loading.present();
       this.childService.getChildByCard(card_id.replace(/\D/g,'').substring(0, 19),
+        this.childForm.controls['password'].value,
         this.childForm.controls['id'].value)
         .then(list => {
         loading.dismiss();
@@ -270,6 +271,10 @@ export class ChildPofile implements OnInit {
       ]
       ],
       'notification': ['', []
+      ],
+      'password': ['', [
+        Validators.required
+      ]
       ]
     });
     this.childForm.valueChanges.subscribe(data => {
@@ -314,7 +319,8 @@ export class ChildPofile implements OnInit {
     'surname': '',
     'patronymic': '',
     'gender': '',
-    'notification' : ''
+    'notification' : '',
+    'password' : ''
   };
 
   validationMessages = {
@@ -347,5 +353,9 @@ export class ChildPofile implements OnInit {
     },
     'notification': {
     },
+    'password': {
+      'required': 'Please enter password',
+      'notCorrect': 'This password is not correct!'
+    }
   };
 }

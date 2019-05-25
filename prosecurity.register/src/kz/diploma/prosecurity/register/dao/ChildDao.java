@@ -66,6 +66,11 @@ public interface ChildDao {
     "where card_number = #{cardNumber};")
   Integer checkCard(@Param("cardNumber") String cardNumber);
 
+  @Select("select actual\n" +
+    "from card\n" +
+    "where card_number = #{cardNumber} and password = #{password};")
+  Integer checkCardPassword(@Param("cardNumber") String cardNumber, @Param("password") String password);
+
   @Update("update child\n" +
     "set card_number = #{cardNumber}\n" +
     "where id = #{childId};")

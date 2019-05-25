@@ -123,7 +123,10 @@ public class DbLoader {
 
   }
   private void card(String cardNumber){
-    authTestDao.get().insertCard(cardNumber, RND.str(8), RND.intStr(11));
+
+    String password = "1";
+    //    String password = idGenerator.get().newId();
+    authTestDao.get().insertCard(cardNumber, RND.str(8), RND.intStr(11), password);
   }
 
   private void phone(Long id)  {

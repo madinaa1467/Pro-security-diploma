@@ -15,6 +15,7 @@
     <sql endDelimiter=";;"><![CDATA[
       create table card (
         card_number varchar(20),
+        password varchar(30) not null,
         in_hex varchar(20),
         in_dec varchar(20),
         actual integer,
@@ -90,76 +91,5 @@
       )
     ]]></sql>
   </changeSet>
-
-
-  <!--<changeSet author="madina" id="insert-child">-->
-    <!--<sql endDelimiter=";;"><![CDATA[-->
-    <!--insert into child(id, surname, name, patronymic, gender, birth_date, actual)-->
-      <!--values (1, 'Asyl', 'Aisha', 'Asla', 'female', '2001-09-28', true),-->
-             <!--(2, 'Kasymzhan', 'Arman', 'Adam', 'male', '2001-09-28', true),-->
-             <!--(3, 'Ermekova', 'Altyn', 'Iman kyzy', 'female', '2001-09-28', true),-->
-             <!--(4, 'Asanov', 'Syrym', 'Asanovich', 'male', '2001-09-28', true);-->
-  <!--]]></sql>-->
-  <!--</changeSet>-->
-
-  <!--<changeSet author="madina" id="insert-parent">-->
-    <!--<sql endDelimiter=";;"><![CDATA[-->
-    <!--insert into parent(id, surname, name, patronymic, gender, actual)-->
-      <!--values (1, 'Asyl', 'Aisha', '', 'female', true),-->
-             <!--(2, 'Kasymzhan', 'Arman', 'Adam', 'male', true),-->
-             <!--(3, 'Ermekova', 'Altyn', 'Iman kyzy', 'female', true),-->
-             <!--(4, 'Asanov', 'Syrym', 'Asanovich', 'male', true);-->
-  <!--]]></sql>-->
-  <!--</changeSet>-->
-
-  <!--<changeSet author="madina" id="insert-event">-->
-    <!--<sql endDelimiter=";;"><![CDATA[-->
-    <!--insert into event(id, action, date, actual, child)-->
-      <!--values (1, 'in', '2007-02-16 07:38:40', true, 1),-->
-             <!--(2, 'out', '2007-02-16 11:22:13', true, 1),-->
-             <!--(3, 'in', '2007-02-16 11:32:55', true, 1),-->
-             <!--(4, 'out', '2007-02-16 14:25:43', true, 1),-->
-             <!--(5, 'in', '2007-02-17 07:38:40', true, 1),-->
-             <!--(6, 'out', '2007-02-17 11:22:13', true, 1),-->
-             <!--(7, 'in', '2007-02-17 11:32:55', true, 1),-->
-             <!--(8, 'out', '2007-02-17 14:25:43', true, 1),-->
-             <!--(9, 'in', '2007-02-16 07:38:40', true, 2),-->
-             <!--(10, 'out', '2007-02-16 11:22:13', true, 2),-->
-             <!--(11, 'in', '2007-02-16 11:32:55', true, 2),-->
-             <!--(12, 'out', '2007-02-16 14:25:43', true, 2),-->
-             <!--(13, 'in', '2007-02-16 07:38:40', true, 3),-->
-             <!--(14, 'out', '2007-02-16 11:22:13', true, 3),-->
-             <!--(15, 'in', '2007-02-16 11:32:55', true, 3),-->
-             <!--(16, 'out', '2007-02-16 14:25:43', true, 3),-->
-             <!--(17, 'in', '2007-02-17 07:38:40', true, 3),-->
-             <!--(18, 'out', '2007-02-17 11:22:13', true, 3),-->
-             <!--(19, 'in', '2007-02-17 11:32:55', true, 3),-->
-             <!--(20, 'out', '2007-02-17 14:25:43', true, 3);-->
-  <!--]]></sql>-->
-  <!--</changeSet>-->
-
-  <!--<changeSet author="madina" id="insert-parent_phone">-->
-    <!--<sql endDelimiter=";;"><![CDATA[-->
-    <!--insert into parent_phone(parent, number, type, actual)-->
-      <!--values (1, '+77474938358', 'mob', true),-->
-             <!--(2, '+77774356773', 'home', true),-->
-             <!--(3, '+77472342441', 'mob', true),-->
-             <!--(1, '+77756999767', 'work', true);-->
-  <!--]]></sql>-->
-  <!--</changeSet>-->
-
-  <!--<changeSet author="madina" id="insert-parent_child">-->
-    <!--<sql endDelimiter=";;"><![CDATA[-->
-    <!--insert into parent_child(id, parent, child, actual)-->
-      <!--values (1, 1, 1, true),-->
-             <!--(2, 2, 1, true),-->
-             <!--(3, 3, 2, true),-->
-             <!--(4, 4, 2, true),-->
-             <!--(5, 1, 3, true),-->
-             <!--(6, 2, 4, true),-->
-             <!--(7, 3, 4, true),-->
-             <!--(8, 4, 3, true);-->
-  <!--]]></sql>-->
-  <!--</changeSet>-->
 
 </databaseChangeLog>

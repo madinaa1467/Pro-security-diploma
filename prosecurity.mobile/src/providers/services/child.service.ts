@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Api} from "../index";
+import {Api} from "..";
 import {EventList} from "../../model/EventList";
 import {EventFilter} from "../../model/EventFilter";
 import {Child} from "../../model/Child";
@@ -33,7 +33,7 @@ export class ChildService {
       .toPromise().then(resp => {
         console.log("Response from child/getChildList:  ", resp);
         if (!resp)
-          console.error(resp)
+          console.error(resp);
         return (<any> resp).map((r) =>
           Child.create(r)
         );
@@ -93,10 +93,10 @@ export class ChildService {
       });
   }
 
-  getChildByCard(card_number: string, childId: number) {
-    console.log('Call child/getChildByCard: ', card_number);
+  getChildByCard(card_number: string, password: string, childId: number) {
+    console.log('Call child/getChildByCard: ', card_number, "password", password);
     return this.http.get("child/getChildByCard",
-      {cardNumber: card_number, childId: childId })
+      {cardNumber: card_number, password: password, childId: childId })
       .toPromise()
       .then(resp => {
         console.log('Response from server child/getChildByCard:', resp);
