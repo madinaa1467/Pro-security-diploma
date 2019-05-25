@@ -3,6 +3,7 @@ import {AlertController, App, IonicPage, LoadingController, NavController, NavPa
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Auth} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 /**
  * Generated class for the LoginPage page.
@@ -21,45 +22,26 @@ export class LoginPage {
 
 
   constructor(private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController,
-    public app: App,
-    private auth: Auth,
-    private fb: FormBuilder,
-    public navCtrl: NavController,
-    public navParams: NavParams, public translate: TranslateService) {
-  this.form = this.fb.group({
+              private alertCtrl: AlertController,
+              public app: App,
+              private auth: Auth,
+              private fb: FormBuilder,
+              public navCtrl: NavController,
+              public navParams: NavParams, public translate: TranslateService,
+              private toastNotificationService: ToastNotificationService) {
+    this.form = this.fb.group({
       username: [null, Validators.required],
       password: [null, Validators.required]
     });
- }
+  }
 
   ionViewCanEnter() {
     return !this.auth.isAuthenticated();
   }
 
-  ionViewDidLoad(){
+  static ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
-
-  // login() {
-    // const loading = this.loadingCtrl.create({
-    //   duration: 500
-    // });
-    //
-    // loading.onDidDismiss(() => {
-      // const alert = this.alertCtrl.create({
-        // title: 'Logged in!',
-        // subTitle: 'Thanks for logging in.',
-        // buttons: ['Dismiss']
-      // });
-      // alert.present();
-    //   this.navCtrl.setRoot(TabsPage);
-    // });
-
-    // loading.present();
-    //
-    // this.auth.login(this.form.getRawValue()).catch(err => {
-    // });
 
   login() {
     const loading = this.loadingCtrl.create();
@@ -72,12 +54,7 @@ export class LoginPage {
       }).catch(err => {
 
       loading.dismiss();
-      const alert = this.alertCtrl.create({
-        title: 'Ошибка',
-        message: err.error.error_description,
-        buttons: ['Отклонять']
-      });
-      alert.present();
+      this.toastNotificationService.presentToast('Произошла ошибка');
     });
 
   }
@@ -144,6 +121,8 @@ export class LoginPage {
 
     }
 
-    setInterval(() => { this.updateGradient(); }, 40);
+    setInterval(() => {
+      this.updateGradient();
+    }, 40);
   }
 }

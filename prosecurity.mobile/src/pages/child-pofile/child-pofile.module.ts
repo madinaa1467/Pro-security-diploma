@@ -4,6 +4,7 @@ import { ChildPofile } from './child-pofile';
 import IonicStepperModule from "ionic-stepper";
 import {CommonModule} from "@angular/common";
 import {SharedModule} from "../../app/shared.module";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 @NgModule({
   declarations: [
@@ -15,5 +16,8 @@ import {SharedModule} from "../../app/shared.module";
     CommonModule,
     SharedModule
   ],
+  providers: [
+    ToastNotificationService
+  ]
 })
 export class ChildPofilePageModule {}

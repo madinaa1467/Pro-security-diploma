@@ -18,6 +18,7 @@ import {FilePath} from "@ionic-native/file-path";
 import {Crop} from "@ionic-native/crop";
 import {ParentDetails} from "../../model/parent-details";
 import {ImagePickerComponent} from "../../components/image-picker/image-picker";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 @IonicPage()
 @Component({
@@ -112,7 +113,8 @@ export class EditProfile implements OnInit {
     public viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
-    private parentService: ParentService) {
+    private parentService: ParentService,
+    private toastNotificationService: ToastNotificationService) {
   }
 
   ngOnInit() {
@@ -142,6 +144,7 @@ export class EditProfile implements OnInit {
       this.parentService.save(this.userForm.getRawValue()).then(_ => {
         loading.dismiss();
         this.navCtrl.pop();
+        this.toastNotificationService.presentToast('Ваш профиль успешно изменен изменен!');
 
       }).catch(err => {
         loading.dismiss();
@@ -242,7 +245,7 @@ export class EditProfile implements OnInit {
     }
   }
 
-  ionViewDidLoad() {
+  static ionViewDidLoad() {
     console.log('ionViewDidLoad Edit -Page');
   }
 

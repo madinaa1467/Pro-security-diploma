@@ -5,13 +5,7 @@ import {Component, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
 import {ImagePickerComponent} from "../../components/image-picker/image-picker";
-
-/**
- * Generated class for the ChildPofilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 @IonicPage()
 @Component({
@@ -39,7 +33,8 @@ export class ChildPofile implements OnInit {
     public loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private alertCtrl: AlertController,
-    private childService: ChildService) {
+    private childService: ChildService,
+    private toastNotificationService: ToastNotificationService) {
 
     this.buildForm();
     this.child = this.navParams.get('child');
@@ -119,33 +114,14 @@ export class ChildPofile implements OnInit {
       this.childForm.patchValue({img: imgId, cardNumber: card_id});
       this.childService.save(this.childForm.getRawValue()).then(_resp => {
         loading.dismiss();
-        let alert;
         if (this.action == 'edit') {
-          alert = this.alertCtrl.create({
-            //todo change by languge
-            title: ' Уведомление',
-            message: 'Вы успешнo изменили запись!',
-            buttons: [{
-              text: 'Ok',
-              handler: data => {
-                this.dismiss();
-              }
-            }]
-          });
+          this.dismiss();
+          this.toastNotificationService.presentToast('Вы успешнo изменили запись');
+
         } else {
-          alert = this.alertCtrl.create({
-            //todo change by languge
-            title: ' Уведомление',
-            message: 'Вы успешнo добавили ребенка!',
-            buttons: [{
-              text: 'Ok',
-              handler: data => {
-                this.dismiss();
-              }
-            }]
-          });
+          this.dismiss();
+          this.toastNotificationService.presentToast('Вы успешнo добавили ребенка!');
         }
-        alert.present();
       }).catch(err => {
         loading.dismiss();
         if (err.status == 400) {
@@ -195,41 +171,20 @@ export class ChildPofile implements OnInit {
     let childId = this.childForm.controls['id'].value;
     if(childId) {
       this.childService.delete(childId, how).then(_resp => {
-        loading.dismiss();
-        const alert = this.alertCtrl.create({
-          //todo change by languge
-          title: ' Уведомление',
-          message: 'Вы успешнo удалили запись везде!',
-          buttons: [{
-            text: 'Ok',
-            handler: data => {
-              this.dismiss();
-            }
-          }]
-        });
-        alert.present();
+        this.dismiss();
+        this.toastNotificationService.presentToast('Вы успешнo удалили запись везде!');
       });
     } else{
-      const alert = this.alertCtrl.create({
-        //todo change by languge
-        title: ' Уведомление',
-        message: 'Вы не можете удалить!',
-        buttons: [{
-          text: 'Ok',
-          handler: data => {
-            // this.dismiss();
-          }
-        }]
-      });
-      alert.present();
+      this.dismiss();
+      this.toastNotificationService.presentToast('Вы не можете удалить!');
     }
   }
 
-  ionViewDidLoad() {
+  static ionViewDidLoad() {
     console.log('ionViewDidLoad ChildPofile Modal -Page');
   }
 
-  handleFile(files: any) {
+  static handleFile(files: any) {
     console.log({files})
   }
 
@@ -262,7 +217,7 @@ export class ChildPofile implements OnInit {
         Validators.maxLength(25)
       ]
       ],
-      'birthDate': [, [
+      'birthDate': ['', [
         Validators.required
       ]
       ],
