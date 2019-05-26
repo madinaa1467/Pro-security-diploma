@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ClientData} from '../../../model/ClientData';
+import {ClientData} from "../../../model/ClientData";
 
 @Component({
-  selector: 'app-profile-info',
-  templateUrl: './profile-info.component.html',
-  styleUrls: ['./profile-info.component.scss']
+  selector: 'app-parent-profile',
+  templateUrl: './parent-profile.component.html',
+  styleUrls: ['./parent-profile.component.scss']
 })
-export class ProfileInfoComponent implements OnInit {
+export class ParentProfileComponent implements OnInit {
+
   client: ClientData = new ClientData();
 
   constructor() {
@@ -19,5 +20,4 @@ export class ProfileInfoComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

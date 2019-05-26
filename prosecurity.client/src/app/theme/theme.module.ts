@@ -25,6 +25,7 @@ import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsBu
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security";
 import {SecurePipe} from './pipes/secure.pipe';
+import {Ng2SmartTableModule} from "ng2-smart-table";
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -32,6 +33,7 @@ const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 const NB_MODULES = [
   SecurityModule,
 
+  Ng2SmartTableModule,
 
   NbLayoutModule,
   NbCardModule,
