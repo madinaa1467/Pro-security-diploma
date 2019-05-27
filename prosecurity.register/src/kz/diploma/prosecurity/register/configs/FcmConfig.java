@@ -3,10 +3,10 @@ package kz.diploma.prosecurity.register.configs;
 import kz.greetgo.conf.hot.DefaultStrValue;
 import kz.greetgo.conf.hot.Description;
 
-@Description("Параметры доступа к БД (используется только БД Postgresql)")
+@Description("Параметры доступа к FCM")
 public interface FcmConfig {
 
-    @Description("Fcm File config path")
-    @DefaultStrValue("/")
-    String filePath();
+  @Description("Папка для отправляемых писем (относительно ~/prosecurity.d/)")
+  @DefaultStrValue("fcm_config/asd.json")
+  String filePath();
 }
