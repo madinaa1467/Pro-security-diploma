@@ -1,33 +1,40 @@
 page-event-detail {
-
-  .text{
-    color: darkgray;
-    font-size: 2rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-
+  .header-image {
+    background-image: url(../../assets/src/school-background14.png);
+    height: 30vh;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    z-index: -1;
   }
-
-  .upper-card-text{
-    margin-left: 2rem;
-    margin-top: 4rem;
-    //color: #565d6a;
+  .main-content {
+    margin-top: -20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 20px;
+    background-color: white;
+    -webkit-box-shadow: 0 0 55px -16px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 0 55px -16px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 55px -16px rgba(0, 0, 0, 0.75);
+    position: relative !important;
   }
-
-  .upper-card-detail{
-    margin-left: 2rem;
-    margin-top: 1rem;
-    //color: #a9abaf;// #666;
+  .circular {
+    width: 100px;
+    height: 100px;
+    position: inherit;
+    border-radius: 50%;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    border: solid white;
+    background: url(../../assets/src/unknown.png) no-repeat;
+    background-size: 100%;
+    margin-top: -70px;
+    margin-left: auto;
+    margin-right: auto;
+    // margin-bottom: 50px;
   }
-
-  .card-content-key{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .card-content-value{
-    color: gray;
-    font-size: 3rem;
+  .profile-description {
+    font-size: 15px;
+    color: #888;
   }
 }

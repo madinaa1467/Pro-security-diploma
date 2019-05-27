@@ -1,0 +1,52 @@
+@import '../../../theme/styles/themes';
+
+@include nb-install-component() {
+
+  nb-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .picture {
+    padding-top: 1.5em;
+    position: relative;
+    background-position: center;
+    border-top-left-radius: nb-theme(card-border-radius);
+    border-top-right-radius: nb-theme(card-border-radius);
+    flex: 0.5;
+  }
+  .no-profile {
+    background-size: 100% 100%;
+    margin: auto;
+    width: 75%;
+    height: 100%;
+    background-image: url("../../../../assets/images/noProfileImg.png");
+  }
+
+  .details {
+    padding: 1.25rem 1.25rem 0;
+
+    .title {
+      font-family: nb-theme(font-secondary);
+      font-weight: nb-theme(font-weight-bold);
+      color: nb-theme(color-fg-heading);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+
+      @include nb-for-theme(cosmic) {
+        font-weight: nb-theme(font-weight-bolder);
+      }
+    }
+
+    .description {
+      text-align: justify;
+      color: nb-theme(color-fg-text);
+      font-weight: nb-theme(font-weight-light);
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: calc(1rem * 8 * #{nb-theme(line-height)});
+    }
+  }
+}

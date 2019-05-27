@@ -3,6 +3,7 @@ import {IonicPageModule} from 'ionic-angular';
 import {LoginPage} from './login';
 import {FormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,9 @@ import {TranslateModule} from "@ngx-translate/core";
   ],
   exports: [
     LoginPage
+  ],
+  providers: [
+    ToastNotificationService
   ]
 })
 export class LoginPageModule {}

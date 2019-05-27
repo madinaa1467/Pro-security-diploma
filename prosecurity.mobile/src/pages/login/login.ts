@@ -3,6 +3,7 @@ import {AlertController, App, IonicPage, LoadingController, NavController, NavPa
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Auth} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 /**
  * Generated class for the LoginPage page.
@@ -18,48 +19,29 @@ import {TranslateService} from "@ngx-translate/core";
 export class LoginPage {
   public loginForm: any;
   form: FormGroup;
-
+  isShowLang: boolean = false;
 
   constructor(private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController,
-    public app: App,
-    private auth: Auth,
-    private fb: FormBuilder,
-    public navCtrl: NavController,
-    public navParams: NavParams, public translate: TranslateService) {
-  this.form = this.fb.group({
+              private alertCtrl: AlertController,
+              public app: App,
+              private auth: Auth,
+              private fb: FormBuilder,
+              public navCtrl: NavController,
+              public navParams: NavParams, public translate: TranslateService,
+              private toastNotificationService: ToastNotificationService) {
+    this.form = this.fb.group({
       username: [null, Validators.required],
       password: [null, Validators.required]
     });
- }
+  }
 
   ionViewCanEnter() {
     return !this.auth.isAuthenticated();
   }
 
-  ionViewDidLoad(){
+  static ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
-
-  // login() {
-    // const loading = this.loadingCtrl.create({
-    //   duration: 500
-    // });
-    //
-    // loading.onDidDismiss(() => {
-      // const alert = this.alertCtrl.create({
-        // title: 'Logged in!',
-        // subTitle: 'Thanks for logging in.',
-        // buttons: ['Dismiss']
-      // });
-      // alert.present();
-    //   this.navCtrl.setRoot(TabsPage);
-    // });
-
-    // loading.present();
-    //
-    // this.auth.login(this.form.getRawValue()).catch(err => {
-    // });
 
   login() {
     const loading = this.loadingCtrl.create();
@@ -72,12 +54,7 @@ export class LoginPage {
       }).catch(err => {
 
       loading.dismiss();
-      const alert = this.alertCtrl.create({
-        title: 'Ошибка',
-        message: err.error.error_description,
-        buttons: ['Отклонять']
-      });
-      alert.present();
+      this.toastNotificationService.presentToast('Произошла ошибка');
     });
 
   }
@@ -91,12 +68,12 @@ export class LoginPage {
   // A programmatically way to make a nice rainbow effect, there you go.
   // NOTE: It probably won't work because it will crash your phone as this method is heavy \o/
   colors = new Array(
-    [62, 35, 255],
-    [60, 255, 60],
-    [255, 35, 98],
-    [45, 175, 230],
-    [255, 0, 255],
-    [255, 128, 0]);
+    [117, 208, 227],
+    [101, 197, 218],
+    [119, 166, 228],
+    [119, 148, 228],
+    [119, 133, 228],
+    [122, 119, 228]);
 
   step = 0;
   // color table indices for:
@@ -144,6 +121,12 @@ export class LoginPage {
 
     }
 
-    setInterval(() => { this.updateGradient(); }, 40);
+    setInterval(() => {
+      this.updateGradient();
+    }, 40);
+  }
+
+  showLang() {
+
   }
 }

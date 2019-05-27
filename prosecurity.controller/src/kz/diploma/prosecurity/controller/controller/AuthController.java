@@ -20,10 +20,6 @@ import kz.greetgo.mvc.annotations.on_methods.OnPost;
 import kz.greetgo.mvc.interfaces.TunnelCookies;
 import kz.greetgo.security.session.SessionIdentity;
 
-/**
- * как составлять контроллеры написано
- * <a href="https://github.com/greetgo/greetgo.mvc/blob/master/doc/controller_spec.md">здесь</a>
- */
 @Bean
 @ControllerPrefix("/auth")
 public class AuthController implements Controller {

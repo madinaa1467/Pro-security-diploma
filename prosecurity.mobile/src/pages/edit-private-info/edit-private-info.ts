@@ -1,7 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AlertController, IonicPage, LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  ViewController
+} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 @IonicPage()
 @Component({
@@ -19,7 +27,8 @@ export class EditPrivateInfo implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
-    private parentService: ParentService) {
+    private parentService: ParentService,
+    private toastNotificationService: ToastNotificationService) {
   }
 
   ngOnInit() {
@@ -28,35 +37,16 @@ export class EditPrivateInfo implements OnInit {
 
   changePassword() {
     const loading = this.loadingCtrl.create();
-    let alert;
-    this.parentService.changePassword(this.privateInfoForm.controls['password'].value).then(_resp =>{
+    this.parentService.changePassword(this.privateInfoForm.controls['password'].value).then(_resp => {
       loading.dismiss();
-      if(_resp == true) {
-        alert = this.alertCtrl.create({
-          //todo change by languge
-          title: ' Уведомление',
-          message: 'Вы успешнo изменили пароль!',
-          buttons: [{
-            text: 'Ok',
-            handler: data => {
-              this.dismiss();
-            }
-          }]
-        });
-        alert.present();
+      if (_resp == true) {
+        this.dismiss();
+        this.toastNotificationService.presentToast('Вы успешнo изменили пароль');
+        //todo change by languge
       } else {
-        alert = this.alertCtrl.create({
-          //todo change by languge
-          title: ' Уведомление',
-          message: 'Возникли проблемы и пароль не был изменен!',
-          buttons: [{
-            text: 'Ok',
-            handler: data => {
-              this.dismiss();
-            }
-          }]
-        });
-        alert.present();
+        this.dismiss();
+        this.toastNotificationService.presentToast('Возникли проблемы и пароль не был изменен!');
+        //todo change by languge
       }
     });
   }
@@ -65,13 +55,13 @@ export class EditPrivateInfo implements OnInit {
     this.viewCtrl.dismiss();
   }
 
-  ionViewDidLoad() {
+  static ionViewDidLoad() {
     console.log('ionViewDidLoad Edit Private -Page');
   }
 
   selectChange(e) {
     console.log(e);
-    if(e == 1) {
+    if (e == 1) {
       const loading = this.loadingCtrl.create();
       loading.present();
       this.parentService.checkPassword(this.privateInfoForm.controls['oldPassword'].value)
@@ -151,14 +141,12 @@ export class EditPrivateInfo implements OnInit {
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    const form = this.privateInfoForm;
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
         passwordConfirmationInput = group.controls[passwordConfirmationKey];
       if (passwordInput.value !== passwordConfirmationInput.value) {
         return passwordConfirmationInput.setErrors({notEquivalent: true});
-      }
-      else {
+      } else {
         return passwordConfirmationInput.setErrors(null);
       }
     };

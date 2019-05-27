@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../../core/auth/services";
-import {UserService} from "../../../core/data/users";
-import {catchError, map, switchMap} from "rxjs/internal/operators";
+import {UserInfo, UserService} from "../../../core/data/users";
+import {catchError, switchMap} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-login',
@@ -31,9 +31,7 @@ export class LoginComponent implements OnInit {
     // TODO: msultanova 5/20/19 future tips add AuthResult.ts for correct password strategy
     this.service.authenticate(this.user).pipe(
       switchMap(result => {
-        return this.userService.loadUserInfo().pipe(
-          map(() => result)
-        )
+        return this.userService.loadUserInfo();
       }),
       catchError(err => {
         this.submitted = false;
@@ -41,10 +39,14 @@ export class LoginComponent implements OnInit {
         this.cd.detectChanges();
         return err;
       })
-    ).subscribe(res => {
+    ).subscribe((res: UserInfo) => {
       this.submitted = false;
+      if (['MODERATOR'].some(permitted => res.cans.has(permitted))) {
+        this.router.navigateByUrl("/pages/moderator");
+      } else {
+        this.router.navigateByUrl("/pages");
+      }
 
-      this.router.navigateByUrl("/pages");
       this.cd.detectChanges();
     })
   }

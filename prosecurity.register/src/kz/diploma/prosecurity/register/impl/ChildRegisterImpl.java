@@ -65,8 +65,8 @@ public class ChildRegisterImpl implements ChildRegister {
   }
 
   @Override
-  public Child getChildByCard(String cardNumber, Long childId) {
-    Child child = this.getChildByCardFromDB(cardNumber, childId);
+  public Child getChildByCard(String cardNumber, String password, Long childId) {
+    Child child = this.getChildByCardFromDB(cardNumber, password, childId);
     return child;
   }
 
@@ -76,7 +76,7 @@ public class ChildRegisterImpl implements ChildRegister {
 
       String oldImgId = childDao.get().getImgIdById(childToSave.id);
 
-      Child child = this.getChildByCardFromDB(childToSave.cardNumber, childToSave.id);
+      Child child = this.getChildByCardFromDB(childToSave.cardNumber, childToSave.password, childToSave.id);
       this.childDao.get().upsertParentChild(parentId, childToSave.id, childToSave.notification, 1);
 
       if (!Objects.equals(child.cardNumber, childToSave.cardNumber) && child.cardNumber != null)
@@ -185,7 +185,7 @@ public class ChildRegisterImpl implements ChildRegister {
     }
   }
 
-  public Child getChildByCardFromDB(String cardNumber, Long childId) {
+  public Child getChildByCardFromDB(String cardNumber, String password, Long childId) {
 
     Child child = childDao.get().getChildByCard(cardNumber);
     if (child == null) {
@@ -213,6 +213,12 @@ public class ChildRegisterImpl implements ChildRegister {
       ErrorMessage errorMessage = new ErrorMessage("cardNumber", "alreadyInUse");
       throw new ValidationError(errorMessage);
     }
-    return child;
+
+    if(childDao.get().checkCardPassword(cardNumber, password) != null) {
+      return child;
+    } else{
+      ErrorMessage errorMessage = new ErrorMessage("password", "notCorrect");
+      throw new ValidationError(errorMessage);
+    }
   }
 }

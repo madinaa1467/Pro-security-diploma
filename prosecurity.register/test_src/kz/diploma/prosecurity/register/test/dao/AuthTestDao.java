@@ -96,9 +96,10 @@ public interface AuthTestDao {
   @Select("select * from parent where id=#{id} and actual=1")
   ToSave getInfo(@Param("id") Long id);
 
-  @Insert("insert into card (card_number, in_hex, in_dec, actual) " +
-    "values (#{cardNumber}, #{inHex}, #{inDec}, 1)")
+  @Insert("insert into card (card_number, in_hex, in_dec, password, actual) " +
+    "values (#{cardNumber}, #{inHex}, #{inDec}, #{password}, 1)")
   void insertCard(@Param("cardNumber") String cardNumber,
                   @Param("inHex") String inHex,
-                  @Param("inDec") String inDec);
+                  @Param("inDec") String inDec,
+                  @Param("password") String password);
 }

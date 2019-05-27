@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PagesComponent} from "./pages.component";
-import {SampleGuard} from "../core/guards/sample-guard.service";
+import {PagesComponent} from './pages.component';
+import {SampleGuard} from '../core/guards/sample-guard.service';
 
 const routes: Routes = [
   {
@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'sample',
         canActivate: [SampleGuard],
         loadChildren: './sample/sample.module#SampleModule',
+      },
+      {
+        path: 'moderator',
+        loadChildren: './moderator/moderator.module#ModeratorModule',
       },
     ]
   }

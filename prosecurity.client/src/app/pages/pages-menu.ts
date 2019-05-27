@@ -25,4 +25,11 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: 'nb-grid-b',
     link: '/pages/profile'
   },
+  {
+
+    //TODO delete
+    title: 'Moderator',
+    icon: 'nb-grid-b',
+    link: '/pages/moderator'
+  },
 ];

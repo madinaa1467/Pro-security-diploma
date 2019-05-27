@@ -7,14 +7,8 @@ import {IonicStorageModule, Storage} from "@ionic/storage";
 import {AppLoader, AuthInterceptor, MODULES, PROVIDERS, Settings} from "./app.imports";
 import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {PostPopover} from '../pages/home/post-popover';
-import {Search} from '../pages/search/search';
-import {ModalPost} from '../pages/modal-post/modal-post';
-import {NewMessage} from '../pages/new-message/new-message';
 import {Notifications} from '../pages/notifications/notifications';
-import {TaggedProfile} from '../pages/tagged-profile/tagged-profile';
-import {SavedProfile} from '../pages/saved-profile/saved-profile';
 import {Options} from '../pages/options/options';
-import {Comments} from '../pages/comments/comments';
 import {TabsPage} from '../pages/tabs/tabs';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -42,7 +36,7 @@ export function initApp(appLoadService: AppLoader) {
 }
 
 export function setTranslateLoader(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');//, './assets/i18n/', '.json'
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -53,15 +47,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // App Core
     MyApp,
     PostPopover,
-    Search,
-    ModalPost,
-    NewMessage,
     Notifications,
     // Profile,
-    TaggedProfile,
-    SavedProfile,
     Options,
-    Comments,
     TabsPage
   ],
   imports: [
@@ -84,15 +72,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   entryComponents: [
     MyApp,
     PostPopover,
-    Search,
-    ModalPost,
-    NewMessage,
     Notifications,
     // Profile,
-    TaggedProfile,
-    SavedProfile,
     Options,
-    Comments,
     TabsPage
   ],
   providers: [
@@ -104,13 +86,5 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
   ]
 })
-
-// providers: [
-//   PROVIDERS,
-//   {provide: Settings, useFactory: provideSettings, deps: [Storage]},
-//   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-//   {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoader], multi: true},
-//   {provide: ErrorHandler, useClass: IonicErrorHandler},
-// ]
 export class AppModule {
 }

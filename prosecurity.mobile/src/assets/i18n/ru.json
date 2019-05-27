@@ -10,6 +10,18 @@
     "in_female": "{{childFio}} вышла в ",
     "out_female": "{{childFio}} зашла в "
   },
+  "EVENT": {
+    "in_male": "Entered to school",
+    "out_male": "Exit school",
+    "in_female": "Entered to school",
+    "out_female": "Exit school",
+    "time-in": "Coming time",
+    "time-out": "Exit time",
+    "date-in": "Coming date",
+    "date-out": "Exit date",
+    "in": "Entered by the entrance #",
+    "out": "Exit by the #"
+  },
   "LOGIN": {
     "SIGN_IN": "Вход",
     "SIGN_UP": "Регистрация",
@@ -31,5 +43,8 @@
     "HOURS_AGO": "{{when}}ч",
     "MINUTES_AGO": "{{when}}мин",
     "SECONDS_AGO": "{{when}}сек"
+  },
+  "PROFILE":{
+    "add_child": "Register child"
   }
 }

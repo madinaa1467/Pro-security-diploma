@@ -45,8 +45,8 @@ public class ChildController implements Controller {
 
   @ToJson
   @OnGet("/getChildByCard")
-  public Child getChildByCard(@Par("cardNumber") String cardNumber, @Json @Par("childId") Long childId) {
-    return childRegister.get().getChildByCard(cardNumber, childId);
+  public Child getChildByCard(@Par("cardNumber") String cardNumber, @Par("password") String password, @Json @Par("childId") Long childId) {
+    return childRegister.get().getChildByCard(cardNumber, password, childId);
   }
 
   @ToJson

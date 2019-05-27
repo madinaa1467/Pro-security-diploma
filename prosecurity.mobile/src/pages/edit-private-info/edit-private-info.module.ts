@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import {SharedModule} from "../../app/shared.module";
 import {EditPrivateInfo} from "./edit-private-info";
 import IonicStepperModule from "ionic-stepper";
+import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,9 @@ import IonicStepperModule from "ionic-stepper";
   ],
   exports: [
     EditPrivateInfo
+  ],
+  providers: [
+    ToastNotificationService
   ]
 })
 export class EditPrivateInfoModule {}

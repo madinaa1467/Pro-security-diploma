@@ -11,6 +11,7 @@ public class ChildToSave {
   public String patronymic;
   public Date birthDate;
   public String cardNumber;
+  public String password;
   public int notification;
 
 }

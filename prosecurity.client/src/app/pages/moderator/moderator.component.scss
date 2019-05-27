@@ -1,0 +1,7 @@
+@import '../../theme/styles/themes';
+
+@include nb-install-component() {
+  app-profile-info {
+    width: 100%;
+  }
+}

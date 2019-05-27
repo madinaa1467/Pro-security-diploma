@@ -13,75 +13,37 @@
 </ion-header>
 <ion-content>
 
-  <ion-row style="margin: 5px;">
-    <!-- Avatar -->
-    <ion-col col-3>
-      <img [src]="(accountInfo.img | secure) | async" class="avatar" alt=""
+  <div id="profile-bg" [ngStyle]="{'background-image': 'url(../../assets/src/school-background5.jpg)'}"></div>
+  <div id="content">
+    <div id="profile-info">
+      <img id="profile-image" [src]="(accountInfo.img | secure) | async" class="avatar" alt=""
            onerror="this.src='assets/src/unknown.png'">
-      <!--<img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=120" class="avatar" alt="">-->
-    </ion-col>
-  </ion-row>
+      <h3 id="profile-name">{{accountInfo.fio}}</h3>
+<!--      <span id="profile-description">Traveler, geek and animal lover.</span>-->
+    </div>
 
-
-  <!-- Add Child button -->
-  <ion-row no-padding no-margin>
-    <ion-col no-padding no-margin col-4></ion-col>
-    <ion-col no-padding no-margin text-center col-8>
-      <ion-item href="https://www.ionicframework.com">
-        <ion-label>
-          {{accountInfo.fio}}
-        </ion-label>
-      </ion-item>
-    </ion-col>
-    <ion-col col-3></ion-col>
-  </ion-row>
-
-  <!-- Edit/follow button -->
-  <ion-row no-padding no-margin>
-    <ion-col no-padding no-margin col-4></ion-col>
-      <ion-col no-padding no-margin text-center col-8>
-        <ion-item href="https://www.ionicframework.com">
-          <ion-label>
-            My children
-          </ion-label>
-        </ion-item>
-      <!--<button class="edit-button" ion-button block color="light" (click)="goEditProfile()">-->
-        <!--<ion-icon name="create"></ion-icon> &nbsp; Edit your profile</button>-->
-    </ion-col>
-    <ion-col col-3></ion-col>
-  </ion-row>
-
-  <!-- Profile info -->
-  <!--<div padding>-->
-    <!--<p no-margin no-padding><b>Can Delibas</b></p>-->
-  <!--</div>-->
-
-  <!-- Segments -->
-  <button ion-button class="my-children centered-text"  (click)="childSaveEdit()">
-    <p>My Children</p>
-    <ion-icon style="padding-left: 2%" name="ios-add-outline"></ion-icon>
-  </button>
-
-  <!-- Segment content -->
-  <div [ngSwitch]="profile_segment">
-
-    <ion-list>
-
-      <div *ngFor="let i of childService.parentChildListValueChanges$ | async">
-        <button ion-item *ngIf="i.id != 0" (click)="childSaveEdit(i)">
-          <ion-row text-center>
-            <ion-col col-3 class="grid_img">
-              <img [src]="(i.img | secure) | async" class="child-avatar" alt=""
-                   onerror="this.src='assets/src/unknown.png'">
-            </ion-col>
-            <ion-col class="centered-text">
-              <p>{{i.fio}}</p>
-            </ion-col>
-          </ion-row>
-        </button>
-      </div>
-    </ion-list>
+    <div>
+      <ion-list>
+        <ion-list-header>
+          {{'PROFILE.add_child' | translate}}
+          <button item-end ion-button icon-only clear (click)="childSaveEdit(null)">
+            <ion-icon color="primary" name="add-circle"></ion-icon>
+          </button>
+        </ion-list-header>
+        <div *ngFor="let i of childService.parentChildListValueChanges$ | async">
+          <button ion-item *ngIf="i.id != 0" (click)="childSaveEdit(i)">
+            <ion-row text-center>
+              <ion-col col-3 class="grid_img">
+                <img class="post-profile-image"  [src]="(i.img | secure) | async" alt=""
+                     onerror="this.src='assets/src/unknown.png'">
+              </ion-col>
+              <ion-col class="centered-text">
+                <p>{{i.fio}}</p>
+              </ion-col>
+            </ion-row>
+          </button>
+        </div>
+      </ion-list>
+    </div>
   </div>
-
-
 </ion-content>

@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
-import {MENU_ITEMS, MenuItem} from "./pages-menu";
-import {takeWhile} from "rxjs/internal/operators";
-import {CanIProvider} from "../security/services/can.i.provider";
+import {MENU_ITEMS, MenuItem} from './pages-menu';
+import {takeWhile} from 'rxjs/internal/operators';
+import {CanIProvider} from '../security/services/can.i.provider';
 
 @Component({
   selector: 'app-pages',
@@ -9,7 +9,6 @@ import {CanIProvider} from "../security/services/can.i.provider";
   styleUrls: ['./pages.component.scss']
 })
 export class PagesComponent implements OnDestroy {
-  //menu = MENU_ITEMS;
 
   menu: MenuItem[] = [];
 
