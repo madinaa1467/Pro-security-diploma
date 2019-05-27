@@ -29,7 +29,9 @@ public class FcmServiceImpl implements FcmService {
   private ApnsConfig apnsConfig;
 
   public FcmServiceImpl(String path) {
+
     Path p = Paths.get(path);
+
     try (InputStream stream = Files.newInputStream(p)) {
       FirebaseOptions options = new FirebaseOptions.Builder()
         .setCredentials(GoogleCredentials.fromStream(stream)).build();
@@ -63,7 +65,7 @@ public class FcmServiceImpl implements FcmService {
       .setNotification(new Notification("Personal Message", "A Personal Message"))
       .build();
 
-    String response = FirebaseMessaging.getInstance().sendAsync(message).get();
+    String response = instance.sendAsync(message).get();
     System.out.println("Sent message: " + response);
   }
 
