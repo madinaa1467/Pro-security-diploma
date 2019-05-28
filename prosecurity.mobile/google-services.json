@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "371200360905",
+    "firebase_url": "https://pro-security.firebaseio.com",
+    "project_id": "pro-security",
+    "storage_bucket": "pro-security.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371200360905:android:0cf7875b4a92961f",
+        "android_client_info": {
+          "package_name": "kz.prosecurity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371200360905-gu7r55ukee8v6rk89gp5tligfihn5e7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHUbbugjm_hW38aNC2_t00qa4Yd-q944s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371200360905-gu7r55ukee8v6rk89gp5tligfihn5e7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

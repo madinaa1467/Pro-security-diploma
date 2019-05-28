@@ -17,7 +17,7 @@
     "@angular/animations": "5.2.11",
     "@angular/common": "5.2.11",
     "@angular/compiler": "5.2.11",
-    "@angular/compiler-cli": "5.2.11",
+    "@angular/compiler-cli": "^7.2.15",
     "@angular/core": "5.2.11",
     "@angular/forms": "5.2.11",
     "@angular/http": "5.2.11",
@@ -33,17 +33,19 @@
     "@ionic/storage": "2.2.0",
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^2.0.1",
-    "cordova-android": "6.0.0",
-    "cordova-ios": "4.3.1",
-    "cordova-plugin-camera": "2.4.1",
-    "cordova-plugin-compat": "1.2.0",
-    "cordova-plugin-crop": "0.4.0",
+    "cordova-android": "7.1.4",
+    "cordova-ios": "^5.0.1",
+    "cordova-plugin-camera": "^2.4.1",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-crop": "^0.4.0",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-file": "4.3.3",
-    "cordova-plugin-filepath": "1.5.4",
+    "cordova-plugin-file": "^4.3.3",
+    "cordova-plugin-filepath": "^1.5.4",
+    "cordova-plugin-firebase": "git+https://github.com/dpa99c/cordova-plugin-firebase.git#GH-1057-April-05-android-build-issue",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
+    "firebase": "^4.12.1",
     "ionic-angular": "3.9.2",
     "ionic-stepper": "^1.1.0",
     "ionic3-input-mask": "^0.20.5",
@@ -54,9 +56,10 @@
     "zone.js": "0.8.29"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.1",
+    "@ionic/app-scripts": "^3.2.4",
     "@ionic/cli-plugin-cordova": "1.4.0",
     "@ionic/cli-plugin-ionic-angular": "1.3.1",
+    "cordova-plugin-globalization": "^1.11.0",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
@@ -73,7 +76,9 @@
       "cordova-plugin-file": {},
       "cordova-plugin-filepath": {},
       "cordova-plugin-crop": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-globalization": {},
+      "cordova-plugin-firebase": {}
     }
   }
 }
