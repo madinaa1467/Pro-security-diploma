@@ -77,9 +77,10 @@ public interface AuthTestDao {
                          @Param("actual") int actual
   );
 
-  @Insert("insert into Event (action, date, child, actual) " +
-          "values (#{action}, #{date}, #{child}, #{actual})")
+  @Insert("insert into Event (action, entrance, date, child, actual) " +
+          "values (#{action}, #{entrance}, #{date}, #{child}, #{actual})")
   void insertEvent(@Param("action") String action,
+                   @Param("entrance") String entrance,
                    @Param("child") Long child,
                    @Param("date") Date date,
                    @Param("actual") int actual

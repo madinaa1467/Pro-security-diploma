@@ -5,33 +5,35 @@
 
   <nb-card-body class="m-3">
 
+
     <nb-accordion>
-      <nb-accordion-item>
+      <nb-accordion-item #item>
         <nb-accordion-item-header>Filter</nb-accordion-item-header>
         <nb-accordion-item-body>
 
-          <nb-select placeholder="Entrance" shape="rectangle" status="primary" [formControl]="selectedItemFormControl">
+          <form [formGroup]="filterForm">
+
+          <nb-select placeholder="Entrance" shape="rectangle" formControlName="entrance" outline status="primary">
             <nb-option>Clean</nb-option>
-            <nb-option value="1">Option 1</nb-option>
-            <nb-option value="2">Option 2</nb-option>
-            <nb-option value="3">Option 3</nb-option>
-            <nb-option value="4">Option 4</nb-option>
+            <nb-option *ngFor="let entry of entrances" value="{{entry}}">{{entry}}</nb-option>
           </nb-select>
 
-          <input type="text" nbInput fullWidth fieldSize="medium" placeholder="Name">
-          <input type="text" nbInput fullWidth fieldSize="medium" placeholder="Surname">
-          <input type="text" nbInput fullWidth fieldSize="medium" placeholder="Patronymic">
+          <input type="text" nbInput formControlName="childName" fullWidth status="primary" fieldSize="medium" placeholder="Child Name"/>
+          <input type="text" nbInput formControlName="childSurname" fullWidth status="primary" fieldSize="medium" placeholder="Child Surname"/>
+          <input type="text" nbInput formControlName="childPatronymic" fullWidth status="primary" fieldSize="medium" placeholder="Child Patronymic"/>
 
           <div>
-            <input nbInput placeholder="Form Picker" [nbDatepicker]="formcontrol" [formControl]="formControl">
-            <nb-datepicker #formcontrol [min]="minStart" [max]="maxStart"></nb-datepicker>
+            <input nbInput placeholder="Form Picker" [nbDatepicker]="formcontrol1" status="primary" formControlName="startDate">
+            <nb-datepicker #formcontrol1 [min]="minStart" [max]="maxStart"></nb-datepicker>
 
-            <input nbInput placeholder="Form Picker" [nbDatepicker]="formcontrol" [formControl]="formControl">
-            <nb-datepicker #formcontrol [min]="minEnd" [max]="maxEnd"></nb-datepicker>
+            <input nbInput placeholder="Form Picker" [nbDatepicker]="formcontrol2" status="primary" formControlName="endDate">
+            <nb-datepicker #formcontrol2 [min]="minEnd" [max]="maxEnd"></nb-datepicker>
           </div>
 
-          <button nbButton fullWidth shape="rectangle" outline >Info</button>
+          <button nbButton fullWidth shape="rectangle"  outline status="info" (click)="search()">Search</button>
+          <button nbButton fullWidth shape="rectangle"  outline status="info" (click)="clearFilter()">Clear Filter</button>
 
+          </form>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>

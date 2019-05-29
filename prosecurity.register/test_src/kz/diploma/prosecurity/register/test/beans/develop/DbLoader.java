@@ -20,10 +20,10 @@ public class DbLoader {
   final Logger logger = Logger.getLogger(getClass());
 
 
-  public BeanGetter<AuthTestDao> authTestDao;
+  private BeanGetter<AuthTestDao> authTestDao;
   public BeanGetter<IdGenerator> idGenerator;
-  public BeanGetter<PasswordEncoder> passwordEncoder;
-  public BeanGetter<SequenceDao> sequenceDao;
+  private BeanGetter<PasswordEncoder> passwordEncoder;
+  private BeanGetter<SequenceDao> sequenceDao;
 
 
   public void loadTestData() throws Exception {
@@ -80,7 +80,7 @@ public class DbLoader {
     logger.info("Finish loading persons");
   }
 
-  private void user(Long id, String accountName) throws Exception {
+  private void user(Long id, String accountName) {
     String encryptPassword = passwordEncoder.get().encode("1");
     String[] fio = "Пушкин Александр Сергеевич".split("\\s+");
     authTestDao.get().insertPerson(id, accountName, fio[0], fio[1], fio[2],accountName+"@gmail.com", encryptPassword);
@@ -115,10 +115,10 @@ public class DbLoader {
     authTestDao.get().insertParentChild(parentID, id, 1, actual);
 
     SimpleDateFormat sdfEvent = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    authTestDao.get().insertEvent("in", id, new Timestamp(sdfEvent.parse("2007-02-16 07:38:40").getTime()), actual);
-    authTestDao.get().insertEvent("out", id, new Timestamp(sdfEvent.parse("2007-02-16 12:38:55").getTime()), actual);
-    authTestDao.get().insertEvent("in", id, new Timestamp(sdfEvent.parse("2007-02-17 08:00:55").getTime()), actual);
-    authTestDao.get().insertEvent("out", id, new Timestamp(sdfEvent.parse("2007-02-17 13:10:22").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2007-02-16 07:38:40").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2007-02-16 12:38:55").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2007-02-17 08:00:55").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2007-02-17 13:10:22").getTime()), actual);
     authTestDao.get().insertEventWithoutDate("out", id,  actual);
 
   }

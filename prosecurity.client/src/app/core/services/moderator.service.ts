@@ -10,14 +10,11 @@ export class ModeratorService {
   constructor(private http: HttpService) {
   }
 
-  getEventList(){
+  getEventList(filter : EventFilterWeb){
 
-    let filter : EventFilterWeb = new EventFilterWeb();
+    // let filter : EventFilterWeb = new EventFilterWeb();
 
-    filter.limit = 15;
-    filter.offset = 0;
-
-    console.log('Call web/moderator');
+    console.log('Call web/moderator filter:', filter);
     return this.http.get('/web/moderator',
       {filter: JSON.stringify(filter)})
       .toPromise().then(resp => {
@@ -26,6 +23,20 @@ export class ModeratorService {
         console.error(resp);
       return (<any> resp).map((r) =>
         EventWeb.create(r)
+      );
+    });
+  }
+
+
+  getEntranceList(){
+    console.log('Call web/entrances');
+    return this.http.get('/web/entrances')
+      .toPromise().then(resp => {
+      console.log("Response from web/entrances:  ", resp);
+      if (!resp)
+        console.error(resp);
+      return (<any> resp).map((r) =>
+        (r)
       );
     });
   }

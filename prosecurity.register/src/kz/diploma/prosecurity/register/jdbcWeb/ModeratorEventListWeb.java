@@ -30,19 +30,23 @@ public class ModeratorEventListWeb extends EventListConnectionWeb {
             sql.where("date >= :startDate");
             sql.setValue("startDate", filter.startDate);
         }
+        if (filter.entrance != null) {
+            sql.where("lower(entrance) like :entrance");
+            sql.setValue("entrance", "%" + filter.entrance.toLowerCase() + "%");
+        }
         if (filter.endDate != null) {
             sql.where("date < :endDate");
             sql.setValue("endDate", filter.endDate);
         }
-        if(filter.childName != null && filter.childName != ""){
+        if(filter.childName != null && !"".equals(filter.childName)){
             sql.where("lower(c.name) like :childName");
             sql.setValue("childName", "%" + filter.childName.toLowerCase() + "%");
         }
-        if(filter.childSurname != null && filter.childSurname != ""){
+        if(filter.childSurname != null && !"".equals(filter.childSurname)){
             sql.where("lower(c.surname) like :childSurname");
             sql.setValue("childSurname", "%" + filter.childSurname.toLowerCase() + "%");
         }
-        if(filter.childPatronymic != null && filter.childPatronymic != ""){
+        if(filter.childPatronymic != null && !"".equals(filter.childPatronymic)){
             sql.where("lower(c.patronymic) like :childPatronymic");
             sql.setValue("childPatronymic", "%" + filter.childPatronymic.toLowerCase() + "%");
         }
@@ -58,7 +62,7 @@ public class ModeratorEventListWeb extends EventListConnectionWeb {
     @Override
     void offset() {
         sql.offset(":offset");
-        sql.setValue("offset", filter.offset * filter.limit);
+        sql.setValue("offset", filter.offset);
     }
     @Override
     void orderBy() {

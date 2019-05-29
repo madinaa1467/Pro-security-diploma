@@ -12,4 +12,5 @@ public class EventFilterWeb {
   public String childName;
   public String childSurname;
   public String childPatronymic;
+  public String entrance;
 }
