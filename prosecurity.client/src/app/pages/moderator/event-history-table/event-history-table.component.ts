@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {SmartTableData} from '../../../core/data/smart-table';
+import {ModeratorService} from "../../../core/services/moderator.service";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {NbDateService} from "@nebular/theme";
 
 @Component({
   selector: 'app-event-history-table',
@@ -10,21 +13,22 @@ import {SmartTableData} from '../../../core/data/smart-table';
 export class EventHistoryTableComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
+  formControl = new FormControl(new Date());
+  selectedItemFormControl = new FormControl();
+
+  minStart: Date;
+  maxStart: Date;
+  minEnd: Date;
+  maxEnd: Date;
+
+  filterForm: FormGroup;
 
   settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+    hideSubHeader: true,
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
     },
     columns: {
       firstName: {
@@ -39,27 +43,41 @@ export class EventHistoryTableComponent implements OnInit {
         title: 'Patronymic',
         type: 'string',
       },
-      username: {
-        title: 'Username',
+      parentFio: {
+        title: 'Parent',
         type: 'string',
+        filter: false
       },
-      enterance: {
-        title: 'enterance',
+      entrance: {
+        title: 'Entrance',
         type: 'string',
       },
       date: {
-        title: 'date',
+        title: 'Time',
         type: 'date',
       },
     },
   };
 
-  constructor(private service: SmartTableData) {
-  }
+  constructor(private service: SmartTableData, private moderatorService: ModeratorService,
+              protected dateService: NbDateService<Date>,
+              private fb: FormBuilder) {
+  this.minStart = this.dateService.addMonth(this.dateService.today(), -1);
+  this.maxStart = this.dateService.addMonth(this.dateService.today(), 1);
+}
 
   ngOnInit() {
-    const data = this.service.getData();
-    this.source.load(data);
+    this.buildForm();
+
+    let data = [];
+    this.moderatorService.getEventList().then(
+      res=>{
+        console.log('Cheeeeeeck', res);
+        data = res;
+        this.source.load(data);
+      }
+    );
+
   }
 
 
@@ -70,4 +88,33 @@ export class EventHistoryTableComponent implements OnInit {
       event.confirm.reject();
     }
   }
+
+  buildForm() {
+    this.filterForm = this.fb.group({
+      'childName': null,
+      'childSurname': null,
+      'childPatronymic': null,
+      '': null,
+    });
+
+    this.filterForm.valueChanges.subscribe(data => {
+      this.onValueChanged(data);
+    });
+
+    this.onValueChanged();
+
+  }
+
+  onValueChanged(data?: any) {
+    if (!this.filterForm) {
+      return;
+    }
+    const form = this.filterForm;
+
+  }
+
+
+
+
+
 }

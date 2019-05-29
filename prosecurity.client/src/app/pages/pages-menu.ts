@@ -1,5 +1,5 @@
 import {NbMenuItem} from "@nebular/theme";
-import {UserCan} from "../core/data/users";
+import {UserCan} from "../core/model/UserCan";
 
 export class MenuItem extends NbMenuItem {
   permission?: string | string[]

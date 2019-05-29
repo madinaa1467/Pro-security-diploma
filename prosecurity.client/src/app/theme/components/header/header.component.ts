@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NbMenuService, NbSidebarService} from "@nebular/theme";
 import {LayoutService} from "../../../core/utils";
-import {UserCan, UserInfo, UserService} from "../../../core/data/users";
+import {UserCan} from "../../../core/model/UserCan";
+import {UserInfo} from "../../../core/model/auth/user-info";
+import {UserService} from "../../../core/data/users";
 
 @Component({
   selector: 'app-header',

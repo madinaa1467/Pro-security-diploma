@@ -1,8 +1,9 @@
 import {CanIProvider} from "../../security/index";
 import {Observable} from "rxjs/Rx";
 import {Injectable} from "@angular/core";
-import {UserInfo, UserService} from "../data/users";
+import {UserService} from "../data/users";
 import {map} from "rxjs/internal/operators";
+import {UserInfo} from "../model/auth/user-info";
 
 @Injectable()
 export class CustomCanIProvider implements CanIProvider {

@@ -14,6 +14,7 @@ import {AuthService, TokenLocalStorage, TokenService, TokenStorage} from "./auth
 import {SampleGuard} from "./guards";
 import {UserActivityData, UserActivityService} from "./data/user-activity";
 import {PeriodsService} from "./data/periods.service";
+import {ModeratorService} from "./services/moderator.service";
 
 export function initApp(appLoaderService: AppLoaderService) {
   return () => appLoaderService.initApp();
@@ -22,6 +23,7 @@ export function initApp(appLoaderService: AppLoaderService) {
 const DATA_SERVICES = [
   UserService,
   AuthService,
+  ModeratorService,
   TokenService,
   {provide: SmartTableData, useClass: SmartTableService},
   {provide: UserInfoStorage, useClass: UserInfoLocalStorage},

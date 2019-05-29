@@ -1,7 +1,8 @@
 package kz.diploma.prosecurity.controller.controller;
 
-import kz.diploma.prosecurity.controller.model.ToSave;
-import kz.diploma.prosecurity.controller.register.ParentRegister;
+import kz.diploma.prosecurity.controller.model.EventFilterWeb;
+import kz.diploma.prosecurity.controller.model.EventWeb;
+import kz.diploma.prosecurity.controller.register.WebRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
 import kz.greetgo.depinject.core.Bean;
@@ -10,22 +11,28 @@ import kz.greetgo.mvc.annotations.Json;
 import kz.greetgo.mvc.annotations.Par;
 import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
-import kz.greetgo.mvc.annotations.on_methods.OnPost;
+import kz.greetgo.mvc.annotations.on_methods.OnGet;
+
+import java.util.List;
 
 
 @Bean
 @ControllerPrefix("/web")
 public class WebController implements Controller {
 
-  public BeanGetter<ParentRegister> parentRegister;
+  public BeanGetter<WebRegister> webRegister;
 
   @ToJson
   @PublicAccess
-  @OnPost("/register")
-  public Long register(@Json @Par("toSave") ToSave toSave) {
-    return parentRegister.get().register(toSave);
+  @OnGet("/parent")
+  public List<EventWeb> parent(@Json @Par("filter") EventFilterWeb filter) {
+    return webRegister.get().getParentEventList(filter);
   }
 
-
-
+  @ToJson
+  @PublicAccess
+  @OnGet("/moderator")
+  public List<EventWeb> moderator(@Json @Par("filter") EventFilterWeb filter) {
+    return webRegister.get().getModeratorEventList(filter);
+  }
 }

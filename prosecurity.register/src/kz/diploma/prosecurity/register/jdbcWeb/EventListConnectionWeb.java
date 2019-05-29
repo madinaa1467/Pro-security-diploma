@@ -1,6 +1,6 @@
 package kz.diploma.prosecurity.register.jdbcWeb;
 
-import kz.diploma.prosecurity.controller.model.EventFilter;
+import kz.diploma.prosecurity.controller.model.EventFilterWeb;
 import kz.diploma.prosecurity.controller.model.EventWeb;
 import kz.greetgo.db.DbType;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class EventListConnectionWeb extends AbstractEventListLoaderWeb<List<EventWeb>> {
 
-    public EventListConnectionWeb(EventFilter filter) {
+    public EventListConnectionWeb(EventFilterWeb filter) {
         super(filter);
     }
 
@@ -36,11 +36,16 @@ public abstract class EventListConnectionWeb extends AbstractEventListLoaderWeb<
         ret.id = rs.getLong("id");
         ret.date = new java.util.Date(rs.getTimestamp("date").getTime());
         ret.action = rs.getString("action");
+        ret.entrance = rs.getString("entrance");
         ret.childId = rs.getLong("childId");
+        ret.firstName = rs.getString("firstName");
+        ret.lastName = rs.getString("lastName");
+        ret.patronymic = rs.getString("patronymic");
         ret.fio = rs.getString("fio");
         ret.gender = rs.getString("gender");
         ret.img = rs.getString("img");
-        ret.parentId = rs.getLong("parent");
+        ret.parentId = rs.getLong("parentId");
+        ret.parentFio = rs.getString("parentFio");
         return ret;
     }
 

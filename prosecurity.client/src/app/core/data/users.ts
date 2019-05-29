@@ -3,44 +3,8 @@ import {BehaviorSubject, Observable, of as observableOf} from "rxjs/index";
 import {filter, share} from "rxjs/operators";
 import {map, tap} from "rxjs/internal/operators";
 import {HttpService} from "../../http/services";
+import {UserInfo} from "../model/auth/user-info";
 
-export class UserInfo {
-  public displayName: string;
-  public username: string;
-  public img: string;
-  public role: string;
-  public cans: Set<string>;
-
-  public static of(a: any): UserInfo {
-    const ret: UserInfo = new UserInfo();
-    ret.assign(a);
-    return ret;
-  }
-
-  assign(a: any) {
-    this.displayName = a.displayName;
-    this.username = a.username;
-    this.img = a.img;
-    this.role = a.role;
-    this.cans = (a.cans instanceof Array) ? new Set(a.cans) : new Set();
-  }
-
-}
-
-export enum UserCan {
-
-  USER = "USER",
-  MODERATOR = "MODERATOR",
-  ADMIN = "ADMIN",
-
-  VIEW_PARENT = "VIEW_PARENT",
-  VIEW_CHILD = "VIEW_CHILD",
-  VIEW_MENU = "VIEW_MENU",
-  VIEW_RECENT_EVENT_LIST = "VIEW_RECENT_EVENT_LIST",
-  VIEW_EVENT_LIST = "VIEW_EVENT_LIST",
-  VIEW_EDIT_MODERATOR = "VIEW_EDIT_MODERATOR",
-  VIEW_CREATE_MODERATOR = "VIEW_CREATE_MODERATOR"
-}
 
 export abstract class UserInfoStorage {
   abstract get(): UserInfo;

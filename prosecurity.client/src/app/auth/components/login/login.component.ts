@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../../core/auth/services";
-import {UserInfo, UserService} from "../../../core/data/users";
+import {UserService} from "../../../core/data/users";
 import {catchError, switchMap} from "rxjs/internal/operators";
+import {UserInfo} from "../../../core/model/auth/user-info";
 
 @Component({
   selector: 'app-login',

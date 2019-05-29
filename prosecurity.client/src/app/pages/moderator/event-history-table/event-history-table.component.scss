@@ -1,3 +1,13 @@
 nb-card {
   transform: translate3d(0, 0, 0);
 }
+:host {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40rem;
+}
+
+:host input {
+  width: 26.875rem;
+}

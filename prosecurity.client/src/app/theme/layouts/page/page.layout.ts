@@ -7,7 +7,7 @@ import {
   NbThemeService
 } from "@nebular/theme";
 import {delay, takeWhile, withLatestFrom} from "rxjs/internal/operators";
-import {UserCan} from "../../../core/data/users";
+import {UserCan} from "../../../core/model/UserCan";
 
 @Component({
   selector: 'app-page-layout',
