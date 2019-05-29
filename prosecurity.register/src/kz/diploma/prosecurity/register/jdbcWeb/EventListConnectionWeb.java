@@ -35,6 +35,7 @@ public abstract class EventListConnectionWeb extends AbstractEventListLoaderWeb<
         EventWeb ret = new EventWeb();
         ret.id = rs.getLong("id");
         ret.date = new java.util.Date(rs.getTimestamp("date").getTime());
+        ret.time = rs.getString("time");
         ret.action = rs.getString("action");
         ret.entrance = rs.getString("entrance");
         ret.childId = rs.getLong("childId");

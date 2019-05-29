@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ThemeModule} from "./theme/theme.module";
 import {CoreModule} from "./core/core.module";
 import {HttpModule} from "./http";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {HttpModule} from "./http";
     HttpModule,
     AppRoutingModule,
     ThemeModule.forRoot(),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NbDialogService} from "@nebular/theme";
-import {ClientData} from "../../model/ClientData";
+import {Child} from "../../core/model/Child";
 
 @Component({
   selector: 'app-profile',
@@ -17,14 +17,13 @@ export class ProfileComponent implements OnInit {
 
   stepperDataArr: string[] = [];
 
-  client: ClientData = new ClientData();
+  child: Child = new Child();
+
 
   constructor(private fb: FormBuilder, private dialogService: NbDialogService) {
-    this.client.midname = "Ивановичь";
-    this.client.surname = "Иванов";
-    this.client.name = "Иван";
-    this.client.addFakePhone();
-    this.client.addFakeTickets();
+    this.child.patronymic = 'Ивановичь';
+    this.child.surname = 'Иванов';
+    this.child.name = 'Иван';
 
     this.pushStepperTestData();
   }

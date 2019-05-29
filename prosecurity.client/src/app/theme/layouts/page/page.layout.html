@@ -3,7 +3,7 @@
     <app-header></app-header>
   </nb-layout-header>
 
-  <nb-sidebar *canI="[VIEW_MENU]" class="menu-sidebar"
+  <nb-sidebar *canI="[ADMIN]" class="menu-sidebar"
               [tag]="tag"
               responsive
               [end]="sideBarEnd">
@@ -18,7 +18,7 @@
     <app-footer></app-footer>
   </nb-layout-footer>
 
-  <nb-sidebar *canI="[VIEW_RECENT_EVENT_LIST]" class="settings-sidebar"
+  <nb-sidebar *canI="[MODERATOR]" class="settings-sidebar"
               tag="settings-sidebar"
               state="collapsed"
               fixed

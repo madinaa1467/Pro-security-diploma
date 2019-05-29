@@ -14,8 +14,8 @@ export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
 
-  VIEW_MENU: UserCan = UserCan.VIEW_MENU;
-  VIEW_RECENT_EVENT_LIST: UserCan = UserCan.VIEW_RECENT_EVENT_LIST;
+  VIEW_MENU: UserCan = UserCan.ADMIN;
+  MODERATOR: UserCan = UserCan.MODERATOR;
 
   placeholder: string = 'assets/images/unknown.png';
 

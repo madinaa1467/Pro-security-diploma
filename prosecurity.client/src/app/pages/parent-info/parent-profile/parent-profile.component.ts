@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ClientData} from "../../../model/ClientData";
+import {Child} from "../../../core/model/Child";
 
 @Component({
   selector: 'app-parent-profile',
@@ -8,14 +8,12 @@ import {ClientData} from "../../../model/ClientData";
 })
 export class ParentProfileComponent implements OnInit {
 
-  client: ClientData = new ClientData();
+  child: Child = new Child();
 
   constructor() {
-    this.client.midname = 'Ивановичь';
-    this.client.surname = 'Иванов';
-    this.client.name = 'Иван';
-    this.client.addFakePhone();
-    this.client.addFakeTickets();
+    this.child.patronymic = 'Ивановичь';
+    this.child.surname = 'Иванов';
+    this.child.name = 'Иван';
   }
 
   ngOnInit() {

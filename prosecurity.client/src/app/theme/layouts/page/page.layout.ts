@@ -16,8 +16,8 @@ import {UserCan} from "../../../core/model/UserCan";
 })
 export class PageLayoutComponent implements OnDestroy {
 
-  VIEW_MENU: UserCan = UserCan.VIEW_MENU;
-  VIEW_RECENT_EVENT_LIST: UserCan = UserCan.VIEW_RECENT_EVENT_LIST;
+  ADMIN: UserCan = UserCan.ADMIN;
+  MODERATOR: UserCan = UserCan.MODERATOR;
 
   sideBarEnd: boolean = false;
   tag: string = 'menu-sidebar';

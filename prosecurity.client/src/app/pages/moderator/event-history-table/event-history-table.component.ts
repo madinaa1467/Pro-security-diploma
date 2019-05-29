@@ -20,7 +20,7 @@ export class EventHistoryTableComponent implements OnInit {
   minEnd: Date;
   maxEnd: Date;
   data:EventWeb[];
-  eventsPerPage = 9;
+  eventsPerPage = 15;
   @ViewChild('item') accordion;
 
   filterForm: FormGroup;
@@ -61,9 +61,14 @@ export class EventHistoryTableComponent implements OnInit {
         type: 'string',
         filter: false
       },
-      date: {
+      time: {
         title: 'Time',
-        type: 'date',
+        type: 'string',
+        filter: false
+      },
+      action: {
+        title: 'Action',
+        type: 'string',
         filter: false
       },
     },
@@ -157,8 +162,8 @@ export class EventHistoryTableComponent implements OnInit {
       res=>{
         this.source.load(res);
         this.data = res;
-      }
-    );
+      });
+    this.accordion.close();
   }
 
   pageChange(pageIndex) {
@@ -195,6 +200,5 @@ export class EventHistoryTableComponent implements OnInit {
     this.filterForm.controls['endDate'].patchValue(null);
     this.filterForm.controls['offset'].patchValue(0);
     this.search();
-    this.accordion.close();
   }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @ControllerPrefix("/web")
 public class WebController implements Controller {
 
-  private BeanGetter<WebRegister> webRegister;
+  public BeanGetter<WebRegister> webRegister;
 
   @ToJson
   @PublicAccess
@@ -37,8 +37,21 @@ public class WebController implements Controller {
   }
 
   @ToJson
+  @PublicAccess
+  @OnGet("/recentEvents")
+  public List<EventWeb> getRecentEvents(@Json @Par("filter") EventFilterWeb filter) {
+    return webRegister.get().getModeratorEventList(filter);
+  }
+
+  @ToJson
   @OnGet("/entrances")
-  public List<String> moderator() {
+  public List<String> entrances() {
     return webRegister.get().getParentEntrancesList();
+  }
+
+  @ToJson
+  @OnGet("/lastEvent")
+  public EventWeb lastEventChild() {
+    return webRegister.get().getLastEvent();
   }
 }

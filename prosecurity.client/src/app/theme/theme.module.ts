@@ -14,7 +14,7 @@ import {
   NbLayoutModule,
   NbListModule,
   NbMenuModule,
-  NbSidebarModule,
+  NbSidebarModule, NbSpinnerModule,
   NbStepperModule,
   NbThemeModule,
   NbUserModule
@@ -26,6 +26,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security";
 import {SecurePipe} from './pipes/secure.pipe';
 import {Ng2SmartTableModule} from "ng2-smart-table";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -73,7 +74,7 @@ const NB_THEME_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [...BASE_MODULES, ...NB_MODULES],
+  imports: [...BASE_MODULES, ...NB_MODULES, NbSpinnerModule, InfiniteScrollModule],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
   declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...ENTRY_COMPONENTS]

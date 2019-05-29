@@ -2,14 +2,18 @@
 
   <nb-card-body>
     <div class="picture">
-      <div class="no-profile"></div>
+        <img class="no-profile" [src]="(event?.img | secure | async) || placeholder">
     </div>
 
     <div class="details">
       <div class="title">
-        <p>Фамилия : {{client.surname}}</p>
-        <p>Имя : {{client.name}}</p>
-        <p>Отчество : {{client.midname}}</p>
+        <p>Surname : {{event.lastName}}</p>
+        <p>Name : {{event.firstName}}</p>
+        <p>Patronymic : {{event.patronymic}}</p>
+        <p>Date : {{event.date | date: 'fullDate'}}</p>
+        <p>Time : {{event.date | date: 'fullTime'}}</p>
+        <p>Action : {{event.action}}</p>
+        <p>Entrance : {{event.entrance}}</p>
       </div>
     </div>
   </nb-card-body>

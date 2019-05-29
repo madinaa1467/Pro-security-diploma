@@ -33,5 +33,10 @@ public class WebRegisterImpl implements WebRegister {
     return webDao.get().getParentEntrancesList();
   }
 
+   @Override
+  public EventWeb getLastEvent() {
+    return webDao.get().getLastEvent();
+  }
+
 
 }

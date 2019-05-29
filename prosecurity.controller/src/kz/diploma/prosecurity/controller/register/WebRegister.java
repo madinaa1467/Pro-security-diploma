@@ -9,4 +9,5 @@ public interface WebRegister {
     List<EventWeb> getModeratorEventList(EventFilterWeb filter);
     List<EventWeb> getParentEventList(EventFilterWeb filter);
     List<String> getParentEntrancesList();
+    EventWeb getLastEvent();
 }

@@ -10,9 +10,9 @@
 
         <div class="details">
           <div class="title">
-            <p>Фамилия : {{client.surname}}</p>
-            <p>Имя : {{client.name}}</p>
-            <p>Отчество : {{client.midname}}</p>
+            <p>Фамилия : {{child.surname}}</p>
+            <p>Имя : {{child.name}}</p>
+            <p>Отчество : {{child.patronymic}}</p>
           </div>
         </div>
       </nb-card-body>
@@ -90,13 +90,13 @@
       </nb-card-header>
       <nb-card-body>
         <nb-list>
-          <nb-list-item *ngFor="let phone of client.phoneList">
-            <div style="position: relative">
-              <p>{{ phone.number }}</p>
-              <nb-badge style="width: 25px" text="{{phone.callCount}}" status="info"
-                        position="bottom top right"></nb-badge>
-            </div>
-          </nb-list-item>
+<!--          <nb-list-item *ngFor="let phone of client.phoneList">-->
+<!--            <div style="position: relative">-->
+<!--              <p>{{ phone.number }}</p>-->
+<!--              <nb-badge style="width: 25px" text="{{phone.callCount}}" status="info"-->
+<!--                        position="bottom top right"></nb-badge>-->
+<!--            </div>-->
+<!--          </nb-list-item>-->
         </nb-list>
       </nb-card-body>
     </nb-card>
@@ -112,9 +112,10 @@
       nbInfiniteList
       [threshold]="500"
       (bottomThreshold)="loadNextTicket()">
-      <nb-list-item *ngFor="let ticket of client.tickets">
-        <app-event-history [ticket]="ticket"></app-event-history>
-      </nb-list-item>
+
+
+
+
     </nb-list>
   </nb-card>
 
@@ -125,11 +126,11 @@
       </nb-card-header>
       <nb-card-body>
         <nb-list>
-          <
-          <nb-list-item *ngFor="let ticket of client.tickets">
-            <p>{{ticket.startDate| date:'dd-MM-yyyy'}} | {{ client.phoneList[0].number }}</p>
 
-          </nb-list-item>
+
+
+
+
         </nb-list>
       </nb-card-body>
     </nb-card>

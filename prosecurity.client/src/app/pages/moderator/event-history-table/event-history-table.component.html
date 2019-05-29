@@ -23,10 +23,10 @@
           <input type="text" nbInput formControlName="childPatronymic" fullWidth status="primary" fieldSize="medium" placeholder="Child Patronymic"/>
 
           <div>
-            <input nbInput placeholder="Form Picker" [nbDatepicker]="formcontrol1" status="primary" formControlName="startDate">
+            <input nbInput placeholder="Start from" [nbDatepicker]="formcontrol1" status="primary" formControlName="startDate">
             <nb-datepicker #formcontrol1 [min]="minStart" [max]="maxStart"></nb-datepicker>
 
-            <input nbInput placeholder="Form Picker" [nbDatepicker]="formcontrol2" status="primary" formControlName="endDate">
+            <input nbInput placeholder="End to" [nbDatepicker]="formcontrol2" status="primary" formControlName="endDate">
             <nb-datepicker #formcontrol2 [min]="minEnd" [max]="maxEnd"></nb-datepicker>
           </div>
 

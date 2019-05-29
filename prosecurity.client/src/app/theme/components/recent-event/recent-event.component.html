@@ -2,7 +2,6 @@
   <nb-card-header>
     <span>User Activity</span>
     <div class="dropdown ghost-dropdown" ngbDropdown>
-      <!--btn-success-->
       <button type="button" class="btn btn-sm btn-primary" ngbDropdownToggle>
         {{ type }}
       </button>
@@ -16,32 +15,26 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <ul class="user-activity-list">
-      <li *ngFor="let c of recent">
-        <nb-user [picture]="(user?.img | secure | async) || placeholder" [name]="c.user.name" [title]="c.type"
-                 size="large"></nb-user>
-        <span class="time">{{ c.time | date: 'shortTime' }}</span>
-      </li>
 
-      <!--<li *ngFor="let item of userActivity">
-        <div class="visited-date">
-          {{ item.date }}
-        </div>
-        <div class="visited-pages-count">
-          <div class="title">Pages Visit</div>
-          <div class="value">{{ item.pagesVisitCount }}</div>
-        </div>
-        <div class="visited-percentages">
-          <div class="title">New visits, %</div>
-          <div class="delta value"
-               [class.up]="item.deltaUp"
-               [class.down]="!item.deltaUp">
-            {{ item.newVisits }}%
-          </div>
-        </div>
-      </li>-->
+    <div class="search-results"
+         infinite-scroll
+         [infiniteScrollDistance]="scrollDistance"
+         [infiniteScrollUpDistance]="scrollUpDistance"
+         [infiniteScrollThrottle]="throttle"
+         [scrollWindow]="false"
+         (scrolled)="onScrollDown($event)"
+         (scrolledUp)="onUp($event)">
+
+      <ul class="user-activity-list">
+        <li *ngFor="let c of recent">
+          <nb-user [picture]="(c?.img | secure | async) || placeholder" [name]="c.action" [title]="c.fio"
+                   size="large"></nb-user>
+          <span class="time">{{ c.date | date: 'shortTime' }}</span>
+        </li>
+
+      </ul>
 
 
-    </ul>
+    </div>
   </nb-card-body>
 </nb-card>

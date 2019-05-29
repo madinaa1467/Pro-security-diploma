@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ClientData} from '../../../model/ClientData';
+import {ModeratorService} from "../../../core/services/moderator.service";
+import {EventWeb} from "../../../core/model/EventWeb";
 
 @Component({
   selector: 'app-profile-info',
@@ -7,14 +8,13 @@ import {ClientData} from '../../../model/ClientData';
   styleUrls: ['./profile-info.component.scss']
 })
 export class ProfileInfoComponent implements OnInit {
-  client: ClientData = new ClientData();
+  event: EventWeb;
+  placeholder: string = 'assets/images/unknown.png';
 
-  constructor() {
-    this.client.midname = 'Ивановичь';
-    this.client.surname = 'Иванов';
-    this.client.name = 'Иван';
-    this.client.addFakePhone();
-    this.client.addFakeTickets();
+  constructor(private moderatorService: ModeratorService) {
+    this.moderatorService.getLastEvent().then(res=>{
+      this.event = res;
+    });
   }
 
   ngOnInit() {

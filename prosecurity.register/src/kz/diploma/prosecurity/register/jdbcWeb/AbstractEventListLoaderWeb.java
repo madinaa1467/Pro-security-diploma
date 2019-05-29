@@ -22,6 +22,7 @@ public abstract class AbstractEventListLoaderWeb<T> implements ConnectionCallbac
     void select(){
         sql.select("e.id")
                 .select("to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as date")
+                .select("to_char(e.date, 'YYYY-MM-DD HH24:MI:SS') as time")
                 .select("e.action")
                 .select("e.entrance")
                 .select("c.id as childId")
