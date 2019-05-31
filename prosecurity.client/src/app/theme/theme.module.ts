@@ -23,7 +23,14 @@ import {
 } from "@nebular/theme";
 import {CORPORATE_THEME} from "./styles/theme.corporate";
 import {PageLayoutComponent} from "./layouts";
-import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsButtonComponent} from "./components";
+import {
+  FooterComponent,
+  HeaderComponent,
+  LayoutDirectionSwitcherComponent,
+  RecentEventComponent,
+  SwitcherComponent,
+  ToggleSettingsButtonComponent,
+} from "./components";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security";
 import {SecurePipe} from './pipes/secure.pipe';
@@ -58,7 +65,14 @@ const NB_MODULES = [
 
 ];
 
-const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
+const COMPONENTS = [
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
+  PageLayoutComponent,
+  HeaderComponent,
+  FooterComponent,
+  ToggleSettingsButtonComponent,
+  RecentEventComponent];
 
 const ENTRY_COMPONENTS = [];
 
