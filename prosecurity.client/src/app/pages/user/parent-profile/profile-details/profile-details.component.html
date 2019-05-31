@@ -1,0 +1,21 @@
+<nb-card size="small" aaccent="info">
+
+  <nb-card-header>Personal Information</nb-card-header>
+
+  <nb-card-body>
+    <div class="picture">
+      <img class="no-profile" [src]="(user?.img | secure | async) || placeholder">
+    </div>
+
+    <div class="details">
+      <div class="title">
+        <p>Full Name : {{user.displayName}}</p>
+        <p>Username : {{user.username}}</p>
+        <p>Role : {{user.role}}</p>
+      </div>
+    </div>
+  </nb-card-body>
+
+  <nb-card-header>Buttons to edit</nb-card-header>
+
+</nb-card>

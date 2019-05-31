@@ -1,0 +1,39 @@
+<nb-card>
+  <nb-card-header>
+    Smart Table
+  </nb-card-header>
+
+  <nb-card-body class="m-3">
+
+
+    <nb-accordion>
+      <nb-accordion-item #item>
+        <nb-accordion-item-header>Filter</nb-accordion-item-header>
+        <nb-accordion-item-body>
+
+          <form [formGroup]="filterForm">
+
+            <nb-select placeholder="Children" shape="rectangle" formControlName="childId" outline status="primary">
+              <nb-option *ngFor="let child of children" value="{{child.id}}">{{child.fio}}</nb-option>
+            </nb-select>
+
+            <div>
+              <input nbInput placeholder="Start from" [nbDatepicker]="formcontrol1" status="primary" formControlName="startDate">
+              <nb-datepicker #formcontrol1 [min]="minStart" [max]="maxStart"></nb-datepicker>
+
+              <input nbInput placeholder="End to" [nbDatepicker]="formcontrol2" status="primary" formControlName="endDate">
+              <nb-datepicker #formcontrol2 [min]="minEnd" [max]="maxEnd"></nb-datepicker>
+            </div>
+
+            <button nbButton fullWidth shape="rectangle"  outline status="info" (click)="search()">Search</button>
+            <button nbButton fullWidth shape="rectangle"  outline status="info" (click)="clearFilter()">Clear Filter</button>
+
+          </form>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

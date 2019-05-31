@@ -1,0 +1,20 @@
+nb-card {
+  transform: translate3d(0, 0, 0);
+}
+
+.ng2-smart-table  {
+  min-width: 100%;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40rem;
+}
+
+:host input {
+  //width: 93.7rem;
+  //width: 65.7rem;
+  width: 100%;
+}
