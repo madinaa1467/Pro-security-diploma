@@ -7,14 +7,25 @@ import {ThemeModule} from "../../../theme/theme.module";
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import { ChildDetailsComponent } from './child-details/child-details.component';
 import {Ng2SmartTableModule} from "ng2-smart-table";
+import { ChildEditComponent } from './child-details/child-edit/child-edit.component';
+import {NbDialogModule, NbWindowModule} from "@nebular/theme";
 
 @NgModule({
-  declarations: [ParentProfileComponent, ProfileDetailsComponent, ChildDetailsComponent],
+  declarations: [
+    ParentProfileComponent,
+    ProfileDetailsComponent,
+    ChildDetailsComponent,
+    ChildEditComponent],
   imports: [
     CommonModule,
     ThemeModule,
     ParentProfileRoutingModule,
-    Ng2SmartTableModule
-  ]
+    Ng2SmartTableModule,
+    NbDialogModule.forChild(),
+    NbWindowModule.forChild(),
+  ],
+  entryComponents: [
+    ChildEditComponent
+  ],
 })
 export class ParentProfileModule { }

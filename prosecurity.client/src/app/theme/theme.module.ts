@@ -14,10 +14,12 @@ import {
   NbLayoutModule,
   NbListModule,
   NbMenuModule,
-  NbSidebarModule, NbSpinnerModule,
+  NbSidebarModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbThemeModule,
-  NbUserModule
+  NbUserModule,
+  NbWindowModule
 } from "@nebular/theme";
 import {CORPORATE_THEME} from "./styles/theme.corporate";
 import {PageLayoutComponent} from "./layouts";
@@ -51,6 +53,7 @@ const NB_MODULES = [
   NbBadgeModule,
   NbListModule,
   NbDialogModule,
+  NbWindowModule,
   NgbModule
 
 ];

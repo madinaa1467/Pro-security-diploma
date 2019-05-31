@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from "ng2-smart-table";
 import {SmartTableData} from "../../../../core/data/smart-table";
 import {ParentService} from "../../../../core/services/parent.service";
+import {NbDialogService} from "@nebular/theme";
+import {ChildEditComponent} from "./child-edit/child-edit.component";
+import {Child} from "../../../../core/model/Child";
 
 @Component({
   selector: 'app-child-details',
@@ -13,20 +16,14 @@ export class ChildDetailsComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
+  children: [];
   settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+    hideSubHeader: true,
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+      position: 'right'
     },
     columns: {
       id: {
@@ -58,7 +55,8 @@ export class ChildDetailsComponent implements OnInit {
     },
   };
 
-  constructor(private service: SmartTableData, private parentService: ParentService) {
+  constructor(private service: SmartTableData, private parentService: ParentService,
+              private dialogService: NbDialogService) {
     this.parentService.getChildList().then(
       res=>{
         res.splice(0, 1);
@@ -71,6 +69,14 @@ export class ChildDetailsComponent implements OnInit {
   }
 
 
+  open(child: Child) {
+    this.dialogService.open(ChildEditComponent)
+      .onClose.subscribe(res=>{
+        console.log("AAAAAAAAAAAAAAA", res);
+      }
+    );
+  }
+
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
@@ -79,4 +85,10 @@ export class ChildDetailsComponent implements OnInit {
     }
   }
 
+
+  onCustom(event) {
+    open(event.data)
+    // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
+    console.log('Selected Child: ', event);
+  }
 }
