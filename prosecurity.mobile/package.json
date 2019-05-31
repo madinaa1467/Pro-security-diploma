@@ -28,6 +28,7 @@
     "@ionic-native/crop": "^4.20.0",
     "@ionic-native/file": "^4.20.0",
     "@ionic-native/file-path": "^4.20.0",
+    "@ionic-native/firebase": "^4.20.0",
     "@ionic-native/splash-screen": "~4.18.0",
     "@ionic-native/status-bar": "~4.18.0",
     "@ionic/storage": "2.2.0",
@@ -53,7 +54,8 @@
     "ngx-perfect-scrollbar": "^7.2.1",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.29"
+    "zone.js": "0.8.29",
+    "cordova-plugin-globalization": "1.11.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.2.4",

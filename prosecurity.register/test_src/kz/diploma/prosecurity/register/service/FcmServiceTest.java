@@ -13,7 +13,8 @@ public class FcmServiceTest extends ParentTestNg {
 
   @Test
   public void testSendToParent() throws Exception {
-    String fcmToken = "fKgQD2Iaj88:APA91bFO1X9FS0nI6Zy4QuKa8y0IQYveGSIPTAKxmxgvCxl-XrBI5YrPHN1bSTyZ8Ge4FdMbPvRAG-zhzQ14wf-lTOY0cZuJXss5VUHhHMOyUEefA8kSpP8ce37_vmOuhGhZhfqEyVh1";
+    String fcmToken = "euoS8L3ZBMs:APA91bEnmSOV4NZkGqGKDIBzWwgqxYmU3-yD8IGGNKvI2zWeqfOPcawsPoKyTMFqSRRYjRF4ZX1CY-_8FrHVKPDvnGBe8ir0vh47mTVBWQdb7NaTr37Mu4UdBGCJdY-nXzpM2rsONf81";
+//    String fcmToken = "ebgJ_s5q2dc:APA91bGRlFdEXcmBYYHF1vRJRdtxEY6-OF0QxWkhHGF_fa3LbY03FE0sPacsEA3RprHaRxH_9sCcP7nxtOiOXc8ztOgW1uQMky7QrnkinhU6wd55Rpd4LvsudZYz7tTjb0ZDMFyYBsiT";
     Map<String,String> data = Maps.newHashMap();
     data.put("id", String.valueOf(123));
     data.put("text", String.valueOf(Math.random() * 1000) + " asdfd dsdfsdf dsf");
