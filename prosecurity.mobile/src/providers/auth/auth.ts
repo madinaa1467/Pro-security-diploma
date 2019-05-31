@@ -5,6 +5,7 @@ import {TOKEN_KEY} from "./auth.metadata";
 import {BehaviorSubject} from "rxjs";
 import {AccountInfo} from "../../model/auth/account-info";
 import {ToSave} from "../../model/ToSave";
+import {NotificationProvider} from "../notification/notification";
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class Auth {
 
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private api: Api, private storage: Storage) {
+  constructor(private api: Api, private notification: NotificationProvider, private storage: Storage) {
   }
 
   login(credentials) {
@@ -29,7 +30,13 @@ export class Auth {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {
-        return this.loadAccountInfo();
+
+        return this.loadAccountInfo().then(res=>{
+
+          this.notification.register();
+
+          return res;
+        });
       });
     });
   }
@@ -37,6 +44,7 @@ export class Auth {
   logout() {
     this.storage.remove(TOKEN_KEY).then(res => {
       this._accountInfo = null;
+      this.notification.unregister();
       this.authenticationState.next(false);
     });
   }

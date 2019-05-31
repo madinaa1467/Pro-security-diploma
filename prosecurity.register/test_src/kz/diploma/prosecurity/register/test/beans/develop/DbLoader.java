@@ -20,10 +20,10 @@ public class DbLoader {
   final Logger logger = Logger.getLogger(getClass());
 
 
-  private BeanGetter<AuthTestDao> authTestDao;
+  public BeanGetter<AuthTestDao> authTestDao;
   public BeanGetter<IdGenerator> idGenerator;
-  private BeanGetter<PasswordEncoder> passwordEncoder;
-  private BeanGetter<SequenceDao> sequenceDao;
+  public BeanGetter<PasswordEncoder> passwordEncoder;
+  public BeanGetter<SequenceDao> sequenceDao;
 
 
   public void loadTestData() throws Exception {

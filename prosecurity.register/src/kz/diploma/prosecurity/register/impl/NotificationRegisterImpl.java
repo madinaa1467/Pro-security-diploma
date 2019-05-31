@@ -17,13 +17,13 @@ public class NotificationRegisterImpl implements NotificationRegister {
   public BeanGetter<FcmService> service;
 
   @Override
-  public void register(String fcmToken) {
-    System.out.println("register.fcmToken: " + fcmToken);
+  public void register(Long personId, String registrationId) {
+    System.out.println("personId: " + personId + ", register.registrationId: " + registrationId);
   }
 
   @Override
-  public void unregister(String fcmToken) {
-    System.out.println("unregister.fcmToken: " + fcmToken);
+  public void unregister(Long personId, String registrationId) {
+    System.out.println("personId: " + personId + ", unregister.registrationId: " + registrationId);
   }
 
   @Override

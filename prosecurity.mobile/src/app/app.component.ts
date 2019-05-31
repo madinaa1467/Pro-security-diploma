@@ -22,8 +22,7 @@ export class MyApp {
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
               private auth: Auth,
-              public translate: TranslateService,
-              private push:Push) {
+              public translate: TranslateService) {
 
 
     console.log("LANG" + navigator.language);
@@ -58,29 +57,6 @@ export class MyApp {
         }
         this.nav.setRoot(rootPage);
       });
-
-      const options:PushOptions = {
-        android: {
-          sound:true,
-          vibrate: true,
-        },
-        ios:{
-          alert: 'true',
-          badge: true,
-          sound: 'false'
-        }
-      };
-
-      const pushObject: PushObject = this.push.init(options);
-      pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
-      pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
-      pushObject.on('error').subscribe(error => console.log('Error with Push plugin', error));
-      /*pushObject.unregister().then(()=> {
-        const pushObject1: PushObject = this.push.init(options);
-        pushObject1.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
-        pushObject1.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
-        pushObject1.on('error').subscribe(error => console.log('Error with Push plugin', error));
-      });*/
 
     });
   }
