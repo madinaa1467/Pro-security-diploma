@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Api} from "..";
 import {Push, PushObject, PushOptions} from "@ionic-native/push";
 import {map, switchMap} from "rxjs/operators";
+import {Storage} from "@ionic/storage";
+import {Api} from "../";
+import {FCM_REGISTRATION_ID} from "../auth/auth.metadata";
 
 @Injectable()
 export class NotificationProvider {
@@ -20,13 +22,13 @@ export class NotificationProvider {
     }
   };
 
-  constructor (private api: Api, private push: Push) {
+  constructor(private api: Api, private push: Push, private storage: Storage) {
   }
 
   register () {
     console.log("register");
-
     if (this.pushObject) return;
+
     this.pushObject = this.push.init(this.options);
 
     this.onNotification(this.pushObject);
@@ -38,13 +40,23 @@ export class NotificationProvider {
   }
 
   unregister () {
+    return new Promise((resolve, reject) => {
+      if (!this.pushObject) {
+        resolve();
+        return
+      }
 
-    console.log("unregister")
-
-    /*if(!this.pushObject) return;
-    this.pushObject.unregister();
-
-    this.pushObject = null;*/
+      this.pushObject.unregister().then(res => {
+        return this.storage.get(FCM_REGISTRATION_ID).then(res => {
+          return this.api.get("notification/unregister", {registrationId: res}).toPromise().then(res => {
+            return this.storage.remove(FCM_REGISTRATION_ID).then(res => {
+              this.pushObject = null;
+              resolve();
+            });
+          });
+        });
+      }, err => reject(err));
+    });
   }
 
 
@@ -56,14 +68,17 @@ export class NotificationProvider {
 
   private onRegistration (pushObject: PushObject) {
     pushObject.on('registration').pipe(
+      map(registration => registration),
       switchMap(registration => {
-        return this.api.post("/notification/register", registration).pipe(
+        return this.api.post("notification/register", registration).pipe(
           map(() => registration)
         );
-      })
-    ).subscribe((registration: any) => {
-      console.log('Device registered', registration);
-    });
+      }))
+      .subscribe((registration: any) => {
+        this.storage.set(FCM_REGISTRATION_ID, registration.registrationId).then(() => {
+          console.log('Device registered', registration);
+        });
+      });
   }
 
   private onError (pushObject: PushObject) {

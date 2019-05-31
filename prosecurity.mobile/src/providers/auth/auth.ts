@@ -42,11 +42,13 @@ export class Auth {
   }
 
   logout() {
-    this.storage.remove(TOKEN_KEY).then(res => {
+    this.notification.unregister().then(res => {
+      return this.storage.remove(TOKEN_KEY).then(res => {
       this._accountInfo = null;
-      this.notification.unregister();
       this.authenticationState.next(false);
+      });
     });
+
   }
 
   authenticated(): Promise<boolean> {
