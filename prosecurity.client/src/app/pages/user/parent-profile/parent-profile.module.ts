@@ -8,7 +8,7 @@ import { ProfileDetailsComponent } from './profile-details/profile-details.compo
 import { ChildDetailsComponent } from './child-details/child-details.component';
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import { ChildEditComponent } from './child-details/child-edit/child-edit.component';
-import {NbDialogModule, NbWindowModule} from "@nebular/theme";
+import {NbDatepickerModule, NbDialogModule, NbSelectModule, NbWindowModule} from "@nebular/theme";
 
 @NgModule({
   declarations: [
@@ -21,6 +21,8 @@ import {NbDialogModule, NbWindowModule} from "@nebular/theme";
     ParentProfileRoutingModule,
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
+    NbSelectModule,
+    NbDatepickerModule,
   ],
   entryComponents: [
     ChildEditComponent

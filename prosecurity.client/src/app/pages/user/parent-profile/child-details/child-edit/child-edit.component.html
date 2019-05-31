@@ -1,10 +1,83 @@
 <nb-card>
   <nb-card-header>Enter your name</nb-card-header>
   <nb-card-body>
-    <input #name nbInput placeholder="Name">
+    <nb-stepper #stepper>
+      <nb-step [stepControl]="firstForm" label="First step">
+        <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+
+          <div class="input-group">
+            <input type="text" placeholder="Enter child card" class="form-control" formControlName="card"
+                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+          <input type="text" placeholder="Enter card password" class="form-control" formControlName="password"
+                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+          </div>
+          <button nbButton nbStepperNext>next</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="secondForm" label="Second step">
+<!--        <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">-->
+
+
+
+    <div class="form-control-group">
+      <label class="label" for="input-surname">Surname:</label>
+      <input nbInput
+             [(ngModel)]="child.surname"
+             #name="ngModel"
+             id="input-surname"
+             name="email"
+             pattern=".+@.+..+"
+             placeholder="Email address"
+             fullWidth />
+    </div>
+
+
+  <div class="form-control-group">
+      <label class="label" for="input-name">Name:</label>
+      <input nbInput
+             [(ngModel)]="child.name"
+             #name="ngModel"
+             id="input-name"
+             name="email"
+             pattern=".+@.+..+"
+             placeholder="Email address"
+             fullWidth />
+    </div>
+
+
+  <div class="form-control-group">
+      <label class="label" for="input-patronymic">Patronymic:</label>
+      <input nbInput
+             [(ngModel)]="child.patronymic"
+             #name="ngModel"
+             id="input-patronymic"
+             name="email"
+             pattern=".+@.+..+"
+             placeholder="Email address"
+             fullWidth />
+    </div>
+
+  <div class="form-control-group">
+    <label class="label" for="input-gender">Gender:</label>
+    <nb-select id="input-gender" shape="rectangle"  [(ngModel)]="child.gender" outline status="success">
+      <nb-option *ngFor="let gender of genderTypes" value="{{gender.value}}">{{gender.value}}</nb-option>
+    </nb-select>
+    </div>
+
+
+  <div class="form-control-group">
+    <label class="label" for="input-birth">Birth date:</label>
+    <input nbInput id="input-birth" placeholder="Form Picker" [nbDatepicker]="ngmodel" [(ngModel)]="child.birthDate">
+    <nb-datepicker #ngmodel></nb-datepicker>
+    </div>
+
+
+
+      </nb-step>
+    </nb-stepper>
   </nb-card-body>
   <nb-card-footer>
     <button nbButton status="danget" (click)="cancel()">Cancel</button>
-    <button nbButton status="success" (click)="submit(name.value)">Submit</button>
+    <button nbButton status="success" (click)="submit()">Submit</button>
   </nb-card-footer>
 </nb-card>

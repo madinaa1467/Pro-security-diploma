@@ -30,16 +30,8 @@ export class ChildDetailsComponent implements OnInit {
         title: 'ID',
         type: 'number',
       },
-      name: {
-        title: 'First Name',
-        type: 'string',
-      },
-      surname: {
-        title: 'Last Name',
-        type: 'string',
-      },
-      patronymic: {
-        title: 'Username',
+      fio: {
+        title: 'Child FIO',
         type: 'string',
       },
       gender: {
@@ -70,9 +62,13 @@ export class ChildDetailsComponent implements OnInit {
 
 
   open(child: Child) {
-    this.dialogService.open(ChildEditComponent)
+    this.dialogService.open(ChildEditComponent, {
+      context: {
+        child: child,
+      },
+    })
       .onClose.subscribe(res=>{
-        console.log("AAAAAAAAAAAAAAA", res);
+        console.log("Submit answer", res);
       }
     );
   }
