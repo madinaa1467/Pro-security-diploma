@@ -12,6 +12,7 @@ import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {FilePath} from "@ionic-native/file-path";
 import {Crop} from "@ionic-native/crop";
+import {Push} from "@ionic-native/push";
 
 // Directives
 
@@ -40,7 +41,8 @@ export const PROVIDERS = [
   Camera,
   File,
   FilePath,
-  Crop
+  Crop,
+  Push
 
 ];
 

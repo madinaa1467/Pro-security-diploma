@@ -5,6 +5,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsPage} from "../pages/tabs/tabs";
 import {Auth} from "../providers";
 import {TranslateService} from "@ngx-translate/core";
+import {Push, PushObject, PushOptions} from "@ionic-native/push";
 
 class SignalRProvider {
 }
@@ -17,8 +18,12 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
 
-  constructor(private platform: Platform, private statusBar: StatusBar,
-              private splashScreen: SplashScreen, private auth: Auth, public translate: TranslateService,) {
+  constructor(private platform: Platform,
+              private statusBar: StatusBar,
+              private splashScreen: SplashScreen,
+              private auth: Auth,
+              public translate: TranslateService,
+              private push:Push) {
 
 
     console.log("LANG" + navigator.language);
@@ -53,6 +58,22 @@ export class MyApp {
         }
         this.nav.setRoot(rootPage);
       });
+
+      const options:PushOptions = {
+        android: {
+          senderID: '371200360905'
+        },
+        ios:{
+          alert: 'true',
+          badge: true,
+          sound: 'false'
+        }
+      };
+
+      const pushObject: PushObject = this.push.init(options);
+      pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
+      pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+      pushObject.on('error').subscribe(error => console.log('Error with Push plugin', error));
     });
   }
 
