@@ -61,7 +61,9 @@ export class MyApp {
 
       const options:PushOptions = {
         android: {
-          senderID: '371200360905'
+          sound:true,
+          vibrate: true,
+          forceShow:true,
         },
         ios:{
           alert: 'true',
@@ -74,6 +76,13 @@ export class MyApp {
       pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
       pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
       pushObject.on('error').subscribe(error => console.log('Error with Push plugin', error));
+      /*pushObject.unregister().then(()=> {
+        const pushObject1: PushObject = this.push.init(options);
+        pushObject1.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
+        pushObject1.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+        pushObject1.on('error').subscribe(error => console.log('Error with Push plugin', error));
+      });*/
+
     });
   }
 
