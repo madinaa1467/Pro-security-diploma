@@ -60,4 +60,18 @@ public class ChildController implements Controller {
   public boolean saveOrUpdateChild(@ParSession(PARENT_ID) Long parentId, @Json @Par("childId") Long childId, @Par("delete") String delete) {
     return childRegister.get().deleteChild(parentId, childId, delete);
   }
+
+  @ToJson
+  @PublicAccess
+  @OnPost("/event")
+  public boolean event(@Par("action") String action, @Par("card") String card,  @Par("entrance") String entrance) {
+    System.out.println("AAAAAAAA Event");
+    System.out.println("Event " + "action: " + action);
+    System.out.println("Event " + "card: " + card);
+    System.out.println("Event " + "entrance: " + entrance);
+    return true;
+  }
+
+
+
 }
