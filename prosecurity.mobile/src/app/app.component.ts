@@ -63,7 +63,6 @@ export class MyApp {
         android: {
           sound:true,
           vibrate: true,
-          forceShow:true,
         },
         ios:{
           alert: 'true',

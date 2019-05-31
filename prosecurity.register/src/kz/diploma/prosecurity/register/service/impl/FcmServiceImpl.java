@@ -42,9 +42,10 @@ public class FcmServiceImpl implements FcmService {
   public void sendToParent(String token, Map<String, String> data) throws ExecutionException, InterruptedException {
 
     AndroidConfig androidConfig = AndroidConfig.builder()
-      .setTtl(Duration.ofMinutes(2).toMillis()).setCollapseKey("personal")
+      .setTtl(Duration.ofMinutes(2).toMillis())
+      .setCollapseKey("personal"+data.get("tag"))
       .setPriority(Priority.HIGH)
-      .setNotification(AndroidNotification.builder().setTag("personal").build())
+      .setNotification(AndroidNotification.builder().setTag("personal"+data.get("tag")).build())
       .build();
 
     ApnsConfig apnsConfig = ApnsConfig.builder()
