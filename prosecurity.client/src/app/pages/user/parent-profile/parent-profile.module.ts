@@ -17,10 +17,8 @@ import {NbDialogModule, NbWindowModule} from "@nebular/theme";
     ChildDetailsComponent,
     ChildEditComponent],
   imports: [
-    CommonModule,
     ThemeModule,
     ParentProfileRoutingModule,
-    Ng2SmartTableModule,
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
   ],

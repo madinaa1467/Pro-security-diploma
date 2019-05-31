@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from "ng2-smart-table";
 import {SmartTableData} from "../../../../core/data/smart-table";
 import {ParentService} from "../../../../core/services/parent.service";
@@ -87,7 +87,7 @@ export class ChildDetailsComponent implements OnInit {
 
 
   onCustom(event) {
-    open(event.data)
+    this.open(event.data)
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
     console.log('Selected Child: ', event);
   }

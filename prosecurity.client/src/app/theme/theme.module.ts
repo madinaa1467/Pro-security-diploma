@@ -74,6 +74,7 @@ const NB_THEME_PROVIDERS = [
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
   ...NbDialogModule.forRoot().providers,
+  ...NbWindowModule.forRoot().providers,
 ];
 
 @NgModule({
