@@ -36,23 +36,8 @@ export class EventHistoryTableComponent implements OnInit {
         perPage: this.eventsPerPage
     },
     columns: {
-      firstName: {
-        title: 'First Name',
-        type: 'string',
-        filter: false
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string',
-        filter: false
-      },
-      patronymic: {
-        title: 'Patronymic',
-        type: 'string',
-        filter: false
-      },
-      parentFio: {
-        title: 'Parent',
+      fio: {
+        title: 'Child',
         type: 'string',
         filter: false
       },
@@ -68,6 +53,11 @@ export class EventHistoryTableComponent implements OnInit {
       },
       action: {
         title: 'Action',
+        type: 'string',
+        filter: false
+      },
+      parentFio: {
+        title: 'Parent',
         type: 'string',
         filter: false
       },

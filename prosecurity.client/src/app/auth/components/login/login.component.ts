@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
       this.submitted = false;
       if (['MODERATOR'].some(permitted => res.cans.has(permitted))) {
         this.router.navigateByUrl("/pages/moderator");
+      } else if (['USER'].some(permitted => res.cans.has(permitted))) {
+        this.router.navigateByUrl("/pages/user");
       } else {
         this.router.navigateByUrl("/pages");
       }

@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PagesComponent} from './pages.component';
 import {SampleGuard} from '../core/guards/sample-guard.service';
+import {AuthGuard} from "../core/auth";
+import {UserGuard} from "../core/guards/user-guard.service";
 
 const routes: Routes = [
   {
@@ -25,6 +27,11 @@ const routes: Routes = [
       {
         path: 'moderator',
         loadChildren: './moderator/moderator.module#ModeratorModule',
+      },
+      {
+        canActivate: [UserGuard],
+        path: 'user',
+        loadChildren: './user/user.module#UserModule',
       },
     ]
   }

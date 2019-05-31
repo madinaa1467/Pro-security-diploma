@@ -24,13 +24,6 @@ public class WebController implements Controller {
 
   @ToJson
   @PublicAccess
-  @OnGet("/parent")
-  public List<EventWeb> parent(@Json @Par("filter") EventFilterWeb filter) {
-    return webRegister.get().getParentEventList(filter);
-  }
-
-  @ToJson
-  @PublicAccess
   @OnGet("/moderator")
   public List<EventWeb> moderator(@Json @Par("filter") EventFilterWeb filter) {
     return webRegister.get().getModeratorEventList(filter);

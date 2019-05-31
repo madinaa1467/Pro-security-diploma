@@ -15,6 +15,8 @@ import {SampleGuard} from "./guards";
 import {UserActivityData, UserActivityService} from "./data/user-activity";
 import {PeriodsService} from "./data/periods.service";
 import {ModeratorService} from "./services/moderator.service";
+import {ParentService} from "./services/parent.service";
+import {UserGuard} from "./guards/user-guard.service";
 
 export function initApp(appLoaderService: AppLoaderService) {
   return () => appLoaderService.initApp();
@@ -25,6 +27,7 @@ const DATA_SERVICES = [
   AuthService,
   ModeratorService,
   TokenService,
+  ParentService,
   {provide: SmartTableData, useClass: SmartTableService},
   {provide: UserInfoStorage, useClass: UserInfoLocalStorage},
   {provide: CanIProvider, useClass: CustomCanIProvider},
@@ -43,6 +46,7 @@ const NB_CORE_PROVIDERS = [
 
   // TODO: asset 5/21/19 should be removed
   SampleGuard,
+  UserGuard,
   PeriodsService,
 
   {provide: APP_INITIALIZER, useFactory: initApp, deps: [AppLoaderService], multi: true},

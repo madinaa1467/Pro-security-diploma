@@ -1,8 +1,9 @@
 package kz.diploma.prosecurity.controller.controller;
 
-import kz.diploma.prosecurity.controller.model.AccountInfo;
-import kz.diploma.prosecurity.controller.model.ToSave;
+import kz.diploma.prosecurity.controller.model.*;
+import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
+import kz.diploma.prosecurity.controller.register.WebRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
 import kz.greetgo.depinject.core.Bean;
@@ -15,6 +16,8 @@ import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
 
+import java.util.List;
+
 import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 
 @Bean
@@ -22,6 +25,10 @@ import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 public class ParentController implements Controller {
 
   public BeanGetter<ParentRegister> parentRegister;
+
+
+  public BeanGetter<ChildRegister> childRegister;
+  public BeanGetter<WebRegister> webRegister;
 
   @ToJson
   @PublicAccess
@@ -53,4 +60,18 @@ public class ParentController implements Controller {
   public boolean changePassword(@ParSession(PARENT_ID)Long id, @Par("password") String password){
     return parentRegister.get().changePassword(id, password);
   }
+
+  @ToJson
+  @OnGet("/web/getChildList")
+  public List<Child> getChildList(@ParSession(PARENT_ID) Long parentId){
+    return childRegister.get().getParentChildList(parentId);
+  }
+
+  @ToJson
+  @OnGet("/web/getEventList")
+  public List<EventWeb> parent(@ParSession(PARENT_ID) Long parentId, @Json @Par("filter") EventFilterWeb filter) {
+    filter.parentId = parentId;
+    return webRegister.get().getParentEventList(filter);
+  }
+
 }

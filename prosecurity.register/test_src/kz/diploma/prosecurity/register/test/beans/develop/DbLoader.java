@@ -20,10 +20,10 @@ public class DbLoader {
   final Logger logger = Logger.getLogger(getClass());
 
 
-  private BeanGetter<AuthTestDao> authTestDao;
+  public BeanGetter<AuthTestDao> authTestDao;
   public BeanGetter<IdGenerator> idGenerator;
-  private BeanGetter<PasswordEncoder> passwordEncoder;
-  private BeanGetter<SequenceDao> sequenceDao;
+  public BeanGetter<PasswordEncoder> passwordEncoder;
+  public BeanGetter<SequenceDao> sequenceDao;
 
 
   public void loadTestData() throws Exception {
@@ -52,6 +52,7 @@ public class DbLoader {
     {
       user(sequenceDao.get().proSeqNext(), "user");
       add_can("user", UserCan.USER);
+
     }
     {
       user(sequenceDao.get().proSeqNext(), "moderator");
@@ -59,11 +60,17 @@ public class DbLoader {
     }
 
     {
+      //parent
       user(id, "1");
-      for (UserCan can : UserCan.values()) {
-        add_can("1", can);
-      }
+      add_can("1", UserCan.USER);
     }
+
+//    {
+//      user(id, "1");
+//      for (UserCan can : UserCan.values()) {
+//        add_can("1", can);
+//      }
+//    }
 
     parent(id, "1980-07-23", "1", "male");
     phone(id);
