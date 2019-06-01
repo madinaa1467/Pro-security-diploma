@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
 import {Child} from "../../../../../core/model/Child";
 import {GenderType, genderTypes} from "../../../../../core/model/gender/gender-type";
@@ -7,18 +7,17 @@ import {ParentService} from "../../../../../core/services/parent.service";
 import {ChildToSave} from "../../../../../core/model/ChildToSave";
 
 @Component({
-  selector: 'app-child-edit',
-  templateUrl: './child-edit.component.html',
-  styleUrls: ['./child-edit.component.scss']
+  selector: 'app-child-save',
+  templateUrl: './child-save.component.html',
+  styleUrls: ['./child-save.component.scss']
 })
-export class ChildEditComponent implements OnInit{
+export class ChildSaveComponent implements OnInit {
 
-  constructor(protected ref: NbDialogRef<ChildEditComponent>,
+  constructor(protected ref: NbDialogRef<ChildSaveComponent>,
               private fb: FormBuilder,
               private parentServics: ParentService) { }
 
-  @Input()
-  child: Child;
+  child: Child = new Child;
   public genderTypes: GenderType[] = genderTypes;
   firstForm: FormGroup;
   secondForm: FormGroup;
@@ -39,22 +38,22 @@ export class ChildEditComponent implements OnInit{
     childToSave.password = this.firstForm.controls['password'].value;
     childToSave.cardNumber = this.firstForm.controls['cardNumber'].value;
     this.parentServics.save(childToSave).then(_resp => {
-          alert(`Child changed!`);
-          this.ref.close(this.child);
-        }).catch(err => {
-          if (err.status == 400) {
-            let errors = err.error;
-            alert(`Error, Try again!`);
-            errors.forEach((error) => {
+      alert(`Child changed!`);
+      this.ref.close(this.child);
+    }).catch(err => {
+      if (err.status == 400) {
+        let errors = err.error;
+        alert(`Error, Try again!`);
+        errors.forEach((error) => {
 
-              console.error("error", error);
-              // let field = this.childForm.controls[error.code];
-              // field.setErrors({[error.message]: true});
-            });
-
-            return;
-          }
+          console.error("error", error);
+          // let field = this.childForm.controls[error.code];
+          // field.setErrors({[error.message]: true});
         });
+
+        return;
+      }
+    });
   }
 
   onFirstSubmit() {
@@ -64,7 +63,7 @@ export class ChildEditComponent implements OnInit{
 
   buildForm() {
     this.firstForm = this.fb.group({
-      'cardNumber': [this.child.cardNumber, [
+      'cardNumber': ['', [
         Validators.required,
       ]
       ],
@@ -84,9 +83,9 @@ export class ChildEditComponent implements OnInit{
 
   }
 
-  changeStepper(){
+  changeStepper() {
 
-    if(this.stepper.selectedIndex == 0){
+    if (this.stepper.selectedIndex == 0) {
       console.log("Send: ", this.child);
       this.parentServics.getChildByCard(
         this.firstForm.controls['cardNumber'].value.replace(/\D/g, '').substring(0, 19),

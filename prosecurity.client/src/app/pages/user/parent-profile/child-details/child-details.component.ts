@@ -5,6 +5,7 @@ import {ParentService} from "../../../../core/services/parent.service";
 import {NbDialogService} from "@nebular/theme";
 import {ChildEditComponent} from "./child-edit/child-edit.component";
 import {Child} from "../../../../core/model/Child";
+import {ChildSaveComponent} from "./child-save/child-save.component";
 
 @Component({
   selector: 'app-child-details',
@@ -16,7 +17,6 @@ export class ChildDetailsComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  children: [];
   settings = {
     hideSubHeader: true,
     actions: {
@@ -72,7 +72,6 @@ export class ChildDetailsComponent implements OnInit {
     })
       .onClose.subscribe(res=>{
       this.getChildList();
-      console.log("Submit answer", res);
       }
     );
   }
@@ -90,5 +89,13 @@ export class ChildDetailsComponent implements OnInit {
     this.open(event.data)
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
     console.log('Selected Child: ', event);
+  }
+
+  createChild() {
+    this.dialogService.open(ChildSaveComponent)
+      .onClose.subscribe(res => {
+        this.getChildList();
+      }
+    );
   }
 }
