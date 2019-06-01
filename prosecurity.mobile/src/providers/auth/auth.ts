@@ -48,7 +48,6 @@ export class Auth {
       this.authenticationState.next(false);
       });
     });
-
   }
 
   authenticated(): Promise<boolean> {

@@ -5,6 +5,9 @@ import java.util.concurrent.ExecutionException;
 
 public interface FcmService {
 
-  void sendToParent(String token, Map<String, String> data) throws ExecutionException, InterruptedException;
+  void sendDirectNotification(String token, Map<String, String> data) throws ExecutionException, InterruptedException;
+
+  void sendTopicBasedNotifications(FcmTopic topic, String token, Map<String, String> data) throws ExecutionException,
+    InterruptedException;
 
 }

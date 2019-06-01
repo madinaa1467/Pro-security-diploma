@@ -3,9 +3,8 @@ import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsPage} from "../pages/tabs/tabs";
-import {Auth} from "../providers";
+import {Auth, NotificationProvider} from "../providers";
 import {TranslateService} from "@ngx-translate/core";
-import {Push, PushObject, PushOptions} from "@ionic-native/push";
 
 class SignalRProvider {
 }
@@ -22,7 +21,8 @@ export class MyApp {
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
               private auth: Auth,
-              public translate: TranslateService) {
+              public translate: TranslateService,
+              private notification: NotificationProvider) {
 
 
     console.log("LANG" + navigator.language);
@@ -49,7 +49,6 @@ export class MyApp {
       this.setStatusBarColor();
       this.splashScreen.hide();
 
-
       this.auth.authenticationState.subscribe(state => {
         let rootPage: any = 'LoginPage';
         if (state) {
@@ -57,7 +56,6 @@ export class MyApp {
         }
         this.nav.setRoot(rootPage);
       });
-
     });
   }
 

@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.*;
 import com.google.firebase.messaging.AndroidConfig.Priority;
 import kz.diploma.prosecurity.register.service.FcmService;
+import kz.diploma.prosecurity.register.service.FcmTopic;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -39,26 +40,52 @@ public class FcmServiceImpl implements FcmService {
 
 
   @Override
-  public void sendToParent(String token, Map<String, String> data) throws ExecutionException, InterruptedException {
+  public void sendDirectNotification(String token, Map<String, String> data) throws ExecutionException,
+    InterruptedException {
 
     AndroidConfig androidConfig = AndroidConfig.builder()
       .setTtl(Duration.ofMinutes(2).toMillis())
-      .setCollapseKey("personal"+data.get("tag"))
+      .setCollapseKey("card_number")
       .setPriority(Priority.HIGH)
-      .setNotification(AndroidNotification.builder().setTag("personal"+data.get("tag")).build())
+      .setNotification(AndroidNotification.builder().setTag("card_number").build())
       .build();
 
     ApnsConfig apnsConfig = ApnsConfig.builder()
-      .setAps(Aps.builder().setCategory("personal").setThreadId("personal").build())
+      .setAps(Aps.builder().setCategory("card_number").setThreadId("card_number").build())
       .build();
 
     Message message = Message.builder().putAllData(data).setToken(token)
       .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
-      .setNotification(new Notification("Personal Message", "A Personal Message"))
+      .setNotification(new Notification("child_name", "child_name_{in|out} dd/mm/yyy hh:mm"))
       .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();
     System.out.println("Sent message: " + response);
+  }
+
+
+  @Override
+  public void sendTopicBasedNotifications(FcmTopic topic, String token, Map<String, String> data) throws
+    ExecutionException,
+    InterruptedException {
+
+    AndroidConfig androidConfig = AndroidConfig.builder()
+      .setTtl(Duration.ofMinutes(2).toMillis()).setCollapseKey("chuck")
+      .setPriority(Priority.HIGH)
+      .setNotification(AndroidNotification.builder().setTag("chuck").build()).build();
+
+    ApnsConfig apnsConfig = ApnsConfig.builder()
+      .setAps(Aps.builder().setCategory("chuck").setThreadId("chuck").build()).build();
+
+    Message message = Message.builder().putAllData(data).setTopic(topic.name())
+      .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
+      .setNotification(
+        new Notification("Chuck Norris Joke", "A new Chuck Norris joke has arrived"))
+      .build();
+
+    String response = FirebaseMessaging.getInstance().sendAsync(message).get();
+    System.out.println("Sent message: " + response);
+
   }
 
 }
