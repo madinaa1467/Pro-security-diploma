@@ -5,6 +5,7 @@ import kz.diploma.prosecurity.controller.errors.ValidationError;
 import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.register.FileRegister;
+import kz.diploma.prosecurity.controller.register.NotificationRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
 import kz.diploma.prosecurity.register.dao.SequenceDao;
 import kz.diploma.prosecurity.register.jdbc.ChildEventList;
@@ -23,6 +24,8 @@ public class ChildRegisterImpl implements ChildRegister {
   public BeanGetter<SequenceDao> sequenceDao;
   public BeanGetter<Jdbc> jdbc;
   public BeanGetter<FileRegister> fileRegister;
+
+  public BeanGetter<NotificationRegister> notificationRegister;
 
   @Override
   public List<EventList> listAllEvents(Long parentId, EventFilter filter) {
@@ -109,6 +112,34 @@ public class ChildRegisterImpl implements ChildRegister {
       return true;
     }
     return false;
+  }
+
+
+  @Override
+  public boolean permission(String action, String cardNumberInHex, String entrance) {
+    Child child = childDao.get().getChildByCardHex(cardNumberInHex);
+    if (child == null) {
+      return false;
+    } else {
+      Integer actual = this.childDao.get().checkCard(child.cardNumber);
+      if (actual == null && actual == 0) {
+        return false;
+      } else {
+        Event event = new Event();
+        event.id = sequenceDao.get().proSeqNext();
+        event.date = new Date();
+        event.action = action;
+        event.entrance = entrance;
+        event.childId = child.id;
+        event.fio = child.fio;
+        event.cardNumber = child.cardNumber;
+
+        this.childDao.get().insertEvent(event);
+
+        notificationRegister.get().send(event);
+        return true;
+      }
+    }
   }
 
   @Override

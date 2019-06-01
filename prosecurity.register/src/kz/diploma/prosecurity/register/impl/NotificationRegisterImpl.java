@@ -1,5 +1,8 @@
 package kz.diploma.prosecurity.register.impl;
 
+import com.google.common.collect.Maps;
+import kz.diploma.prosecurity.controller.model.Event;
+import kz.diploma.prosecurity.controller.model.NotificationEvent;
 import kz.diploma.prosecurity.controller.register.NotificationRegister;
 import kz.diploma.prosecurity.register.dao.NotificationDao;
 import kz.diploma.prosecurity.register.service.FcmService;
@@ -7,6 +10,7 @@ import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import org.apache.log4j.Logger;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -14,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 public class NotificationRegisterImpl implements NotificationRegister {
 
   final Logger logger = Logger.getLogger(getClass());
+
+  private static SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm dd/mm/yyyy");
 
   public BeanGetter<FcmService> service;
   public BeanGetter<NotificationDao> notificationDao;
@@ -31,14 +37,24 @@ public class NotificationRegisterImpl implements NotificationRegister {
   }
 
   @Override
-  public void send(String token, Map<String, String> data) {
-    sendDirectNotification(token, data);
+  public void send(Event event) {
+
+    notificationDao.get().getParentTokensByChild(event.childId)
+      .stream()
+      .forEach(token -> {
+
+        Map<String, String> data = Maps.newHashMap();
+        data.put("id", event.id + "");
+
+        sendDirectNotification(token, data, event.toNotificationEvent());
+      });
   }
 
-  private void sendDirectNotification(String token, Map<String, String> data) {
+  private void sendDirectNotification(String token, Map<String, String> data, NotificationEvent event) {
     try {
-      service.get().sendDirectNotification(token, data);
+      service.get().sendDirectNotification(token, data, event);
     } catch (ExecutionException | InterruptedException e) {
+      notificationDao.get().unregisterDevice(token);
       logger.error(e);
     }
   }

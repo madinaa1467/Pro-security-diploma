@@ -4,14 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event implements Comparable<Event> {
-  public long id;
+  public Long id;
   public Date date;
   public String time;
   public String action;
-  public long childId;
+  public Long childId;
   public String fio;
   public String img;
   public String gender;
+  public String entrance;
+  public String cardNumber;
 
 
   public String when;
@@ -32,4 +34,20 @@ public class Event implements Comparable<Event> {
   public void setTime() {
     this.time = timeFormat.format(this.date);
   }
+
+  private static SimpleDateFormat notificationTimeFormat = new SimpleDateFormat("hh:mm dd/mm/yyyy");
+
+  public NotificationEvent toNotificationEvent() {
+    NotificationEvent e = new NotificationEvent();
+
+    String strDate = notificationTimeFormat.format(this.date);
+
+    e.cardNumber = this.cardNumber;
+    e.title = this.fio;
+    e.action = this.action;
+    e.body = this.fio + " " + this.action + " at " + strDate + " by " + this.entrance + " entrance.";
+
+    return e;
+  }
+
 }

@@ -1,6 +1,6 @@
 package kz.diploma.prosecurity.controller.register;
 
-import java.util.Map;
+import kz.diploma.prosecurity.controller.model.Event;
 
 public interface NotificationRegister {
 
@@ -8,6 +8,6 @@ public interface NotificationRegister {
 
   void unregister(Long personId,  String registrationId);
 
-  void send(String token, Map<String, String> data);
+  void send(Event event);
 
 }

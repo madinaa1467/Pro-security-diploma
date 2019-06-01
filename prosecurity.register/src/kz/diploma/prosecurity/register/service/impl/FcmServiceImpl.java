@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.*;
 import com.google.firebase.messaging.AndroidConfig.Priority;
+import kz.diploma.prosecurity.controller.model.NotificationEvent;
 import kz.diploma.prosecurity.register.service.FcmService;
 import kz.diploma.prosecurity.register.service.FcmTopic;
 import org.apache.log4j.Logger;
@@ -40,23 +41,24 @@ public class FcmServiceImpl implements FcmService {
 
 
   @Override
-  public void sendDirectNotification(String token, Map<String, String> data) throws ExecutionException,
+  public void sendDirectNotification(String token, Map<String, String> data, NotificationEvent event) throws
+    ExecutionException,
     InterruptedException {
 
     AndroidConfig androidConfig = AndroidConfig.builder()
       .setTtl(Duration.ofMinutes(2).toMillis())
-      .setCollapseKey("card_number")
+      .setCollapseKey(event.cardNumber)
       .setPriority(Priority.HIGH)
-      .setNotification(AndroidNotification.builder().setTag("card_number").build())
+      //.setNotification(AndroidNotification.builder().setTag(event.action).build())
       .build();
 
     ApnsConfig apnsConfig = ApnsConfig.builder()
-      .setAps(Aps.builder().setCategory("card_number").setThreadId("card_number").build())
+      .setAps(Aps.builder().setCategory(event.cardNumber).setThreadId(event.cardNumber).build())
       .build();
 
     Message message = Message.builder().putAllData(data).setToken(token)
       .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
-      .setNotification(new Notification("child_name", "child_name_{in|out} dd/mm/yyy hh:mm"))
+      .setNotification(new Notification(event.title, event.body))
       .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();

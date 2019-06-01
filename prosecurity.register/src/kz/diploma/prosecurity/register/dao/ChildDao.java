@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ChildDao {
@@ -55,6 +54,14 @@ public interface ChildDao {
     "from child as c, parent_child as pc\n" +
     "where pc.child = c.id and c.card_number = #{cardNumber} and c.actual = 1 limit 1;")
   Child getChildByCard(@Param("cardNumber") String cardNumber);
+
+
+  @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname,\n" +
+    "  c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
+    "from child as c, parent_child as pc, card\n" +
+    "  where pc.child = c.id and c.card_number = card.card_number and card.in_hex = #{cardNumberInHex} and c.actual =" +
+    " 1 limit 1;")
+  Child getChildByCardHex(@Param("cardNumberInHex") String cardNumberInHex);
 
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
     "from child as c, parent_child as pc\n" +
@@ -115,10 +122,10 @@ public interface ChildDao {
   Event getChildLastEvent(@Param("parentId") Long parentId, @Param("childId") Long childId);
 
 
-  @Insert("insert into Event (action, date, child, actual) " +
-    "values (#{action}, #{date}, #{child}, #{actual})")
-  void insertEvent(@Param("action") String action,
-                   @Param("child") Long child,
-                   @Param("date") Date date,
-                   @Param("actual") int actual);
+  @Insert("insert into Event (id, action, entrance, date, child, actual) " +
+    "values (#{event.id}, #{event.action}, #{event.entrance}, #{event.date}, #{event.childId}, 1)")
+  void insertEvent(@Param("event") Event event);
+
+  @Select("select parent from parent_child where child=#{childId}")
+  List<Long> selectParentIds(@Param("childId") Long childId);
 }

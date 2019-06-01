@@ -4,6 +4,7 @@ import kz.diploma.prosecurity.controller.model.*;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.mvc.annotations.Json;
@@ -15,8 +16,6 @@ import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
 
 import java.util.List;
-
-import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
 @Bean
 @ControllerPrefix("/child")
 public class ChildController implements Controller {
@@ -64,12 +63,14 @@ public class ChildController implements Controller {
   @ToJson
   @PublicAccess
   @OnPost("/event")
+  @OnGet("/event")
   public boolean event(@Par("action") String action, @Par("card") String card,  @Par("entrance") String entrance) {
     System.out.println("AAAAAAAA Event");
     System.out.println("Event " + "action: " + action);
     System.out.println("Event " + "card: " + card);
     System.out.println("Event " + "entrance: " + entrance);
-    return true;
+
+    return childRegister.get().permission(action, card, entrance);
   }
 
 
