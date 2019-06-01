@@ -12,5 +12,5 @@ public interface ChildRegister {
   boolean saveOrUpdateChild(Long parentId, ChildToSave child);
   boolean deleteChild(Long parentId, Long childId, String delete);
 
-  boolean permission(String action, String cardNumberInHex, String entrance);
+  boolean permission(String action, String cardNumberInDec, String entrance);
 }
