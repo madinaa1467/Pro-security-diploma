@@ -72,53 +72,5 @@ export class UserService {
   getUserInfo(): Observable<UserInfo> {
     return observableOf(this.userInfoStorage.get());
   }
-
-  // TODO: msultanova 5/21/19 remove fake data
-  getRecentUsers(): Observable<RecentUsers[]> {
-    return observableOf(this.recentUsers);
-  }
-
-  // TODO: msultanova 5/21/19 remove fake data
-  private time: Date = new Date;
-
-  private users = {
-    nick: {name: 'Nick Jones', img: 'assets/images/nick.png'},
-    eva: {name: 'Eva Moor', img: null},
-    jack: {name: 'Jack Williams', img: null},
-    lee: {name: 'Lee Wong', img: null},
-    alan: {name: 'Alan Thompson', img: null},
-    kate: {name: 'Kate Martinez', img: null},
-  };
-  private types = {
-    mobile: 'mobile',
-    home: 'home',
-    work: 'work',
-  };
-
-  private recentUsers: RecentUsers[] = [
-    {user: this.users.alan, type: this.types.home, time: this.time.setHours(21, 12)},
-    {user: this.users.eva, type: this.types.home, time: this.time.setHours(17, 45)},
-    {user: this.users.nick, type: this.types.mobile, time: this.time.setHours(5, 29)},
-    {user: this.users.lee, type: this.types.mobile, time: this.time.setHours(11, 24)},
-    {user: this.users.jack, type: this.types.mobile, time: this.time.setHours(10, 45)},
-    {user: this.users.kate, type: this.types.work, time: this.time.setHours(9, 42)},
-    {user: this.users.kate, type: this.types.work, time: this.time.setHours(9, 31)},
-    {user: this.users.jack, type: this.types.mobile, time: this.time.setHours(8, 0)},
-  ];
-
 }
 
-// TODO: msultanova 5/21/19 remove fake data
-export interface User {
-  name: string;
-  img: string;
-}
-
-export interface Contacts {
-  user: User;
-  type: string;
-}
-
-export interface RecentUsers extends Contacts {
-  time: number;
-}

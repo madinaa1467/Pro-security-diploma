@@ -52,6 +52,7 @@ public class DbLoader {
     {
       user(sequenceDao.get().proSeqNext(), "user");
       add_can("user", UserCan.USER);
+
     }
     {
       user(sequenceDao.get().proSeqNext(), "moderator");
@@ -59,11 +60,17 @@ public class DbLoader {
     }
 
     {
+      //parent
       user(id, "1");
-      for (UserCan can : UserCan.values()) {
-        add_can("1", can);
-      }
+      add_can("1", UserCan.USER);
     }
+
+//    {
+//      user(id, "1");
+//      for (UserCan can : UserCan.values()) {
+//        add_can("1", can);
+//      }
+//    }
 
     parent(id, "1980-07-23", "1", "male");
     phone(id);

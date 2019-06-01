@@ -23,6 +23,11 @@ public class ParentEventListWeb extends EventListConnectionWeb {
         sql.where("pc.parent = :parentId");
         sql.setValue("parentId", filter.parentId);
         sql.where("pc.parent = p.id");
+
+        if(filter.childId != 0) {
+            sql.where("pc.child = :childId");
+            sql.setValue("childId", filter.childId);
+        }
         sql.where("pc.child = c.id");
         sql.where("pc.child = e.child");
         sql.where("c.actual = 1");
@@ -39,18 +44,6 @@ public class ParentEventListWeb extends EventListConnectionWeb {
         if (filter.entrance != null) {
             sql.where("lower(entrance) like :entrance");
             sql.setValue("entrance", "%" + filter.entrance.toLowerCase() + "%");
-        }
-        if(filter.childName != null && !"".equals(filter.childName)){
-            sql.where("lower(c.name) like :childName");
-            sql.setValue("childName", "%" + filter.childName.toLowerCase() + "%");
-        }
-        if(filter.childSurname != null && !"".equals(filter.childSurname)){
-            sql.where("lower(c.surname) like :childSurname");
-            sql.setValue("childSurname", "%" + filter.childSurname.toLowerCase() + "%");
-        }
-        if(filter.childPatronymic != null && !"".equals(filter.childPatronymic)){
-            sql.where("lower(c.patronymic) like :childPatronymic");
-            sql.setValue("childPatronymic", "%" + filter.childPatronymic.toLowerCase() + "%");
         }
 
     }

@@ -14,7 +14,16 @@
       <nb-user [nbContextMenu]="userMenu" [name]="user?.name"
                [picture]="(user?.img | secure | async) || placeholder"></nb-user>
     </nb-action>
+
     <nb-action *canI="[MODERATOR]" (click)="toggleNotification()" class="control-item"
                icon="nb-notifications" badgeText="99+" badgeStatus="danger"></nb-action>
+
+    <nb-action *canI="[MODERATOR]">
+      <app-layout-direction-switcher></app-layout-direction-switcher>
+<!--      <mat-slide-toggle>Tracking</mat-slide-toggle>-->
+<!--      https://stackblitz.com/edit/angular-eszrpl?file=package.json-->
+<!--      <checkbox cb-name="main.test.greet" cb-model="main.test" cb-checked="main.test.checked"></checkbox>-->
+<!--https://codepen.io/dannyburrows/pen/zrrgxY-->
+    </nb-action>
   </nb-actions>
 </div>

@@ -7,12 +7,9 @@ import {EventHistoryTableComponent} from './event-history-table/event-history-ta
 import {ProfileInfoComponent} from './profile-info/profile-info.component';
 import {
   NbAccordionModule,
-  NbDatepicker,
-  NbDatepickerDirective,
   NbDatepickerModule,
   NbSelectModule
 } from "@nebular/theme";
-import {NG_VALIDATORS, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @NgModule({
   declarations: [ModeratorComponent, EventHistoryTableComponent, ProfileInfoComponent],

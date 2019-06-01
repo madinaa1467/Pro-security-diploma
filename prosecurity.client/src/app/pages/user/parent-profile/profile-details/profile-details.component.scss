@@ -1,16 +1,28 @@
-@import '../../theme/styles/themes';
+@import '../../../../theme/styles/themes';
 
 @include nb-install-component() {
 
   nb-card-body {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0;
   }
 
-
-  .form-group label {
-    padding: 0 0 0.75rem;
+  .picture {
+    padding-top: 1.5em;
+    position: relative;
+    background-position: center;
+    border-top-left-radius: nb-theme(card-border-radius);
+    border-top-right-radius: nb-theme(card-border-radius);
+    flex: 0.5;
+  }
+  .no-profile {
+    background-size: 100% 100%;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    padding-left: 2rem;
+    //background-image: url("../../../../assets/images/noProfileImg.png");
   }
 
   .details {
@@ -37,28 +49,5 @@
       text-overflow: ellipsis;
       max-height: calc(1rem * 8 * #{nb-theme(line-height)});
     }
-  }
-  nb-card-footer {
-    display: flex;
-    justify-content: space-around;
-    padding: 0.75rem 0;
-    border: none;
-
-    a {
-      text-decoration: none;
-      color: nb-theme(color-fg);
-
-      &:hover {
-        color: nb-theme(color-fg-heading);
-      }
-
-      i {
-        font-size: 1.75rem;
-      }
-    }
-  }
-
-  nb-card-header.title {
-    font-size: 1.5em;
   }
 }

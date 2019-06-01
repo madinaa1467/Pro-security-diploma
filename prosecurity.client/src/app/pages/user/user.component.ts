@@ -1,20 +1,21 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {SmartTableData} from '../../../core/data/smart-table';
-import {ModeratorService} from "../../../core/services/moderator.service";
+import {LocalDataSource} from "ng2-smart-table";
+import {EventWeb} from "../../core/model/EventWeb";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {SmartTableData} from "../../core/data/smart-table";
 import {NbDateService} from "@nebular/theme";
-import {EventWeb} from "../../../core/model/EventWeb";
+import {ParentService} from "../../core/services/parent.service";
+import {Child} from "../../core/model/Child";
 
 @Component({
-  selector: 'app-event-history-table',
-  templateUrl: './event-history-table.component.html',
-  styleUrls: ['./event-history-table.component.scss']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class EventHistoryTableComponent implements OnInit {
+export class UserComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
-  entrances: [];
+  children: Child[];
   minStart: Date;
   maxStart: Date;
   minEnd: Date;
@@ -33,11 +34,16 @@ export class EventHistoryTableComponent implements OnInit {
       delete: false,
     },
     pager: {
-        perPage: this.eventsPerPage
+      perPage: this.eventsPerPage
     },
     columns: {
       fio: {
         title: 'Child',
+        type: 'string',
+        filter: false
+      },
+      parentFio: {
+        title: 'Parent',
         type: 'string',
         filter: false
       },
@@ -56,20 +62,15 @@ export class EventHistoryTableComponent implements OnInit {
         type: 'string',
         filter: false
       },
-      parentFio: {
-        title: 'Parent',
-        type: 'string',
-        filter: false
-      },
     },
   };
 
-  constructor(private service: SmartTableData, private moderatorService: ModeratorService,
+  constructor(private service: SmartTableData, private parentService: ParentService,
               protected dateService: NbDateService<Date>,
               private fb: FormBuilder) {
-  this.maxStart = this.dateService.today();//this.dateService.addDay(this.dateService.today(), 0);
-  this.maxEnd = this.dateService.today();//this.dateService.addDay(this.dateService.today(), 0);
-}
+    this.maxStart = this.dateService.today();//this.dateService.addDay(this.dateService.today(), 0);
+    this.maxEnd = this.dateService.today();//this.dateService.addDay(this.dateService.today(), 0);
+  }
 
   ngOnInit() {
     this.buildForm();
@@ -80,19 +81,17 @@ export class EventHistoryTableComponent implements OnInit {
       }
     });
 
-    this.moderatorService.getEntranceList().then(
+    this.parentService.getChildList().then(
       res=>{
-        this.entrances = res;
+        this.children = res;
       }
     );
 
-    this.moderatorService.getEventList(this.filterForm.getRawValue()).then(
+    this.parentService.getEventList(this.filterForm.getRawValue()).then(
       res=>{
         console.log('Cheeeeeeck', res);
         this.source.load(res);
         this.data = res;
-        // this.source.setPaging(1, 2, true);
-
       }
     );
 
@@ -111,10 +110,7 @@ export class EventHistoryTableComponent implements OnInit {
     this.filterForm = this.fb.group({
       'offset': 0,
       'limit': this.eventsPerPage + 1,
-      'entrance': null,
-      'childName': null,
-      'childSurname': null,
-      'childPatronymic': null,
+      'childId': null,
       'startDate': null,
       'endDate': null,
     });
@@ -148,7 +144,7 @@ export class EventHistoryTableComponent implements OnInit {
 
   search() {
     this.filterForm.controls['offset'].patchValue(0);
-    this.moderatorService.getEventList(this.filterForm.getRawValue()).then(
+    this.parentService.getEventList(this.filterForm.getRawValue()).then(
       res=>{
         this.source.load(res);
         this.data = res;
@@ -164,7 +160,7 @@ export class EventHistoryTableComponent implements OnInit {
     this.filterForm.controls['offset'].patchValue(this.source.count());
 
     if(pageIndex > this.source.count() / this.filterForm.controls['limit'].value) {
-      this.moderatorService.getEventList(this.filterForm.getRawValue()).then(
+      this.parentService.getEventList(this.filterForm.getRawValue()).then(
         res => {
           console.log('pagination', res);
           res.forEach(d => this.data.push(d));
@@ -178,14 +174,7 @@ export class EventHistoryTableComponent implements OnInit {
   }
 
   clearFilter() {
-    // Object.keys(this.filterForm.controls).forEach((name) => {
-    //   this.filterForm.controls[name].patchValue(null);
-    // });
-
-    this.filterForm.controls['entrance'].patchValue(null);
-    this.filterForm.controls['childName'].patchValue(null);
-    this.filterForm.controls['childSurname'].patchValue(null);
-    this.filterForm.controls['childPatronymic'].patchValue(null);
+    this.filterForm.controls['childId'].patchValue(0);
     this.filterForm.controls['startDate'].patchValue(null);
     this.filterForm.controls['endDate'].patchValue(null);
     this.filterForm.controls['offset'].patchValue(0);

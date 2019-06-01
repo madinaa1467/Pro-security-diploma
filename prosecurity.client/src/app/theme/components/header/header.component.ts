@@ -23,14 +23,10 @@ export class HeaderComponent implements OnInit {
 
   userMenu = [
     {
-      title: 'Profile'
-    },
-    {
       title: 'Log out',
       link: '/auth/logout',
     }];
 
-  sidebarEnd = false;
   expanded = false;
   wasExpanded = false;
 
@@ -40,13 +36,25 @@ export class HeaderComponent implements OnInit {
               private layoutService: LayoutService) { }
 
   ngOnInit() {
-    //this.user = {name: 'Vasya Pupkin', picture: 'assets/images/nick.png'};
     this.userService.getUserInfo().subscribe((userInfo: UserInfo) => {
       this.user = {
         name: userInfo.displayName,
         img: userInfo.img
       };
-    })
+      if (['USER'].some(permitted => userInfo.cans.has(permitted))) {
+        this.userMenu.push({
+          title: 'Profile',
+          link: '/pages/user/profile'
+        });
+        this.userMenu.push({
+          title: 'Even List',
+          link: '/pages/user'
+        });
+      }
+    });
+
+
+
   }
 
   toggleSidebar(): boolean {

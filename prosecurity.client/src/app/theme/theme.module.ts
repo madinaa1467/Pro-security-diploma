@@ -14,14 +14,23 @@ import {
   NbLayoutModule,
   NbListModule,
   NbMenuModule,
-  NbSidebarModule, NbSpinnerModule,
+  NbSidebarModule,
+  NbSpinnerModule,
   NbStepperModule,
   NbThemeModule,
-  NbUserModule
+  NbUserModule,
+  NbWindowModule
 } from "@nebular/theme";
 import {CORPORATE_THEME} from "./styles/theme.corporate";
 import {PageLayoutComponent} from "./layouts";
-import {FooterComponent, HeaderComponent, RecentEventComponent, ToggleSettingsButtonComponent} from "./components";
+import {
+  FooterComponent,
+  HeaderComponent,
+  LayoutDirectionSwitcherComponent,
+  RecentEventComponent,
+  SwitcherComponent,
+  ToggleSettingsButtonComponent,
+} from "./components";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security";
 import {SecurePipe} from './pipes/secure.pipe';
@@ -51,11 +60,19 @@ const NB_MODULES = [
   NbBadgeModule,
   NbListModule,
   NbDialogModule,
+  NbWindowModule,
   NgbModule
 
 ];
 
-const COMPONENTS = [PageLayoutComponent, HeaderComponent, FooterComponent, ToggleSettingsButtonComponent, RecentEventComponent];
+const COMPONENTS = [
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
+  PageLayoutComponent,
+  HeaderComponent,
+  FooterComponent,
+  ToggleSettingsButtonComponent,
+  RecentEventComponent];
 
 const ENTRY_COMPONENTS = [];
 
@@ -71,6 +88,7 @@ const NB_THEME_PROVIDERS = [
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
   ...NbDialogModule.forRoot().providers,
+  ...NbWindowModule.forRoot().providers,
 ];
 
 @NgModule({

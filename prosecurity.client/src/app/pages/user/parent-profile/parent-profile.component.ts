@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Child} from "../../../core/model/Child";
 
 @Component({
   selector: 'app-parent-profile',
@@ -8,12 +7,8 @@ import {Child} from "../../../core/model/Child";
 })
 export class ParentProfileComponent implements OnInit {
 
-  child: Child = new Child();
 
   constructor() {
-    this.child.patronymic = 'Ивановичь';
-    this.child.surname = 'Иванов';
-    this.child.name = 'Иван';
   }
 
   ngOnInit() {
