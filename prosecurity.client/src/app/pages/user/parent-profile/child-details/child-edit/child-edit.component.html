@@ -11,6 +11,7 @@
           <input type="text" placeholder="Enter card password" class="form-control" formControlName="password"
                    [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
           </div>
+          <button nbButton disabled nbStepperNext>prev</button>
           <button nbButton nbStepperNext>next</button>
         </form>
       </nb-step>
@@ -71,7 +72,8 @@
     <nb-datepicker #ngmodel></nb-datepicker>
     </div>
 
-
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton disabled nbStepperNext>next</button>
 
       </nb-step>
     </nb-stepper>
