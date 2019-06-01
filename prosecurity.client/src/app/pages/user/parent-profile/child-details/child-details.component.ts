@@ -49,12 +49,15 @@ export class ChildDetailsComponent implements OnInit {
 
   constructor(private service: SmartTableData, private parentService: ParentService,
               private dialogService: NbDialogService) {
+    this.getChildList();
+  }
+
+  getChildList(){
     this.parentService.getChildList().then(
       res=>{
         res.splice(0, 1);
         this.source.load(res);
-      }
-    );
+      });
   }
 
   ngOnInit() {
@@ -68,7 +71,8 @@ export class ChildDetailsComponent implements OnInit {
       },
     })
       .onClose.subscribe(res=>{
-        console.log("Submit answer", res);
+      this.getChildList();
+      console.log("Submit answer", res);
       }
     );
   }
