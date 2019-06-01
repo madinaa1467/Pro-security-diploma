@@ -18,6 +18,7 @@ import {
   NbSpinnerModule,
   NbStepperModule,
   NbThemeModule,
+  NbToastrModule,
   NbUserModule,
   NbWindowModule
 } from "@nebular/theme";
@@ -61,6 +62,7 @@ const NB_MODULES = [
   NbListModule,
   NbDialogModule,
   NbWindowModule,
+  NbToastrModule,
   NgbModule
 
 ];
@@ -89,6 +91,7 @@ const NB_THEME_PROVIDERS = [
   ...NbMenuModule.forRoot().providers,
   ...NbDialogModule.forRoot().providers,
   ...NbWindowModule.forRoot().providers,
+  ...NbToastrModule.forRoot().providers,
 ];
 
 @NgModule({

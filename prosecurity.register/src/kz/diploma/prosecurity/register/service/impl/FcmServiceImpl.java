@@ -68,22 +68,24 @@ public class FcmServiceImpl implements FcmService {
 
 
   @Override
-  public void sendTopicBasedNotifications(FcmTopic topic, Map<String, String> data) throws
+  public void sendTopicBasedNotifications(FcmTopic topic, Map<String, String> data, NotificationEvent event) throws
     ExecutionException,
     InterruptedException {
 
     AndroidConfig androidConfig = AndroidConfig.builder()
-      .setTtl(Duration.ofMinutes(2).toMillis()).setCollapseKey("chuck")
+      .setTtl(Duration.ofMinutes(2).toMillis())
+      .setCollapseKey(event.cardNumber)
       .setPriority(Priority.HIGH)
-      .setNotification(AndroidNotification.builder().setTag("chuck").build()).build();
+      //.setNotification(AndroidNotification.builder().setTag("chuck").build())
+      .build();
 
     ApnsConfig apnsConfig = ApnsConfig.builder()
-      .setAps(Aps.builder().setCategory("chuck").setThreadId("chuck").build()).build();
+      .setAps(Aps.builder().setCategory(event.cardNumber).setThreadId(event.cardNumber).build()).build();
 
     Message message = Message.builder().putAllData(data).setTopic(topic.name())
       .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
       .setNotification(
-        new Notification("Chuck Norris Joke", "A new Chuck Norris joke has arrived"))
+        new Notification(event.title, event.body))
       .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();

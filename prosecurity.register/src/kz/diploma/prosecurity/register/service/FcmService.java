@@ -14,7 +14,8 @@ public interface FcmService {
     ExecutionException,
     InterruptedException;
 
-  void sendTopicBasedNotifications(FcmTopic topic, Map<String, String> data) throws ExecutionException,
+  void sendTopicBasedNotifications(FcmTopic topic, Map<String, String> data, NotificationEvent event) throws
+    ExecutionException,
     InterruptedException, FirebaseMessagingException;
 
   void subscribeToTopic(@NonNull List<String> registrationTokens,
