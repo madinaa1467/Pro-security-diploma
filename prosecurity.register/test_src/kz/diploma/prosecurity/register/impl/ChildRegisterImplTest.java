@@ -5,12 +5,14 @@ import kz.diploma.prosecurity.controller.model.EventFilter;
 import kz.diploma.prosecurity.controller.model.EventList;
 import kz.diploma.prosecurity.controller.register.ChildRegister;
 import kz.diploma.prosecurity.register.dao.ChildDao;
+import kz.diploma.prosecurity.register.dao.NotificationDao;
 import kz.diploma.prosecurity.register.dao.SequenceDao;
 import kz.diploma.prosecurity.register.jdbc.ChildEventList;
 import kz.diploma.prosecurity.register.jdbc.ChildrenEventList;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
 import kz.greetgo.db.Jdbc;
 import kz.greetgo.depinject.core.BeanGetter;
+import kz.greetgo.util.RND;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
@@ -98,10 +100,22 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
 
   public BeanGetter<ChildDao> dao;
+  public BeanGetter<NotificationDao> notificationDao;
 
   @Test
   public void test() {
-    System.out.println("nextVal: " + sequenceDao.get().proSeqNext());
+    dao.get().selectParentIds(1l).stream().forEach(id -> {
+
+      for (int i = 0; i < 2; i++) {
+        notificationDao.get().registerDevice(id, RND.str(100));
+      }
+    });
+
+  }
+
+  @Test
+  public void testPermission() {
+
   }
 
 }

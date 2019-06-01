@@ -92,4 +92,14 @@
     ]]></sql>
   </changeSet>
 
+  <changeSet author="madina" id="create-table-device_notification">
+    <sql endDelimiter=";;"><![CDATA[
+      create table device_notification (
+        registration_id varchar(255) not null,
+        parent serial references parent(id),
+        primary key(registration_id)
+      )
+    ]]></sql>
+  </changeSet>
+
 </databaseChangeLog>
