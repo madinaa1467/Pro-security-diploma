@@ -36,6 +36,7 @@ import {SecurityModule} from "../security";
 import {SecurePipe} from './pipes/secure.pipe';
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {NbEvaIconsModule} from "@nebular/eva-icons";
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -61,7 +62,8 @@ const NB_MODULES = [
   NbListModule,
   NbDialogModule,
   NbWindowModule,
-  NgbModule
+  NgbModule,
+  NbEvaIconsModule
 
 ];
 

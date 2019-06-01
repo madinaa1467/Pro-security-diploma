@@ -40,4 +40,15 @@ export class ParentService {
     });
   }
 
+  getChildByCard(card_number: string, password: string, childId: number) {
+    console.log('Call child/getChildByCard: ', card_number, "password", password);
+    return this.http.get("/child/getChildByCard",
+      {cardNumber: card_number, password: password, childId: childId })
+      .toPromise()
+      .then(resp => {
+        console.error('Response from server child/getChildByCard:', resp);
+        return Child.create(resp);
+      });
+  }
+
 }

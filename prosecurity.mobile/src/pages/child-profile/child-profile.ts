@@ -64,6 +64,7 @@ export class ChildProfile implements OnInit {
       this.childForm.controls['cardNumber'].patchValue(card_id.substring(0, 23));
       console.log("Send: ", this.childForm.controls['cardNumber'].value);
       loading.present();
+
       this.childService.getChildByCard(card_id.replace(/\D/g, '').substring(0, 19),
         this.childForm.controls['password'].value,
         this.childForm.controls['id'].value)

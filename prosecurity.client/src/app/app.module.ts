@@ -8,7 +8,6 @@ import {ThemeModule} from "./theme/theme.module";
 import {CoreModule} from "./core/core.module";
 import {HttpModule} from "./http";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
-// import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
