@@ -41,6 +41,15 @@ public interface ParentDao {
   void upsertPhone(@Param("parentId") Long parentId,
                    @Param("phone") Phone phone);
 
+  @Insert("insert into user_can (user_can, description) values (#{can}, 'description of '||#{can})" +
+    " on conflict (user_can) do nothing")
+  void upsert(@Param("can") String can);
+
+  @Insert("insert into person_cans (person_id, user_can)" +
+    " select p.id as person_id, #{can} as user_can" +
+    " from person p, user_can where p.username = #{username} and p.actual = 1" +
+    " on conflict (person_id, user_can) do nothing")
+  void personCan(@Param("username") String username, @Param("can") String can);
 
   @Update("update parent_phone set actual = 0 where parent " +
     "= #{parent}")

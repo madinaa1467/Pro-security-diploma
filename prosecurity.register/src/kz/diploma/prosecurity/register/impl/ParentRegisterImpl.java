@@ -5,6 +5,7 @@ import kz.diploma.prosecurity.controller.errors.ValidationError;
 import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.Phone;
 import kz.diploma.prosecurity.controller.model.ToSave;
+import kz.diploma.prosecurity.controller.model.UserCan;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.register.FileRegister;
 import kz.diploma.prosecurity.controller.register.ParentRegister;
@@ -41,9 +42,20 @@ public class ParentRegisterImpl implements ParentRegister {
     for (Phone phone : toSave.phones) {
       parentDao.get().upsertPhone(toSave.id, phone);
     }
+
+    //TODO change to set other permission
+    add_can(toSave.username, UserCan.USER);
+
     return toSave.id;
   }
 
+
+  private void add_can(String username, UserCan... cans) {
+    for (UserCan can : cans) {
+      parentDao.get().upsert(can.name());
+      parentDao.get().personCan(username, can.name());
+    }
+  }
 
   @Override
   public AccountInfo save(Long id, ToSave toSave) {
