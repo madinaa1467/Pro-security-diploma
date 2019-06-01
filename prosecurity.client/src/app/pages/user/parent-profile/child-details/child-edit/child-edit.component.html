@@ -21,7 +21,7 @@
                    formControlName="cardNumber" mask="0000 00 00000 0000 0000"
                    [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
                    disabled="true">
-          <input type="text" placeholder="Enter card password" class="form-control" formControlName="password"
+          <input type="password" placeholder="Enter card password" class="form-control" formControlName="password"
                    [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
           </div>
         </form>
@@ -39,7 +39,7 @@
              id="input-surname"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder=""
              fullWidth />
     </div>
 
@@ -52,7 +52,7 @@
              id="input-name"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder=""
              fullWidth />
     </div>
 
@@ -65,7 +65,7 @@
              id="input-patronymic"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder=""
              fullWidth />
     </div>
 

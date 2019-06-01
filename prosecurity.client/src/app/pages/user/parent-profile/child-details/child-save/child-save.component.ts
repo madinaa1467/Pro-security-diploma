@@ -101,7 +101,11 @@ export class ChildSaveComponent implements OnInit {
           let errors = err.error;
 
           errors.forEach((error) => {
-            alert(`Password is not correct!`);
+            if(error.code == 'password') {
+              alert(`Password is not correct!`);
+            } else{
+              alert(`Entered card is not exist in system, Try again!`);
+            }
             let field = this.firstForm.controls[error.code];
             field.setErrors({[error.message]: true});
           });

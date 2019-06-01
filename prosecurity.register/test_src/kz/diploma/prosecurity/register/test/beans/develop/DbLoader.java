@@ -75,12 +75,13 @@ public class DbLoader {
     parent(id, "1980-07-23", "1", "male");
     phone(id);
 
+    Long childId = sequenceDao.get().proSeqNext();
+    child(childId, id, "9643108503302167061","Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
+    authTestDao.get().insertParentChild(id, childId, 1, 1);
 
-    child(1L, id, "9643108503302167061","Asyl", "Aisha", "Asla", "female", "2005-01-05", 1);
-    authTestDao.get().insertParentChild(id, 1L, 1, 1);
-
-    child(2L, id, "9643108503302167063","Kasymzhan", "Abzal", "Adam", "male", "2010-04-09", 1);
-    authTestDao.get().insertParentChild(id, 2L, 1, 1);
+    childId = sequenceDao.get().proSeqNext();
+    child(childId, id, "9643108503302167063","Kasymzhan", "Abzal", "Adam", "male", "2010-04-09", 1);
+    authTestDao.get().insertParentChild(id, childId, 1, 1);
 
 
     card("9643108503302167064");
@@ -95,7 +96,7 @@ public class DbLoader {
       add_can(i + "", UserCan.USER);
       parent(id, "1980-07-23", i + "", "male");
       phone(id);
-      authTestDao.get().insertParentChild(id, 1L, 1, 1);
+      authTestDao.get().insertParentChild(id, childId, 1, 1);
     }
 
     logger.info("Finish loading persons");

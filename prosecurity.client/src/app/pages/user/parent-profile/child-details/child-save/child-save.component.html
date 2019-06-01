@@ -17,6 +17,28 @@
         <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
 
           <div class="input-group">
+
+<!--            <div class="form-control-group">-->
+<!--              <label class="label" for="input-cardNumber">Child card:</label>-->
+<!--              <input nbInput-->
+<!--                     id="input-cardNumber"-->
+<!--                     name="cardNumber"-->
+<!--                     placeholder="Enter child card"-->
+<!--                     fullWidth-->
+<!--                     formControlName="cardNumber" mask="0000 00 00000 0000 0000"-->
+<!--                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"/>-->
+<!--            </div>-->
+<!--            <div class="form-control-group">-->
+<!--              <label class="label" for="input-password">type="password":</label>-->
+<!--              <input nbInput-->
+<!--                     type="password"-->
+<!--                     id="input-password"-->
+<!--                     name="password"-->
+<!--                     placeholder="Enter card password"-->
+<!--                     fullWidth-->
+<!--                     formControlName="password"-->
+<!--                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"/>-->
+<!--            </div>-->
             <input type="text" placeholder="Enter child card" class="form-control"
                    formControlName="cardNumber" mask="0000 00 00000 0000 0000"
                    [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
@@ -35,8 +57,7 @@
                  [(ngModel)]="child.surname"
                  #surname="ngModel"
                  id="input-surname"
-                 name="email"
-                 pattern=".+@.+..+"
+                 name="surname"
                  placeholder="Email address"
                  fullWidth/>
         </div>
@@ -48,8 +69,7 @@
                  [(ngModel)]="child.name"
                  #name="ngModel"
                  id="input-name"
-                 name="email"
-                 pattern=".+@.+..+"
+                 name="name"
                  placeholder="Email address"
                  fullWidth/>
         </div>
@@ -61,8 +81,7 @@
                  [(ngModel)]="child.patronymic"
                  #patronymic="ngModel"
                  id="input-patronymic"
-                 name="email"
-                 pattern=".+@.+..+"
+                 name="patronymic"
                  placeholder="Email address"
                  fullWidth/>
         </div>
