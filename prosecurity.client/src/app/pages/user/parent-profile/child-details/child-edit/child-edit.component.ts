@@ -4,6 +4,7 @@ import {Child} from "../../../../../core/model/Child";
 import {GenderType, genderTypes} from "../../../../../core/model/gender/gender-type";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../../../../core/services/parent.service";
+import {ChildToSave} from "../../../../../core/model/ChildToSave";
 
 @Component({
   selector: 'app-child-edit',
@@ -34,7 +35,10 @@ export class ChildEditComponent implements OnInit{
 
   submit() {
     // this.child.fio = this.child.surname + ' ' + this.child.name + ' ' + this.child.patronymic;
-        this.parentServics.save(this.child).then(_resp => {
+    let childToSave = ChildToSave.create(this.child);
+    childToSave.password = this.firstForm.controls['password'].value;
+    childToSave.cardNumber = this.firstForm.controls['cardNumber'].value;
+    this.parentServics.save(childToSave).then(_resp => {
           alert(`Child changed!`);
           this.ref.close(this.child);
         }).catch(err => {
@@ -42,6 +46,8 @@ export class ChildEditComponent implements OnInit{
             let errors = err.error;
             alert(`Error, Try again!`);
             errors.forEach((error) => {
+
+              console.error("error", error);
               // let field = this.childForm.controls[error.code];
               // field.setErrors({[error.message]: true});
             });

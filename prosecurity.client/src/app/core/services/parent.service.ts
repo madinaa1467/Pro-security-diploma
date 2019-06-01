@@ -3,7 +3,6 @@ import {EventWeb} from "../model/EventWeb";
 import {HttpService} from "../../http/services";
 import {EventFilterWeb} from "../model/EventFilterWeb";
 import {Child} from "../model/Child";
-import {ChildToSave} from "../model/ChildToSave";
 
 
 @Injectable()
@@ -53,8 +52,9 @@ export class ParentService {
   }
 
   save(childToSave) {
+    console.log('Call child/save: ', childToSave);
     return this.http.post("/child/save",
-      {"childToSave": JSON.stringify(ChildToSave.create(childToSave))})
+      {"childToSave": JSON.stringify(childToSave)})
       .toPromise().then(resp => {
         console.log("Response from child/save:  ", resp);
         if (!resp)
