@@ -207,7 +207,28 @@ public class DbLoader {
     authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-22 09:38:47").getTime()), actual);
     authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-22 13:18:38").getTime()), actual);
     authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-23 06:15:31").getTime()), actual);
-    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-23 17:04:59").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-23 17:04:59").getTime()), actual);///
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-02-16 07:38:40").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-20 07:38:47").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-20 14:18:38").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-21 07:15:31").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-21 11:04:59").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-22 08:38:40").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-22 13:27:55").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-23 09:07:55").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-23 14:14:22").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-24 08:16:40").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-24 15:18:55").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-25 08:53:24").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-25 16:19:32").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-27 08:37:40").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-27 13:49:05").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-28 09:07:44").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-28 17:12:27").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-29 09:38:47").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-29 13:18:38").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-30 06:15:31").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-30 17:04:59").getTime()), actual);
   }
 
   private void createEventListEven(Long id, int actual) throws ParseException {
@@ -275,7 +296,27 @@ public class DbLoader {
     authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-22 09:44:57").getTime()), actual);
     authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-22 13:08:12").getTime()), actual);
     authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-23 08:11:46").getTime()), actual);
-    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-23 19:36:28").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-23 19:36:28").getTime()), actual);////
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-20 07:49:36").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-20 18:14:45").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-21 07:09:21").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-21 16:03:28").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-22 07:01:41").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-22 16:09:03").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-23 07:42:53").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-23 14:14:26").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-24 07:27:45").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-24 16:24:47").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-25 07:59:28").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-25 10:46:19").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-27 08:42:18").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-27 15:35:10").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-28 08:50:41").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-28 16:18:10").getTime()), actual);
+    authTestDao.get().insertEvent("in", "first", id, new Timestamp(sdfEvent.parse("2019-05-29 07:08:07").getTime()), actual);
+    authTestDao.get().insertEvent("out","first", id, new Timestamp(sdfEvent.parse("2019-05-29 09:46:30").getTime()), actual);
+    authTestDao.get().insertEvent("in","second", id, new Timestamp(sdfEvent.parse("2019-05-30 08:06:42").getTime()), actual);
+    authTestDao.get().insertEvent("out", "second", id, new Timestamp(sdfEvent.parse("2019-05-30 12:36:22").getTime()), actual);
   }
 
   private void phone(Long id)  {
