@@ -1,5 +1,5 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -8,6 +8,8 @@ import {ThemeModule} from "./theme/theme.module";
 import {CoreModule} from "./core/core.module";
 import {HttpModule} from "./http";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+
+
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
@@ -22,6 +24,7 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     InfiniteScrollModule,
+
     // MatSlideToggleModule
     // MatCheckboxModule
   ],

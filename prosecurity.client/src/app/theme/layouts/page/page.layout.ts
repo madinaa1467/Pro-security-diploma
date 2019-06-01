@@ -8,6 +8,7 @@ import {
 } from "@nebular/theme";
 import {delay, takeWhile, withLatestFrom} from "rxjs/internal/operators";
 import {UserCan} from "../../../core/model/UserCan";
+import {MessagingService} from "../../../core/utils";
 
 @Component({
   selector: 'app-page-layout',
@@ -27,7 +28,8 @@ export class PageLayoutComponent implements OnDestroy {
   constructor(private menuService: NbMenuService,
               protected themeService: NbThemeService,
               private bpService: NbMediaBreakpointsService,
-              private sidebarService: NbSidebarService) {
+              private sidebarService: NbSidebarService,
+              private messagingService: MessagingService) {
 
     const isBp = this.bpService.getByName('is');
     this.menuService.onItemSelect()
@@ -42,6 +44,11 @@ export class PageLayoutComponent implements OnDestroy {
           this.sidebarService.collapse(this.tag);
         }
       });
+
+    this.messagingService.onMessage().pipe(
+      takeWhile(() => this.alive)
+    ).subscribe(message => console.log('message:', message));
+    //this.message = this.messagingService.currentMessage
 
   }
 

@@ -8,6 +8,10 @@ public interface NotificationRegister {
 
   void unregister(Long personId,  String registrationId);
 
+  void subscribe(Long personId, String registrationId, String topic);
+
+  void unsubscribe(Long personId, String registrationId, String topic);
+
   void send(Event event);
 
 }

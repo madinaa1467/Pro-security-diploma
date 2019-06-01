@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.NotificationEvent;
 import kz.diploma.prosecurity.register.service.FcmService;
+import kz.diploma.prosecurity.register.service.FcmTopic;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
 import kz.greetgo.depinject.core.BeanGetter;
 import org.testng.annotations.Test;
@@ -18,8 +19,8 @@ public class FcmServiceTest extends ParentTestNg {
   @Test
   public void testSendDirectNotification() throws Exception {
     String token =
-      "c-yj3IeOINE" +
-        ":APA91bEptEZJmvaH9i89qsZCnKVzUQCW1sEQh_F7ZXwML3qK3vEnK77fzdD3jr3csDv4FSAg5jtHNHTp8fnkxRsroVbipQ5VH8dYm7LKlsvSq63J-2Lw2wVfNJITJsAlgq7wJeGSstac";
+      "fuw1FIGmn64:APA91bGNQgbcHAM7RBH23urnmaT6tCNSczEJsTwb5YCmiwBtJRFfh5K2pAJC_PcB4d7Yhy8a7CrG71Z" +
+        "-Fe0doBvCJEA9zjzx3Qgafu9IW4ZXFBWOlxt5UQfXuZld0Zrw1lBgNcIBq4qt";
 //    String fcmToken = "ebgJ_s5q2dc:APA91bGRlFdEXcmBYYHF1vRJRdtxEY6-OF0QxWkhHGF_fa3LbY03FE0sPacsEA3RprHaRxH_9sCcP7nxtOiOXc8ztOgW1uQMky7QrnkinhU6wd55Rpd4LvsudZYz7tTjb0ZDMFyYBsiT";
 
 
@@ -44,6 +45,15 @@ public class FcmServiceTest extends ParentTestNg {
       System.out.println();
       service.get().sendDirectNotification(token, data, notificationEvent);
     }
-
   }
+
+  @Test
+  public void sendTopicBasedNotifications() throws Exception {
+    String token =
+      "fe2vuaf03jo:APA91bFJPbpE1eRVv83xc9I4gcptnW" +
+        "-raxMBwGnyGULfBrYFuTgA0F2p_NhdQvylbUWAqANa8Zy_mNQby4O7kcZM9Gcg9ZbmkYc6TjdtcqH9EjOjUBiKlqz3XGtdZB" +
+        "-8Vy2dTO0lvEpQ";
+    service.get().sendTopicBasedNotifications(FcmTopic.TRACKING, Maps.newHashMap());
+  }
+
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Set;
 
 public interface NotificationDao {
 
@@ -24,4 +25,7 @@ public interface NotificationDao {
     "inner join device_notification dn on pc.parent=dn.parent\n" +
     "where pc.child = #{childId} and pc.notification = 1")
   List<String> getParentTokensByChild(@Param("childId") Long childId);
+
+  @Select("select registration_id from device_notification where parent=#{parentId}")
+  Set<String> getRegisterTokensByParentId(@Param("parentId") Long parentId);
 }

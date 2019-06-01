@@ -1,5 +1,6 @@
 import {Component, Input, OnDestroy} from '@angular/core';
 import {NbLayoutDirection, NbLayoutDirectionService} from '@nebular/theme';
+import {MessagingService} from "../../../core/utils";
 
 @Component({
   selector: 'app-layout-direction-switcher',
@@ -23,7 +24,8 @@ export class LayoutDirectionSwitcherComponent implements OnDestroy {
 
   @Input() vertical: boolean = false;
 
-  constructor(private directionService: NbLayoutDirectionService) {
+  constructor(private directionService: NbLayoutDirectionService,
+              private messagingService: MessagingService) {
     this.currentDirection = this.directionService.getDirection();
 
     /*this.directionService.onDirectionChange()
@@ -33,7 +35,11 @@ export class LayoutDirectionSwitcherComponent implements OnDestroy {
 
   toggleDirection(newDirection) {
     //this.directionService.setDirection(newDirection);
-
+    if (NbLayoutDirection.LTR === newDirection) {
+      this.messagingService.subscribe("TRACKING")
+    } else {
+      this.messagingService.unsubscribe("TRACKING")
+    }
     console.log('toggleDirection:', newDirection);
   }
 

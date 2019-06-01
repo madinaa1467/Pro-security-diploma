@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -62,12 +63,12 @@ public class FcmServiceImpl implements FcmService {
       .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();
-    System.out.println("Sent message: " + response);
+    logger.info("Sent message: " + response);
   }
 
 
   @Override
-  public void sendTopicBasedNotifications(FcmTopic topic, String token, Map<String, String> data) throws
+  public void sendTopicBasedNotifications(FcmTopic topic, Map<String, String> data) throws
     ExecutionException,
     InterruptedException {
 
@@ -86,8 +87,23 @@ public class FcmServiceImpl implements FcmService {
       .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();
-    System.out.println("Sent message: " + response);
+    logger.info("Sent message: " + response);
+  }
 
+  @Override
+  public void subscribeToTopic(List<String> registrationTokens, String topic) throws FirebaseMessagingException {
+    TopicManagementResponse response =
+      FirebaseMessaging.getInstance().subscribeToTopic(registrationTokens, topic);
+
+    logger.info("Sent unsubscribeToTopic: " + response.getErrors());
+  }
+
+  @Override
+  public void unsubscribeToTopic(List<String> registrationTokens, String topic) throws FirebaseMessagingException {
+    TopicManagementResponse response =
+      FirebaseMessaging.getInstance().unsubscribeFromTopic(registrationTokens, topic);
+
+    logger.info("Sent unsubscribeToTopic: " + response.getErrors());
   }
 
 }

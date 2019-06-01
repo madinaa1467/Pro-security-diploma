@@ -2,8 +2,9 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 import {Router} from "@angular/router";
 import {AuthService} from "../../../core/auth/services";
 import {UserService} from "../../../core/data/users";
-import {catchError, switchMap} from "rxjs/internal/operators";
+import {catchError, switchMap, tap} from "rxjs/internal/operators";
 import {UserInfo} from "../../../core/model/auth/user-info";
+import {MessagingService} from "../../../core/utils";
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(private cd: ChangeDetectorRef,
               private router: Router,
               private service: AuthService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private messagingService: MessagingService) { }
 
   ngOnInit() {
   }
@@ -31,16 +33,22 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     // TODO: msultanova 5/20/19 future tips add AuthResult.ts for correct password strategy
     this.service.authenticate(this.user).pipe(
-      switchMap(result => {
-        return this.userService.loadUserInfo();
+      switchMap(res => {
+        return this.userService.loadUserInfo().pipe(
+          tap(userInfo => {
+            this.messagingService.requestPermission().subscribe()
+          })
+        )
       }),
       catchError(err => {
         this.submitted = false;
         this.errors.push(err.error);
         this.cd.detectChanges();
+        console.error('login:', err);
         return err;
       })
     ).subscribe((res: UserInfo) => {
+      console.log('res:', res);
       this.submitted = false;
       if (['MODERATOR'].some(permitted => res.cans.has(permitted))) {
         this.router.navigateByUrl("/pages/moderator");

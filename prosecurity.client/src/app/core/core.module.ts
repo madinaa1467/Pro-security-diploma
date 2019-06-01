@@ -17,6 +17,10 @@ import {PeriodsService} from "./data/periods.service";
 import {ModeratorService} from "./services/moderator.service";
 import {ParentService} from "./services/parent.service";
 import {UserGuard} from "./guards/user-guard.service";
+import {AngularFireMessagingModule} from '@angular/fire/messaging';
+import {AngularFireFunctionsModule} from '@angular/fire/functions';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from "../../environments/environment";
 
 export function initApp(appLoaderService: AppLoaderService) {
   return () => appLoaderService.initApp();
@@ -56,7 +60,10 @@ const NB_CORE_PROVIDERS = [
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    AngularFireMessagingModule,
+    AngularFireFunctionsModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ]
 })
 export class CoreModule {

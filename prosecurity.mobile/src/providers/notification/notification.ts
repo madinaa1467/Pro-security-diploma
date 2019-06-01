@@ -55,7 +55,7 @@ export class NotificationProvider {
             });
           });
         });
-      }, err => reject(err));
+      }, err => resolve());
     });
   }
 

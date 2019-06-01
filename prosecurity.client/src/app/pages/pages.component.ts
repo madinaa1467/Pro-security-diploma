@@ -16,7 +16,6 @@ export class PagesComponent implements OnDestroy {
 
   constructor(private canIProvider: CanIProvider) {
 
-
     this.canIProvider.getCans().pipe(
       takeWhile(() => this.alive)
     ).subscribe((cans: Set<string>) => {

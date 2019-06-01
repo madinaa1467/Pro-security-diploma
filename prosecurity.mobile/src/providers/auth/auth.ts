@@ -42,6 +42,7 @@ export class Auth {
   }
 
   logout() {
+
     this.notification.unregister().then(res => {
       return this.storage.remove(TOKEN_KEY).then(res => {
       this._accountInfo = null;

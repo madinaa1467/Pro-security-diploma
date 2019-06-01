@@ -1,6 +1,8 @@
 package kz.diploma.prosecurity.register.impl;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.NotificationEvent;
 import kz.diploma.prosecurity.controller.register.NotificationRegister;
@@ -11,7 +13,10 @@ import kz.greetgo.depinject.core.BeanGetter;
 import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 @Bean
@@ -34,6 +39,36 @@ public class NotificationRegisterImpl implements NotificationRegister {
   public void unregister(Long personId, String registrationId) {
     notificationDao.get().unregisterDevice(registrationId);
     logger.info("personId: " + personId + ", unregister.registrationId: " + registrationId);
+  }
+
+  @Override
+  public void subscribe(Long personId, String registrationId, String topic) {
+    try {
+      List<String> list = getTokenList(personId, registrationId);
+
+      if (list != null && !list.isEmpty()) service.get().subscribeToTopic(list, topic);
+    } catch (FirebaseMessagingException e) {
+      logger.error(e);
+    }
+
+  }
+
+  @Override
+  public void unsubscribe(Long personId, String registrationId, String topic) {
+    try {
+      List<String> list = getTokenList(personId, registrationId);
+
+      if (list != null && !list.isEmpty()) service.get().unsubscribeToTopic(list, topic);
+    } catch (FirebaseMessagingException e) {
+      logger.error(e);
+    }
+  }
+
+  private List<String> getTokenList(Long personId, String registrationId) {
+    Set<String> tokens = notificationDao.get().getRegisterTokensByParentId(personId);
+    if (!Strings.isNullOrEmpty(registrationId)) tokens.add(registrationId);
+
+    return new ArrayList<>(tokens);
   }
 
   @Override

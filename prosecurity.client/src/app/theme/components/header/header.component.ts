@@ -52,9 +52,6 @@ export class HeaderComponent implements OnInit {
         });
       }
     });
-
-
-
   }
 
   toggleSidebar(): boolean {
