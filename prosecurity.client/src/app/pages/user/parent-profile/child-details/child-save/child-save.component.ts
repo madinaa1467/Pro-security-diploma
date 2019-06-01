@@ -26,6 +26,8 @@ export class ChildSaveComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.child.birthDate = new Date().toJSON();
+    this.child.gender = this.genderTypes[0].value;
   }
 
   cancel() {
@@ -37,7 +39,7 @@ export class ChildSaveComponent implements OnInit {
     let childToSave = ChildToSave.create(this.child);
     childToSave.password = this.firstForm.controls['password'].value;
     childToSave.cardNumber = this.firstForm.controls['cardNumber'].value;
-    this.parentServics.save(childToSave).then(_resp => {
+    this.parentServics.saveChild(childToSave).then(_resp => {
       alert(`Child changed!`);
       this.ref.close(this.child);
     }).catch(err => {

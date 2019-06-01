@@ -9,6 +9,7 @@ import {ChildEditComponent} from './child-details/child-edit/child-edit.componen
 import {NbDatepickerModule, NbDialogModule, NbSelectModule, NbWindowModule} from "@nebular/theme";
 import {ChildSaveComponent} from "./child-details/child-save/child-save.component";
 import {NgxMaskModule} from "ngx-mask";
+import { EditProfileComponent } from './profile-details/edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {NgxMaskModule} from "ngx-mask";
     ProfileDetailsComponent,
     ChildDetailsComponent,
     ChildEditComponent,
-    ChildSaveComponent
+    ChildSaveComponent,
+    EditProfileComponent
   ],
   imports: [
     ThemeModule,
@@ -30,7 +32,8 @@ import {NgxMaskModule} from "ngx-mask";
   ],
   entryComponents: [
     ChildEditComponent,
-    ChildSaveComponent
+    ChildSaveComponent,
+    EditProfileComponent
   ],
 })
 export class ParentProfileModule { }

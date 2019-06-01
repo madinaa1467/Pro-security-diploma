@@ -3,6 +3,8 @@ import {EventWeb} from "../model/EventWeb";
 import {HttpService} from "../../http/services";
 import {EventFilterWeb} from "../model/EventFilterWeb";
 import {Child} from "../model/Child";
+import {ParentDetails} from "../model/parent-details";
+import {ToSave} from "../model/ToSave";
 
 
 @Injectable()
@@ -51,7 +53,7 @@ export class ParentService {
       });
   }
 
-  save(childToSave) {
+  saveChild(childToSave) {
     console.log('Call child/save: ', childToSave);
     return this.http.post("/child/save",
       {"childToSave": JSON.stringify(childToSave)})
@@ -60,6 +62,26 @@ export class ParentService {
         if (!resp)
           console.error(resp);
         return resp;
+      });
+  }
+
+
+  loadParentInfo(): Promise<ParentDetails> {
+    console.log('Call parent/getInfo:');
+    return this.http.get("/parent/getInfo")
+      .toPromise()
+      .then(resp => {
+        console.log("Response from parent/getInfo:  ", resp);
+        return ParentDetails.create(resp)
+      });
+  }
+
+
+  saveProfile(toSave) {
+    console.log('Call parent/save toSave', ToSave);
+    return this.http.post("/parent/save", {"toSave": JSON.stringify(ToSave.create(toSave))})
+      .toPromise().then(res => {
+        console.log("Response from parent/save:  ", res);
       });
   }
 

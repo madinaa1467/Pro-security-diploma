@@ -33,10 +33,12 @@ export class HeaderComponent implements OnInit {
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private userService: UserService,
-              private layoutService: LayoutService) { }
+              private layoutService: LayoutService) {
+  }
 
   ngOnInit() {
-    this.userService.getUserInfo().subscribe((userInfo: UserInfo) => {
+
+    this.userService.userInfoChange().subscribe((userInfo: UserInfo) => {
       this.user = {
         name: userInfo.displayName,
         img: userInfo.img
@@ -52,7 +54,6 @@ export class HeaderComponent implements OnInit {
         });
       }
     });
-
 
 
   }

@@ -38,7 +38,7 @@ export class ChildEditComponent implements OnInit{
     let childToSave = ChildToSave.create(this.child);
     childToSave.password = this.firstForm.controls['password'].value;
     childToSave.cardNumber = this.firstForm.controls['cardNumber'].value;
-    this.parentServics.save(childToSave).then(_resp => {
+    this.parentServics.saveChild(childToSave).then(_resp => {
           alert(`Child changed!`);
           this.ref.close(this.child);
         }).catch(err => {
