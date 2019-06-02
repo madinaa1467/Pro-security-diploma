@@ -6,6 +6,7 @@ import {switchMap} from "rxjs/internal/operators";
 import {HttpService} from "../../../http/services";
 import {Observable} from 'rxjs';
 import {FCM_REGISTRATION_ID} from "../../utils/messaging.service";
+import {ToSave} from "../../model/ToSave";
 
 
 @Injectable()
@@ -42,14 +43,11 @@ export class AuthService {
       );
   }
 
-  register(data?: any): Observable<string> {
-    return null;
-    /*return this.getStrategy(strategyName).register(data)
-      .pipe(
-        switchMap((result: GgAuthResult) => {
-          return this.processResultToken(result);
-        }),
-      );*/
+  register(toSave){
+    console.error('Register Save:', toSave);
+    return this.http.post('/parent/register',
+      {toSave: JSON.stringify(ToSave.create(toSave))})
+      .toPromise().then(res => res);
   }
 
   logout(): Observable<any> {

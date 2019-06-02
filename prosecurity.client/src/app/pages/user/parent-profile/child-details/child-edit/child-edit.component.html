@@ -1,17 +1,29 @@
 <nb-card>
-  <nb-card-header>Enter your name</nb-card-header>
+  <nb-card-header>
+    <h3>Child</h3>
+    <button nbButton  style="float:right" (click)="changeStepper()"
+            [disabled]="!firstForm.controls['cardNumber'].valid  || !firstForm.controls['password'].valid">
+
+
+      <span *ngIf="stepper.selectedIndex == 0">next</span>
+      <span *ngIf="stepper.selectedIndex == 1">prev</span>
+<!--      <nb-icon icon="star"  status="warning"></nb-icon>-->
+
+    </button>
+  </nb-card-header>
   <nb-card-body>
     <nb-stepper #stepper>
       <nb-step [stepControl]="firstForm" label="First step">
         <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
 
           <div class="input-group">
-            <input type="text" placeholder="Enter child card" class="form-control" formControlName="card"
-                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
-          <input type="text" placeholder="Enter card password" class="form-control" formControlName="password"
+            <input type="text" placeholder="Enter child card" class="form-control"
+                   formControlName="cardNumber" mask="0000 00 00000 0000 0000"
+                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
+                   disabled="true">
+          <input type="password" placeholder="Enter card password" class="form-control" formControlName="password"
                    [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
           </div>
-          <button nbButton nbStepperNext>next</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="secondForm" label="Second step">
@@ -23,11 +35,11 @@
       <label class="label" for="input-surname">Surname:</label>
       <input nbInput
              [(ngModel)]="child.surname"
-             #name="ngModel"
+             #surname="ngModel"
              id="input-surname"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder=""
              fullWidth />
     </div>
 
@@ -40,7 +52,7 @@
              id="input-name"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder=""
              fullWidth />
     </div>
 
@@ -49,11 +61,11 @@
       <label class="label" for="input-patronymic">Patronymic:</label>
       <input nbInput
              [(ngModel)]="child.patronymic"
-             #name="ngModel"
+             #patronymic="ngModel"
              id="input-patronymic"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder=""
              fullWidth />
     </div>
 
@@ -72,12 +84,13 @@
     </div>
 
 
-
       </nb-step>
     </nb-stepper>
   </nb-card-body>
   <nb-card-footer>
-    <button nbButton status="danget" (click)="cancel()">Cancel</button>
+    <div *ngIf="stepper.selectedIndex == 1">
+    <button nbButton status="danger" (click)="cancel()">Cancel</button>
     <button nbButton status="success" (click)="submit()">Submit</button>
+    </div>
   </nb-card-footer>
 </nb-card>

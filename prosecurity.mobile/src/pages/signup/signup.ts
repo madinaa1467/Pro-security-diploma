@@ -248,7 +248,7 @@ export class SignupPage implements OnInit {
       const alert = this.alertCtrl.create({
         title: 'Ошибка',
         message: err.error.error_description,
-        buttons: ['Отклонять']
+        buttons: ['Отклонить']
       });
       alert.present();
     });

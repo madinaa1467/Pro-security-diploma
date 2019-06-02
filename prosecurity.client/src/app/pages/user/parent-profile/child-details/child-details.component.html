@@ -4,6 +4,7 @@
   </nb-card-header>
 
   <nb-card-body>
+    <button nbButton style="float:right" (click)="createChild()">Create</button>
     <ng2-smart-table [settings]="settings" [source]="source"  (userRowSelect)="onCustom($event)" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>

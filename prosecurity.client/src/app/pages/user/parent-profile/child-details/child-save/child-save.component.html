@@ -1,0 +1,114 @@
+<nb-card>
+  <nb-card-header>
+    <h3>Child</h3>
+    <button nbButton style="float:right" (click)="changeStepper()"
+            [disabled]="!firstForm.controls['cardNumber'].valid  || !firstForm.controls['password'].valid">
+
+
+      <span *ngIf="stepper.selectedIndex == 0">next</span>
+      <span *ngIf="stepper.selectedIndex == 1">prev</span>
+      <!--      <nb-icon icon="star"  status="warning"></nb-icon>-->
+
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper #stepper>
+      <nb-step [stepControl]="firstForm" label="First step">
+        <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+
+          <div class="input-group">
+
+<!--            <div class="form-control-group">-->
+<!--              <label class="label" for="input-cardNumber">Child card:</label>-->
+<!--              <input nbInput-->
+<!--                     id="input-cardNumber"-->
+<!--                     name="cardNumber"-->
+<!--                     placeholder="Enter child card"-->
+<!--                     fullWidth-->
+<!--                     formControlName="cardNumber" mask="0000 00 00000 0000 0000"-->
+<!--                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"/>-->
+<!--            </div>-->
+<!--            <div class="form-control-group">-->
+<!--              <label class="label" for="input-password">type="password":</label>-->
+<!--              <input nbInput-->
+<!--                     type="password"-->
+<!--                     id="input-password"-->
+<!--                     name="password"-->
+<!--                     placeholder="Enter card password"-->
+<!--                     fullWidth-->
+<!--                     formControlName="password"-->
+<!--                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"/>-->
+<!--            </div>-->
+            <input type="text" placeholder="Enter child card" class="form-control"
+                   formControlName="cardNumber" mask="0000 00 00000 0000 0000"
+                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+            <input type="text" placeholder="Enter card password" class="form-control" formControlName="password"
+                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+          </div>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="secondForm" label="Second step">
+        <!--        <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">-->
+
+
+        <div class="form-control-group">
+          <label class="label" for="input-surname">Surname:</label>
+          <input nbInput
+                 [(ngModel)]="child.surname"
+                 #surname="ngModel"
+                 id="input-surname"
+                 name="surname"
+                 placeholder="Email address"
+                 fullWidth/>
+        </div>
+
+
+        <div class="form-control-group">
+          <label class="label" for="input-name">Name:</label>
+          <input nbInput
+                 [(ngModel)]="child.name"
+                 #name="ngModel"
+                 id="input-name"
+                 name="name"
+                 placeholder="Email address"
+                 fullWidth/>
+        </div>
+
+
+        <div class="form-control-group">
+          <label class="label" for="input-patronymic">Patronymic:</label>
+          <input nbInput
+                 [(ngModel)]="child.patronymic"
+                 #patronymic="ngModel"
+                 id="input-patronymic"
+                 name="patronymic"
+                 placeholder="Email address"
+                 fullWidth/>
+        </div>
+
+        <div class="form-control-group">
+          <label class="label" for="input-gender">Gender:</label>
+          <nb-select id="input-gender" shape="rectangle" [(ngModel)]="child.gender" outline status="success">
+            <nb-option *ngFor="let gender of genderTypes" value="{{gender.value}}">{{gender.value}}</nb-option>
+          </nb-select>
+        </div>
+
+
+        <div class="form-control-group">
+          <label class="label" for="input-birth">Birth date:</label>
+          <input nbInput id="input-birth" placeholder="Form Picker" [nbDatepicker]="ngmodel"
+                 [(ngModel)]="child.birthDate">
+          <nb-datepicker #ngmodel></nb-datepicker>
+        </div>
+
+
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+  <nb-card-footer>
+    <div *ngIf="stepper.selectedIndex == 1">
+      <button nbButton status="danger" (click)="cancel()">Cancel</button>
+      <button nbButton status="success" (click)="submit()">Submit</button>
+    </div>
+  </nb-card-footer>
+</nb-card>
