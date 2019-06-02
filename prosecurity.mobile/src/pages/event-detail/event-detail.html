@@ -8,9 +8,12 @@
 
 
 <ion-content #content parallax-header no-bounce class="bg-modal">
-  <div class="header-image"></div>
+  <div class="header-image" [ngStyle]="{'background-image': 'url(assets/src/school-background14.png)'}"></div>
   <div class="main-content" text-wrap text-center>
-    <div class="circular"></div>
+    <div class="circular">
+      <img [src]="(event.img | secure) | async" class="avatar" alt=""
+           onerror="this.src='assets/src/unknown.png'">
+    </div>
     <h2>{{event.fio}}</h2>
     <p>{{ ('EVENT.'+event.action+'_'+event.gender) | translate}}</p>
 <!--    <p class="profile-description">-->
