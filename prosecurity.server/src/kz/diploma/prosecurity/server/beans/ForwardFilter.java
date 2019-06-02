@@ -39,8 +39,10 @@ public class ForwardFilter implements Filter {
 
 
   private boolean isContinueChain(String target) {
-    if (target.startsWith("/prosecurity/api/")) {
+    //if (target.startsWith("/prosecurity/api/")) {
+    if (target.startsWith("/api/")) {
       return true;
+
     }
 
     int slashLastIndex = target.lastIndexOf('/');
