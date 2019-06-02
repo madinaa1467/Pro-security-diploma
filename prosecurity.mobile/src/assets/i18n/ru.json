@@ -1,50 +1,204 @@
 {
   "GENDER_MALE": "Мужчина",
   "GENDER_FEMALE": "Женщина",
-  "CHANGE_LANGUAGE": "Поменять язык",
+  "CHANGE_LANGUAGE": "Изменить язык",
   "HOME": {
-    "TITLE": "Привет ngx-translate!",
-    "SELECT": "Выберите язык",
+    "TITLE": "Привет",
+    "SELECT": "Изменить язык",
     "in_male": "{{childFio}} вышел в ",
     "out_male": "{{childFio}} зашел в ",
     "in_female": "{{childFio}} вышла в ",
     "out_female": "{{childFio}} зашла в "
   },
   "EVENT": {
-    "in_male": "Entered to school",
-    "out_male": "Exit school",
-    "in_female": "Entered to school",
-    "out_female": "Exit school",
-    "time-in": "Coming time",
-    "time-out": "Exit time",
-    "date-in": "Coming date",
-    "date-out": "Exit date",
-    "in": "Entered by the entrance #",
-    "out": "Exit by the #"
+    "in_male": "Зашел в школу",
+    "out_male": "Вышел со школы",
+    "in_female": "Зашлa в школу",
+    "out_female": "Вышлa со школы",
+    "time-in": "Время прибытия",
+    "time-out": "Время ухода",
+    "date-in": "Дата прибытия",
+    "date-out": "Дата ухода",
+    "in": "Вошел через вход #",
+    "out": "Вышел через выход #"
   },
   "LOGIN": {
-    "SIGN_IN": "Вход",
-    "SIGN_UP": "Регистрация",
+    "SIGN_IN": "Войти",
+    "SIGN_UP": "Зарегистрироваться",
     "USERNAME": "Имя пользователя",
-    "PASSWORD": "Пароль"
-  },
-  "SIGN_UP_VALIDATOR": {
-    "EMAIL_REQUIRED": "Пожалуйста введите свою почту",
-    "EMAIL_VALID": "Пожалуйста введите почту в правильном формате"
+    "PASSWORD": "Пароль",
+    "error": "Произошла ошибка"
   },
   "MESSAGE":{
-    "in_male": "{{childFio}} вышел в {{time}}",
-    "out_male": "{{childFio}} зашел в {{time}}",
-    "in_female": "{{childFio}} вышла в {{time}}",
-    "out_female": "{{childFio}} зашла в {{time}}",
+    "in_male": "{{childFio}} вошел в {{time}}",
+    "out_male": "{{childFio}} вышел в {{time}}",
+    "in_female": "{{childFio}} вошла в {{time}}",
+    "out_female": "{{childFio}} вышла в {{time}}",
     "YEARS_AGO": "{{when}}г",
-    "MONTHS_AGO": "{{when}}мес",
+    "MONTHS_AGO": "{{when}}месяц",
     "DAYS_AGO": "{{when}}д",
     "HOURS_AGO": "{{when}}ч",
     "MINUTES_AGO": "{{when}}мин",
-    "SECONDS_AGO": "{{when}}сек"
+    "SECONDS_AGO": "{{when}}сек",
+    "title": "Сообщения"
   },
   "PROFILE":{
-    "add_child": "Register child"
+    "add_child": "Добавить ребенка"
+  },
+  "SIGN_UP":{
+    "personal_info": "Пожалуйста, введите вашу личную информацию:",
+    "email": "Почта",
+    "username": "Имя пользователя",
+    "name": "Имя",
+    "surname": "Фамилия",
+    "patronymic": "Отчество",
+    "birth": "Дата рождения",
+    "gender": "Пол",
+    "register": "Зарегистрироваться",
+    "password": "Пароль",
+    "confirm_pass": "Подтвертить пароль",
+
+    "notification": "Уведомление",
+    "success_register": "Вы успешно зарегистрировались!  и уже можете зайти....",
+    "ok_button": "Ок",
+    "exception": "Произошла непредвиденная ошибка",
+    "try_again": "Попробовать заново"
+
+  },
+  "SIGN_UP_VALIDATOR": {
+    "EMAIL_REQUIRED": "Пожалуйста, введите ваш адрес электронной почты",
+    "EMAIL_VALID": "Пожалуйста, введите ваш действующий адрес электронной почты",
+    "in_use": "Почта уже используется",
+
+    "pass_req": "Пожалуйста, введите пароль",
+    "pass_pattern": "Пароль должен содержать цифры и буквы",
+    "pass_min": "Пожалуйста, введите более 6 символов",
+    "pass_max": "Пожалуйста, введите менее 25 символов",
+
+    "conf_pass_not_equal": "Подтверждающий пароль должен совпадать с паролем",
+    "conf_pass_req": "Подтверждающий пароль не совпадает с новым паролем",
+
+    "username_req": "Пожалуйста, введите Имя пользователя",
+    "username_pattern": "Имя пользователя должно содержать только буквы",
+    "username_min": "Пожалуйста, введите более 2 символов",
+    "username_max": "Пожалуйста, введите менее 25 символов",
+    "username_in_use": "Имя пользователя уже используется",
+
+    "name_req": "Пожалуйста, введите Ваше имя",
+    "name_pattern": "Имя должно содержать только буквы",
+    "name_min": "Пожалуйста, введите более 2 символов",
+    "name_max": "Пожалуйста, введите менее 25 символов",
+
+    "surname_req": "Пожалуйста, введите вашу фамилию",
+    "surname_pattern": "Фамилия должна содержать только буквы",
+    "surname_min": "Пожалуйста, введите более 2 символов",
+    "surname_max": "Пожалуйста, введите менее 25 символов",
+
+    "patronymic_pattern": "Имя должно содержать только буквы",
+    "patronymic_min": "Пожалуйста, введите более 2 символов",
+    "patronymic_max": "Пожалуйста, введите менее 25 символов",
+
+    "gender_req": "Пожалуйста, введите ваш номер телефона",
+    "phone_req": "Пожалуйста, выберите ваш пол",
+
+    "phone_format": "Телефон должен быть в формате +7"
+  },
+  "FILTER": {
+    "use_button": "ПРИМЕНИТЬ",
+    "cancel_button": "СБРОСИТЬ",
+    "from": "Из",
+    "to": "В"
+  },
+  "CHILD_PROFILE": {
+    "edit_child": "Редактировать ребенка",
+    "add_child": "Добавить ребенка",
+    "enter_onay": "Ввести номер карты Онай",
+    "onay_card": "Номер карты Онай",
+    "card_password": "Пароль карты",
+
+    "personal_info": "Заполните личную информацию",
+    "name": "Имя",
+    "surname": "Фамилия",
+    "patronymic": "Отчество",
+    "birth": "Дата рождения",
+    "gender": "Пол",
+
+    "send_notification": "Отправить уведомление",
+    "delete_child": "Удалить ребенка",
+    "previous": "Предыдущий",
+
+    "name_req": "Пожалуйста, введите Ваше имя",
+    "name_pattern": "Имя должно содержать только буквы",
+    "name_min": "Пожалуйста, введите более 2 символов",
+    "name_max": "Пожалуйста, введите менее 25 символов",
+
+    "surname_req": "Пожалуйста, введите вашу фамилию",
+    "surname_pattern": "Фамилия должна содержать только буквы",
+    "surname_min": "Пожалуйста, введите более 2 символов",
+    "surname_max": "Пожалуйста, введите менее 25 символов",
+
+    "patronymic_pattern": "Имя должно содержать только буквы",
+    "patronymic_min": "Пожалуйста, введите более 2 символов",
+    "patronymic_max": "Пожалуйста, введите менее 25 символов",
+
+    "gender_req": "Пожалуйста, введите ваш номер телефона",
+
+
+    "cardNumber_req": "Введите номер Онай",
+    "cardNumber_pattern": "Неправильный номер!",
+    "cardNumber_unknown": "Неизвестная карта, попробуйте еще раз",
+    "cardNumber_unavailable": "Карта недоступна",
+    "cardNumber_alreadyInUse": "Эта карта уже используется другим пользователем",
+
+    "password_required": "Пожалуйста, введите пароль карты",
+    "password_notCorrect": "Этот пароль неверный!",
+
+    "cant_delete": "Вы не можете удалить!",
+    "delete_success_forever": "Вы успешно удалили все записи!",
+
+    "add_success": "Вы успешно добавили ребенка!",
+    "edit_success": "Вы успешно изменили запись!",
+
+    "delete_child": "Вы уверены, что хотите удалить?",
+    "delete_for_all": "Для всех родителей",
+    "delete_for_me": "Только для меня"
+  },
+
+  "EDIT_PROFILE": {
+    "successfully_changed": "Ваш профиль успешно изменен!"
+  },
+  "OPTIONS": {
+    "title": "Опции",
+    "account": "Аккаунт",
+    "edit_profile": "Изменить профиль",
+    "change_pass": "Изменить пароль",
+    "log_out": "Выйти",
+    "about": "О нас",
+    "privacy_policy": "Политика конфиденциальности",
+    "terms_of_service": "Условия обслуживания",
+    "application": "Приложение"
+  },
+  "PRIVATE_INFORMATION": {
+    "title": "Личная информация",
+    "old_pass": "Введите свой старый пароль",
+    "pass": "Пароль",
+    "confirm_pass": "Подтвердите пароль",
+
+    "pass_req": "Пожалуйста, введите пароль",
+    "pass_pattern": "Пароль должен содержать цифры и буквы",
+    "pass_min": "Пожалуйста, введите более 6 символов",
+    "pass_max": "Пожалуйста, введите менее 25 символов",
+
+    "conf_pass_not_equal": "Подтверждающий пароль должен совпадать с паролем",
+    "conf_pass_req": "Подтверждающий пароль не совпадает с новым пароль",
+
+
+    "oldPassword_req": "Пожалуйста, введите ваш старый пароль",
+    "oldPassword_notCorrect": "Пароль неверный!",
+
+    "success_pass_change": "Вы успешнo изменили пароль",
+    "error_pass_change": "Возникли проблемы и пароль не был изменен!"
+
+
   }
 }

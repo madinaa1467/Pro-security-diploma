@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GenderType, genderTypes} from "../../model/gender/gender-type";
 import {ImagePickerComponent} from "../../components/image-picker/image-picker";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -34,7 +35,9 @@ export class ChildProfile implements OnInit {
     private fb: FormBuilder,
     private alertCtrl: AlertController,
     private childService: ChildService,
-    private toastNotificationService: ToastNotificationService) {
+    private toastNotificationService: ToastNotificationService,
+    public translate: TranslateService,
+    private translatePipe: TranslatePipe,) {
 
     this.buildForm();
     this.child = this.navParams.get('child');
@@ -116,11 +119,11 @@ export class ChildProfile implements OnInit {
         loading.dismiss();
         if (this.action == 'edit') {
           this.dismiss();
-          this.toastNotificationService.presentToast('Вы успешнo изменили запись');
+          this.toastNotificationService.presentToast(this.translatePipe.transform('CHILD_PROFILE.edit_success'));
 
         } else {
           this.dismiss();
-          this.toastNotificationService.presentToast('Вы успешнo добавили ребенка!');
+          this.toastNotificationService.presentToast(this.translatePipe.transform('CHILD_PROFILE.add_success'));
         }
       }).catch(err => {
         loading.dismiss();
@@ -147,14 +150,14 @@ export class ChildProfile implements OnInit {
     const deleteFor = this.alertCtrl.create({
       //todo change by languge
       title: ' ',
-      message: 'Delete?',
+      message: this.translatePipe.transform('CHILD_PROFILE.delete_child'),
       buttons: [{
-        text: 'For all parents',
+        text: this.translatePipe.transform('CHILD_PROFILE.delete_for_all'),
         handler: data => {
           this.delete('permanent');
         }
       }, {
-        text: 'Just for me',
+        text: this.translatePipe.transform('CHILD_PROFILE.delete_for_me'),
         handler: data => {
           this.delete('temporary');
         }
@@ -172,11 +175,11 @@ export class ChildProfile implements OnInit {
     if (childId) {
       this.childService.delete(childId, how).then(_resp => {
         this.dismiss();
-        this.toastNotificationService.presentToast('Вы успешнo удалили запись везде!');
+        this.toastNotificationService.presentToast(this.translatePipe.transform('CHILD_PROFILE.delete_success_forever'));
       });
     } else {
       this.dismiss();
-      this.toastNotificationService.presentToast('Вы не можете удалить!');
+      this.toastNotificationService.presentToast(this.translatePipe.transform('CHILD_PROFILE.cant_delete'));
     }
   }
 
@@ -281,36 +284,36 @@ export class ChildProfile implements OnInit {
 
   validationMessages = {
     'cardNumber': {
-      'required': 'Enter onay',
-      'pattern': 'Not correct!',
-      'unknown': 'Unknown card, try again',
-      'unavailable': 'Right now this card is unavailable',
-      'alreadyInUse': 'This card already in use by someone else'
+      'required': this.translatePipe.transform('CHILD_PROFILE.cardNumber_req'),
+      'pattern': this.translatePipe.transform('CHILD_PROFILE.cardNumber_pattern'),
+      'unknown': this.translatePipe.transform('CHILD_PROFILE.cardNumber_unknown'),
+      'unavailable': this.translatePipe.transform('CHILD_PROFILE.cardNumber_unavailable'),
+      'alreadyInUse': this.translatePipe.transform('CHILD_PROFILE.cardNumber_alreadyInUse'),
     },
     'name': {
-      'required': 'Please enter your Name',
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('CHILD_PROFILE.name_req'),
+      'pattern': this.translatePipe.transform('CHILD_PROFILE.name_pattern'),
+      'minlength': this.translatePipe.transform('CHILD_PROFILE.name_min'),
+      'maxlength': this.translatePipe.transform('CHILD_PROFILE.name_max'),
     },
     'surname': {
-      'required': 'Please enter your Surname',
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('CHILD_PROFILE.surname_req'),
+      'pattern': this.translatePipe.transform('CHILD_PROFILE.surname_pattern'),
+      'minlength': this.translatePipe.transform('CHILD_PROFILE.surname_min'),
+      'maxlength': this.translatePipe.transform('CHILD_PROFILE.surname_max'),
     },
     'patronymic': {
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'pattern': this.translatePipe.transform('CHILD_PROFILE.patronymic_pattern'),
+      'minlength': this.translatePipe.transform('CHILD_PROFILE.patronymic_min'),
+      'maxlength': this.translatePipe.transform('CHILD_PROFILE.patronymic_max'),
     },
     'gender': {
-      'required': 'Please choose your gender',
+      'required': this.translatePipe.transform('CHILD_PROFILE.gender_req'),
     },
     'notification': {},
     'password': {
-      'required': 'Please enter password',
-      'notCorrect': 'This password is not correct!'
+      'required': this.translatePipe.transform('CHILD_PROFILE.password_required'),
+      'notCorrect': this.translatePipe.transform('CHILD_PROFILE.password_notCorrect')
     }
   };
 }

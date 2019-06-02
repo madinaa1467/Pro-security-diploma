@@ -46,47 +46,47 @@ export class SignupPage implements OnInit {
     'email': {
       'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_REQUIRED'),
       'email': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_VALID'),
-      'alreadyInUse': 'Email is already in use',
+      'alreadyInUse': this.translatePipe.transform('SIGN_UP_VALIDATOR.in_use'),
     },
     'password': {
-      'required': 'Please enter your password',
-      'pattern': 'The password must contain numbers and letters',
-      'minlength': 'Please enter more than 6 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.pass_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.pass_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.pass_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.pass_max'),
     },
     'password2': {
-      'required': 'Value must be equal to password',
-      'notEquivalent': 'Password confirmation must be equal to password',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.conf_pass_req'),
+      'notEquivalent': this.translatePipe.transform('SIGN_UP_VALIDATOR.conf_pass_not_equal'),
     },
     'username': {
-      'required': 'Please enter your Username',
-      'pattern': 'The Username must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
-      'alreadyInUse': 'Username is already in use',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_max'),
+      'alreadyInUse': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_in_use'),
     },
     'name': {
-      'required': 'Please enter your Name',
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_max'),
     },
     'surname': {
-      'required': 'Please enter your Surname',
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_max'),
     },
     'patronymic': {
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.patronymic_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.patronymic_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.patronymic_max'),
     },
     'gender': {
-      'required': 'Please choose your gender',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.gender_req'),
     },
     'phones': {
-      'required': 'Please enter your Phone',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.phone_req')
       // 'pattern': 'The Phone must be in format +7',
     },
   };
@@ -219,10 +219,10 @@ export class SignupPage implements OnInit {
 
       const alert = this.alertCtrl.create({
         //todo change by languge
-        title: ' Уведомление',
-        message: 'Вы успешно зарегистрировались!  и уже можете зайти....',
+        title: this.translatePipe.transform('SIGN_UP.notification'),
+        message: this.translatePipe.transform('SIGN_UP.success_register'),
         buttons: [{
-          text: 'Ok',
+          text: this.translatePipe.transform('SIGN_UP.ok_button'),
           handler: data => {
             this.navCtrl.pop();
           }
@@ -246,9 +246,9 @@ export class SignupPage implements OnInit {
       }
 
       const alert = this.alertCtrl.create({
-        title: 'Ошибка',
+        title: this.translatePipe.transform('SIGN_UP.exception'),
         message: err.error.error_description,
-        buttons: ['Отклонять']
+        buttons: [this.translatePipe.transform('SIGN_UP.try_again')]
       });
       alert.present();
     });
@@ -260,9 +260,9 @@ export class SignupPage implements OnInit {
 
   getPhoneError (phoneErrorsArray) {
       if(phoneErrorsArray['pattern'] !== undefined){
-        return 'The Phone must be in format +7';
+        return this.translatePipe.transform('SIGN_UP_VALIDATOR.phone_format');
       } else if(phoneErrorsArray['required'] !== undefined){
-        return 'Please enter your Phone';
+        return this.translatePipe.transform('SIGN_UP_VALIDATOR.phone_req');
       }
   }
 

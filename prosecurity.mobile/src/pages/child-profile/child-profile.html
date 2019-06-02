@@ -6,8 +6,8 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title *ngIf="action === 'edit'">Edit Child</ion-title>
-    <ion-title *ngIf="action === 'save'">Add Child</ion-title>
+    <ion-title *ngIf="action === 'edit'">{{ 'CHILD_PROFILE.edit_child' | translate }}</ion-title>
+    <ion-title *ngIf="action === 'save'">{{ 'CHILD_PROFILE.add_child' | translate }}</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only  (click)="saveChild()"  [disabled]="!childForm.valid">
@@ -24,10 +24,10 @@
   <ion-stepper #stepper (selectIndexChange)="selectChange($event)" mode='horizontal'>
     <ion-step label="Card"
               description="Onay child card number" icon="card">
-      <h2>Enter onay number</h2>
+      <h2>{{ 'CHILD_PROFILE.enter_onay' | translate }}</h2>
       <form [formGroup]="childForm">
         <ion-item>
-          <ion-label color="primary" stacked>Onay card number</ion-label>
+          <ion-label color="primary" stacked>{{ 'CHILD_PROFILE.onay_card' | translate }}</ion-label>
           <ion-input type="text" id="onay_number" [textMask]="{mask: mask}"
                      required formControlName="cardNumber"></ion-input>
         </ion-item>
@@ -41,7 +41,7 @@
         </div>
 
         <ion-item>
-          <ion-label color="primary" stacked>Card password</ion-label>
+          <ion-label color="primary" stacked>{{ 'CHILD_PROFILE.card_password' | translate }}</ion-label>
           <ion-input type="text" id="password"
                      required formControlName="password"></ion-input>
         </ion-item>
@@ -66,7 +66,7 @@
 
     <ion-step label="Personal info"
               description="Step1 description" icon="person">
-      <h2 class="centered-text">Fill the personal Information</h2>
+      <h2 class="centered-text">{{ 'CHILD_PROFILE.personal_info' | translate }}</h2>
 
       <!-- Profile picture -->
       <div text-center>
@@ -85,7 +85,7 @@
       <form [formGroup]="childForm">
 
         <ion-item>
-          <ion-label color="primary" fixed>Name</ion-label>
+          <ion-label color="primary" fixed>{{ 'CHILD_PROFILE.name' | translate}}</ion-label>
           <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
         </ion-item>
         <div class="validation-errors">
@@ -98,7 +98,7 @@
         </div>
 
         <ion-item>
-          <ion-label color="primary" fixed>Surname</ion-label>
+          <ion-label color="primary" fixed>{{ 'CHILD_PROFILE.surname' | translate}}</ion-label>
           <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
         </ion-item>
         <div class="validation-errors">
@@ -111,7 +111,7 @@
         </div>
 
         <ion-item>
-          <ion-label color="primary" fixed>Patronymic</ion-label>
+          <ion-label color="primary" fixed>{{ 'CHILD_PROFILE.patronymic' | translate}}</ion-label>
           <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
         </ion-item>
         <div class="validation-errors">
@@ -123,14 +123,14 @@
           </ng-container>
         </div>
         <ion-item>
-          <ion-label>Birth Date</ion-label>
+          <ion-label>{{ 'CHILD_PROFILE.birth' | translate}}</ion-label>
           <ion-datetime formControlName="birthDate" display-format="MMMM YYYY" min="1900" max="2020-10-31"
                         placeholder="Birth Date"
                         required></ion-datetime>
         </ion-item>
 
         <ion-item>
-          <ion-label>Gender</ion-label>
+          <ion-label>{{ 'CHILD_PROFILE.gender' | translate}}</ion-label>
           <ion-select placeholder="Gender" formControlName="gender">
             <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
           </ion-select>
@@ -145,7 +145,7 @@
         </div>
 
         <ion-item>
-          <ion-label>Send Notification</ion-label>
+          <ion-label>{{ 'CHILD_PROFILE.send_notification' | translate}}</ion-label>
           <ion-toggle slot="end" formControlName="notification" [checked]="true"></ion-toggle>
         </ion-item>
       </form>
@@ -153,7 +153,7 @@
       <ion-row *ngIf="action === 'edit'">
         <ion-col col-12>
           <button ion-button block color="danger" (click)="deleteChild()">
-            <ion-icon name="close"></ion-icon> &nbsp; Delete Child
+            <ion-icon name="close"></ion-icon> &nbsp; {{ 'CHILD_PROFILE.delete_child' | translate}}
           </button>
         </ion-col>
       </ion-row>
@@ -162,7 +162,7 @@
       <ion-row>
         <ion-col col-12>
           <button ion-button ionicStepperPrevious block color="light">
-            Previous
+            {{ 'CHILD_PROFILE.previous' | translate}}
           </button>
         </ion-col>
       </ion-row>

@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Options</ion-title>
+    <ion-title>{{ 'OPTIONS.title' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -9,27 +9,22 @@
 <ion-content padding>
 
   <div padding-top margin-top>
-    <h4 no-margin no-padding class="info-text">Account</h4>
+    <h4 no-margin no-padding class="info-text">{{ 'OPTIONS.account' | translate}}</h4>
     <hr class="custom-hr" color="gray">
-    <ion-item (click)="goEditProfile()">Edit Profile</ion-item>
-    <ion-item  (click)="goEditPrivateInfo()">Change password</ion-item>
-    <ion-item>Connect to Telegram</ion-item>
-    <!--<ion-item>-->
-      <!--<ion-label color="black">Private Account</ion-label>-->
-      <!--<ion-toggle checked="true"></ion-toggle>-->
-    <!--</ion-item>-->
-    <ion-item (click)="logOut()">Log Out</ion-item>
+    <ion-item (click)="goEditProfile()">{{ 'OPTIONS.edit_profile' | translate}}</ion-item>
+    <ion-item  (click)="goEditPrivateInfo()">{{ 'OPTIONS.change_pass' | translate}}</ion-item>
+    <ion-item (click)="logOut()">{{ 'OPTIONS.log_out' | translate}}</ion-item>
   </div>
 
   <div padding-top margin-top>
-    <h4 no-margin no-padding class="info-text">About</h4>
+    <h4 no-margin no-padding class="info-text">{{ 'OPTIONS.about' | translate}}</h4>
     <hr class="custom-hr" color="gray">
-    <ion-item>Privacy Policy</ion-item>
-    <ion-item>Terms of Service</ion-item>
+    <ion-item>{{ 'OPTIONS.privacy_policy' | translate}}</ion-item>
+    <ion-item>{{ 'OPTIONS.terms_of_service' | translate}}</ion-item>
   </div>
 
   <div padding-top margin-top>
-    <h4 no-margin no-padding class="info-text">Application</h4>
+    <h4 no-margin no-padding class="info-text">{{ 'OPTIONS.application' | translate}}</h4>
     <hr class="custom-hr" color="gray">
 
     <ion-item><ion-label>{{ 'CHANGE_LANGUAGE' | translate }}</ion-label>

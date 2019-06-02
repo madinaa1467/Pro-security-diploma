@@ -4,6 +4,7 @@ export class Event {
   public time: String;
   public action: String;
   public gender: String;
+  public entrance: String;
 
   public childId: number;
   public fio: string;

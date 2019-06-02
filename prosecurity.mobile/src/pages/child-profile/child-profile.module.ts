@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 import {SharedModule} from "../../app/shared.module";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 import {ChildProfile} from "./child-profile";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {ChildProfile} from "./child-profile";
     SharedModule,
   ],
   providers: [
-    ToastNotificationService
+    ToastNotificationService,
+    TranslatePipe
   ],
   entryComponents: [
     ChildProfile

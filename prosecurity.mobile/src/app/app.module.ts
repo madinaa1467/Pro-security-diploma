@@ -8,13 +8,13 @@ import {AppLoader, AuthInterceptor, MODULES, PROVIDERS, Settings} from "./app.im
 import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {PostPopover} from '../pages/home/post-popover';
 import {Notifications} from '../pages/notifications/notifications';
-import {Options} from '../pages/options/options';
 import {TabsPage} from '../pages/tabs/tabs';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import IonicStepperModule from "ionic-stepper";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Options} from "../pages/options/options";
 
 export function provideSettings(storage: Storage) {
   /**
@@ -38,6 +38,7 @@ export function initApp(appLoadService: AppLoader) {
 export function setTranslateLoader(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -50,7 +51,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     Notifications,
     // Profile,
     Options,
-    TabsPage
+    TabsPage,
+    //ChildProfile
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     Notifications,
     // Profile,
     Options,
-    TabsPage
+    TabsPage,
+    //ChildProfile
   ],
   providers: [
     PROVIDERS,

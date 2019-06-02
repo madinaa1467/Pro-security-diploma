@@ -10,9 +10,6 @@ import {SharedModule} from "../../app/shared.module";
   imports: [
     IonicPageModule.forChild(Messages),
     SharedModule
-  ],
-  exports: [
-    Messages
   ]
 })
 export class MessagesModule {

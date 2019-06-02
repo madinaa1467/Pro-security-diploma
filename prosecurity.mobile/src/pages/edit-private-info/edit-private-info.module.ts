@@ -4,6 +4,7 @@ import {SharedModule} from "../../app/shared.module";
 import {EditPrivateInfo} from "./edit-private-info";
 import IonicStepperModule from "ionic-stepper";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
+import {TranslateModule, TranslatePipe} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -12,14 +13,17 @@ import {ToastNotificationService} from "../../providers/services/toast-notificat
   imports: [
     IonicPageModule.forChild(EditPrivateInfo),
     SharedModule,
-    IonicStepperModule
+    IonicStepperModule,
+    TranslateModule
 
   ],
   exports: [
     EditPrivateInfo
   ],
   providers: [
-    ToastNotificationService
+    ToastNotificationService,
+    TranslatePipe
   ]
+
 })
 export class EditPrivateInfoModule {}

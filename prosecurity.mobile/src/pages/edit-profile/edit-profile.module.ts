@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { EditProfile } from './edit-profile';
+import {NgModule} from '@angular/core';
+import {IonicPageModule} from 'ionic-angular';
+import {EditProfile} from './edit-profile';
 import {SharedModule} from "../../app/shared.module";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -10,13 +11,15 @@ import {ToastNotificationService} from "../../providers/services/toast-notificat
   ],
   imports: [
     IonicPageModule.forChild(EditProfile),
-    SharedModule
+    SharedModule,
+    TranslateModule.forChild()
   ],
   exports: [
     EditProfile
   ],
   providers: [
-    ToastNotificationService
+    ToastNotificationService,
   ]
 })
-export class EditProfileModule {}
+export class EditProfileModule {
+}

@@ -6,15 +6,15 @@
     "TITLE": "Hello Angular with ngx-translate!",
     "SELECT": "Change language",
     "in_male": "{{childFio}} entered at ",
-    "out_male": "{{childFio}} go out at ",
+    "out_male": "{{childFio}} left at ",
     "in_female": "{{childFio}} entered at ",
-    "out_female": "{{childFio}} go out at "
+    "out_female": "{{childFio}} left at "
   },
   "EVENT": {
     "in_male": "Entered to school",
-    "out_male": "Exit school",
+    "out_male": "Left school",
     "in_female": "Entered to school",
-    "out_female": "Exit school",
+    "out_female": "Left school",
     "time-in": "Coming time",
     "time-out": "Exit time",
     "date-in": "Coming date",
@@ -26,11 +26,8 @@
     "SIGN_IN": "Login",
     "SIGN_UP": "Register",
     "USERNAME": "Username",
-    "PASSWORD": "Password"
-  },
-  "SIGN_UP_VALIDATOR": {
-    "EMAIL_REQUIRED": "Please enter your email",
-    "EMAIL_VALID": "Please enter your valid email"
+    "PASSWORD": "Password",
+    "error": "Error"
   },
   "MESSAGE":{
     "in_male": "{{childFio}} entered at {{time}}",
@@ -42,9 +39,166 @@
     "DAYS_AGO": "{{when}}d",
     "HOURS_AGO": "{{when}}h",
     "MINUTES_AGO": "{{when}}min",
-    "SECONDS_AGO": "{{when}}sec"
+    "SECONDS_AGO": "{{when}}sec",
+    "title": "Messages"
   },
   "PROFILE":{
     "add_child": "Register child"
+  },
+  "SIGN_UP":{
+    "personal_info": "Please, enter your personal info:",
+    "email": "Email",
+    "username": "Username",
+    "name": "Name",
+    "surname": "Surname",
+    "patronymic": "Patronymic",
+    "birth": "Birth Date",
+    "gender": "Gender",
+    "register": "Register",
+    "password": "Password",
+    "confirm_pass": "Confirm password",
+
+    "notification": "Notification",
+    "success_register": "You have successfully registered! You can already go...",
+    "ok_button": "Ok",
+    "exception": "unexpected error has occurred.",
+    "try_again": "Try again"
+
+  },
+  "SIGN_UP_VALIDATOR": {
+    "EMAIL_REQUIRED": "Please enter your email",
+    "EMAIL_VALID": "Please enter your valid email",
+    "in_use": "Email is already in use",
+
+    "pass_req": "Please enter your password",
+    "pass_pattern": "The password must contain numbers and letters",
+    "pass_min": "Please enter more than 6 characters",
+    "pass_max": "Please enter less than 25 characters",
+
+    "conf_pass_not_equal": "Password confirmation must be equal to password",
+    "conf_pass_req": "New password and confirmation password do not match",
+
+    "username_req": "Please enter your Username",
+    "username_pattern": "The Username must contain only letters",
+    "username_min": "Please enter more than 2 characters",
+    "username_max": "Please enter less than 25 characters",
+    "username_in_use": "Username is already in use",
+
+    "name_req": "Please enter your Name",
+    "name_pattern": "The Name must contain only letters",
+    "name_min": "Please enter more than 2 characters",
+    "name_max": "Please enter less than 25 characters",
+
+    "surname_req": "Please enter your Surname",
+    "surname_pattern": "The Surname must contain only letters",
+    "surname_min": "Please enter more than 2 characters",
+    "surname_max": "Please enter less than 25 characters",
+
+    "patronymic_pattern": "The Name must contain only letters",
+    "patronymic_min": "Please enter more than 2 characters",
+    "patronymic_max": "Please enter less than 25 characters",
+
+    "gender_req": "Please enter your gender",
+    "phone_req": "Please choose your Phone",
+
+    "phone_format": "The Phone must be in format +7"
+  },
+  "FILTER": {
+    "use_button": "APPLY",
+    "cancel_button": "RESET",
+    "from": "From",
+    "to": "To"
+  },
+  "CHILD_PROFILE": {
+    "edit_child": "Edit Child",
+    "add_child": "Add Child",
+    "enter_onay": "Enter onay number",
+    "onay_card": "Onay card number",
+    "card_password": "Card password",
+
+    "personal_info": "Fill the personal Information",
+    "name": "Name",
+    "surname": "Surname",
+    "patronymic": "Patronymic",
+    "birth": "Birth Date",
+    "gender": "Gender",
+
+    "send_notification": "Send Notification",
+    "delete_child": "Delete Child",
+    "previous": "Previous",
+
+    "name_req": "Please enter your Name",
+    "name_pattern": "The Name must contain only letters",
+    "name_min": "Please enter more than 2 characters",
+    "name_max": "Please enter less than 25 characters",
+
+    "surname_req": "Please enter your Surname",
+    "surname_pattern": "The Surname must contain only letters",
+    "surname_min": "Please enter more than 2 characters",
+    "surname_max": "Please enter less than 25 characters",
+
+    "patronymic_pattern": "The Name must contain only letters",
+    "patronymic_min": "Please enter more than 2 characters",
+    "patronymic_max": "Please enter less than 25 characters",
+
+    "gender_req": "Please enter your Phone",
+
+
+    "cardNumber_req": "Enter onay",
+    "cardNumber_pattern": "Not correct!",
+    "cardNumber_unknown": "Unknown card, try again",
+    "cardNumber_unavailable": "This card is unavailable",
+    "cardNumber_alreadyInUse": "This card already in use by someone else",
+
+    "password_required": "Please enter card password",
+    "password_notCorrect": "This password is not correct!",
+
+    "cant_delete": "You cannot delete!",
+    "delete_success_forever": "You have succesfully deleted all records!",
+
+    "add_success": "You have sucсessfully added a child!",
+    "edit_success": "You have successfully changed the record!",
+
+    "delete_child": "Are you sure that you want to delete?",
+    "delete_for_all": "For all parents",
+    "delete_for_me": "Just for me"
+    },
+
+  "EDIT_PROFILE": {
+    "successfully_changed": "Your profile successfully changed!"
+  },
+  "OPTIONS": {
+    "title": "Options",
+    "account": "Account",
+    "edit_profile": "Edit Profile",
+    "change_pass": "Change password",
+    "log_out": "Log Out",
+    "about": "About",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "application": "Application"
+  },
+  "PRIVATE_INFORMATION": {
+    "title": "Private Information",
+    "old_pass": "Enter your old password",
+    "pass": "Password",
+    "confirm_pass": "Confirm password",
+
+    "pass_req": "Please enter your password",
+    "pass_pattern": "The password must contain numbers and letters",
+    "pass_min": "Please enter more than 6 characters",
+    "pass_max": "Please enter less than 25 characters",
+
+    "conf_pass_not_equal": "Password confirmation must be equal to password",
+    "conf_pass_req": "Value must be equal to password",
+
+
+    "oldPassword_req": "Please enter your old password",
+    "oldPassword_notCorrect": "Password is not correct!",
+
+    "success_pass_change": "You have successfully changed your password.",
+    "error_pass_change": "There were problems and the password was not changed!"
+
+
   }
 }

@@ -19,6 +19,7 @@ import {Crop} from "@ionic-native/crop";
 import {ParentDetails} from "../../model/parent-details";
 import {ImagePickerComponent} from "../../components/image-picker/image-picker";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -63,40 +64,40 @@ export class EditProfile implements OnInit {
   };
   validationMessages = {
     'email': {
-      'required': 'Please enter your email',
-      'email': 'Please enter your valid email',
-      'alreadyInUse': 'Email is already in use',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_REQUIRED'),
+      'email': this.translatePipe.transform('SIGN_UP_VALIDATOR.EMAIL_VALID'),
+      'alreadyInUse': this.translatePipe.transform('SIGN_UP_VALIDATOR.in_use'),
     },
     'username': {
-      'required': 'Please enter your Username',
-      'pattern': 'The Username must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
-      'alreadyInUse': 'Username is already in use',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_max'),
+      'alreadyInUse': this.translatePipe.transform('SIGN_UP_VALIDATOR.username_in_use'),
     },
     'name': {
-      'required': 'Please enter your Name',
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.name_max'),
     },
     'surname': {
-      'required': 'Please enter your Surname',
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_req'),
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.surname_max'),
     },
     'patronymic': {
-      'pattern': 'The Name must contain just letters',
-      'minlength': 'Please enter more than 2 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'pattern': this.translatePipe.transform('SIGN_UP_VALIDATOR.patronymic_pattern'),
+      'minlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.patronymic_min'),
+      'maxlength': this.translatePipe.transform('SIGN_UP_VALIDATOR.patronymic_max'),
     },
     'gender': {
-      'required': 'Please choose your gender',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.gender_req'),
     },
     'phones': {
-      'required': 'Please enter your Phone',
-      'pattern': 'The Phone must be in format +7',
+      'required': this.translatePipe.transform('SIGN_UP_VALIDATOR.phone_req')
+      // 'pattern': 'The Phone must be in format +7',
     },
   };
 
@@ -114,7 +115,9 @@ export class EditProfile implements OnInit {
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private parentService: ParentService,
-    private toastNotificationService: ToastNotificationService) {
+    private toastNotificationService: ToastNotificationService,
+    public translate: TranslateService,
+    private translatePipe: TranslatePipe) {
   }
 
   ngOnInit() {
@@ -144,7 +147,7 @@ export class EditProfile implements OnInit {
       this.parentService.save(this.userForm.getRawValue()).then(_ => {
         loading.dismiss();
         this.navCtrl.pop();
-        this.toastNotificationService.presentToast('Ваш профиль успешно изменен изменен!');
+        this.toastNotificationService.presentToast(this.translatePipe.transform('EDIT_PROFILE.successfully_changed'));
 
       }).catch(err => {
         loading.dismiss();

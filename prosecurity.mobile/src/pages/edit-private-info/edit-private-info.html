@@ -25,7 +25,7 @@
 
     <!-- Private information form -->
     <div margin-top padding-top>
-      <h4 no-margin no-padding class="info-text">Private Information</h4>
+      <h4 no-margin no-padding class="info-text">{{ 'PRIVATE_INFORMATION.title' | translate}}</h4>
       <hr class="custom-hr" color="gray">
     </div>
 
@@ -35,7 +35,7 @@
 <!--          <h2></h2>-->
           <ion-item>
             <!--<ion-label color="primary" stacked>Password</ion-label>-->
-            <ion-input type="password" placeholder="Enter your old password" id="oldPassword" class="input"
+            <ion-input type="password" placeholder="{{ 'PRIVATE_INFORMATION.old_pass' | translate}}" id="oldPassword" class="input"
                        formControlName="oldPassword" required></ion-input>
           </ion-item>
           <div class="validation-errors">
@@ -64,7 +64,7 @@
 
           <ion-item>
             <!--<ion-label color="primary" stacked>Password</ion-label>-->
-            <ion-input type="password" placeholder="Password" id="password" class="input"
+            <ion-input type="password" placeholder="{{ 'PRIVATE_INFORMATION.pass' | translate}}" id="password" class="input"
                        formControlName="password" required></ion-input>
           </ion-item>
           <div class="validation-errors">
@@ -78,7 +78,7 @@
 
           <ion-item>
             <!--<ion-label color="primary" stacked>Confirm password</ion-label>-->
-            <ion-input type="password" placeholder="Confirm password" id="password2" class="input"
+            <ion-input type="password" placeholder="{{ 'PRIVATE_INFORMATION.confirm_pass' | translate}}" id="password2" class="input"
                        formControlName="password2" required></ion-input>
           </ion-item>
           <div class="validation-errors">

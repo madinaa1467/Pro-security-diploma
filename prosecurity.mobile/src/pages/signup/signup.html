@@ -6,12 +6,12 @@
 
 <ion-content>
   <div class="centered-text" padding>
-    <span><strong>Please, enter your personal info:</strong></span>
+    <span><strong>{{ 'SIGN_UP.personal_info' | translate}}</strong></span>
   </div>
   <div padding>
     <form [formGroup]="userForm">
       <ion-item>
-        <ion-label color="primary" fixed>Email</ion-label>
+        <ion-label color="primary" fixed>{{ 'SIGN_UP.email' | translate}}</ion-label>
         <ion-input type="email" placeholder="" id="email" class="input"
                    formControlName="email" required></ion-input>
       </ion-item>
@@ -25,10 +25,11 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" fixed>Username</ion-label>
+        <ion-label color="primary" fixed>{{ 'SIGN_UP.username' | translate}}</ion-label>
         <ion-input type="text" formControlName="username" required></ion-input>
       </ion-item>
       <div class="validation-errors">
+
         <ng-container>
           <i></i>
           <div class="error-message isa_error" *ngIf="formErrors.username">
@@ -38,7 +39,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" fixed>Name</ion-label>
+        <ion-label color="primary" fixed>{{ 'SIGN_UP.name' | translate}}</ion-label>
         <ion-input type="text" placeholder="" id="name" formControlName="name" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -51,7 +52,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" fixed>Surname</ion-label>
+        <ion-label color="primary" fixed>{{ 'SIGN_UP.surname' | translate}}</ion-label>
         <ion-input type="text" placeholder="" id="surname" formControlName="surname" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -64,7 +65,7 @@
       </div>
 
       <ion-item>
-        <ion-label color="primary" fixed>Patronymic</ion-label>
+        <ion-label color="primary" fixed>{{ 'SIGN_UP.patronymic' | translate}}</ion-label>
         <ion-input type="text" placeholder="" id="patronymic" formControlName="patronymic"></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -77,14 +78,14 @@
       </div>
 
       <ion-item>
-        <ion-label>Birth Date</ion-label>
+        <ion-label>{{ 'SIGN_UP.birth' | translate}}</ion-label>
         <ion-datetime formControlName="birthDate" display-format="MMMM YYYY" min="1900" max="2020-10-31"
                       placeholder="Birth Date"
                       required></ion-datetime>
       </ion-item>
 
       <ion-item>
-        <ion-label>Gender</ion-label>
+        <ion-label>{{ 'SIGN_UP.gender' | translate}}</ion-label>
         <ion-select placeholder="Gender" formControlName="gender">
           <ion-option *ngFor="let s of genderTypes" [value]="s.value">{{s.viewValue | translate}}</ion-option>
         </ion-select>
@@ -136,7 +137,7 @@
 
       <ion-item>
         <!--<ion-label color="primary" stacked>Password</ion-label>-->
-        <ion-input type="password" placeholder="Password" id="password" class="input"
+        <ion-input type="password" placeholder="{{ 'SIGN_UP.password' | translate}}" id="password" class="input"
                    formControlName="password" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -150,7 +151,7 @@
 
       <ion-item>
         <!--<ion-label color="primary" stacked>Confirm password</ion-label>-->
-        <ion-input type="password" placeholder="Confirm password" id="password2" class="input"
+        <ion-input type="password" placeholder="{{ 'SIGN_UP.confirm_pass' | translate}}" id="password2" class="input"
                    formControlName="password2" required></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -174,7 +175,7 @@
 
     <button ion-button block outline class="login-button" type="submit" (click)="register()"
             [disabled]="!userForm.valid">
-      Register
+      {{ 'SIGN_UP.register' | translate}}
     </button>
   </ion-toolbar>
 </ion-footer>

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, App, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Auth} from "../../providers";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
 
 /**
@@ -28,7 +28,9 @@ export class LoginPage {
               private fb: FormBuilder,
               public navCtrl: NavController,
               public navParams: NavParams, public translate: TranslateService,
-              private toastNotificationService: ToastNotificationService) {
+              private toastNotificationService: ToastNotificationService,
+              private translatePipe: TranslatePipe) {
+
     this.form = this.fb.group({
       username: [null, Validators.required],
       password: [null, Validators.required]
@@ -54,7 +56,7 @@ export class LoginPage {
       }).catch(err => {
 
       loading.dismiss();
-      this.toastNotificationService.presentToast('Произошла ошибка');
+      this.toastNotificationService.presentToast(this.translatePipe.transform('LOGIN.error'));
     });
 
   }

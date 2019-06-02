@@ -10,6 +10,7 @@ import {
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParentService} from "../../providers/services/parent.service";
 import {ToastNotificationService} from "../../providers/services/toast-notification.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -28,7 +29,9 @@ export class EditPrivateInfo implements OnInit {
     private loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private parentService: ParentService,
-    private toastNotificationService: ToastNotificationService) {
+    private toastNotificationService: ToastNotificationService,
+    public translate: TranslateService,
+    private translatePipe: TranslatePipe) {
   }
 
   ngOnInit() {
@@ -41,11 +44,11 @@ export class EditPrivateInfo implements OnInit {
       loading.dismiss();
       if (_resp == true) {
         this.dismiss();
-        this.toastNotificationService.presentToast('Вы успешнo изменили пароль');
+        this.toastNotificationService.presentToast(this.translatePipe.transform('PRIVATE_INFORMATION.success_pass_change'));
         //todo change by languge
       } else {
         this.dismiss();
-        this.toastNotificationService.presentToast('Возникли проблемы и пароль не был изменен!');
+        this.toastNotificationService.presentToast(this.translatePipe.transform('PRIVATE_INFORMATION.error_pass_change'));
         //todo change by languge
       }
     });
@@ -94,19 +97,18 @@ export class EditPrivateInfo implements OnInit {
   };
   validationMessages = {
     'oldPassword': {
-      'required': 'Please enter your old password',
-      'notCorrect': 'Password is not correct!',
+      'required': this.translatePipe.transform('PRIVATE_INFORMATION.oldPassword_req'),
+      'notCorrect': this.translatePipe.transform('PRIVATE_INFORMATION.oldPassword_notCorrect'),
     },
     'password': {
-      'required': 'Please enter your password',
-      'pattern': 'The password must contain numbers and letters',
-      'minlength': 'Please enter more than 6 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': this.translatePipe.transform('PRIVATE_INFORMATION.pass_req'),
+      'pattern': this.translatePipe.transform('PRIVATE_INFORMATION.pass_pattern'),
+      'minlength': this.translatePipe.transform('PRIVATE_INFORMATION.pass_min'),
+      'maxlength': this.translatePipe.transform('PRIVATE_INFORMATION.pass_max'),
+    }, 'password2': {
+      'required': this.translatePipe.transform('PRIVATE_INFORMATION.conf_pass_req'),
+      'notEquivalent': this.translatePipe.transform('PRIVATE_INFORMATION.conf_pass_not_equal'),
     },
-    'password2': {
-      'required': 'Value must be equal to password',
-      'notEquivalent': 'Password confirmation must be equal to password',
-    }
   };
 
   buildForm() {

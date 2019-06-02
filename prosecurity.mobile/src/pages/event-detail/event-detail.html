@@ -29,9 +29,11 @@
         {{ ('EVENT.time-'+event.action) | translate}}
         <a button ion-button color="secondary" item-end medium>{{event.time}}</a>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="event.entrance">
         <ion-icon item-start name="pin" color="twitter"></ion-icon>
         <p>{{ ('EVENT.'+event.action) | translate}}</p>
+        <a button ion-button color="secondary" item-end medium>{{event.entrance}}</a>
+
       </ion-item>
     </ion-list>
   </div>
