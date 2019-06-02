@@ -8,6 +8,7 @@ import kz.diploma.prosecurity.controller.model.NotificationEvent;
 import kz.diploma.prosecurity.controller.register.NotificationRegister;
 import kz.diploma.prosecurity.register.dao.NotificationDao;
 import kz.diploma.prosecurity.register.service.FcmService;
+import kz.diploma.prosecurity.register.service.FcmTopic;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import org.apache.log4j.Logger;
@@ -80,9 +81,21 @@ public class NotificationRegisterImpl implements NotificationRegister {
 
         Map<String, String> data = Maps.newHashMap();
         data.put("id", event.id + "");
+        data.put("action", event.action);
 
         sendDirectNotification(token, data, event.toNotificationEvent());
+
+        sendTopicBasedNotifications(data, event.toNotificationEvent());
+
       });
+  }
+
+  private void sendTopicBasedNotifications(Map<String, String> data, NotificationEvent event) {
+    try {
+      service.get().sendTopicBasedNotifications(FcmTopic.TRACKING, data, event);
+    } catch (ExecutionException | InterruptedException | FirebaseMessagingException e) {
+      logger.error(e);
+    }
   }
 
   private void sendDirectNotification(String token, Map<String, String> data, NotificationEvent event) {
