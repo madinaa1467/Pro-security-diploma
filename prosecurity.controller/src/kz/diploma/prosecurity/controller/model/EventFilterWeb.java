@@ -7,8 +7,8 @@ public class EventFilterWeb {
   public Date endDate;
   public int offset;
   public int limit;
-  public long childId;
-  public long parentId;
+  public Long childId;
+  public Long parentId;
   public String childName;
   public String childSurname;
   public String childPatronymic;
