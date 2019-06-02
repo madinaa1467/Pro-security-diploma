@@ -1,6 +1,6 @@
 page-event-detail {
   .header-image {
-    background-image: url(../../assets/src/school-background14.png);
+    background-image: url("../../assets/src/school-background14.png");
     height: 30vh;
     background-size: cover;
     background-position: center center;
@@ -26,7 +26,7 @@ page-event-detail {
     -webkit-border-radius: 150px;
     -moz-border-radius: 150px;
     border: solid white;
-    background: url(../../assets/src/unknown.png) no-repeat;
+    background: url("../../assets/src/unknown.png") no-repeat;
     background-size: 100%;
     margin-top: -70px;
     margin-left: auto;
