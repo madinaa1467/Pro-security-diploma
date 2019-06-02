@@ -5,8 +5,6 @@ import kz.diploma.prosecurity.controller.model.UserInfo;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.security.PublicAccess;
 import kz.diploma.prosecurity.controller.util.Controller;
-import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
-import static kz.diploma.prosecurity.controller.util.ParSessionNames.SESSION_ID;
 import kz.diploma.prosecurity.controller.util.ProSecurityViews;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
@@ -19,6 +17,9 @@ import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
 import kz.greetgo.mvc.interfaces.TunnelCookies;
 import kz.greetgo.security.session.SessionIdentity;
+
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.PARENT_ID;
+import static kz.diploma.prosecurity.controller.util.ParSessionNames.SESSION_ID;
 
 @Bean
 @ControllerPrefix("/auth")
@@ -38,7 +39,7 @@ public class AuthController implements Controller {
   @OnPost("/login")
   public String login(@Par("username") String username,
                       @Par("password") String password,
-                      @Par("mobile") boolean mobile,
+                      @Par("mobile") Boolean mobile,
                       TunnelCookies cookies) {
 
     SessionIdentity identity = authRegister.get().login(username, password, mobile);

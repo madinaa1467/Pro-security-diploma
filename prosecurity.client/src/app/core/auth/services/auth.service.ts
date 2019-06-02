@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   authenticate(credentials): Observable<string> {
-    return this.http.post('/auth/login', credentials, {responseType: 'text'})
+    return this.http.post('/auth/login', {...credentials, mobile: false}, {responseType: 'text'})
       .pipe(
         switchMap((res: string) => {
             return this.processResultToken(res)
