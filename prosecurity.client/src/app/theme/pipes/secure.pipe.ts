@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {FileService} from "../../core/utils";
-import {isNullOrUndefined} from "util";
 
 @Pipe({
   name: 'secure'
@@ -10,7 +9,7 @@ export class SecurePipe implements PipeTransform {
 
   transform(fileId: string) {
     return new Promise((resolve, reject) => {
-      if (isNullOrUndefined(fileId)) {
+      if (!fileId) {
         resolve(null);
         return;
       }

@@ -77,6 +77,9 @@ public class NotificationRegisterImpl implements NotificationRegister {
     Map<String, String> data = Maps.newHashMap();
     data.put("id", event.id + "");
     data.put("action", event.action);
+    data.put("img", event.img);
+    data.put("date", event.getNotificationTime());
+
 
     sendTopicBasedNotifications(data, event.toNotificationEvent());
 

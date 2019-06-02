@@ -37,10 +37,14 @@ public class Event implements Comparable<Event> {
 
   private static SimpleDateFormat notificationTimeFormat = new SimpleDateFormat("hh:mm dd/mm/yyyy");
 
+  public String getNotificationTime() {
+    return notificationTimeFormat.format(this.date);
+  }
+
   public NotificationEvent toNotificationEvent() {
     NotificationEvent e = new NotificationEvent();
 
-    String strDate = notificationTimeFormat.format(this.date);
+    String strDate = getNotificationTime();
 
     e.cardNumber = this.cardNumber;
     e.title = this.fio;

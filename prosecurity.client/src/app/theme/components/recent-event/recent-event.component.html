@@ -1,7 +1,7 @@
 <nb-card size="large">
   <nb-card-header>
-    <span>User Activity</span>
-    <div class="dropdown ghost-dropdown" ngbDropdown>
+    <span>Recent events</span>
+    <!--<div class="dropdown ghost-dropdown" ngbDropdown>
       <button type="button" class="btn btn-sm btn-primary" ngbDropdownToggle>
         {{ type }}
       </button>
@@ -12,24 +12,17 @@
           {{ t }}
         </li>
       </ul>
-    </div>
+    </div>-->
   </nb-card-header>
   <nb-card-body>
 
-    <div class="search-results"
-         infinite-scroll
-         [infiniteScrollDistance]="scrollDistance"
-         [infiniteScrollUpDistance]="scrollUpDistance"
-         [infiniteScrollThrottle]="throttle"
-         [scrollWindow]="false"
-         (scrolled)="onScrollDown($event)"
-         (scrolledUp)="onUp($event)">
-
+    <div class="search-results">
       <ul class="user-activity-list">
         <li *ngFor="let c of recent">
           <nb-user [picture]="(c?.img | secure | async) || placeholder" [name]="c.fio" [title]="c.action"
                    size="large"></nb-user>
-          <span class="time">{{ c.date | date: 'medium' }}</span>
+          <!--<span class="time">{{ c.date | date: 'medium' }}</span>-->
+          <span class="time">{{c.date}}</span>
         </li>
 
       </ul>

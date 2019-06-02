@@ -1,7 +1,8 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../../core/data/users";
 import {EventFilterWeb} from "../../../core/model/EventFilterWeb";
 import {ModeratorService} from "../../../core/services/moderator.service";
+import {MessagingService} from "../../../core/utils";
 
 @Component({
   selector: 'app-recent-event',
@@ -14,21 +15,36 @@ export class RecentEventComponent implements OnDestroy, OnInit {
   filter: EventFilterWeb = new EventFilterWeb;
   placeholder: string = 'assets/images/unknown.png';
   recent = [];
+  private MAX_COUNT: number = 10;
 
   type = 'week';
   types = ['week', 'month', 'year'];
 
   constructor(private userService: UserService,
-              private moderatorService: ModeratorService) {
+              private moderatorService: ModeratorService,
+              private messagingService: MessagingService) {
     this.filter.startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     this.filter.endDate = new Date();
     this.filter.offset = 0;
     this.filter.limit = 20;
-    this.moderatorService.getRecentEvents(this.filter).then(
+    /*this.moderatorService.getRecentEvents(this.filter).then(
       res => {
         this.recent = res;
       }
-    );
+    );*/
+  }
+
+  ngOnInit(): void {
+    this.messagingService.onMessage()
+      .subscribe(n => {
+        if (this.MAX_COUNT <= this.recent.length) this.recent.pop();
+        this.recent.unshift({
+          fio: n.notification.title,
+          img: n.data.img,
+          action: n.data.action,
+          date: n.data.date
+        });
+      });
   }
 
   getUserActivity(period: string) {
@@ -54,9 +70,7 @@ export class RecentEventComponent implements OnDestroy, OnInit {
     this.alive = false;
   }
 
-  ngOnInit(): void {
 
-  }
 
   throttle = 300;
   scrollDistance = 1;

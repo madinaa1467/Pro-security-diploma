@@ -139,6 +139,8 @@ public class ChildRegisterImpl implements ChildRegister {
         event.childId = child.id;
         event.fio = child.fio;
         event.cardNumber = child.cardNumber;
+        event.img = child.img;
+
 
         this.childDao.get().insertEvent(event);
 

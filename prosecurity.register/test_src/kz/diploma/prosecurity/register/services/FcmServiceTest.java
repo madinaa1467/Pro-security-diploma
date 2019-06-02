@@ -1,5 +1,6 @@
 package kz.diploma.prosecurity.register.services;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import kz.diploma.prosecurity.controller.model.Event;
 import kz.diploma.prosecurity.controller.model.NotificationEvent;
@@ -7,6 +8,7 @@ import kz.diploma.prosecurity.register.service.FcmService;
 import kz.diploma.prosecurity.register.service.FcmTopic;
 import kz.diploma.prosecurity.register.test.util.ParentTestNg;
 import kz.greetgo.depinject.core.BeanGetter;
+import kz.greetgo.util.RND;
 import org.testng.annotations.Test;
 
 import java.util.Date;
@@ -49,13 +51,14 @@ public class FcmServiceTest extends ParentTestNg {
   @Test
   public void sendTopicBasedNotifications() throws Exception {
     String token =
-      "eyvSHUrhhEU:APA91bFcCTynmJSvNVct5Gmg_HCd3YN-bNitFvcoP9hO4DU" +
-        "-iy9Eiy6ublPTC8t_pUaEKjQCQJmkzI54Y3FHJAqcjX7ahW1Ksl57hbMBOGp4dQ4aXpWL3ZCZIePUwEyipLPswWOGN6EB";
+      "eqbsmOk9XpI:APA91bGXEwlPehKUJeNb3q6KP4-siGwqWIs265qtvOYGZ1N_CsRHtTKNDTlXQ0iDxCON-_UhKU" +
+        "-wVvdt76k7hTjHvDJLQCioCLnj-jUMbfoX-_e2PYcLQOfaFgOokYvKo3gb5IsGpBGJ";
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
 
       Event event = new Event();
-      event.fio = "Vasya Pupkin";
+      event.id = Long.parseLong(RND.intStr(5));
+      event.fio = "Vasya Pupkin " + RND.str(2) + " " + i;
       event.cardNumber = "1000000";
       event.action = (i % 2 == 0) ? "in" : "out";
       event.entrance = "public gate";
@@ -64,8 +67,10 @@ public class FcmServiceTest extends ParentTestNg {
       NotificationEvent notificationEvent = event.toNotificationEvent();
 
       Map<String, String> data = Maps.newHashMap();
-      data.put("id", String.valueOf((int) (Math.random() * 1000)));
-      data.put("action", notificationEvent.action);
+      data.put("id", event.id + "");
+      data.put("action", event.action);
+      data.put("img", Strings.nullToEmpty(event.img));
+      data.put("date", event.getNotificationTime());
 
 //      data.put("text", "AAA: " + String.valueOf((int) (Math.random() * 1000)));
 
