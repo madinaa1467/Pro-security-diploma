@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="kz.prosecurity" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="kz.prosecurity" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
     <name>Pro-Security</name>
     <description />
     <author email="madinaa.1467@gmail.com" href="https://github.com/madinaa1467/">IITU Diploma team</author>
