@@ -59,9 +59,9 @@ public interface ChildDao {
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname,\n" +
     "  c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
     "from child as c, parent_child as pc, card\n" +
-    "  where pc.child = c.id and c.card_number = card.card_number and card.in_hex = #{cardNumberInHex} and c.actual =" +
+    "  where pc.child = c.id and c.card_number = card.card_number and card.in_dec = #{cardNumberInDec} and c.actual =" +
     " 1 limit 1;")
-  Child getChildByCardHex(@Param("cardNumberInHex") String cardNumberInHex);
+  Child getChildByCardDec(@Param("cardNumberInDec") String cardNumberInDec);
 
   @Select("select c.id, c.surname||' '||c.name||' '||c.patronymic as fio, c.gender, c.name, c.surname, c.patronymic, pc.notification, c.birth_date as birthDate, c.card_number as cardNumber\n" +
     "from child as c, parent_child as pc\n" +

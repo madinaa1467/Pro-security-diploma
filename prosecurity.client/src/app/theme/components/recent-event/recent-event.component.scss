@@ -75,15 +75,15 @@
   }
 
   .time {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: nb-theme(font-weight-light);
     text-transform: uppercase;
   }
 
   nb-user /deep/ {
     .info-container {
-      @include nb-ltr(margin-left, 0.875rem);
-      @include nb-rtl(margin-right, 0.875rem);
+      @include nb-ltr(margin-left, 0.75rem);
+      @include nb-rtl(margin-right, 0.75rem);
     }
 
     .user-name {

@@ -49,10 +49,10 @@ public class FcmServiceTest extends ParentTestNg {
   @Test
   public void sendTopicBasedNotifications() throws Exception {
     String token =
-      "fqzIg6V_cms:APA91bGTLmNOGlyprD0mxwYrtdupqV6SyT2ICEFMc1D2goZlR7_ZYNyPtTZC-SI_2LMj2zy0H300" +
-        "--mr1kr2luCx6rRzW3iL61E0Hf66xOnz7rYdBczQWlUZ-wugdt5IPIHh0CASQMRJ";
+      "eyvSHUrhhEU:APA91bFcCTynmJSvNVct5Gmg_HCd3YN-bNitFvcoP9hO4DU" +
+        "-iy9Eiy6ublPTC8t_pUaEKjQCQJmkzI54Y3FHJAqcjX7ahW1Ksl57hbMBOGp4dQ4aXpWL3ZCZIePUwEyipLPswWOGN6EB";
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1; i++) {
 
       Event event = new Event();
       event.fio = "Vasya Pupkin";

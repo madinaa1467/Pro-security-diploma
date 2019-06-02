@@ -27,9 +27,9 @@
 
       <ul class="user-activity-list">
         <li *ngFor="let c of recent">
-          <nb-user [picture]="(c?.img | secure | async) || placeholder" [name]="c.action" [title]="c.fio"
+          <nb-user [picture]="(c?.img | secure | async) || placeholder" [name]="c.fio" [title]="c.action"
                    size="large"></nb-user>
-          <span class="time">{{ c.date | date: 'shortTime' }}</span>
+          <span class="time">{{ c.date | date: 'medium' }}</span>
         </li>
 
       </ul>

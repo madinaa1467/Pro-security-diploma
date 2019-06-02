@@ -116,8 +116,8 @@ public class ChildRegisterImpl implements ChildRegister {
 
 
   @Override
-  public boolean permission(String action, String cardNumberInHex, String entrance) {
-    Child child = childDao.get().getChildByCardHex(cardNumberInHex);
+  public boolean permission(String action, String cardNumberInDec, String entrance) {
+    Child child = childDao.get().getChildByCardDec(cardNumberInDec.replaceAll(" ",""));
     if (child == null) {
       return false;
     } else {
@@ -128,7 +128,13 @@ public class ChildRegisterImpl implements ChildRegister {
         Event event = new Event();
         event.id = sequenceDao.get().proSeqNext();
         event.date = new Date();
-        event.action = action;
+        if("1".equals(action)){
+          event.action = "in";
+        } else if("0".equals(action)){
+          event.action = "out";
+        } else if("in".equals(action) || "out".equals(action)){
+          event.action = action;
+        }
         event.entrance = entrance;
         event.childId = child.id;
         event.fio = child.fio;

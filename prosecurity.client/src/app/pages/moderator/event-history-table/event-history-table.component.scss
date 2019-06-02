@@ -6,13 +6,6 @@ nb-card {
   min-width: 100%;
 }
 
-:host {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  height: 40rem;
-}
-
 :host input {
   width: 100%;
 

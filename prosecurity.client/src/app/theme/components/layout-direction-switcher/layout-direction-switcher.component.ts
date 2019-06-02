@@ -26,7 +26,7 @@ export class LayoutDirectionSwitcherComponent implements OnDestroy {
 
   constructor(private directionService: NbLayoutDirectionService,
               private messagingService: MessagingService) {
-    this.currentDirection = this.directionService.getDirection();
+    this.currentDirection = NbLayoutDirection.RTL;//this.directionService.getDirection();
 
     /*this.directionService.onDirectionChange()
       .pipe(takeWhile(() => this.alive))
@@ -35,7 +35,7 @@ export class LayoutDirectionSwitcherComponent implements OnDestroy {
 
   toggleDirection(newDirection) {
     //this.directionService.setDirection(newDirection);
-    if (NbLayoutDirection.LTR === newDirection) {
+if (NbLayoutDirection.LTR === newDirection) {
       this.messagingService.subscribe("TRACKING")
     } else {
       this.messagingService.unsubscribe("TRACKING")

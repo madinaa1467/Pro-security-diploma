@@ -38,9 +38,10 @@ public class AuthController implements Controller {
   @OnPost("/login")
   public String login(@Par("username") String username,
                       @Par("password") String password,
+                      @Par("mobile") boolean mobile,
                       TunnelCookies cookies) {
 
-    SessionIdentity identity = authRegister.get().login(username, password);
+    SessionIdentity identity = authRegister.get().login(username, password, mobile);
 
     cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")
@@ -60,8 +61,10 @@ public class AuthController implements Controller {
   @AsIs
   @PublicAccess
   @OnGet("/exit")
-  public void exit(@ParSession(SESSION_ID) String sessionId, TunnelCookies cookies) {
-    authRegister.get().deleteSession(sessionId);
+  public void exit(@Par("registrationId") String registrationId, @ParSession(SESSION_ID) String sessionId,
+                   TunnelCookies cookies) {
+
+    authRegister.get().deleteSession(sessionId, registrationId);
 
     cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")

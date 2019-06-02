@@ -22,11 +22,11 @@ export class LogoutComponent implements OnInit {
   }
 
   private logout() {
-    this.messagingService.unregister().pipe(
-      switchMap(res => {
-        return this.service.logout().pipe(
-          switchMap(result => {
-            return this.userService.clear().pipe(map(() => result))
+    this.service.logout().pipe(
+      switchMap(result => {
+        return this.userService.clear().pipe(
+          switchMap(() => {
+            return this.messagingService.unregister().pipe(map(() => result))
           })
         )
       })

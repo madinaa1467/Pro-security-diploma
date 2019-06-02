@@ -96,7 +96,7 @@
     <sql endDelimiter=";;"><![CDATA[
       create table device_notification (
         registration_id varchar(255) not null,
-        parent serial references person(id),
+        person serial references person(id),
         primary key(registration_id)
       )
     ]]></sql>

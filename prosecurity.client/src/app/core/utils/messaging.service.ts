@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFireMessaging} from '@angular/fire/messaging';
 import {AngularFireFunctions} from '@angular/fire/functions';
-import {map, switchMap, tap} from "rxjs/internal/operators";
+import {switchMap, tap} from "rxjs/internal/operators";
 import {HttpService} from "../../http/services";
 import {filter, share} from "rxjs/operators";
 // import * as app from 'firebase';
@@ -46,15 +46,7 @@ export class MessagingService {
     if (!registrationId) return of({});
 
     return this.angularFireMessaging.deleteToken(registrationId).pipe(
-      switchMap(res => {
-        console.log('res:', res);
-        return this.http.get("/notification/unregister", {registrationId: registrationId}).pipe(
-          map(() => {
-            localStorage.removeItem(FCM_REGISTRATION_ID);
-            return res;
-          })
-        )
-      })
+      tap(res => localStorage.removeItem(FCM_REGISTRATION_ID))
     )
   }
 

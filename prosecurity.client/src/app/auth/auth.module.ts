@@ -5,6 +5,7 @@ import {ThemeModule} from "../theme/theme.module";
 import {AuthBlockComponent, AuthComponent, LoginComponent} from "./components";
 import {LogoutComponent} from './components/logout/logout.component';
 import {RegisterComponent} from './components/register/register.component';
+import {NbDatepickerModule, NbSelectModule} from "@nebular/theme";
 
 const COMPONENTS = [AuthBlockComponent, AuthComponent, LoginComponent, LogoutComponent, RegisterComponent];
 
@@ -12,7 +13,9 @@ const COMPONENTS = [AuthBlockComponent, AuthComponent, LoginComponent, LogoutCom
   declarations: [...COMPONENTS],
   imports: [
     ThemeModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    NbDatepickerModule.forRoot(),
+    NbSelectModule
   ]
 })
 export class AuthModule {}

@@ -22,9 +22,9 @@ public class WebRegisterImplTest extends ParentTestNg {
     EventFilterWeb eventFilter = new EventFilterWeb();
 
     eventFilter.limit = 15;
-    eventFilter.parentId = 1000;
+    eventFilter.parentId = 1000L;
     eventFilter.offset = 0;
-    eventFilter.childId = 1;
+    eventFilter.childId = 1L;
     try {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       eventFilter.startDate = formatter.parse("2000-02-16 23:59:59");

@@ -6,7 +6,7 @@ public interface NotificationRegister {
 
   void register(Long personId, String registrationId);
 
-  void unregister(Long personId,  String registrationId);
+  void unregister(String registrationId);
 
   void subscribe(Long personId, String registrationId, String topic);
 
