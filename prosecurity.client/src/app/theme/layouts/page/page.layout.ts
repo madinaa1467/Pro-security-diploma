@@ -49,9 +49,9 @@ export class PageLayoutComponent implements OnDestroy {
         }
       });
 
-    this.messagingService.onMessage().pipe(
-      takeWhile(() => this.alive)
-    ).subscribe(notification => {
+    this.messagingService.onMessage()
+    //.pipe(takeWhile(() => this.alive))
+      .subscribe(notification => {
       let status: NbToastStatus = notification.data.action == "in" ? NbToastStatus.SUCCESS : NbToastStatus.INFO;
 
       this.showToast(status, notification['notification']);
