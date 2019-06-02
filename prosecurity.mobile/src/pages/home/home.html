@@ -31,13 +31,14 @@
 
 <ion-header>
   <ion-navbar color="white">
-    <ion-buttons start left>
 
-    </ion-buttons>
-    <button ion-button [menuToggle]="activeMenu" right>
-      <ion-icon name="funnel"></ion-icon>
-    </button>
     <ion-title style="border: 1px solid #ccc" (click)="scrollToTop()">Pro-Security</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="showEventFilter()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

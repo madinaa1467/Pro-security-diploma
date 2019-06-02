@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {App, Content, IonicPage, MenuController, NavController, PopoverController} from 'ionic-angular';
+import {Animation, App, Content, IonicPage, MenuController, ModalController, NavController} from 'ionic-angular';
 import {ChildService} from "../../providers/services/child.service";
 import {Subscription} from "rxjs/Subscription";
 import {EventFilter} from "../../model/EventFilter";
@@ -23,8 +23,11 @@ export class Home implements OnInit, OnDestroy {
   public loadMore: boolean = true;
 
   // public stories;
-  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App,
-              public childService: ChildService, public menu: MenuController) {
+  constructor(public navCtrl: NavController,
+              public app: App,
+              public childService: ChildService,
+              public menu: MenuController,
+              public modalCtrl: ModalController,) {
     this.menuActive();
     this.filter.childId = 0;
     this.filter.endDate = null;
@@ -138,8 +141,47 @@ export class Home implements OnInit, OnDestroy {
     }, 500);
   }
 
-  openEventDetails(event){
+  openEventDetails(event) {
     console.error('OOOOOOOOOOpnen')
     this.navCtrl.push('EventDetail', { event: event});
   }
+
+  showEventFilter() {
+    let modal = this.modalCtrl.create('EventFilterPage',
+      {child: 'asd', action: 'edit'},
+      {
+        //cssClass: 'my-event-filter',
+        showBackdrop: true,
+        enableBackdropDismiss: true,
+        enterAnimation: myEnterAnimation,
+        leaveAnimation: myLeaveAnimation
+      }
+    );
+    modal.present();
+  }
+}
+
+export function myEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+
+  const baseAnimation = new AnimationC();
+
+  const backdropAnimation = new AnimationC();
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+
+  const wrapperAnimation = new AnimationC();
+  wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
+
+  wrapperAnimation.beforeStyles({'opacity': 1})
+    .fromTo('translateY', '100%', '0%');
+
+  backdropAnimation.fromTo('opacity', 0.01, 0.4);
+
+  return Promise.resolve(baseAnimation
+    .addElement(baseEl)
+    .easing('cubic-bezier(0.36,0.66,0.04,1)')
+    .duration(400)
+    .beforeAddClass('show-modal')
+    .add(backdropAnimation)
+    .add(wrapperAnimation));
+
 }
