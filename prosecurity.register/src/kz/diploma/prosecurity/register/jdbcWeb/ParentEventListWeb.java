@@ -24,7 +24,7 @@ public class ParentEventListWeb extends EventListConnectionWeb {
         sql.setValue("parentId", filter.parentId);
         sql.where("pc.parent = p.id");
 
-        if(filter.childId != 0) {
+        if (filter.childId != null && filter.childId != 0) {
             sql.where("pc.child = :childId");
             sql.setValue("childId", filter.childId);
         }

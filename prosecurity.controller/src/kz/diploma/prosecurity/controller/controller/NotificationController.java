@@ -24,7 +24,7 @@ public class NotificationController implements Controller {
 
   @OnGet("/unregister")
   public void unregister(@ParSession(PARENT_ID) Long personId, @Par("registrationId") String registrationId) {
-    register.get().unregister(personId, registrationId);
+    register.get().unregister(registrationId);
   }
 
   @OnPost("/subscribe")

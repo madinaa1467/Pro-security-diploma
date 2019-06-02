@@ -5,6 +5,7 @@ import {TokenService} from './token/token.service';
 import {switchMap} from "rxjs/internal/operators";
 import {HttpService} from "../../../http/services";
 import {Observable} from 'rxjs';
+import {FCM_REGISTRATION_ID} from "../../utils/messaging.service";
 
 
 @Injectable()
@@ -53,7 +54,9 @@ export class AuthService {
 
   logout(): Observable<any> {
     // TODO: msultanova 5/20/19 internet connection
-    return this.http.get('/auth/exit').pipe(
+    let registrationId = localStorage.getItem(FCM_REGISTRATION_ID);
+
+    return this.http.get('/auth/exit', {registrationId: registrationId}).pipe(
       switchMap(() => this.tokenService.clear())
     );
   }

@@ -60,8 +60,10 @@ public class AuthController implements Controller {
   @AsIs
   @PublicAccess
   @OnGet("/exit")
-  public void exit(@ParSession(SESSION_ID) String sessionId, TunnelCookies cookies) {
-    authRegister.get().deleteSession(sessionId);
+  public void exit(@Par("registrationId") String registrationId, @ParSession(SESSION_ID) String sessionId,
+                   TunnelCookies cookies) {
+
+    authRegister.get().deleteSession(sessionId, registrationId);
 
     cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")

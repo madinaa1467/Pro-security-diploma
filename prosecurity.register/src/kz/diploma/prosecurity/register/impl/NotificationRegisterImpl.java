@@ -37,9 +37,9 @@ public class NotificationRegisterImpl implements NotificationRegister {
   }
 
   @Override
-  public void unregister(Long personId, String registrationId) {
+  public void unregister(String registrationId) {
     notificationDao.get().unregisterDevice(registrationId);
-    logger.info("personId: " + personId + ", unregister.registrationId: " + registrationId);
+    logger.info("unregister.registrationId: " + registrationId);
   }
 
   @Override
@@ -74,20 +74,15 @@ public class NotificationRegisterImpl implements NotificationRegister {
 
   @Override
   public void send(Event event) {
+    Map<String, String> data = Maps.newHashMap();
+    data.put("id", event.id + "");
+    data.put("action", event.action);
+
+    sendTopicBasedNotifications(data, event.toNotificationEvent());
 
     notificationDao.get().getParentTokensByChild(event.childId)
       .stream()
-      .forEach(token -> {
-
-        Map<String, String> data = Maps.newHashMap();
-        data.put("id", event.id + "");
-        data.put("action", event.action);
-
-        sendDirectNotification(token, data, event.toNotificationEvent());
-
-        sendTopicBasedNotifications(data, event.toNotificationEvent());
-
-      });
+      .forEach(token -> sendDirectNotification(token, data, event.toNotificationEvent()));
   }
 
   private void sendTopicBasedNotifications(Map<String, String> data, NotificationEvent event) {

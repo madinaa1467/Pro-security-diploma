@@ -5,6 +5,7 @@ import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.model.UserInfo;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
+import kz.diploma.prosecurity.controller.register.NotificationRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
 import kz.diploma.prosecurity.register.dao.ParentDao;
 import kz.diploma.prosecurity.register.dao.PersonDao;
@@ -24,6 +25,7 @@ public class AuthRegisterImpl implements AuthRegister {
   public BeanGetter<PasswordEncoder> passwordEncoder;
   public BeanGetter<SessionService> sessionService;
   private final ThreadLocal<SessionHolder> sessionDot = new ThreadLocal<>();
+  public BeanGetter<NotificationRegister> notificationRegister;
 
   @Override
   public SessionIdentity login(String username, String password) {
@@ -67,8 +69,9 @@ public class AuthRegisterImpl implements AuthRegister {
   }
 
   @Override
-  public void deleteSession(String sessionId) {
+  public void deleteSession(String sessionId, String registrationId) {
     sessionService.get().removeSession(sessionId);
+    notificationRegister.get().unregister(registrationId);
   }
 
 

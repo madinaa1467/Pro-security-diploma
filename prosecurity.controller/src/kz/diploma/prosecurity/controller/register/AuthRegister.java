@@ -10,7 +10,8 @@ public interface AuthRegister {
   void resetThreadLocalAndVerifySession(String sessionId, String token);
   SessionHolder getSession();
   AccountInfo accountInfo(Long id);
-  void deleteSession(String sessionId);
+
+  void deleteSession(String sessionId, String registrationId);
 
   UserInfo getUserInfo(Long personId);
 }

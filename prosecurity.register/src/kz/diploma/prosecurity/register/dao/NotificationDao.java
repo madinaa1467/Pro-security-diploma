@@ -10,11 +10,11 @@ import java.util.Set;
 
 public interface NotificationDao {
 
-  @Insert("insert into device_notification(parent, registration_id)\n " +
-    " values (#{parentId}, #{registrationId})" +
+  @Insert("insert into device_notification(person, registration_id)\n " +
+    " values (#{personId}, #{registrationId})" +
     " on conflict (registration_id) do update set" +
-    " parent = excluded.parent\n")
-  Long registerDevice(@Param("parentId") Long parentId, @Param("registrationId") String registrationId);
+    " person = excluded.person\n")
+  Long registerDevice(@Param("personId") Long personId, @Param("registrationId") String registrationId);
 
   @Delete("delete from device_notification where registration_id=#{registrationId};")
   void unregisterDevice(@Param("registrationId") String registrationId);
@@ -22,10 +22,10 @@ public interface NotificationDao {
 
   @Select("select dn.registration_id\n" +
     "from parent_child pc\n" +
-    "inner join device_notification dn on pc.parent=dn.parent\n" +
+    "inner join device_notification dn on pc.parent=dn.person\n" +
     "where pc.child = #{childId} and pc.notification = 1")
   List<String> getParentTokensByChild(@Param("childId") Long childId);
 
-  @Select("select registration_id from device_notification where parent=#{parentId}")
-  Set<String> getRegisterTokensByParentId(@Param("parentId") Long parentId);
+  @Select("select registration_id from device_notification where person=#{personId}")
+  Set<String> getRegisterTokensByParentId(@Param("personId") Long personId);
 }
