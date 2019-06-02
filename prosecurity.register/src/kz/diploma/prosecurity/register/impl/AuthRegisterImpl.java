@@ -1,13 +1,14 @@
 package kz.diploma.prosecurity.register.impl;
 
 import kz.diploma.prosecurity.controller.errors.IllegalLoginOrPassword;
+import kz.diploma.prosecurity.controller.errors.NoAccountName;
+import kz.diploma.prosecurity.controller.errors.NoAccountPermission;
 import kz.diploma.prosecurity.controller.model.AccountInfo;
 import kz.diploma.prosecurity.controller.model.SessionHolder;
 import kz.diploma.prosecurity.controller.model.UserInfo;
 import kz.diploma.prosecurity.controller.register.AuthRegister;
 import kz.diploma.prosecurity.controller.register.NotificationRegister;
 import kz.diploma.prosecurity.register.dao.AuthDao;
-import kz.diploma.prosecurity.register.dao.ParentDao;
 import kz.diploma.prosecurity.register.dao.PersonDao;
 import kz.diploma.prosecurity.register.model.PersonLogin;
 import kz.greetgo.depinject.core.Bean;
@@ -20,7 +21,6 @@ import kz.greetgo.security.session.SessionService;
 public class AuthRegisterImpl implements AuthRegister {
 
   public BeanGetter<AuthDao> authDao;
-  public BeanGetter<ParentDao> parentDao;
   public BeanGetter<PersonDao> personDao;
   public BeanGetter<PasswordEncoder> passwordEncoder;
   public BeanGetter<SessionService> sessionService;
@@ -28,12 +28,18 @@ public class AuthRegisterImpl implements AuthRegister {
   public BeanGetter<NotificationRegister> notificationRegister;
 
   @Override
-  public SessionIdentity login(String username, String password) {
+  public SessionIdentity login(String username, String password, Boolean mobile) {
 
     PersonLogin personLogin = personDao.get().selectByUsername(username);
     if (personLogin == null) {
-      throw new IllegalLoginOrPassword();
+      throw new NoAccountName();
     }
+
+    if (mobile) {
+      Boolean isModerator = personDao.get().isModerator(personLogin.id);
+      if (isModerator) throw new NoAccountPermission();
+    }
+
     if (!passwordEncoder.get().verify(password, personLogin.encodedPassword)) {
       throw new IllegalLoginOrPassword();
     }

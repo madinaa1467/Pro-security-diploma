@@ -53,6 +53,7 @@ export class MyApp {
         let rootPage: any = 'LoginPage';
         if (state) {
           rootPage = TabsPage;
+          this.notification.register();
         }
         this.nav.setRoot(rootPage);
       });

@@ -38,9 +38,10 @@ public class AuthController implements Controller {
   @OnPost("/login")
   public String login(@Par("username") String username,
                       @Par("password") String password,
+                      @Par("mobile") boolean mobile,
                       TunnelCookies cookies) {
 
-    SessionIdentity identity = authRegister.get().login(username, password);
+    SessionIdentity identity = authRegister.get().login(username, password, mobile);
 
     cookies.forName(ProSecurityViews.P_SESSION)
       .path("/")

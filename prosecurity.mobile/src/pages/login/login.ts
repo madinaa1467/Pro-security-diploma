@@ -52,9 +52,16 @@ export class LoginPage {
         //loading.onDidDismiss(() => {});
         loading.dismiss();
       }).catch(err => {
+      console.error('err:', err);
 
       loading.dismiss();
-      this.toastNotificationService.presentToast('Произошла ошибка');
+      // this.toastNotificationService.presentToast('Произошла ошибка');
+      const alert = this.alertCtrl.create({
+        title: 'Ошибка',
+        message: err.error,
+        buttons: ['Отклонять']
+      });
+      alert.present();
     });
 
   }

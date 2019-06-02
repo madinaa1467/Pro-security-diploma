@@ -1,6 +1,5 @@
 package kz.diploma.prosecurity.register.dao;
 
-import kz.diploma.prosecurity.controller.model.PersonRecord;
 import kz.diploma.prosecurity.controller.model.ToSave;
 import kz.diploma.prosecurity.register.model.PersonLogin;
 import org.apache.ibatis.annotations.Insert;
@@ -50,4 +49,7 @@ public interface PersonDao {
 
   @Select("select img from person where id=#{id}")
   String getImgIdById(@Param("id") Long id);
+
+  @Select("select count(1) from person_cans where user_can='MODERATOR' and person_id=#{personId}")
+  Boolean isModerator(@Param("personId") Long personId);
 }

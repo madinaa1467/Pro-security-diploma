@@ -6,7 +6,7 @@ import kz.diploma.prosecurity.controller.model.UserInfo;
 import kz.greetgo.security.session.SessionIdentity;
 
 public interface AuthRegister {
-  SessionIdentity login(String username, String password);
+  SessionIdentity login(String username, String password, Boolean mobile);
   void resetThreadLocalAndVerifySession(String sessionId, String token);
   SessionHolder getSession();
   AccountInfo accountInfo(Long id);

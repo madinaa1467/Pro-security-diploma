@@ -26,7 +26,7 @@ export class Auth {
 
   login(credentials) {
     console.log('Call auth/login credentials: ', credentials);
-    return this.api.post('auth/login', credentials, {
+    return this.api.post('auth/login', {...credentials, mobile: true}, {
       responseType: 'text'
     }).toPromise().then(res => {
       return this.storage.set(TOKEN_KEY, res).then(() => {

@@ -47,16 +47,20 @@ export class NotificationProvider {
       }
 
       this.pushObject.unregister().then(res => {
-        return this.storage.get(FCM_REGISTRATION_ID).then(res => {
-          return this.api.get("notification/unregister", {registrationId: res}).toPromise().then(res => {
+        console.log('storage.unregister:');
+        return this.storage.get(FCM_REGISTRATION_ID).then(registrationId => {
+          console.log('storage.registrationId:', registrationId);
+          return this.api.get("notification/unregister", {registrationId: registrationId}).toPromise().then(res => {
+            console.log('notification/unregister/registrationId:', registrationId);
             return this.storage.remove(FCM_REGISTRATION_ID).then(res => {
+              console.log('pushObject null');
               this.pushObject = null;
               resolve();
             });
           });
         });
-      }, err => resolve());
-    });
+      }).catch(err => reject(err));
+    })
   }
 
 

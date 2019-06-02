@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {EditProfile} from "../edit-profile/edit-profile";
 import {EditPrivateInfo} from "../edit-private-info/edit-private-info";
