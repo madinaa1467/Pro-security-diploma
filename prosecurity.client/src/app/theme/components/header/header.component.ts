@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
         name: userInfo.displayName,
         img: userInfo.img
       };
-      if (['USER'].some(permitted => userInfo.cans.has(permitted)) &&  this.userMenu.length < 2) {
+      if (['USER'].some(permitted => userInfo.cans.has(permitted)) && this.userMenu.length < 2) {
         this.userMenu.push({
           title: 'Profile',
           link: '/pages/user/profile'

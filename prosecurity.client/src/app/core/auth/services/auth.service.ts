@@ -43,7 +43,7 @@ export class AuthService {
       );
   }
 
-  register(toSave){
+  register(toSave) {
     console.error('Register Save:', toSave);
     return this.http.post('/parent/register',
       {toSave: JSON.stringify(ToSave.create(toSave))})
