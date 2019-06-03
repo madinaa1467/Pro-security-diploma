@@ -75,10 +75,10 @@ public class NotificationRegisterImpl implements NotificationRegister {
   @Override
   public void send(Event event) {
     Map<String, String> data = Maps.newHashMap();
-    data.put("id", event.id + "");
-    data.put("action", event.action);
-    data.put("img", event.img);
-    data.put("date", event.getNotificationTime());
+    data.put("id", nullToEmpty(event.id + ""));
+    data.put("action", nullToEmpty(event.action));
+    data.put("img", nullToEmpty(event.img));
+    data.put("date", nullToEmpty(event.getNotificationTime()));
 
 
     sendTopicBasedNotifications(data, event.toNotificationEvent());
@@ -103,5 +103,9 @@ public class NotificationRegisterImpl implements NotificationRegister {
       notificationDao.get().unregisterDevice(token);
       logger.error(e);
     }
+  }
+
+  private String nullToEmpty(String str) {
+    return Strings.nullToEmpty(str);
   }
 }

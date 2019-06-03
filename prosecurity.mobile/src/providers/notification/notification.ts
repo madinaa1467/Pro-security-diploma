@@ -46,20 +46,26 @@ export class NotificationProvider {
         return
       }
 
-      this.pushObject.unregister().then(res => {
-        console.log('storage.unregister:');
-        return this.storage.get(FCM_REGISTRATION_ID).then(registrationId => {
-          console.log('storage.registrationId:', registrationId);
-          return this.api.get("notification/unregister", {registrationId: registrationId}).toPromise().then(res => {
-            console.log('notification/unregister/registrationId:', registrationId);
-            return this.storage.remove(FCM_REGISTRATION_ID).then(res => {
-              console.log('pushObject null');
-              this.pushObject = null;
-              resolve();
-            });
+      this.storage.get(FCM_REGISTRATION_ID).then(registrationId => {
+        console.log('storage.registrationId:', registrationId);
+        return this.api.get("notification/unregister", {registrationId: registrationId}).toPromise().then(res => {
+          console.log('notification/unregister/registrationId:', registrationId);
+          return this.storage.remove(FCM_REGISTRATION_ID).then(res => {
+            console.log('pushObject null');
+
+            this.pushObject.unregister().then(res => {
+              console.log('storage.unregister:');
+            }).catch(err => reject(err));
+
+            this.pushObject = null;
+
+            resolve();
           });
         });
       }).catch(err => reject(err));
+      ;
+
+
     })
   }
 
