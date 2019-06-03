@@ -14,6 +14,7 @@ export class NotificationProvider {
     android: {
       sound: true,
       vibrate: true,
+      forceShow: true
     },
     ios: {
       alert: 'true',
