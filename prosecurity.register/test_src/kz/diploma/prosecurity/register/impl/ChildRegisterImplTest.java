@@ -115,7 +115,7 @@ public class ChildRegisterImplTest extends ParentTestNg {
 
   @Test
   public void testPermission() {
-    childRegisterBeanGetter.get().permission("in", "56958039186", "3");
+    childRegisterBeanGetter.get().permission("in", "56124560633", "3");
   }
 
 }

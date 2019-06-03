@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {
   NbGlobalPhysicalPosition,
   NbMediaBreakpoint,
@@ -12,19 +12,23 @@ import {delay, takeWhile, withLatestFrom} from "rxjs/internal/operators";
 import {UserCan} from "../../../core/model/UserCan";
 import {MessagingService} from "../../../core/utils";
 import {NbToastStatus} from "@nebular/theme/components/toastr/model";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-page-layout',
   styleUrls: ['./page.layout.scss'],
   templateUrl: './page.layout.html',
 })
-export class PageLayoutComponent implements OnDestroy {
+export class PageLayoutComponent implements OnDestroy, OnInit {
+
 
   ADMIN: UserCan = UserCan.ADMIN;
   MODERATOR: UserCan = UserCan.MODERATOR;
 
   sideBarEnd: boolean = false;
   tag: string = 'menu-sidebar';
+  onMessageSub: Subscription;
+
 
   private alive = true;
 
@@ -49,20 +53,25 @@ export class PageLayoutComponent implements OnDestroy {
         }
       });
 
-    this.messagingService.onMessage()
+  }
+
+  ngOnInit(): void {
+
+    this.onMessageSub = this.messagingService.onMessage()
     //.pipe(takeWhile(() => this.alive))
       .subscribe(notification => {
-      let status: NbToastStatus = notification.data.action == "in" ? NbToastStatus.SUCCESS : NbToastStatus.INFO;
+        let status: NbToastStatus = notification.data.action == "in" ? NbToastStatus.SUCCESS : NbToastStatus.INFO;
 
-      this.showToast(status, notification['notification']);
+        this.showToast(status, notification['notification']);
 
-    });
+      });
     //this.message = this.messagingService.currentMessage
 
   }
 
   ngOnDestroy(): void {
     this.alive = false;
+    this.onMessageSub.unsubscribe();
   }
 
   private showToast(type: NbToastStatus, message: any) {
